@@ -26,8 +26,8 @@ class Vehiculos extends Model
     public function vendedor(){
         return $this->belongsTo(Vendedores::class, 'id_vendedor');
     }
-    public function ventas(){
-        return $this->belongsTo(Ventas::class, 'id_vehiculo');
+    public function sales(){
+        return $this->belongsTo(Sales::class, 'id_vehiculo');
     }
 
 }

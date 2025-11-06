@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vendedores extends Model
 {
-    /** @use HasFactory<\Database\Factories\VendedoresFactory> */
+    /** @use HasFactory<\Database\Factories\SellersFactory> */
     use HasFactory;
     protected $fillable = [
         'id_particular',
@@ -23,8 +23,8 @@ class Vendedores extends Model
         return $this->belongsTo(Empresas::class, 'id_empresa');
     }
 
-    public function vehiculos()
+    public function cars()
     {
-        return $this->hasMany(Vehiculos::class, 'id_vendedor');
+        return $this->hasMany(Cars::class, 'id_vendedor');
     }
 }
