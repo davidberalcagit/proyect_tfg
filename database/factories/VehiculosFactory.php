@@ -24,7 +24,7 @@ class VehiculosFactory extends Factory
             'Toyota' => ['Corolla',  'RAV4', 'Camry'],
             'BMW' => ['X1', 'X2','X4'],
             'Mercedes' => ['A-Class', 'C-Class', 'E-Class'],
-            'Renault' => ['Clio', 'Megane'],
+            'Renault' => ['Clios', 'Megane'],
             'Volvo' => ['S60', 'V90'],
             'Ford' => ['Focus', 'Fiesta', 'Kuga'],
             'Hyundai' => ['i10', 'Kona', 'Tucson'],
