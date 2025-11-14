@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Vendedores;
+use App\Models\Sellers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class VehiculosFactory extends Factory
+class CarsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -47,7 +47,6 @@ class VehiculosFactory extends Factory
             "km"=>$this -> faker -> numberBetween(100,100000),
             "precio"=>$this -> faker -> numberBetween(2000,100000)."€",
             "moto"=>$this -> faker -> boolean(50),
-            'foto' => $this->faker->imageUrl(640, 480, 'cars', true),
             "descripcion"=>$this -> faker -> text()
         ];
     }

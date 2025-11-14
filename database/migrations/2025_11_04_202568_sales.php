@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
            $table->id();
-           $table->foreignId('id_vendedor')->nullable()->constrained('vendedores')->onDelete('cascade');
-           $table->foreignId('id_comprador')->nullable()->constrained('compradores')->onDelete('cascade');
-           $table->foreignId('id_vehiculo')->nullable()->constrained('vehiculos')->onDelete('cascade');
+           $table->foreignId('id_vendedor')->nullable()->constrained('sellers')->onDelete('cascade');
+           $table->foreignId('id_comprador')->nullable()->constrained('buyers')->onDelete('cascade');
+           $table->foreignId('id_vehiculo')->nullable()->constrained('cars')->onDelete('cascade');
            $table->timestamps();
         });
     }

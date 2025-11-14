@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vehiculos extends Model
+class Cars extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -24,7 +24,7 @@ class Vehiculos extends Model
         'descripcion',
     ];
     public function vendedor(){
-        return $this->belongsTo(Vendedores::class, 'id_vendedor');
+        return $this->belongsTo(Sellers::class, 'id_vendedor');
     }
     public function sales(){
         return $this->belongsTo(Sales::class, 'id_vehiculo');

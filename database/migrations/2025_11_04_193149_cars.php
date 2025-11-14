@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_vendedor')->constrained('vendedores')->onDelete('cascade');
+            $table->foreignId('id_vendedor')->constrained('sellers')->onDelete('cascade');
             $table->string('marca');
             $table->string('modelo');
             $table->string('matricula');
@@ -25,7 +25,6 @@ return new class extends Migration
             $table->integer('km');
             $table->string('precio');
             $table->boolean('moto');
-            $table->string('foto')->nullable();
             $table->text('descripcion');
             $table->timestamps();
         });
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehiculos');
+        Schema::dropIfExists('cars');
     }
 };

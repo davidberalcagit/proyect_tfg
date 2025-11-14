@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compradores', function (Blueprint $table) {
+        Schema::create('buyers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_particular')->nullable()->constrained('particulares')->onDelete('cascade');
-            $table->foreignId('id_empresa')->nullable()->constrained('empresas')->onDelete('cascade');
+            $table->foreignId('id_particular')->nullable()->constrained('individuals')->onDelete('cascade');
+            $table->foreignId('id_empresa')->nullable()->constrained('dealerships')->onDelete('cascade');
             $table->timestamps();
         });
     }

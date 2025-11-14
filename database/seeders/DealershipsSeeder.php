@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Empresas;
+use App\Models\Dealerships;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EmpresaSeeder extends Seeder
+class DealershipsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Empresas::factory()->count(1)->create();
+        Dealerships::factory()->count(1)->create();
 
     }
 }

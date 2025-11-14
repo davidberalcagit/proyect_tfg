@@ -13,12 +13,12 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     public function particular()
     {
-        return $this->hasOne(Particulares::class);
+        return $this->hasOne(Individuals::class);
     }
 
     public function empresas()
     {
-        return $this->hasOne(Empresas::class);
+        return $this->hasOne(Dealerships::class);
     }
     /**
      * The attributes that are mass assignable.

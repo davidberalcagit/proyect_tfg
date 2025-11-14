@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vendedores extends Model
+class Sellers extends Model
 {
     /** @use HasFactory<\Database\Factories\SellersFactory> */
     use HasFactory;
@@ -13,14 +13,14 @@ class Vendedores extends Model
         'id_particular',
         'id_empresa',
     ];
-    public function particular()
+    public function indiindividual()
     {
-        return $this->belongsTo(Particulares::class, 'id_cliente');
+        return $this->belongsTo(Individuals::class, 'id_cliente');
     }
 
     public function empresa()
     {
-        return $this->belongsTo(Empresas::class, 'id_empresa');
+        return $this->belongsTo(Dealerships::class, 'id_empresa');
     }
 
     public function cars()

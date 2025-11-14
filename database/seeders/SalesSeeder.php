@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vehiculos;
-use App\Models\Ventas;
+use App\Models\Cars;
+use App\Models\Sales;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class VentasSeeder extends Seeder
+class SalesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Ventas::factory()->count(5)->create();
+        Sales::factory()->count(5)->create();
     }
 }
