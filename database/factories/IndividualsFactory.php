@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Faker\Provider\es_ES_US;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Individuals>
  */
@@ -19,8 +19,8 @@ class IndividualsFactory extends Factory
         return [
             'nombre' => $this->faker->name(),
             'apellidos' => $this->faker->lastName(),
-            'telefono' => $this->faker->phoneNumber(),
-            'dni'=>$this->faker->numberBetween(10000000,99999999),
+            'telefono' => $this->faker->numerify('6########'),
+            'dni'=>$this->faker->dni(),
             'correo' => $this->faker->unique()->safeEmail(),
         ];
     }
