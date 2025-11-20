@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Fortify;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+
     }
 }

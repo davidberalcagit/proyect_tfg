@@ -10,7 +10,7 @@
     <meta name="description" content="{{ $metaDescription ?? 'Default description' }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex h-screen flex-col bg-slate-100 selection:bg-sky-600 selection:text-sky-50 dark:bg-slate-950">
+<body class="flex h-screen flex-col bg-slate-100 selection:bg-sky-600 selection:text-sky-50">
 <x-partials.navigation />
 
 @session('status')
@@ -28,7 +28,7 @@
         class="mx-auto flex max-w-6xl flex-col items-center space-y-4 md:flex-row md:justify-between md:space-y-0"
     >
         <div
-            class="text-center text-sm text-slate-600 dark:text-slate-400"
+            class="text-center text-sm text-slate-600"
         >
             ® 2025 2DAW All Rights Reserved.
         </div>

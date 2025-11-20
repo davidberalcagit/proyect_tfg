@@ -1,10 +1,10 @@
-<header class="bg-white px-6 shadow dark:bg-slate-900">
+<header class="bg-white px-6 shadow">
     <div
         class="mx-auto flex h-16 max-w-6xl items-center justify-between"
     >
         <button
             id="toggle-mobile-menu"
-            class="-ml-1 rounded p-1 text-slate-500 transition-colors hover:bg-sky-500 hover:text-slate-100 focus:ring-2 focus:ring-slate-200 dark:text-slate-400 dark:hover:text-slate-100 md:hidden"
+            class="-ml-1 rounded p-1 text-slate-500 transition-colors hover:bg-sky-500 hover:text-slate-100 focus:ring-2 focus:ring-slate-200 md:hidden"
         >
             <svg
                 id="open-menu-icon"
@@ -86,25 +86,25 @@
                 </svg>
             </a>
             <div class="ml-8 hidden space-x-8 md:flex">
-                <a class="px-3 py-2 {{ request()->routeIs('home') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500 dark:text-slate-400 dark:hover:text-sky-500' }}"
+                <a class="px-3 py-2 {{ request()->routeIs('home') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500' }}"
                    href="/"
                 >
                     Home
                 </a>
                 <a
-                    class="px-3 py-2 {{ request()->routeIs('about') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500 dark:text-slate-400 dark:hover:text-sky-500' }}"
+                    class="px-3 py-2 {{ request()->routeIs('about') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500' }}"
                     href="{{ route('about') }}"
                 >
                     About
                 </a>
                 <a
-                    class="px-3 py-2 {{ request()->routeIs('posts.index') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500 dark:text-slate-400 dark:hover:text-sky-500' }}"
+                    class="px-3 py-2 {{ request()->routeIs('posts.index') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500' }}"
                     href="{{ route('posts.index') }}"
                 >
                     Blog
                 </a>
                 <a
-                    class="px-3 py-2 {{ request()->routeIs('contact') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500 dark:text-slate-400 dark:hover:text-sky-500' }}"
+                    class="px-3 py-2 {{ request()->routeIs('contact') ? 'text-sky-500' : 'text-slate-600 transition-colors hover:text-sky-500' }}"
                     href="{{ route('contact') }}"
                 >
                     Contact
@@ -116,7 +116,7 @@
             <div class="relative pt-1">
                 <button
                     id="toggle-theme-menu"
-                    class="rounded-full text-slate-500 transition-colors hover:text-sky-500 focus:ring-2 focus:ring-slate-200 focus:ring-offset-1 focus:ring-offset-transparent dark:text-slate-400 dark:hover:text-sky-500 dark:focus:ring-slate-700"
+                    class="rounded-full text-slate-500 transition-colors hover:text-sky-500 focus:ring-2 focus:ring-slate-200 focus:ring-offset-1 focus:ring-offset-transparent"
                 >
                     <svg
                         id="light-icon"
@@ -168,11 +168,11 @@
                 </button>
                 <div
                     id="theme-menu"
-                    class="absolute right-0 z-20 hidden w-28 overflow-hidden rounded-md bg-white/90 shadow-lg dark:bg-slate-800/90"
+                    class="absolute right-0 z-20 hidden w-28 overflow-hidden rounded-md bg-white/90 shadow-lg"
                 >
                     <button
                         data-theme-option="light"
-                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900 dark:focus:bg-slate-900"
+                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100"
                     >
                         <svg
                             class="h-6 w-6"
@@ -193,7 +193,7 @@
                     </button>
                     <button
                         data-theme-option="dark"
-                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900 dark:focus:bg-slate-900"
+                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100"
                     >
                         <svg
                             class="h-6 w-6"
@@ -214,7 +214,7 @@
                     </button>
                     <button
                         data-theme-option="system"
-                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900 dark:focus:bg-slate-900"
+                        class="flex w-full items-center space-x-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 focus:bg-slate-100"
                     >
                         <svg
                             class="h-6 w-6"
@@ -248,29 +248,29 @@
     </div>
     <div
         id="mobile-menu"
-        class="hidden space-y-1 border-t pb-3 pt-2 dark:border-slate-500"
+        class="hidden space-y-1 border-t pb-3 pt-2"
     >
         <a
             href="{{ route('home') }}"
-            class="block rounded-md {{ request()->routeIs('home') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white dark:text-slate-400 dark:hover:text-white' }}"
+            class="block rounded-md {{ request()->routeIs('home') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white' }}"
         >
             Home
         </a>
         <a
             href="{{ route('about') }}"
-            class="block rounded-md px-3 py-2 {{ request()->routeIs('about') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white dark:text-slate-400 dark:hover:text-white' }}"
+            class="block rounded-md px-3 py-2 {{ request()->routeIs('about') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white' }}"
         >
             About
         </a>
         <a
             href="{{ route('posts.index') }}"
-            class="block rounded-md px-3 py-2 {{ request()->routeIs('posts.index') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white dark:text-slate-400 dark:hover:text-white' }}"
+            class="block rounded-md px-3 py-2 {{ request()->routeIs('posts.index') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white' }}"
         >
             Blog
         </a>
         <a
             href="{{ route('contact') }}"
-            class="block rounded-md px-3 py-2 {{ request()->routeIs('contact') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white dark:text-slate-400 dark:hover:text-white' }}"
+            class="block rounded-md px-3 py-2 {{ request()->routeIs('contact') ? 'bg-sky-500 px-3 py-2 text-white' : 'text-slate-700 transition-colors hover:bg-sky-500 hover:text-white' }}"
         >
             Contact
         </a>

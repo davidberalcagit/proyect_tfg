@@ -63,12 +63,12 @@
         @endauth
         <div class="flex-1 space-y-3 pt-4 md:text-center">
             {{--<h3
-                class="text-sm font-semibold text-sky-500 dark:text-sky-400"
+                class="text-sm font-semibold text-sky-500"
             >
                 Laravel
             </h3>--}}
             <h2
-                class="text-2xl font-semibold leading-tight text-slate-800 dark:text-slate-200 md:text-4xl"
+                class="text-2xl font-semibold leading-tight text-slate-800 md:text-4xl"
             >
                 {{ $post->title }}
             </h2>
@@ -81,19 +81,19 @@
             />
             <div class="flex flex-col justify-center">
             <span
-                class="text-sm font-semibold leading-4 text-slate-600 dark:text-slate-400"
+                class="text-sm font-semibold leading-4 text-slate-600"
             >
               Jorge García
             </span>
                 <span
-                    class="text-sm text-slate-500 dark:text-slate-400"
+                    class="text-sm text-slate-500"
                 >
               Mar 18, 2023
             </span>
             </div>
         </div>--}}
         <div
-            class="prose prose-slate mx-auto mt-6 dark:prose-invert lg:prose-xl"
+            class="prose prose-slate mx-auto mt-6 lg:prose-xl"
         >
             {{ $post->body }}
         </div>
