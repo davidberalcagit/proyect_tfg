@@ -14,6 +14,6 @@ class SalesSeeder extends Seeder
      */
     public function run(): void
     {
-        Sales::factory()->count(5)->create();
+        Sales::factory()->create();
     }
 }
