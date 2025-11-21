@@ -15,4 +15,7 @@ class Dealerships extends Model
         'nif',
         'correo',
         'direccion'];
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }

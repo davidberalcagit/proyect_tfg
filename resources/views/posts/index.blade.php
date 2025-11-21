@@ -1,3 +1,4 @@
+
 <x-blog-layout meta-title="Blog" meta-description="Descripción de la página de Blog">
     <div class="mx-auto mt-4 max-w-6xl">
         <h1 class="my-4 text-center font-serif text-4xl font-extrabold text-sky-600 md:text-5xl">
@@ -33,8 +34,11 @@
         class="mx-auto mt-8 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3"
     >
         @foreach($posts as $post)
+            @foreach ($posts as $post)
+                <a href="{{ route('posts.edit', $post) }}">Editar</a>
+            @endforeach
         <article
-            class="flex flex-col overflow-hidden rounded bg-white shadow dark:bg-slate-900"
+            class="flex flex-col overflow-hidden rounded bg-white shadow"
         >
             {{--<div class="h-52">
                 <a
@@ -53,14 +57,14 @@
                     Desk and Office
                 </h3>--}}
                 <h2
-                    class="text-xl font-semibold leading-tight text-slate-800 dark:text-slate-200"
+                    class="text-xl font-semibold leading-tight text-slate-800"
                 >
                     <a class="hover:underline" href="{{ route('posts.show', $post) }}">
                         {{ $post->title }}
                     </a>
                 </h2>
                 <p
-                    class="hidden text-slate-500 dark:text-slate-400 md:block"
+                    class="hidden text-slate-500 md:block"
                 >
                     {{ Str::limit($post->body, 100) }}
                 </p>
@@ -73,7 +77,7 @@
                 />
                 <div class="flex flex-col justify-center">
               <span
-                  class="text-sm font-semibold leading-4 text-slate-600 dark:text-slate-400"
+                  class="text-sm font-semibold leading-4 text-slate-600"
               >
                 Roel Aufderehar
               </span>

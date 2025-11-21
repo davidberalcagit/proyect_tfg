@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dealerships;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -31,14 +32,15 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'tipo' => ['required', 'string', 'in:Empresa,Particular'],
+            //'type' => ['required', 'string', 'in:dealerships,individuals'],
+            'type'=>['required'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
-            'tipo' => $request->tipo,
+            'type' => $request->type,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -49,4 +51,33 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+    public function update(Request $request, User $user)
+    {
+        // Validación básica
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|in:normal,empresa',
+        ]);
+
+        // Actualiza los datos del usuario
+        $user->update($data);
+
+        // Si el tipo es empresa y no existe una empresa asociada...
+        if ($data['type'] === 'empresa') {
+
+            // Comprobar si ya tiene registro en empresas (opcional)
+            if (!$user->empresa) {
+
+                // Crear registro en tabla empresas
+                \App\Models\Dealerships::create([
+                    'user_id' => $user->id,
+                    // puedes añadir más campos obligatorios aquí
+                ]);
+            }
+        }
+
+        return redirect()->route('users.index')
+            ->with('status', 'Usuario actualizado correctamente.');
+    }
+
 }

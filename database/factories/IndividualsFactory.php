@@ -19,8 +19,8 @@ class IndividualsFactory extends Factory
         return [
             'nombre' => $this->faker->name(),
             'apellidos' => $this->faker->lastName(),
-            'telefono' => $this->faker->phoneNumber(),
-            'dni'=>$this->faker->numberBetween(10000000,99999999),
+            'telefono' => $this->faker->numerify('6########'),
+            'dni'=>$this->faker->numerify("########"),
             'correo' => $this->faker->unique()->safeEmail(),
         ];
     }

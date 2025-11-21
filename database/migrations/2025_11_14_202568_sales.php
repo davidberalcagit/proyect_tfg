@@ -16,6 +16,7 @@ return new class extends Migration
            $table->foreignId('id_vendedor')->nullable()->constrained('sellers')->onDelete('cascade');
            $table->foreignId('id_comprador')->nullable()->constrained('buyers')->onDelete('cascade');
            $table->foreignId('id_vehiculo')->nullable()->constrained('cars')->onDelete('cascade');
+           $table->foreignId('precio')->nullable()->constrained('cars')->onDelete('cascade');
            $table->timestamps();
         });
     }

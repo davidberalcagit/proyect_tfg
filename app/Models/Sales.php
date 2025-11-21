@@ -10,6 +10,7 @@ class Sales extends Model
         'id_comprador',
         'id_vendedor',
         'id_vehiculo',
+        'precio'
     ];
     public function comprador(){
         return $this->belongsTo(Buyers::class, 'id_comprador');
