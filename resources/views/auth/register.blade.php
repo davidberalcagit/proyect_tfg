@@ -15,14 +15,41 @@
             </div>
 
             <div>
-                <x-label for="type" value="{{ __('Type') }}" />
-                <select id="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" name="type" :value="old('type')" required autofocus autocomplete="name">
-                    <option value="" disabled selected>Elejir</option>
-                    <option value="empresa">Empresa</option>
-                    <option value="particular">Particular</option>
+                <x-label for="id_entidad" value="{{ __('Type') }}" />
+                <select id="id_entidad" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" name="id_entidad" :value="old('id_entidad')" required>
+
+                    <option value="" disabled selected>Elegir</option>
+                    <option value="1" {{ old('id_entidad') == 1 ? 'selected' : '' }}>Particular</option>
+                    <option value="2" {{ old('id_entidad') == 2 ? 'selected' : '' }}>Empresa</option>
                 </select>
             </div>
+            <div id="campos_particular" class="hidden">
+                <div class="mt-4">
+                    <x-label for="dni" value="DNI" />
+                    <x-input id="dni" class="block mt-1 w-full" type="text" name="dni" :value="old('dni')" />
+                </div>
 
+                <div class="mt-4">
+                    <x-label for="fecha_nacimiento" value="Fecha de nacimiento" />
+                    <x-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" />
+                </div>
+            </div>
+            <div id="campos_empresa" class="hidden">
+                <div class="mt-4">
+                    <x-label for="nombre_empresa" value="Nombre empresa" />
+                    <x-input id="nombre_empresa" class="block mt-1 w-full" type="text" name="nombre_empresa" :value="old('nombre_empresa')" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="nif" value="NIF" />
+                    <x-input id="nif" class="block mt-1 w-full" type="text" name="nif" :value="old('nif')"/>
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="direccion" value="Dirección" />
+                    <x-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" />
+                </div>
+            </div>
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
@@ -65,5 +92,34 @@
                 </x-button>
             </div>
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const selectEntidad = document.getElementById('id_entidad');
+                const camposParticular = document.getElementById('campos_particular');
+                const camposEmpresa = document.getElementById('campos_empresa');
+
+                function actualizarCampos() {
+                    const valor = selectEntidad.value;
+
+                    if (valor == "1") {
+                        // Mostrar particular
+                        camposParticular.classList.remove('hidden');
+                        camposEmpresa.classList.add('hidden');
+                    }
+                    else if (valor == "2") {
+                        // Mostrar empresa
+                        camposEmpresa.classList.remove('hidden');
+                        camposParticular.classList.add('hidden');
+                    }
+                    else {
+                        camposParticular.classList.add('hidden');
+                        camposEmpresa.classList.add('hidden');
+                    }
+                }
+
+                selectEntidad.addEventListener('change', actualizarCampos);
+                actualizarCampos()
+            });
+        </script>
     </x-authentication-card>
 </x-guest-layout>

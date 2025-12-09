@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customers;
 use App\Models\Dealerships;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -32,19 +33,43 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            //'type' => ['required', 'string', 'in:dealerships,individuals'],
-            'type'=>['required'],
+            //'type' => ['required', 'string', 'in:admin,comun'],
+            'id_entidad' => ['required', 'integer', 'in:1,2'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
-            'type' => $request->type,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'type'     => 2,
         ]);
+        $customer = Customers::create([
+            'id_usuario'      => $user->id,
+            'nombre_contacto' => $request->name,
+            'telefono'        => $request->telefono,
+            'id_entidad'      => $request->id_entidad, // 1 = individual, 2 = dealership
+        ]);
+        if ($customer->id_entidad == 2) {
 
+            $customer->dealerships()->create([
+                'id_cliente'      => $customer->id,
+                'nombre_empresa'  => $request->nombre_empresa,
+                'nif'             => $request->nif,
+                'direccion'       => $request->direccion
+            ]);
+        }
+
+        // 4. Si es individual → crear registro en individuals
+        if ($customer->id_entidad == 1) {
+
+            $customer->individuals()->create([
+                'id_cliente'       => $customer->id,
+                'dni'              => $request->dni,
+                'fecha_nacimiento' => $request->fecha_nacimiento
+            ]);
+        }
         event(new Registered($user));
 
         Auth::login($user);
