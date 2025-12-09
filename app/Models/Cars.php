@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Database\Seeders\GearSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,10 +25,13 @@ class Cars extends Model
         'descripcion',
     ];
     public function vendedor(){
-        return $this->belongsTo(Sellers::class, 'id_vendedor');
+        return $this->belongsTo(Customers::class, 'id_vendedor');
     }
     public function sales(){
         return $this->belongsTo(Sales::class, 'id_vehiculo');
+    }
+    public function marcha(){
+        return $this->belongsTo(Gears::class, 'id_marcha');
     }
 
 }

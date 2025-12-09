@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Gears>
  */
-class BuyersFactory extends Factory
+class GearsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class BuyersFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'tipo' => $this->faker->randomElement(['Manual', 'Automático']),
         ];
     }
 }

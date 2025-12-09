@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('dealerships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_usuario')->nullable()->constrained('individuals')->onDelete('cascade');
-            $table->string('nombre');
-            $table->string('telefono', 20);
+            $table->foreignId('id_cliente')->nullable()->constrained('customers')->onDelete('cascade');
+            $table->string('nombre_empresa');
             $table->string('nif')->unique();
-            $table->string('correo')->unique();
             $table->string('direccion')->nullable();
             $table->timestamps();
         });

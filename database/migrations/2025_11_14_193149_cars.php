@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_vendedor')->constrained('sellers')->onDelete('cascade');
-            $table->foreignId('id_marca')->constrained('brands')->onDelete('cascade');
+            //$table->foreignId('id_vendedor')->constrained('customers')->onDelete('cascade');
+            //$table->foreignId('id_marca')->constrained('brands')->onDelete('cascade');
+            $table->foreignId('id_marca')->constrained('brands')->cascadeOnDelete();
+            $table->foreignId('id_modelo')->constrained('car_models')->cascadeOnDelete();
+            $table->foreignId('id_marcha')->constrained('gears')->cascadeOnDelete();
+            $table->foreignId('id_combustible')->constrained('fuels')->cascadeOnDelete();
             $table->string('matricula');
             $table->year('año_matri');
             $table->string('motor');
-            $table->string('combustible');
-            $table->string('cambio');
             $table->string('color');
             $table->integer('km');
             $table->string('precio');

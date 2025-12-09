@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Individuals extends Model
 {
-    use HasFactory;
     protected $fillable = [
-        'id','nombre','apellidos','telefono','dni','correo'];
+        'id_cliente',
+        'dni',
+        'fecha_nacimiento',
+    ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customers::class,'id_cliente');
+    }
 }

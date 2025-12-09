@@ -3,12 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Brands;
-use App\Models\Models;
+use App\Models\CarModels;
+use App\Models\Fuels;
+use App\Models\Gears;
 use App\Models\Sellers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cars>
  */
 class CarsFactory extends Factory
 {
@@ -19,21 +21,24 @@ class CarsFactory extends Factory
      */
     public function definition(): array
     {
-        $combustible=['Gasolina','Diesel','Hibrido','Electrico','Gas'];
-        $cambio=['Manual','Automatico'];
-
+        $marca = Brands::inRandomOrder()->first();
+        $model = CarModels::where("id_marca", $marca->id)->inRandomOrder()->first();
+        $marcha = Gears::inRandomOrder()->first();
+        $combustible = Fuels::inRandomOrder()->first();
 
         return [
+            "id_marca"   => $marca->id,
+            "id_modelo"  => $model->id,
+            "id_marcha"  => $marcha->id,
+            "id_combustible" => $combustible->id,
             "matricula"=>strtoupper($this->faker->bothify("####???")),
             "año_matri"=>$this -> faker -> numberBetween(2000,2025),
             "motor"=>$this -> faker -> word(),
-            "combustible"=>$this -> faker -> randomElement($combustible),
-            "cambio"=>$this -> faker -> randomElement($cambio),
             "color"=>$this -> faker -> colorName(),
             "km"=>$this -> faker -> numberBetween(100,100000),
-            "precio"=>$this -> faker -> numberBetween(2000,100000)."€",
+            "precio"=>$this -> faker -> numberBetween(2000,100000),
             "moto"=>$this -> faker -> boolean(50),
-            "descripcion"=>$this -> faker -> text()
+            "descripcion"=>$this -> faker -> text(),
         ];
     }
 }

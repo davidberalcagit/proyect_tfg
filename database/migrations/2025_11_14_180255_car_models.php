@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('car_models', function (Blueprint $table) {
             $table->id();
+            $table->string('id_marca')->constrained('brands')->onDelete('cascade');
             $table->string('nombre');
+            $table->timestamps();
         });
     }
 

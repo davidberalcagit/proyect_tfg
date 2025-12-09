@@ -9,13 +9,12 @@ class Dealerships extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
-        'nombre',
-        'telefono',
+        'id_cliente',
+        'nombre_empresa',
         'nif',
-        'correo',
-        'direccion'];
-    public function users(){
-        return $this->belongsTo(User::class);
+        'direccion',
+    ];
+    public function customer(){
+        return $this->belongsTo(Customers::class,'id_cliente');
     }
 }

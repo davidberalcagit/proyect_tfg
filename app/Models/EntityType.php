@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class EntityType extends Model
+{
+    protected $fillable = ['name'];
+
+    public function customers()
+    {
+        return $this->hasMany(Customers::class, 'id_entidad');
+    }
+}

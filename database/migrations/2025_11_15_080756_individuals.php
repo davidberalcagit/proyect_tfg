@@ -11,22 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('individuals', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->foreignId('id_cliente')->nullable()->constrained('customers')->onDelete('cascade');
+            $table->string('dni')->unique();
+            $table->string('fecha_nacimiento');
             $table->timestamps();
-//            $table->foreignId('id_marca')->constrained('models')->onDelete('cascade');
-//            $table->string('nombre');
-//            $table->timestamps();
         });
-
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('individuals');
+
     }
 };

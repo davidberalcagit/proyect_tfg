@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Buyers;
+use App\Models\Brands;
+use App\Models\CarModels;
+use App\Models\Customers;
 use App\Models\Dealerships;
+use App\Models\EntityType;
+use App\Models\Gears;
 use App\Models\Individuals;
 use App\Models\User;
 use App\Models\Cars;
-use App\Models\Sellers;
 use App\Models\Sales;
 use Database\Factories\IndividualsFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,41 +25,40 @@ class DatabaseSeeder extends Seeder
      * @param $cars
      */
     public function run(): void
-    {   //Sellers
-        $particularesV = Individuals::factory(3)->create();
-        $empresasV = Dealerships::factory(3)->create();
+    {
+        $this->call(EntityTypesSeeder::class);
+        $this->call(BrandsSeeder::class);
+        $this->call(CarModelsSeeder::class);
+        $this->call(GearSeeder::class);
+        $this->call(FuelsSeeder::class);
+        $users = User::factory()->count(20)->create();
+        $users->each(function ($user) {
 
-        $particularesV->each(fn($particularesV) =>
-        Sellers::create(['id_particular' => $particularesV->id])
-        );
+            $customer = Customers::factory()->create([
+                'id_usuario' => $user->id
+            ]);
 
-        $empresasV->each(fn($empresasV) =>
-        Sellers::create(['id_empresa' => $empresasV->id])
-        );
+            $faker = fake();
 
-        Sellers::all()->each(fn($sellers) =>
-        Cars::factory(1)->create(['id_vendedor' => $sellers->id])
-        );
-        //Buyers
-        $particularesC = Individuals::factory(3)->create();
-        $empresasC = Dealerships::factory(3)->create();
+            if ($customer->id_entidad == 1) {
 
-        $particularesC->each(fn($particularesC) =>
-        Buyers::create(['id_particular' => $particularesC->id])
-        );
+                $customer->individuals()->create([
+                    'id_cliente'      => $customer->id,
+                    'dni'             => $faker->regexify('[0-9]{8}[A-Z]'),
+                    'fecha_nacimiento'=> $faker->date(),
+                ]);
 
-        $empresasC->each(fn($empresasC) =>
-        Buyers::create(['id_empresa' => $empresasC->id])
-        );
+            } else {
 
-        $buyers=Buyers::all();
-        $sellers=Sellers::all();
-        $cars=Cars::all();
-        //Sales
-        $sellers->each(function ($sellers)use($cars, $buyers){
-            $randomBuyers = $buyers->random();
-            $randomCars = $cars->random();
-            Sales::create(['id_comprador' => $randomBuyers->id,'id_vendedor' => $sellers->id,'id_vehiculo' => $randomCars->id ]);
+                $customer->dealerships()->create([
+                    'id_cliente'     => $customer->id,
+                    'nombre_empresa' => $faker->company(),
+                    'nif'            => $faker->regexify('[A-Z][0-9]{8}'),
+                    'direccion'      => $faker->address(),
+                ]);
+            }
+
         });
+        $this->call(CarsSeeder::class);
     }
 }
