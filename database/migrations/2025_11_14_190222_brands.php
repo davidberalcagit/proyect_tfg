@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->timestamps();
-//            $table->foreignId('id_marca')->constrained('models')->onDelete('cascade');
-//            $table->string('nombre');
-//            $table->timestamps();
         });
 
     }

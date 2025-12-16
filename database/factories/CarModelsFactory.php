@@ -15,11 +15,21 @@ class CarModelsFactory extends Factory
         $marca = Brands::inRandomOrder()->first()
             ?? Brands::factory()->create();
 
-        $modelos = [
-            'Corolla','Civic','Focus','A3','Serie 3','Clase C',
-            'Polo','Clio','308','Rio','Tucson','Qashqai',
-            'Megane','Yaris','Fiesta','Sportage'
+        $modelosPorMarca = [
+            'Toyota'    => ['Corolla', 'Yaris'],
+            'Honda'     => ['Civic'],
+            'Ford'      => ['Focus', 'Fiesta'],
+            'Audi'      => ['A3'],
+            'BMW'       => ['Serie 3'],
+            'Mercedes'  => ['Clase C'],
+            'Volkswagen'=> ['Polo'],
+            'Renault'   => ['Clio', 'Megane'],
+            'Peugeot'   => ['308'],
+            'Kia'       => ['Rio', 'Sportage'],
+            'Hyundai'   => ['Tucson'],
+            'Nissan'    => ['Qashqai'],
         ];
+        $modelos = $modelosPorMarca[$marca->nombre] ?? ['Modelo Genérico'];
 
         return [
             'id_marca' => $marca->id,

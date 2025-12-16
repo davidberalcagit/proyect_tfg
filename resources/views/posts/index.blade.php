@@ -34,9 +34,7 @@
         class="mx-auto mt-8 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3"
     >
         @foreach($posts as $post)
-            @foreach ($posts as $post)
                 <a href="{{ route('posts.edit', $post) }}">Editar</a>
-            @endforeach
         <article
             class="flex flex-col overflow-hidden rounded bg-white shadow"
         >

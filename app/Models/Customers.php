@@ -34,7 +34,7 @@ class Customers extends Model
     {
         return $this->hasOne(Dealerships::class,'id_cliente');
     }
-    public function Cars()
+    public function cars()
     {
         return $this->hasMany(Cars::class,'id_vendedor');
     }

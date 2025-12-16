@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_usuario')->unique()->constrained('users')->onDelete('cascade');
-            $table->string('nombre_contacto',255);
-            $table->string('telefono',50)->nullable();
+            $table->string('nombre_contacto');
+            $table->string('telefono')->nullable();
             $table->foreignId('id_entidad')->constrained('entity_types');
             $table->timestamps();
 

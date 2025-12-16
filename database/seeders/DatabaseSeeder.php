@@ -15,6 +15,7 @@ use App\Models\Sales;
 use Database\Factories\IndividualsFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Pest\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,7 +29,19 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(EntityTypesSeeder::class);
         $this->call(BrandsSeeder::class);
-        $this->call(CarModelsSeeder::class);
+//        $this->call(CarModelsSeeder::class);
+        $brands = Brands::all();
+        foreach ($brands as $brand) {
+            $cantidadModelos = rand(1, 3);
+            for ($i = 0; $i < $cantidadModelos; $i++) {
+                CarModels::create([
+                    'id_marca' => $brand->id,
+                    'nombre' => $brand->nombre . ' ' . Str::random(3),
+                ]);
+            }
+        }
+
+
         $this->call(GearSeeder::class);
         $this->call(FuelsSeeder::class);
         $users = User::factory()->count(20)->create();
@@ -60,5 +73,7 @@ class DatabaseSeeder extends Seeder
 
         });
         $this->call(CarsSeeder::class);
+        Sales::factory()->count(10)->create();
+
     }
 }

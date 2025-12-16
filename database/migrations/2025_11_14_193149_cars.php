@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            //$table->foreignId('id_vendedor')->constrained('customers')->onDelete('cascade');
-            //$table->foreignId('id_marca')->constrained('brands')->onDelete('cascade');
+            $table->foreignId('id_vendedor')->constrained('customers')->cascadeOnDelete();
             $table->foreignId('id_marca')->constrained('brands')->cascadeOnDelete();
             $table->foreignId('id_modelo')->constrained('car_models')->cascadeOnDelete();
             $table->foreignId('id_marcha')->constrained('gears')->cascadeOnDelete();
@@ -24,8 +23,7 @@ return new class extends Migration
             $table->string('motor');
             $table->string('color');
             $table->integer('km');
-            $table->string('precio');
-            $table->boolean('moto');
+            $table->integer('precio');
             $table->text('descripcion');
             $table->timestamps();
         });

@@ -10,8 +10,10 @@ class Cars extends Model
     use HasFactory;
     protected $fillable = [
         'id_vendedor',
-        'marca',
-        'modelo',
+        'id_marcha',
+        'id_modelo',
+        'id_marca',
+        'id_combustible',
         'matricula',
         'año_matri',
         'motor',
@@ -20,7 +22,6 @@ class Cars extends Model
         'color',
         'km',
         'precio',
-        'moto',
         'foto',
         'descripcion',
     ];
@@ -33,5 +34,7 @@ class Cars extends Model
     public function marcha(){
         return $this->belongsTo(Gears::class, 'id_marcha');
     }
-
+    public function combustible(){
+        return $this->belongsTo(Fuels::class, 'id_combustible');
+    }
 }
