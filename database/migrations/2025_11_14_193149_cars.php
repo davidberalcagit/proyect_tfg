@@ -19,8 +19,7 @@ return new class extends Migration
             $table->foreignId('id_marcha')->constrained('gears')->cascadeOnDelete();
             $table->foreignId('id_combustible')->constrained('fuels')->cascadeOnDelete();
             $table->string('matricula');
-            $table->year('año_matri');
-            $table->string('motor');
+            $table->year('anyo_matri');
             $table->string('color');
             $table->integer('km');
             $table->integer('precio');

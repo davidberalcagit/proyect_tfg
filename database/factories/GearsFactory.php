@@ -2,19 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Gears;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Gears>
- */
 class GearsFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Gears::class;
+
+    public function definition()
     {
         return [
             'tipo' => $this->faker->randomElement(['Manual', 'Automático']),

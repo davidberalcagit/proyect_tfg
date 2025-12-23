@@ -34,7 +34,6 @@
         class="mx-auto mt-8 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3"
     >
         @foreach($posts as $post)
-                <a href="{{ route('posts.edit', $post) }}">Editar</a>
         <article
             class="flex flex-col overflow-hidden rounded bg-white shadow"
         >
@@ -66,6 +65,14 @@
                 >
                     {{ Str::limit($post->body, 100) }}
                 </p>
+                <div class="flex items-center justify-end space-x-2">
+                    <a href="{{ route('posts.edit', $post) }}" class="text-sm text-gray-600 hover:text-gray-900">Editar</a>
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-sm text-red-600 hover:text-red-900">Borrar</button>
+                    </form>
+                </div>
             </div>
             {{--<div class="flex space-x-2 p-5">
                 <img

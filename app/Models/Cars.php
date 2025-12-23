@@ -9,20 +9,17 @@ class Cars extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'title',
         'id_vendedor',
         'id_marcha',
         'id_modelo',
         'id_marca',
         'id_combustible',
         'matricula',
-        'año_matri',
-        'motor',
-        'combustible',
-        'cambio',
+        'anyo_matri',
         'color',
         'km',
         'precio',
-        'foto',
         'descripcion',
     ];
     public function vendedor(){

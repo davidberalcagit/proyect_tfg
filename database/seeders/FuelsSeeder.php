@@ -15,10 +15,10 @@ class FuelsSeeder extends Seeder
     public function run(): void
     {
         Fuels::insert([
-            ['name' => 'Gasolina'],
-            ['name' => 'Diesel'],
-            ['name' => 'Electrico'],
-            ['name' => 'Hibrido'],
-            ['name' => 'Gas'],
+            ['nombre' => 'Gasolina'],
+            ['nombre' => 'Diesel'],
+            ['nombre' => 'Electrico'],
+            ['nombre' => 'Hibrido'],
+            ['nombre' => 'Gas'],
         ]);}
 }

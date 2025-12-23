@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CarsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,7 +21,9 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->middleware(['auth', 'verified'])->name('contact');
+
 Route::resource('posts', PostController::class);
+Route::resource('cars', CarsController::class)->middleware(['auth', 'verified']);
 
 
 
