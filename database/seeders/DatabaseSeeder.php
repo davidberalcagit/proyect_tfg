@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(EntityTypesSeeder::class);
+        $this->call(ColorsSeeder::class);
         $this->call(BrandsSeeder::class);
 //        $this->call(CarModelsSeeder::class);
         $brands = Brands::all();

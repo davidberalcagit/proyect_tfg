@@ -85,7 +85,14 @@
                             </div>
                             <div>
                                 <label for="color" class="block font-medium text-sm text-gray-700">Color</label>
-                                <input type="text" name="color" id="color" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('color') }}" />
+                                <select name="id_color" id="color" class="form-input rounded-md shadow-sm mt-1 block w-full">
+                                    <option value="">--Selecciona un color--</option>
+                                    @foreach($colors as $color)
+                                        <option value="{{ $color->id }}" {{ old('id_color') == $color->id ? 'selected' : '' }}>
+                                            {{ $color->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <label for="descripcion" class="block font-medium text-sm text-gray-700">Descripcion</label>

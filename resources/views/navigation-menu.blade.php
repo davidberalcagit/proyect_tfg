@@ -15,15 +15,14 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('posts.index') }}" :active="request()->routeIs('posts.index')">
-                        {{ __('Blog') }}
-                    </x-nav-link>
+
                     <x-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')">
                         {{ __('Cars') }}
                     </x-nav-link>
                 </div>
             </div>
 
+            @auth
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
@@ -129,6 +128,16 @@
                     </x-dropdown>
                 </div>
             </div>
+            @else
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                        {{ __('Log in') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                        {{ __('Register') }}
+                    </x-nav-link>
+                </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -152,6 +161,7 @@
         </div>
 
         <!-- Responsive Settings Options -->
+        @auth
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -222,5 +232,17 @@
                 @endif
             </div>
         </div>
+        @else
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                        {{ __('Log in') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                        {{ __('Register') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
+        @endauth
     </div>
 </nav>

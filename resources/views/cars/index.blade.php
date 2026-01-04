@@ -39,7 +39,7 @@
                                 @foreach ($cars as $car)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ $car->title }}</div>
+                                            <a href="{{ route('cars.show', $car) }}"class="text-sm text-gray-900">{{ $car->title }}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{ $car->precio }}</div>

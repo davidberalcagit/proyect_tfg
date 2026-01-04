@@ -9,7 +9,7 @@ class Fuels extends Model
 {
     use HasFactory;
     protected $table = 'fuels';
-    protected $fillable = ['nombre'];
+    protected $fillable = ['name'];
     public function cars()
     {
         return $this->hasMany(Cars::class,'id_combustible');

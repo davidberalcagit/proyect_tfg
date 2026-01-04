@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brands;
 use App\Models\CarModels;
 use App\Models\Cars;
+use App\Models\Color;
 use App\Models\Fuels;
 use App\Models\Gears;
 use Illuminate\Http\Request;
@@ -29,9 +30,10 @@ class CarsController extends Controller
         $brands = Brands::all();
         $fuels  = Fuels::all();
         $gears = Gears::all();
+        $colors = Color::all();
 
 
-        return view('cars.create',compact('brands','fuels', 'gears'));
+        return view('cars.create',compact('brands','fuels', 'gears', 'colors'));
     }
 
     public function getModels(Brands $brand)
@@ -55,7 +57,7 @@ class CarsController extends Controller
             'anyo_matri' => 'required|integer',
             'km' => 'required|integer',
             'matricula' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
+            'id_color' => 'required|integer|exists:colors,id',
             'descripcion' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -79,6 +81,7 @@ class CarsController extends Controller
      */
     public function show(Cars $car)
     {
+        $car->load('vendedor', 'marcha', 'combustible', 'color', 'marca', 'modelo');
         return view('cars.show', compact('car'));
     }
 
@@ -90,7 +93,8 @@ class CarsController extends Controller
         $brands = Brands::all();
         $fuels = Fuels::all();
         $gears = Gears::all();
-        return view('cars.edit', compact('car', 'brands', 'fuels', 'gears'));
+        $colors = Color::all();
+        return view('cars.edit', compact('car', 'brands', 'fuels', 'gears', 'colors'));
     }
 
     /**
@@ -108,7 +112,7 @@ class CarsController extends Controller
             'anyo_matri' => 'required|integer',
             'km' => 'required|integer',
             'matricula' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
+            'id_color' => 'required|integer|exists:colors,id',
             'descripcion' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -118,6 +122,7 @@ class CarsController extends Controller
         $car->id_combustible = $request->id_combustible;
         $car->id_marcha = $request->id_marcha;
         $car->id_modelo = $request->id_modelo;
+        $car->id_color = $request->id_color;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('public/cars');

@@ -11,36 +11,18 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/blog', [PostController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('blog');
+})->name('dashboard');
+
 Route::get('/about', function () {
     return view('about');
-})->middleware(['auth', 'verified'])->name('about');
+})->name('about');
+
 Route::get('/contact', function () {
     return view('contact');
-})->middleware(['auth', 'verified'])->name('contact');
+})->name('contact');
 
-Route::resource('posts', PostController::class);
-Route::resource('cars', CarsController::class)->middleware(['auth', 'verified']);
+Route::resource('cars', CarsController::class);
 
-
-
-//Route::get('/posts.index', function () {
-//    return view('posts.index');
-//})->middleware(['auth', 'verified'])->name('index.index');
-//
-//Route::get('/posts.create', function () {
-//    return view('posts.create');
-//})->middleware(['auth', 'verified'])->name('posts.create');
-//Route::get('/posts.show', function () {
-//    return view('posts.show');
-//})->middleware(['auth', 'verified'])->name('show.index');
-//Route::get('/posts.edit', function () {
-//    return view('posts.edit');
-//})->middleware(['auth', 'verified'])->name('edit.index');
-Route::resource('posts', PostController::class)->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

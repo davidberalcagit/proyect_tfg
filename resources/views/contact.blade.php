@@ -4,4 +4,4 @@
             Contacto
         </h1>
     </div>
-</x-layout>
+</x-blog-layout>
