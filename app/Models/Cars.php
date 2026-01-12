@@ -21,6 +21,8 @@ class Cars extends Model
         'km',
         'precio',
         'descripcion',
+        'image',
+        'id_estado', // Changed from estado
     ];
 
     public function vendedor(){
@@ -51,5 +53,10 @@ class Cars extends Model
     public function modelo()
     {
         return $this->belongsTo(CarModels::class, 'id_modelo');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(CarStatus::class, 'id_estado');
     }
 }

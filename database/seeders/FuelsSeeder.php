@@ -14,11 +14,10 @@ class FuelsSeeder extends Seeder
      */
     public function run(): void
     {
-        Fuels::insert([
-            ['nombre' => 'Gasolina'],
-            ['nombre' => 'Diesel'],
-            ['nombre' => 'Electrico'],
-            ['nombre' => 'Hibrido'],
-            ['nombre' => 'Gas'],
-        ]);}
+        $fuels = ['Gasolina', 'Diesel', 'Electrico', 'Hibrido', 'Gas'];
+
+        foreach ($fuels as $fuel) {
+            Fuels::firstOrCreate(['nombre' => $fuel]);
+        }
+    }
 }

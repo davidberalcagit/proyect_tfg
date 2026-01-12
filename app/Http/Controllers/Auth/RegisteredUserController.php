@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -31,48 +32,75 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
-            //'type' => ['required', 'string', 'in:admin,comun'],
-            'id_entidad' => ['required', 'integer', 'in:1,2'],
+            'type' => ['required', 'string', 'in:individual,dealership,admin,supervisor,soporte'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'id_entidad' => ['required_if:type,individual,dealership', 'nullable', 'exists:entity_types,id'],
+            'telefono' => ['required_if:type,individual,dealership', 'nullable', 'string', 'regex:/^[0-9]{9}$/', 'unique:customers,telefono'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ];
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'type'     => 2,
-        ]);
-        $customer = Customers::create([
-            'id_usuario'      => $user->id,
-            'nombre_contacto' => $request->name,
-            'telefono'        => $request->telefono,
-            'id_entidad'      => $request->id_entidad, // 1 = individual, 2 = dealership
-        ]);
-        if ($customer->id_entidad == 2) {
-
-            $customer->dealerships()->create([
-                'id_cliente'      => $customer->id,
-                'nombre_empresa'  => $request->nombre_empresa,
-                'nif'             => $request->nif,
-                'direccion'       => $request->direccion
-            ]);
+        if ($request->input('id_entidad') == 1) {
+            $rules['dni'] = ['required', 'string', 'max:9', 'unique:individuals,dni'];
+            $rules['fecha_nacimiento'] = ['required', 'date'];
         }
 
-        // 4. Si es individual → crear registro en individuals
-        if ($customer->id_entidad == 1) {
+        $request->validate($rules);
 
-            $customer->individuals()->create([
-                'id_cliente'       => $customer->id,
-                'dni'              => $request->dni,
-                'fecha_nacimiento' => $request->fecha_nacimiento
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                // 'type' => $request->type, // Removed
             ]);
-        }
-        event(new Registered($user));
 
-        Auth::login($user);
+            // Assign Role
+            if ($request->type === 'individual') {
+                $user->assignRole('individual');
+            } elseif ($request->type === 'dealership') {
+                $user->assignRole('dealership');
+            } elseif ($request->type === 'admin') {
+                $user->assignRole('admin');
+            } elseif ($request->type === 'supervisor') {
+                $user->assignRole('supervisor');
+            } elseif ($request->type === 'soporte') {
+                $user->assignRole('soporte');
+            }
+
+            if (in_array($request->type, ['individual', 'dealership'])) {
+                $customer = Customers::create([
+                    'id_usuario'      => $user->id,
+                    'nombre_contacto' => $request->name,
+                    'telefono'        => $request->telefono,
+                    'id_entidad'      => $request->id_entidad, // 1 = individual, 2 = dealership
+                ]);
+                if ($customer->id_entidad == 2) {
+
+                    $customer->dealership()->create([
+                        'id_cliente'      => $customer->id,
+                        'nombre_empresa'  => $request->nombre_empresa,
+                        'nif'             => $request->nif,
+                        'direccion'       => $request->direccion
+                    ]);
+                }
+
+                // 4. Si es individual → crear registro en individuals
+                if ($customer->id_entidad == 1) {
+
+                    $customer->individual()->create([
+                        'id_cliente'       => $customer->id,
+                        'dni'              => $request->dni,
+                        'fecha_nacimiento' => $request->fecha_nacimiento
+                    ]);
+                }
+            }
+
+            event(new Registered($user));
+
+            Auth::login($user);
+        });
 
         return redirect(route('dashboard', absolute: false));
     }

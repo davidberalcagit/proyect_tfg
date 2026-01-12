@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_cliente')->nullable()->constrained('customers')->onDelete('cascade');
             $table->string('dni')->unique();
-            $table->string('fecha_nacimiento');
+            $table->date('fecha_nacimiento');
             $table->timestamps();
         });
     }

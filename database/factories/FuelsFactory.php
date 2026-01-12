@@ -17,7 +17,7 @@ class FuelsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=> $this->faker->randomElement(['Gasolina','Diesel','Electrico','Gas','Hibrido']),
+            'nombre'=> $this->faker->unique()->randomElement(['Gasolina','Diesel','Electrico','Gas','Hibrido']),
         ];
     }
 }

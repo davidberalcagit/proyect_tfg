@@ -24,10 +24,6 @@
                         @csrf
                         <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <label for="title" class="block font-medium text-sm text-gray-700">Title</label>
-                                <input type="text" name="title" id="title" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('title') }}" />
-                            </div>
-                            <div>
                                 <label for="brand" class="block font-medium text-sm text-gray-700">Brand</label>
                                 <select name="id_marca" id="brand" class="form-input rounded-md shadow-sm mt-1 block w-full">
                                     <option value="">--Selecciona una marca--</option>

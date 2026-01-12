@@ -17,6 +17,7 @@ return new class extends Migration
            $table->foreignId('id_comprador')->nullable()->references('id')->on('customers')->onDelete('cascade');
            $table->foreignId('id_vehiculo')->nullable()->constrained('cars')->onDelete('cascade');
            $table->integer('precio');
+           $table->foreignId('id_estado')->default(1)->constrained('sale_statuses'); // Changed to FK, default 1 (Completada)
            $table->timestamps();
         });
     }

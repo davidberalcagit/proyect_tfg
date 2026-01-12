@@ -13,8 +13,10 @@ class GearSeeder extends Seeder
      */
     public function run(): void
     {
-        Gears::insert([
-            ['tipo' => 'Manual'],
-            ['tipo' => 'Automático'],
-        ]);}
+        $gears = ['Manual', 'Automático'];
+
+        foreach ($gears as $gear) {
+            Gears::firstOrCreate(['tipo' => $gear]);
+        }
+    }
 }

@@ -11,10 +11,26 @@ class Sales extends Model
 
     protected $fillable = [
         'id_vehiculo',
-        'precio'
+        'id_vendedor',
+        'id_comprador',
+        'precio',
+        'id_estado' // Changed from estado
     ];
 
     public function vehiculo(){
         return $this->belongsTo(Cars::class, 'id_vehiculo');
+    }
+
+    public function vendedor(){
+        return $this->belongsTo(Customers::class, 'id_vendedor');
+    }
+
+    public function comprador(){
+        return $this->belongsTo(Customers::class, 'id_comprador');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(SaleStatus::class, 'id_estado');
     }
 }

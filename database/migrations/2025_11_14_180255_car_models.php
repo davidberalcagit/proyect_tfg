@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_marca')->constrained('brands')->onDelete('cascade');
             $table->string('nombre');
             $table->timestamps();
+            $table->unique(['id_marca', 'nombre']);
         });
     }
 

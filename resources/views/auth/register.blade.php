@@ -14,56 +14,128 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
-            <div>
-                <x-label for="id_entidad" value="{{ __('Type') }}" />
-                <select id="id_entidad" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" name="id_entidad" :value="old('id_entidad')" required>
+              <div class="mt-4">
+        <x-label for="type" value="Account type" />
+        <select
+            id="type"
+            name="type"
+            class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
+            required
+        >
+            <option value="" disabled selected>Select</option>
+            <option value="individual" {{ old('type') === 'individual' ? 'selected' : '' }}>
+                Individual
+            </option>
+            <option value="dealership" {{ old('type') === 'dealership' ? 'selected' : '' }}>
+                Dealership
+            </option>
+        </select>
+        {{-- Hidden input for id_entidad --}}
+        <input type="hidden" name="id_entidad" id="id_entidad" value="{{ old('id_entidad') }}">
+    </div>
+        <div id="individual_fields" class="hidden">
+        <div class="mt-4">
+            <x-label for="dni" value="DNI" />
+            <x-input
+                id="dni"
+                class="block mt-1 w-full"
+                type="text"
+                name="dni"
+                :value="old('dni')"
+            />
+        </div>
+          <div class="mt-4">
+<x-label for="fecha_nacimiento" value="Date of birth" />
+            <x-input
+                id="fecha_nacimiento"
+                class="block mt-1 w-full"
+                type="date"
+                name="fecha_nacimiento"
+                :value="old('fecha_nacimiento')"
+            />
+        </div>
+    </div>
+           <div id="company_fields" class="hidden">
+        <div class="mt-4">
+            <x-label for="nombre_empresa" value="Company name" />
+            <x-input
+                id="nombre_empresa"
+                class="block mt-1 w-full"
+                type="text"
+                name="nombre_empresa"
+                :value="old('nombre_empresa')"
+            />
+        </div>
 
-                    <option value="" disabled selected>Elegir</option>
-                    <option value="1" {{ old('id_entidad') == 1 ? 'selected' : '' }}>Particular</option>
-                    <option value="2" {{ old('id_entidad') == 2 ? 'selected' : '' }}>Empresa</option>
-                </select>
-            </div>
-            <div id="campos_particular" class="hidden">
-                <div class="mt-4">
-                    <x-label for="dni" value="DNI" />
-                    <x-input id="dni" class="block mt-1 w-full" type="text" name="dni" :value="old('dni')" />
-                </div>
+        <div class="mt-4">
+            <x-label for="nif" value="VAT number" />
+            <x-input
+                id="nif"
+                class="block mt-1 w-full"
+                type="text"
+                name="nif"
+                :value="old('nif')"
+            />
+        </div>
 
-                <div class="mt-4">
-                    <x-label for="fecha_nacimiento" value="Fecha de nacimiento" />
-                    <x-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" />
-                </div>
-            </div>
-            <div id="campos_empresa" class="hidden">
-                <div class="mt-4">
-                    <x-label for="nombre_empresa" value="Nombre empresa" />
-                    <x-input id="nombre_empresa" class="block mt-1 w-full" type="text" name="nombre_empresa" :value="old('nombre_empresa')" />
-                </div>
+        <div class="mt-4">
+            <x-label for="direccion" value="Address" />
+            <x-input
+                id="direccion"
+                class="block mt-1 w-full"
+                type="text"
+                name="direccion"
+                :value="old('direccion')"
+            />
+        </div>
+    </div>
+        <div class="mt-4">
+        <x-label for="telefono" value="Phone number" />
+        <x-input
+            id="telefono"
+            class="block mt-1 w-full"
+            type="text"
+            name="telefono"
+            :value="old('telefono')"
+            required
+        />
+    </div>
+     <div class="mt-4">
+        <x-label for="email" value="Email" />
+        <x-input
+            id="email"
+            class="block mt-1 w-full"
+            type="email"
+            name="email"
+            :value="old('email')"
+            required
+            autocomplete="username"
+        />
+    </div>
 
-                <div class="mt-4">
-                    <x-label for="nif" value="NIF" />
-                    <x-input id="nif" class="block mt-1 w-full" type="text" name="nif" :value="old('nif')"/>
-                </div>
+       <div class="mt-4">
+        <x-label for="password" value="Password" />
+        <x-input
+            id="password"
+            class="block mt-1 w-full"
+            type="password"
+            name="password"
+            required
+            autocomplete="new-password"
+        />
+    </div>
 
-                <div class="mt-4">
-                    <x-label for="direccion" value="Dirección" />
-                    <x-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" />
-                </div>
-            </div>
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
+          <div class="mt-4">
+        <x-label for="password_confirmation" value="Confirm password" />
+        <x-input
+            id="password_confirmation"
+            class="block mt-1 w-full"
+            type="password"
+            name="password_confirmation"
+            required
+            autocomplete="new-password"
+        />
+    </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
@@ -94,26 +166,30 @@
         </form>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const selectEntidad = document.getElementById('id_entidad');
-                const camposParticular = document.getElementById('campos_particular');
-                const camposEmpresa = document.getElementById('campos_empresa');
+                const selectEntidad = document.getElementById('type');
+                const inputIdEntidad = document.getElementById('id_entidad');
+                const camposParticular = document.getElementById('individual_fields');
+                const camposEmpresa = document.getElementById('company_fields');
 
                 function actualizarCampos() {
                     const valor = selectEntidad.value;
 
-                    if (valor == "1") {
+                    if (valor == "individual") {
                         // Mostrar particular
                         camposParticular.classList.remove('hidden');
                         camposEmpresa.classList.add('hidden');
+                        inputIdEntidad.value = "1";
                     }
-                    else if (valor == "2") {
+                    else if (valor == "dealership") {
                         // Mostrar empresa
                         camposEmpresa.classList.remove('hidden');
                         camposParticular.classList.add('hidden');
+                        inputIdEntidad.value = "2";
                     }
                     else {
                         camposParticular.classList.add('hidden');
                         camposEmpresa.classList.add('hidden');
+                        inputIdEntidad.value = "";
                     }
                 }
 
