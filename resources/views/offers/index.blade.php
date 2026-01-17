@@ -22,11 +22,11 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offer Amount</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Car') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Buyer') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Offer Amount') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Date') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -49,11 +49,11 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <form action="{{ route('offers.accept', $offer) }}" method="POST" class="inline-block">
                                                     @csrf
-                                                    <button type="submit" class="text-green-600 hover:text-green-900 mr-4" onclick="return confirm('Are you sure you want to accept this offer? This will process the sale.')">Accept</button>
+                                                    <button type="submit" class="text-green-600 hover:text-green-900 mr-4" onclick="return confirm('{{ __('Are you sure you want to accept this offer? This will process the sale.') }}')">{{ __('Accept') }}</button>
                                                 </form>
                                                 <form action="{{ route('offers.reject', $offer) }}" method="POST" class="inline-block">
                                                     @csrf
-                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Reject this offer?')">Reject</button>
+                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('Reject this offer?') }}')">{{ __('Reject') }}</button>
                                                 </form>
                                             </td>
                                         </tr>

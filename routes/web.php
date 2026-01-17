@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -13,9 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    // Redirigir /dashboard a /cars explícitamente
+    Route::get('/dashboard', function () {
+        return redirect('/cars');
+    })->name('dashboard');
+});
 
 Route::get('/about', function () {
     return view('about');
@@ -28,7 +37,6 @@ Route::get('/contact', function () {
 // Language Switcher Route (with Cookie)
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
-        // Queue a cookie for 1 year (525600 minutes)
         Cookie::queue('locale', $locale, 525600);
     }
     return redirect()->back();
@@ -49,6 +57,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // --- RUTAS DE ADMIN ---
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('/admin/run-job', [AdminController::class, 'runJob'])->name('admin.run-job');
+    });
+
+    // --- RUTAS DE SUPERVISOR ---
+    Route::middleware(['role:supervisor|admin'])->group(function () {
+        Route::get('/supervisor', [SupervisorController::class, 'index'])->name('supervisor.dashboard');
+        Route::post('/supervisor/approve/{id}', [SupervisorController::class, 'approveCar'])->name('supervisor.approve');
+        Route::post('/supervisor/reject/{id}', [SupervisorController::class, 'rejectCar'])->name('supervisor.reject');
+    });
 });
 
 require __DIR__.'/auth.php';

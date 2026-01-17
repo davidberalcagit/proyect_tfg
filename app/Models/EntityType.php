@@ -9,7 +9,7 @@ class EntityType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['nombre']; // Corregido de 'name' a 'nombre'
 
     public function customers()
     {

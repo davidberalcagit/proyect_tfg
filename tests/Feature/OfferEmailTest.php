@@ -8,6 +8,7 @@ use App\Models\Cars;
 use App\Models\Customers;
 use App\Models\Offer;
 use App\Models\User;
+use Database\Seeders\StatusesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -19,6 +20,7 @@ class OfferEmailTest extends TestCase
     public function test_email_is_sent_to_seller_when_offer_is_made()
     {
         Mail::fake();
+        $this->seed(StatusesSeeder::class); // Seed statuses
 
         // Crear vendedor
         $sellerUser = User::factory()->create();
@@ -54,6 +56,7 @@ class OfferEmailTest extends TestCase
     public function test_email_is_sent_to_buyer_when_offer_is_accepted()
     {
         Mail::fake();
+        $this->seed(StatusesSeeder::class); // Seed statuses
 
         // Crear vendedor
         $sellerUser = User::factory()->create();

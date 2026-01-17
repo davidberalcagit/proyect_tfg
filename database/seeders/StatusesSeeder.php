@@ -12,10 +12,24 @@ class StatusesSeeder extends Seeder
     public function run(): void
     {
         // Car Statuses
-        // 1: En venta, 2: Vendido, 3: En alquiler, 4: Alquilado
-        $carStatuses = ['En venta', 'Vendido', 'En alquiler', 'Alquilado'];
-        foreach ($carStatuses as $status) {
-            CarStatus::firstOrCreate(['nombre' => $status]);
+        // 1: En Venta
+        // 2: Vendido
+        // 3: En Alquiler
+        // 4: Pendiente de Revisión
+        // 5: Rechazado
+        // 6: Alquilado
+
+        $carStatuses = [
+            1 => 'En Venta',
+            2 => 'Vendido',
+            3 => 'En Alquiler',
+            4 => 'Pendiente de Revisión',
+            5 => 'Rechazado',
+            6 => 'Alquilado'
+        ];
+
+        foreach ($carStatuses as $id => $nombre) {
+            CarStatus::updateOrCreate(['id' => $id], ['nombre' => $nombre]);
         }
 
         // Sale Statuses

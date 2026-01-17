@@ -109,6 +109,12 @@ class OfferController extends Controller
             Mail::to($buyerUser->email)->send(new OfferAccepted($offer));
         }
 
+        // Enviar correo al vendedor (también recibe el recibo)
+        $sellerUser = $offer->seller->user;
+        if ($sellerUser) {
+            Mail::to($sellerUser->email)->send(new OfferAccepted($offer));
+        }
+
         return redirect()->route('offers.index')->with('success', 'Oferta aceptada y venta procesada.');
     }
 

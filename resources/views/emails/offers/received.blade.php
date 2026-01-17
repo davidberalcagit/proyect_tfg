@@ -11,7 +11,12 @@
     <p><strong>Offer Amount:</strong> {{ $offer->cantidad }}€</p>
     <p><strong>Buyer:</strong> {{ $offer->buyer->nombre_contacto }}</p>
 
-    <p>You can accept or reject this offer in your dashboard.</p>
+    <p>You can review, accept, or reject this offer in your dashboard:</p>
+    <p>
+        <a href="{{ route('offers.index') }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            View Received Offers
+        </a>
+    </p>
 
     <p>Thanks,<br>
     {{ config('app.name') }}</p>

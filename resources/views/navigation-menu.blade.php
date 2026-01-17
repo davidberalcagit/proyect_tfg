@@ -5,29 +5,41 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('cars.index') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    <!-- Dashboard Link Removed -->
 
                     <x-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')">
                         {{ __('Cars') }}
                     </x-nav-link>
 
                     @auth
-                    <x-nav-link href="{{ route('cars.my_cars') }}" :active="request()->routeIs('cars.my_cars')">
-                        {{ __('My Cars') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('cars.my_cars') }}" :active="request()->routeIs('cars.my_cars')">
+                            {{ __('My Cars') }}
+                        </x-nav-link>
 
-                    <x-nav-link href="{{ route('offers.index') }}" :active="request()->routeIs('offers.index')">
-                        {{ __('Received Offers') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('offers.index') }}" :active="request()->routeIs('offers.index')">
+                            {{ __('Received Offers') }}
+                        </x-nav-link>
+
+                        <!-- Admin Link -->
+                        @role('admin')
+                            <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Admin Panel') }}
+                            </x-nav-link>
+                        @endrole
+
+                        <!-- Supervisor Link -->
+                        @hasanyrole('supervisor|admin')
+                            <x-nav-link href="{{ route('supervisor.dashboard') }}" :active="request()->routeIs('supervisor.dashboard')">
+                                {{ __('Supervisor Panel') }}
+                            </x-nav-link>
+                        @endhasanyrole
                     @endauth
                 </div>
             </div>
@@ -121,35 +133,48 @@
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()?->name }}
+                                        <div class="flex flex-col items-start">
+                                            <div class="flex items-center">
+                                                {{ Auth::user()?->name }}
 
-                                        <!-- Role Badges -->
-                                        @if(Auth::user()->hasRole('admin'))
-                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                                                Admin
-                                            </span>
-                                        @elseif(Auth::user()->hasRole('supervisor'))
-                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
-                                                Supervisor
-                                            </span>
-                                        @elseif(Auth::user()->hasRole('dealership'))
-                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                                Dealership
-                                            </span>
-                                        @elseif(Auth::user()->hasRole('individual'))
-                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                                                Individual
-                                            </span>
-                                        @endif
+                                                <!-- Company Name -->
+                                                @if(Auth::user()->customer?->dealership?->nombre_empresa)
+                                                    <span class="ml-1 text-xs font-bold text-gray-600">
+                                                        - {{ Auth::user()->customer->dealership->nombre_empresa }}
+                                                    </span>
+                                                @endif
+                                            </div>
 
-                                        <!-- Verified Badge -->
-                                        @if(Auth::user()->is_verified)
-                                            <span class="ml-1 text-green-500" title="Verified">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                                                </svg>
-                                            </span>
-                                        @endif
+                                            <div class="flex mt-1">
+                                                <!-- Role Badges -->
+                                                @if(Auth::user()->hasRole('admin'))
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                                                        Admin
+                                                    </span>
+                                                @elseif(Auth::user()->hasRole('supervisor'))
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
+                                                        Supervisor
+                                                    </span>
+                                                @elseif(Auth::user()->hasRole('dealership'))
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                                        Dealership
+                                                    </span>
+                                                @elseif(Auth::user()->hasRole('individual'))
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                                        Individual
+                                                    </span>
+                                                @endif
+
+                                                <!-- Verified Badge -->
+                                                @if(Auth::user()->is_verified)
+                                                    <span class="ml-1 text-green-500" title="Verified">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -170,7 +195,7 @@
                             </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                <x-dropdown-link href="{{ route('Api-tokens.index') }}">
                                     {{ __('API Tokens') }}
                                 </x-dropdown-link>
                             @endif

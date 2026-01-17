@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Individuals;
 use Database\Seeders\EntityTypesSeeder;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,6 +15,7 @@ class RegisterIndividualTest extends TestCase
 
     public function test_an_individual_user_can_register_successfully()
     {
+        $this->seed(RolesAndPermissionsSeeder::class); // Seed roles first
         $this->seed(EntityTypesSeeder::class);
 
         $response = $this->post(route('register'), [

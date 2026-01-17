@@ -62,16 +62,6 @@
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="type" value="{{ __('Type') }}" />
-            <select id="type" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" wire:model="state.type">
-                <option value="empresa">Empresa</option>
-                <option value="particular">Particular</option>
-            </select>
-
-            <x-input-error for="type" class="mt-2" />
-        </div>
-
 
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">

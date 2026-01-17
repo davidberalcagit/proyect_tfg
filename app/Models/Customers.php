@@ -13,6 +13,7 @@ class Customers extends Model
     protected $fillable = [
         'id_usuario',
         'id_entidad',
+        'dealership_id', // Nuevo campo
         'nombre_contacto',
         'telefono',
     ];
@@ -29,10 +30,13 @@ class Customers extends Model
     {
         return $this->hasOne(Individuals::class,'id_cliente');
     }
+
+    // Relación cambiada: Ahora un cliente PERTENECE a un concesionario
     public function dealership()
     {
-        return $this->hasOne(Dealerships::class,'id_cliente');
+        return $this->belongsTo(Dealerships::class, 'dealership_id');
     }
+
     public function cars()
     {
         return $this->hasMany(Cars::class,'id_vendedor');

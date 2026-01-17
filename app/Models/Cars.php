@@ -22,7 +22,10 @@ class Cars extends Model
         'precio',
         'descripcion',
         'image',
-        'id_estado', // Changed from estado
+        'id_estado',
+        'temp_brand',
+        'temp_model',
+        'temp_color', // Nuevo
     ];
 
     public function vendedor(){

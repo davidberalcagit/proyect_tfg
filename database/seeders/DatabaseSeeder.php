@@ -79,48 +79,71 @@ class DatabaseSeeder extends Seeder
             $role = rand(0, 1) ? 'individual' : 'dealership';
             $user->assignRole($role);
 
+            $faker = fake();
+            $dealershipId = null;
+
+            if ($role === 'dealership') {
+                // Crear primero el concesionario
+                $dealership = Dealerships::create([
+                    'nombre_empresa' => $faker->company(),
+                    'nif'            => $faker->regexify('[A-Z][0-9]{8}'),
+                    'direccion'      => $faker->address(),
+                ]);
+                $dealershipId = $dealership->id;
+            }
+
             $customer = Customers::factory()->create([
                 'id_usuario' => $user->id,
-                'id_entidad' => $role === 'individual' ? 1 : 2
+                'id_entidad' => $role === 'individual' ? 1 : 2,
+                'dealership_id' => $dealershipId // Asignar el concesionario creado
             ]);
 
-            $faker = fake();
-
-            if ($customer->id_entidad == 1) {
-
+            if ($role === 'individual') {
                 $customer->individual()->create([
                     'id_cliente'      => $customer->id,
                     'dni'             => $faker->regexify('[0-9]{8}[A-Z]'),
                     'fecha_nacimiento'=> $faker->date(),
                 ]);
-
-            } else {
-
-                $customer->dealership()->create([
-                    'id_cliente'     => $customer->id,
-                    'nombre_empresa' => $faker->company(),
-                    'nif'            => $faker->regexify('[A-Z][0-9]{8}'),
-                    'direccion'      => $faker->address(),
-                ]);
             }
-
         });
+
         $this->call(CarsSeeder::class);
         Sales::factory()->count(10)->create();
 
-        // Create cars for the test user so they can receive offers
-        $testUserCars = Cars::factory()->count(3)->create([
-            'id_vendedor' => $testCustomer->id,
-            'id_estado' => 1 // En venta
-        ]);
+        // Crear un coche de cada estado para el usuario de prueba
+        $statuses = [
+            1 => 'En Venta',
+            2 => 'Vendido',
+            3 => 'En Alquiler',
+            4 => 'Pendiente de Revisión',
+            5 => 'Rechazado',
+            6 => 'Alquilado'
+        ];
 
-        // Create offers for these cars
-        foreach ($testUserCars as $car) {
-            Offer::factory()->count(2)->create([
-                'id_vehiculo' => $car->id,
+        foreach ($statuses as $id => $name) {
+            $carData = [
                 'id_vendedor' => $testCustomer->id,
-                // id_comprador will be random from factory
-            ]);
+                'id_estado' => $id,
+                'title' => "Coche $name de Prueba",
+            ];
+
+            // Si es pendiente o rechazado, simulamos datos temporales a veces
+            if ($id == 4 || $id == 5) {
+                $carData['temp_brand'] = "Marca $name";
+                $carData['temp_model'] = "Modelo $name";
+                $carData['id_marca'] = null;
+                $carData['id_modelo'] = null;
+            }
+
+            $car = Cars::factory()->create($carData);
+
+            // Si es "En Venta" (1), creamos ofertas para probar
+            if ($id == 1) {
+                Offer::factory()->count(2)->create([
+                    'id_vehiculo' => $car->id,
+                    'id_vendedor' => $testCustomer->id,
+                ]);
+            }
         }
 
         // Create some random offers

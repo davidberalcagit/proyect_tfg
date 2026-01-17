@@ -51,7 +51,15 @@
                                                             {{ __('For Rent') }}
                                                         </span>
                                                     @elseif($car->id_estado == 4)
-                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                            {{ __('Pending Review') }}
+                                                        </span>
+                                                    @elseif($car->id_estado == 5)
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            {{ __('Rejected') }}
+                                                        </span>
+                                                    @elseif($car->id_estado == 6)
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
                                                             {{ __('Rented') }}
                                                         </span>
                                                     @endif
@@ -64,12 +72,22 @@
                                             </div>
                                         </a>
                                         <div class="p-4 bg-gray-50 border-t border-gray-200 text-right mt-auto">
-                                            <a href="{{ route('cars.edit', $car) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
-                                            <form action="{{ route('cars.destroy', $car) }}" method="POST" class="inline ml-4">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900">{{ __('Delete') }}</button>
-                                            </form>
+
+                                            {{-- Solo permitir editar y borrar si está PENDIENTE (4) --}}
+                                            @if($car->id_estado == 4)
+                                                <a href="{{ route('cars.edit', $car) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
+
+                                                <form action="{{ route('cars.destroy', $car) }}" method="POST" class="inline ml-4" onsubmit="return confirm('{{ __('Are you sure?') }}');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900">{{ __('Delete') }}</button>
+                                                </form>
+                                            @else
+                                                <span class="text-gray-400 text-xs cursor-not-allowed" title="{{ __('Cannot modify processed cars') }}">
+                                                    {{ __('Locked') }}
+                                                </span>
+                                            @endif
+
                                         </div>
                                     </div>
                                 @endforeach

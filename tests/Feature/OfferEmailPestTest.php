@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 test('email is sent to seller when offer is made', function () {
     Mail::fake();
-    $this->seed(StatusesSeeder::class); // Seed statuses
+    $this->seed(StatusesSeeder::class);
 
     // Crear vendedor
     $sellerUser = User::factory()->create();
@@ -44,9 +44,9 @@ test('email is sent to seller when offer is made', function () {
     });
 });
 
-test('email with pdf is sent to buyer when offer is accepted', function () {
+test('email with pdf is sent to buyer and seller when offer is accepted', function () {
     Mail::fake();
-    $this->seed(StatusesSeeder::class); // Seed statuses
+    $this->seed(StatusesSeeder::class);
 
     // Crear vendedor
     $sellerUser = User::factory()->create();
@@ -79,8 +79,13 @@ test('email with pdf is sent to buyer when offer is accepted', function () {
     // Verificar redirección
     $response->assertRedirect();
 
-    // Verificar que se envió el correo al comprador y tiene adjunto
+    // Verificar que se envió el correo al comprador
     Mail::assertSent(OfferAccepted::class, function ($mail) use ($buyerUser) {
         return $mail->hasTo($buyerUser->email) && count($mail->attachments()) > 0;
+    });
+
+    // Verificar que se envió el correo al vendedor
+    Mail::assertSent(OfferAccepted::class, function ($mail) use ($sellerUser) {
+        return $mail->hasTo($sellerUser->email) && count($mail->attachments()) > 0;
     });
 });

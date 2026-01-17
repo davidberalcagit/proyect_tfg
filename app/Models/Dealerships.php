@@ -9,12 +9,14 @@ class Dealerships extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_cliente',
+        // 'id_cliente', // Eliminado
         'nombre_empresa',
         'nif',
         'direccion',
     ];
-    public function customer(){
-        return $this->belongsTo(Customers::class,'id_cliente');
+
+    // Relación cambiada: Un concesionario tiene muchos empleados (clientes)
+    public function customers(){
+        return $this->hasMany(Customers::class, 'dealership_id');
     }
 }
