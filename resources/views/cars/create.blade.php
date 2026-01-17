@@ -16,24 +16,19 @@
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    @if ($errors->any())
-                        <div class="mb-4">
-                            <div class="font-medium text-red-600">{{ __('Whoops! Something went wrong.') }}</div>
-                            <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <x-validation-errors class="mb-4" />
+
                     <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        <input type="hidden" name="id_listing_type" value="{{ $listingType->id }}">
+
                         <div class="grid grid-cols-1 gap-6">
 
                             <!-- Marca -->
                             <div>
-                                <label for="brand" class="block font-medium text-sm text-gray-700">{{ __('Brand') }}</label>
-                                <select name="id_marca" id="brand" class="form-input rounded-md shadow-sm mt-1 block w-full">
+                                <x-label for="brand" value="{{ __('Brand') }}" />
+                                <x-select name="id_marca" id="brand" class="mt-1 block w-full">
                                     <option value="">--{{ __('Select a brand') }}--</option>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}" {{ old('id_marca') == $brand->id ? 'selected' : '' }}>
@@ -41,31 +36,31 @@
                                         </option>
                                     @endforeach
                                     <option value="other" {{ old('id_marca') == 'other' ? 'selected' : '' }}>{{ __('Other (New Brand)') }}</option>
-                                </select>
+                                </x-select>
                                 <div id="temp_brand_container" class="mt-2 hidden">
-                                    <label for="temp_brand" class="block font-medium text-sm text-gray-700">{{ __('Nombre de la Nueva Marca') }}</label>
-                                    <input type="text" name="temp_brand" id="temp_brand" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('temp_brand') }}" placeholder="Ej: Tesla" />
+                                    <x-label for="temp_brand" value="{{ __('Nombre de la Nueva Marca') }}" />
+                                    <x-input type="text" name="temp_brand" id="temp_brand" class="mt-1 block w-full" value="{{ old('temp_brand') }}" placeholder="Ej: Tesla" />
                                     <p class="text-xs text-orange-600 mt-1">{{ __('Al crear una nueva marca, el coche quedará pendiente de revisión.') }}</p>
                                 </div>
                             </div>
 
                             <!-- Modelo -->
                             <div>
-                                <label for="model" class="block font-medium text-sm text-gray-700">{{ __('Model') }}</label>
-                                <select name="id_modelo" id="model" class="form-input rounded-md shadow-sm mt-1 block w-full" disabled>
+                                <x-label for="model" value="{{ __('Model') }}" />
+                                <x-select name="id_modelo" id="model" class="mt-1 block w-full" disabled>
                                     <option value="">--{{ __('Select a model') }}--</option>
-                                </select>
+                                </x-select>
                                 <div id="temp_model_container" class="mt-2 hidden">
-                                    <label for="temp_model" class="block font-medium text-sm text-gray-700">{{ __('Nombre del Nuevo Modelo') }}</label>
-                                    <input type="text" name="temp_model" id="temp_model" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('temp_model') }}" placeholder="Ej: Model S" />
+                                    <x-label for="temp_model" value="{{ __('Nombre del Nuevo Modelo') }}" />
+                                    <x-input type="text" name="temp_model" id="temp_model" class="mt-1 block w-full" value="{{ old('temp_model') }}" placeholder="Ej: Model S" />
                                     <p class="text-xs text-orange-600 mt-1">{{ __('Al crear un nuevo modelo, el coche quedará pendiente de revisión.') }}</p>
                                 </div>
                             </div>
 
                             <!-- Color -->
                             <div>
-                                <label for="color" class="block font-medium text-sm text-gray-700">{{ __('Color') }}</label>
-                                <select name="id_color" id="color" class="form-input rounded-md shadow-sm mt-1 block w-full">
+                                <x-label for="color" value="{{ __('Color') }}" />
+                                <x-select name="id_color" id="color" class="mt-1 block w-full">
                                     <option value="">--{{ __('Select a color') }}--</option>
                                     @foreach($colors as $color)
                                         <option value="{{ $color->id }}" {{ old('id_color') == $color->id ? 'selected' : '' }}>
@@ -73,68 +68,74 @@
                                         </option>
                                     @endforeach
                                     <option value="other" {{ old('id_color') == 'other' ? 'selected' : '' }}>{{ __('Other (New Color)') }}</option>
-                                </select>
+                                </x-select>
                                 <div id="temp_color_container" class="mt-2 hidden">
-                                    <label for="temp_color" class="block font-medium text-sm text-gray-700">{{ __('Nombre del Nuevo Color') }}</label>
-                                    <input type="text" name="temp_color" id="temp_color" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('temp_color') }}" placeholder="Ej: Azul Eléctrico" />
+                                    <x-label for="temp_color" value="{{ __('Nombre del Nuevo Color') }}" />
+                                    <x-input type="text" name="temp_color" id="temp_color" class="mt-1 block w-full" value="{{ old('temp_color') }}" placeholder="Ej: Azul Eléctrico" />
                                 </div>
                             </div>
 
+                            <!-- Combustible -->
                             <div>
-                                <label for="fuels" class="block font-medium text-sm text-gray-700">{{ __('Fuels') }}</label>
-                                <select name="id_combustible" id="fuels" class="form-input rounded-md shadow-sm mt-1 block w-full">
-                                    <option value="">--{{ __('Select a fuel') }}--</option>
+                                <x-label value="{{ __('Fuels') }}" />
+                                <div class="mt-2 flex flex-wrap gap-4">
                                     @foreach($fuels as $fuel)
-                                        <option value="{{ $fuel->id }}" {{ old('id_combustible') == $fuel->id ? 'selected' : '' }}>
-                                            {{ $fuel->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-medium text-sm text-gray-700">{{ __('Gear') }}</label>
-                                <div class="mt-2">
-                                    @foreach($gears as $gear)
-                                        <label class="inline-flex items-center mr-4">
-                                            <input type="radio" name="id_marcha" value="{{ $gear->id }}" {{ old('id_marcha') == $gear->id ? 'checked' : '' }} class="form-radio">
-                                            <span class="ml-2">{{ $gear->tipo }}</span>
+                                        <label class="inline-flex items-center">
+                                            <x-radio name="id_combustible" value="{{ $fuel->id }}" :checked="old('id_combustible') == $fuel->id" />
+                                            <span class="ml-2 text-gray-700">{{ $fuel->nombre }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
+
+                            <!-- Marchas -->
                             <div>
-                                <label for="year" class="block font-medium text-sm text-gray-700">{{ __('Year') }}</label>
-                                <x-input type="number" name="anyo_matri" id="year" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('anyo_matri') }}" />
+                                <x-label value="{{ __('Gear') }}" />
+                                <div class="mt-2 flex flex-wrap gap-4">
+                                    @foreach($gears as $gear)
+                                        <label class="inline-flex items-center">
+                                            <x-radio name="id_marcha" value="{{ $gear->id }}" :checked="old('id_marcha') == $gear->id" />
+                                            <span class="ml-2 text-gray-700">{{ $gear->tipo }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div>
-                                <label for="km" class="block font-medium text-sm text-gray-700">{{ __('KM') }}</label>
-                                <input type="number" name="km" id="km" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('km') }}" />
-                            </div>
-                            <div>
-                                <label for="price" class="block font-medium text-sm text-gray-700">{{ __('Price') }}</label>
-                                <input type="number" step="0.01" name="precio" id="price" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('precio') }}" />
-                            </div>
-                            <div>
-                                <label for="matricula" class="block font-medium text-sm text-gray-700">{{ __('Matricula') }}</label>
-                                <input type="text" name="matricula" id="matricula" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old('matricula') }}" />
+                                <x-label for="year" value="{{ __('Year') }}" />
+                                <x-input type="number" name="anyo_matri" id="year" class="mt-1 block w-full" value="{{ old('anyo_matri') }}" />
                             </div>
 
                             <div>
-                                <label for="descripcion" class="block font-medium text-sm text-gray-700">{{ __('Descripcion') }}</label>
-                                <textarea name="descripcion" id="descripcion" class="form-input rounded-md shadow-sm mt-1 block w-full">{{ old('descripcion') }}</textarea>
+                                <x-label for="km" value="{{ __('KM') }}" />
+                                <x-input type="number" name="km" id="km" class="mt-1 block w-full" value="{{ old('km') }}" />
                             </div>
+
                             <div>
-                                <label for="image" class="block font-medium text-sm text-gray-700">{{ __('Image') }}</label>
-                                <input type="file" name="image" id="image" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                                <x-label for="price" value="{{ __('Price') }}" />
+                                <x-input type="number" step="0.01" name="precio" id="price" class="mt-1 block w-full" value="{{ old('precio') }}" />
+                            </div>
+
+                            <div>
+                                <x-label for="matricula" value="{{ __('Matricula') }}" />
+                                <x-input type="text" name="matricula" id="matricula" class="mt-1 block w-full" value="{{ old('matricula') }}" />
+                            </div>
+
+                            <div>
+                                <x-label for="descripcion" value="{{ __('Descripcion') }}" />
+                                <x-textarea name="descripcion" id="descripcion" class="mt-1 block w-full">{{ old('descripcion') }}</x-textarea>
+                            </div>
+
+                            <div>
+                                <x-label for="image" value="{{ __('Image') }}" />
+                                <x-input type="file" name="image" id="image" class="mt-1 block w-full" />
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
-                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                <x-button class="ml-4">
                                     {{ __('Create') }}
-                                </button>
-                                <a href="{{ route('cars.index') }}"
-                                   class="inline-flex items-center px-4 py-2 bg-gray-300 rounded-md text-sm text-red-600 hover:bg-gray-400 ml-2">
+                                </x-button>
+                                <a href="{{ route('cars.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 rounded-md text-sm text-red-600 hover:bg-gray-400 ml-2 font-semibold uppercase tracking-widest">
                                     {{ __('Cancel') }}
                                 </a>
                             </div>
@@ -146,6 +147,7 @@
     </div>
     @push('scripts')
     <script>
+        // ... (El script se mantiene igual)
         document.addEventListener('DOMContentLoaded', function () {
             const brandSelect = document.getElementById('brand');
             const modelSelect = document.getElementById('model');

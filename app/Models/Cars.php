@@ -23,9 +23,10 @@ class Cars extends Model
         'descripcion',
         'image',
         'id_estado',
+        'id_listing_type', // Cambiado
         'temp_brand',
         'temp_model',
-        'temp_color', // Nuevo
+        'temp_color',
     ];
 
     public function vendedor(){
@@ -34,6 +35,10 @@ class Cars extends Model
 
     public function sales(){
         return $this->belongsTo(Sales::class, 'id_vehiculo');
+    }
+
+    public function rentals(){
+        return $this->hasMany(Rental::class, 'id_vehiculo');
     }
 
     public function marcha(){
@@ -61,5 +66,10 @@ class Cars extends Model
     public function status()
     {
         return $this->belongsTo(CarStatus::class, 'id_estado');
+    }
+
+    public function listingType()
+    {
+        return $this->belongsTo(ListingType::class, 'id_listing_type');
     }
 }

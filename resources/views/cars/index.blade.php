@@ -48,9 +48,10 @@
                                     </a>
                                     @auth
                                         <div class="p-4 bg-gray-50 border-t border-gray-200 text-right mt-auto">
-                                            @if(Auth::user()->can('crud all cars') || (Auth::user()->can('crud own cars') && Auth::user()->customer && Auth::user()->customer->id === $car->id_vendedor))
+                                            {{-- Lógica de permisos: Admin siempre, Dueño solo si pendiente --}}
+                                            @if(Auth::user()->hasRole('admin') || (Auth::user()->customer && Auth::user()->customer->id === $car->id_vendedor && $car->id_estado == 4))
                                                 <a href="{{ route('cars.edit', $car) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
-                                                <form action="{{ route('cars.destroy', $car) }}" method="POST" class="inline ml-4">
+                                                <form action="{{ route('cars.destroy', $car) }}" method="POST" class="inline ml-4" onsubmit="return confirm('{{ __('Are you sure?') }}');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="text-red-600 hover:text-red-900">{{ __('Delete') }}</button>

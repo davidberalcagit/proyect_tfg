@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Jobs\SendWelcomeEmailJob;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,9 @@ class AuthController extends Controller
         // $user->tokens()->delete();
 
         $token = $user->createToken('auth_token')->plainTextToken;
+        
+        // JOB: Enviar email de bienvenida (Demo en login)
+        SendWelcomeEmailJob::dispatch($user);
 
         // Devolver el token
         return response()->json([

@@ -2,12 +2,14 @@
 
 namespace App\Actions\Fortify;
 
+use App\Jobs\SendWelcomeEmailJob;
 use App\Models\Customers;
 use App\Models\Dealerships;
 use App\Models\Individuals;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
@@ -41,7 +43,7 @@ class CreateNewUser implements CreatesNewUsers
             'direccion' => ['required_if:type,dealership', 'nullable', 'string', 'max:255'],
         ])->validate();
 
-        return DB::transaction(function () use ($input) {
+        $user = DB::transaction(function () use ($input) {
             $user = User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
@@ -119,5 +121,11 @@ class CreateNewUser implements CreatesNewUsers
             return $user;
         });
 
+        Log::info('Intentando despachar SendWelcomeEmailJob para: ' . $user->email);
+
+        // Despachar Job de Bienvenida FUERA de la transacción
+        SendWelcomeEmailJob::dispatch($user);
+
+        return $user;
     }
 }

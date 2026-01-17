@@ -9,9 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    <div class="flex justify-end">
-                        <a href="{{ route('cars.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                            {{ __('Create Car') }}
+                    <div class="flex justify-end space-x-4">
+                        <a href="{{ route('cars.create', ['type' => 'sale']) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring focus:ring-green-300 disabled:opacity-25 transition">
+                            {{ __('Publish Car for Sale') }}
+                        </a>
+                        <a href="{{ route('cars.create', ['type' => 'rent']) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25 transition">
+                            {{ __('Publish Car for Rent') }}
                         </a>
                     </div>
                     <div class="mt-6">
@@ -71,6 +74,7 @@
                                                 <p class="text-gray-600"><strong>{{ __('KM') }}:</strong> {{ $car->km }}</p>
                                             </div>
                                         </a>
+
                                         <div class="p-4 bg-gray-50 border-t border-gray-200 text-right mt-auto">
 
                                             {{-- Solo permitir editar y borrar si está PENDIENTE (4) --}}

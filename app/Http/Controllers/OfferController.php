@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\NewOfferReceived;
+use App\Jobs\SendOfferNotificationJob;
 use App\Mail\OfferAccepted;
 use App\Models\Cars;
 use App\Models\Offer;
@@ -53,11 +53,8 @@ class OfferController extends Controller
             'estado' => 'pending'
         ]);
 
-        // Enviar correo al vendedor
-        $sellerUser = $car->vendedor->user;
-        if ($sellerUser) {
-            Mail::to($sellerUser->email)->send(new NewOfferReceived($offer));
-        }
+        // Enviar correo al vendedor usando Job
+        SendOfferNotificationJob::dispatch($offer);
 
         return redirect()->back()->with('success', 'Oferta enviada al vendedor.');
     }

@@ -24,7 +24,7 @@ class SupervisorController extends Controller
             'pending_cars_count' => Cars::where('id_estado', 4)->count(),
         ];
 
-        $pendingCars = Cars::where('id_estado', 4)->with(['vendedor'])->get();
+        $pendingCars = Cars::where('id_estado', 4)->with(['vendedor', 'listingType'])->get();
 
         return view('supervisor.dashboard', compact('stats', 'pendingCars'));
     }
@@ -53,19 +53,25 @@ class SupervisorController extends Controller
                 $car->temp_model = null;
             }
 
-            // 3. Color (Nuevo)
+            // 3. Color
             if ($car->temp_color) {
                 $color = Color::firstOrCreate(['nombre' => $car->temp_color]);
                 $car->id_color = $color->id;
                 $car->temp_color = null;
             }
 
-            // 4. Aprobar
-            $car->id_estado = 1;
+            // 4. Aprobar según listingType (relación)
+            // Asumimos que el nombre del tipo es 'Alquiler' o 'Venta'
+            if ($car->listingType && $car->listingType->nombre === 'Alquiler') {
+                $car->id_estado = 3; // En Alquiler
+            } else {
+                $car->id_estado = 1; // En Venta (default)
+            }
+
             $car->save();
         });
 
-        return redirect()->back()->with('success', 'Coche aprobado y atributos creados correctamente.');
+        return redirect()->back()->with('success', 'Coche aprobado correctamente.');
     }
 
     public function rejectCar($id)

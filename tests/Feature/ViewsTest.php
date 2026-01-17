@@ -22,10 +22,9 @@ class ViewsTest extends TestCase
 
     public function test_cars_index_view_renders_correctly()
     {
-        // Crear coche aprobado
         $car = Cars::factory()->create([
             'title' => 'Coche Público',
-            'id_estado' => 1 // En venta
+            'id_estado' => 1
         ]);
 
         $response = $this->get(route('cars.index'));
@@ -43,7 +42,7 @@ class ViewsTest extends TestCase
         $response = $this->actingAs($user)->get(route('cars.create'));
 
         $response->assertStatus(200);
-        $response->assertSee('Create Car'); // O la traducción
+        $response->assertSee('Create Car');
     }
 
     public function test_cars_my_cars_view_renders_correctly()
@@ -55,14 +54,14 @@ class ViewsTest extends TestCase
         Cars::factory()->create([
             'id_vendedor' => $customer->id,
             'title' => 'Mi Coche Privado',
-            'id_estado' => 4 // Pendiente
+            'id_estado' => 4
         ]);
 
         $response = $this->actingAs($user)->get(route('cars.my_cars'));
 
         $response->assertStatus(200);
         $response->assertSee('Mi Coche Privado');
-        $response->assertSee('Pending Review'); // O traducción
+        $response->assertSee('Pending Review');
     }
 
     public function test_car_show_view_renders_correctly()
@@ -82,7 +81,35 @@ class ViewsTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Coche Detalle');
-        $response->assertSee('12345');
+        $response->assertSee('12,345.00');
+        $response->assertSee('Back to list');
+        // Verificar que el botón de volver usa JS
+        $response->assertSee('javascript:history.back()');
+    }
+
+    public function test_car_show_view_shows_rent_button_for_rental_cars()
+    {
+        // Vendedor
+        $sellerUser = User::factory()->create();
+        $sellerUser->assignRole('individual');
+        $sellerCustomer = Customers::factory()->create(['id_usuario' => $sellerUser->id]);
+
+        // Comprador (para ver el botón)
+        $buyerUser = User::factory()->create();
+        $buyerUser->assignRole('individual');
+        Customers::factory()->create(['id_usuario' => $buyerUser->id]);
+
+        $car = Cars::factory()->create([
+            'id_vendedor' => $sellerCustomer->id,
+            'title' => 'Coche Alquiler',
+            'id_estado' => 3 // En Alquiler
+        ]);
+
+        $response = $this->actingAs($buyerUser)->get(route('cars.show', $car));
+
+        $response->assertStatus(200);
+        $response->assertSee('Rent Car'); // Botón de alquilar
+        $response->assertDontSee('Make Offer'); // No debe ver oferta
     }
 
     public function test_offers_index_view_renders_correctly()

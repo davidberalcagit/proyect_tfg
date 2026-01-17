@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Customers;
 use App\Models\Fuels;
 use App\Models\Gears;
+use App\Models\ListingType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,10 +28,8 @@ class CarsFactory extends Factory
              $vendedor = Customers::factory()->create();
         }
 
-        // Get a random model first, then get its brand.
         $model = CarModels::inRandomOrder()->first();
 
-        // Fallback if no models exist
         if (!$model) {
              $marca = Brands::inRandomOrder()->first() ?? Brands::factory()->create();
              $model = CarModels::factory()->create(['id_marca' => $marca->id]);
@@ -42,7 +41,9 @@ class CarsFactory extends Factory
         $color = Color::inRandomOrder()->first() ?? Color::factory()->create();
         $combustible = Fuels::inRandomOrder()->first() ?? Fuels::factory()->create();
 
-        // Generate title based on Brand + Model
+        // Asignar listing type aleatorio (1: Venta, 2: Alquiler)
+        $listingType = ListingType::inRandomOrder()->first() ?? ListingType::factory()->create();
+
         $title = $marca->nombre . ' ' . $model->nombre;
 
         return [
@@ -58,8 +59,9 @@ class CarsFactory extends Factory
             "km" => $this->faker->numberBetween(100, 100000),
             "precio" => $this->faker->numberBetween(2000, 100000),
             "descripcion" => $this->faker->text(),
-            "image" => 'cars/chat-im-cooked-v0-3z8fc1lv9khe1.webp', // Default image
-            "id_estado" => $this->faker->numberBetween(1, 4), // Random status between 1 and 4
+            "image" => 'cars/chat-im-cooked-v0-3z8fc1lv9khe1.webp',
+            "id_estado" => $this->faker->numberBetween(1, 4),
+            "id_listing_type" => $listingType->id, // Nuevo campo
         ];
     }
 }

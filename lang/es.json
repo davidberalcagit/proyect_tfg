@@ -70,5 +70,13 @@
     "Nombre del Nuevo Modelo": "Nombre del Nuevo Modelo",
     "Nombre del Nuevo Color": "Nombre del Nuevo Color",
     "Al crear una nueva marca, el coche quedará pendiente de revisión.": "Al crear una nueva marca, el coche quedará pendiente de revisión.",
-    "Al crear un nuevo modelo, el coche quedará pendiente de revisión.": "Al crear un nuevo modelo, el coche quedará pendiente de revisión."
+    "Al crear un nuevo modelo, el coche quedará pendiente de revisión.": "Al crear un nuevo modelo, el coche quedará pendiente de revisión.",
+    "Switch to Rent": "Poner en Alquiler",
+    "Switch to Sale": "Poner en Venta",
+    "Rent Car": "Alquilar Coche",
+    "Start Date": "Fecha Inicio",
+    "End Date": "Fecha Fin",
+    "Daily Price": "Precio Diario",
+    "Total Estimated": "Total Estimado",
+    "Confirm Rental": "Confirmar Alquiler"
 }

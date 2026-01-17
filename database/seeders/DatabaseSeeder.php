@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GearSeeder::class);
         $this->call(FuelsSeeder::class);
         $this->call(StatusesSeeder::class);
+        $this->call(ListingTypesSeeder::class);
 
         // Create specific user for testing only if it doesn't exist
         $testUser = User::where('email', 'a@gmail.com')->first();
@@ -107,7 +108,7 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        $this->call(CarsSeeder::class);
+        $this->call(CarsSeeder::class); // Descomentado
         Sales::factory()->count(10)->create();
 
         // Crear un coche de cada estado para el usuario de prueba
@@ -125,9 +126,9 @@ class DatabaseSeeder extends Seeder
                 'id_vendedor' => $testCustomer->id,
                 'id_estado' => $id,
                 'title' => "Coche $name de Prueba",
+                'id_listing_type' => ($id == 3 || $id == 6) ? 2 : 1, // 2=Alquiler, 1=Venta
             ];
 
-            // Si es pendiente o rechazado, simulamos datos temporales a veces
             if ($id == 4 || $id == 5) {
                 $carData['temp_brand'] = "Marca $name";
                 $carData['temp_model'] = "Modelo $name";
@@ -137,7 +138,6 @@ class DatabaseSeeder extends Seeder
 
             $car = Cars::factory()->create($carData);
 
-            // Si es "En Venta" (1), creamos ofertas para probar
             if ($id == 1) {
                 Offer::factory()->count(2)->create([
                     'id_vehiculo' => $car->id,
