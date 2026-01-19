@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdateCarRequest extends FormRequest
 {
@@ -12,25 +11,7 @@ class UpdateCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = Auth::user();
-
-        if (!$user) return false;
-
-        // Admin tiene permiso total
-        if ($user->hasRole('admin')) {
-            return true;
-        }
-
-        $car = $this->route('car'); // Obtener el coche de la ruta
-
-        // Verificar permisos: Dueño y estado pendiente
-        if (!$user->customer) return false;
-
-        if ($car->id_vendedor !== $user->customer->id) return false;
-
-        if ($car->id_estado == 1) return false; // No editar aprobados si no eres admin
-
-        return true;
+        return $this->user()->can('update', $this->route('car'));
     }
 
     /**

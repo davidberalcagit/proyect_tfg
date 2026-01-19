@@ -20,6 +20,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // --- 1. Crear Permisos ---
         $permissions = [
+            'create cars', // AÑADIDO
             'crud own cars',
             'buy cars',
             'crud all cars',
@@ -37,9 +38,10 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // --- 2. Crear Roles y Asignar Permisos ---
 
-        // -Individuals: 1,2,8,11 (y 9 ver coches)
+        // -Individuals
         $role = Role::firstOrCreate(['name' => 'individual', 'guard_name' => 'web']);
         $role->syncPermissions([
+            'create cars', // AÑADIDO
             'crud own cars',
             'buy cars',
             'offers for individuals',
@@ -47,9 +49,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // -Dealerships: 1,2,7,11 (y 9 ver coches)
+        // -Dealerships
         $role = Role::firstOrCreate(['name' => 'dealership', 'guard_name' => 'web']);
         $role->syncPermissions([
+            'create cars', // AÑADIDO
             'crud own cars',
             'buy cars',
             'offers for companies',
@@ -57,11 +60,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // -Admin: 6
+        // -Admin
         $role = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $role->syncPermissions(Permission::all());
 
-        // -Supervisores: 3,11,4 (4 es no comprar, así que no le damos 'buy cars')
+        // -Supervisores
         $role = Role::firstOrCreate(['name' => 'supervisor', 'guard_name' => 'web']);
         $role->syncPermissions([
             'crud all cars',
@@ -69,7 +72,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // -Soporte: 5,9,10,11 (5 es no crud, así que no le damos permisos de crud)
+        // -Soporte
         $role = Role::firstOrCreate(['name' => 'soporte', 'guard_name' => 'web']);
         $role->syncPermissions([
             'view cars',

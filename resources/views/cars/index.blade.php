@@ -27,7 +27,20 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach ($cars as $car)
-                                <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
+                                <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col relative">
+                                    <!-- Badge de Estado -->
+                                    <div class="absolute top-2 right-2 z-10">
+                                        @if($car->id_estado == 1)
+                                            <span class="px-2 py-1 text-xs font-bold text-white bg-green-600 rounded-full shadow-sm">
+                                                {{ __('For Sale') }}
+                                            </span>
+                                        @elseif($car->id_estado == 3)
+                                            <span class="px-2 py-1 text-xs font-bold text-white bg-blue-600 rounded-full shadow-sm">
+                                                {{ __('For Rent') }}
+                                            </span>
+                                        @endif
+                                    </div>
+
                                     <a href="{{ route('cars.show', $car) }}" class="block hover:bg-gray-50 transition duration-150 ease-in-out flex-grow">
                                         @if($car->image)
                                             <img src="{{ Storage::url($car->image) }}" alt="{{ $car->title }}" class="h-48 w-full object-cover">
@@ -43,7 +56,7 @@
                                             <p class="text-gray-600"><strong>{{ __('Price') }}:</strong> {{ $car->precio }}€</p>
                                             <p class="text-gray-600"><strong>{{ __('Year') }}:</strong> {{ $car->anyo_matri }}</p>
                                             <p class="text-gray-600"><strong>{{ __('KM') }}:</strong> {{ $car->km }}</p>
-                                            <p class="text-gray-600 mt-2">"{{ $car->descripcion }}"</p>
+                                            <p class="text-gray-600 mt-2 truncate">"{{ $car->descripcion }}"</p>
                                         </div>
                                     </a>
                                     @auth

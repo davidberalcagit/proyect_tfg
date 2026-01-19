@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FuelsSeeder::class);
         $this->call(StatusesSeeder::class);
         $this->call(ListingTypesSeeder::class);
+        $this->call(RentalStatusesSeeder::class);
 
         // Create specific user for testing only if it doesn't exist
         $testUser = User::where('email', 'a@gmail.com')->first();
@@ -108,8 +109,9 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        $this->call(CarsSeeder::class); // Descomentado
+        $this->call(CarsSeeder::class);
         Sales::factory()->count(10)->create();
+        $this->call(RentalsSeeder::class); // Nuevo
 
         // Crear un coche de cada estado para el usuario de prueba
         $statuses = [

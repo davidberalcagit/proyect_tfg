@@ -17,12 +17,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <x-label for="fecha_inicio" value="{{ __('Start Date') }}" />
-                            <x-date name="fecha_inicio" id="fecha_inicio" class="mt-1 block w-full" required min="{{ date('Y-m-d') }}" />
+                            <x-date name="fecha_inicio" id="fecha_inicio" class="mt-1 block w-full" required min="{{ date('Y-m-d') }}" value="{{ old('fecha_inicio') }}" />
                         </div>
 
                         <div>
                             <x-label for="fecha_fin" value="{{ __('End Date') }}" />
-                            <x-date name="fecha_fin" id="fecha_fin" class="mt-1 block w-full" required min="{{ date('Y-m-d') }}" />
+                            <x-date name="fecha_fin" id="fecha_fin" class="mt-1 block w-full" required min="{{ date('Y-m-d') }}" value="{{ old('fecha_fin') }}" />
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@
                         <p class="text-gray-700 mt-2">{{ __('Total Estimated') }}: <span id="total_price" class="font-bold text-xl text-indigo-600">0.00€</span></p>
                     </div>
 
-                    <!-- Checkbox de términos (Uso de x-checkbox) -->
+                    <!-- Checkbox de términos -->
                     <div class="mt-4 block">
                         <label for="terms" class="flex items-center">
                             <x-checkbox id="terms" name="terms" required />
@@ -73,6 +73,11 @@
 
         startDateInput.addEventListener('change', calculateTotal);
         endDateInput.addEventListener('change', calculateTotal);
+
+        // Calcular al cargar si hay valores old
+        if (startDateInput.value && endDateInput.value) {
+            calculateTotal();
+        }
     </script>
     @endpush
 </x-app-layout>

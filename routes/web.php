@@ -46,19 +46,20 @@ Route::resource('cars', CarsController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/my-cars', [CarsController::class, 'myCars'])->name('cars.my_cars');
 
-    // Cambiar estado del coche (Venta/Alquiler)
     Route::post('/cars/{car}/status/sale', [CarsController::class, 'setStatusSale'])->name('cars.status.sale');
     Route::post('/cars/{car}/status/rent', [CarsController::class, 'setStatusRent'])->name('cars.status.rent');
 
     // Ofertas
     Route::post('/cars/{car}/offer', [OfferController::class, 'store'])->name('offers.store');
-    Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
+    Route::get('/transactions', [SalesController::class, 'index'])->name('sales.index');
     Route::post('/offers/{offer}/accept', [OfferController::class, 'accept'])->name('offers.accept');
     Route::post('/offers/{offer}/reject', [OfferController::class, 'reject'])->name('offers.reject');
 
     // Alquileres
     Route::get('/cars/{car}/rent', [RentalController::class, 'create'])->name('rentals.create');
     Route::post('/cars/{car}/rent', [RentalController::class, 'store'])->name('rentals.store');
+    Route::post('/rentals/{rental}/accept', [RentalController::class, 'accept'])->name('rentals.accept'); // Nueva
+    Route::post('/rentals/{rental}/reject', [RentalController::class, 'reject'])->name('rentals.reject'); // Nueva
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -44,6 +44,15 @@ class CarsFactory extends Factory
         // Asignar listing type aleatorio (1: Venta, 2: Alquiler)
         $listingType = ListingType::inRandomOrder()->first() ?? ListingType::factory()->create();
 
+        // Determinar estado coherente
+        if ($listingType->nombre === 'Venta') {
+            // Estados posibles: 1 (En Venta), 2 (Vendido), 4 (Pendiente), 5 (Rechazado)
+            $estado = $this->faker->randomElement([1, 1, 1, 2, 4, 5]); // Más probabilidad de estar en venta
+        } else {
+            // Estados posibles: 3 (En Alquiler), 6 (Alquilado), 4 (Pendiente), 5 (Rechazado)
+            $estado = $this->faker->randomElement([3, 3, 3, 6, 4, 5]);
+        }
+
         $title = $marca->nombre . ' ' . $model->nombre;
 
         return [
@@ -60,8 +69,8 @@ class CarsFactory extends Factory
             "precio" => $this->faker->numberBetween(2000, 100000),
             "descripcion" => $this->faker->text(),
             "image" => 'cars/chat-im-cooked-v0-3z8fc1lv9khe1.webp',
-            "id_estado" => $this->faker->numberBetween(1, 4),
-            "id_listing_type" => $listingType->id, // Nuevo campo
+            "id_estado" => $estado,
+            "id_listing_type" => $listingType->id,
         ];
     }
 }

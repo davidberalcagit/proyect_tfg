@@ -7,6 +7,7 @@ use App\Models\CarModels;
 use App\Models\Cars;
 use App\Models\Color;
 use App\Models\Customers;
+use App\Models\ListingType;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,15 +17,20 @@ class CarsCreateTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $listingType;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed(DatabaseSeeder::class);
+
+        // Obtener o crear un tipo de listado para los tests
+        $this->listingType = ListingType::firstOrCreate(['nombre' => 'Venta']);
     }
 
     // --- Happy Paths ---
 
-    public function test_create_car_redirects_to_show_page()
+    public function test_create_car_with_new_brand()
     {
         $user = User::factory()->create();
         $user->assignRole('individual');
@@ -41,11 +47,39 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ]);
 
-        $car = Cars::where('temp_brand', 'NuevaMarcaTest')->first();
+        $response->assertRedirect();
 
-        // Verificar redirección a show
+        $this->assertDatabaseHas('cars', [
+            'temp_brand' => 'NuevaMarcaTest',
+            'id_estado' => 4
+        ]);
+    }
+
+    public function test_create_car_redirects_to_show_page()
+    {
+        $user = User::factory()->create();
+        $user->assignRole('individual');
+        Customers::factory()->create(['id_usuario' => $user->id, 'id_entidad' => 1]);
+
+        $response = $this->actingAs($user)->post('/cars', [
+            'temp_brand' => 'NuevaMarcaTestShow',
+            'temp_model' => 'NuevoModeloTestShow',
+            'id_marcha' => 1,
+            'id_combustible' => 1,
+            'id_color' => 1,
+            'matricula' => 'SHOW123',
+            'anyo_matri' => 2024,
+            'km' => 100,
+            'precio' => 25000,
+            'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
+        ]);
+
+        $car = Cars::where('temp_brand', 'NuevaMarcaTestShow')->first();
+
         $response->assertRedirect(route('cars.show', $car));
     }
 
@@ -66,17 +100,16 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ]);
 
         $car = Cars::where('temp_brand', 'MarcaPrivada')->first();
 
-        // 1. Verificar que aparece en My Cars
         $responseMyCars = $this->actingAs($user)->get(route('cars.my_cars'));
         $responseMyCars->assertStatus(200);
         $responseMyCars->assertSee($car->title);
-        $responseMyCars->assertSee('Pending Review'); // O la traducción correspondiente
+        $responseMyCars->assertSee('Pending Review');
 
-        // 2. Verificar que NO aparece en Index (Público)
         $responseIndex = $this->get(route('cars.index'));
         $responseIndex->assertStatus(200);
         $responseIndex->assertDontSee($car->title);
@@ -103,6 +136,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ], ['Accept' => 'text/html']);
 
         $response->assertSessionHasErrors(['temp_brand']);
@@ -129,6 +163,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ], ['Accept' => 'text/html']);
 
         $response->assertSessionHasErrors(['temp_model']);
@@ -156,6 +191,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ], ['Accept' => 'text/html']);
 
         $response->assertSessionHasErrors(['temp_color']);
@@ -183,6 +219,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ]);
 
         $response->assertSessionHasErrors(['anyo_matri']);
@@ -208,6 +245,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => -500,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ]);
 
         $response->assertSessionHasErrors(['precio']);
@@ -220,7 +258,8 @@ class CarsCreateTest extends TestCase
         $response = $this->post('/cars', [
             'temp_brand' => 'Marca',
             'temp_model' => 'Modelo',
-            'precio' => 1000
+            'precio' => 1000,
+            'id_listing_type' => 1, // AÑADIDO
         ]);
 
         $response->assertRedirect(route('login'));
@@ -241,6 +280,7 @@ class CarsCreateTest extends TestCase
             'km' => 100,
             'precio' => 25000,
             'descripcion' => 'Test description',
+            'id_listing_type' => $this->listingType->id, // AÑADIDO
         ]);
 
         $response->assertStatus(403);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CarApproved; // Importar
+use App\Mail\CarRejected; // Importar
 use App\Models\Brands;
 use App\Models\CarModels;
 use App\Models\Cars;
@@ -10,6 +12,7 @@ use App\Models\Sales;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail; // Importar
 
 class SupervisorController extends Controller
 {
@@ -60,8 +63,7 @@ class SupervisorController extends Controller
                 $car->temp_color = null;
             }
 
-            // 4. Aprobar según listingType (relación)
-            // Asumimos que el nombre del tipo es 'Alquiler' o 'Venta'
+            // 4. Aprobar según listingType
             if ($car->listingType && $car->listingType->nombre === 'Alquiler') {
                 $car->id_estado = 3; // En Alquiler
             } else {
@@ -71,15 +73,30 @@ class SupervisorController extends Controller
             $car->save();
         });
 
+        // Enviar correo de aprobación
+        if ($car->vendedor && $car->vendedor->user) {
+            Mail::to($car->vendedor->user->email)->send(new CarApproved($car));
+        }
+
         return redirect()->back()->with('success', 'Coche aprobado correctamente.');
     }
 
-    public function rejectCar($id)
+    public function rejectCar(Request $request, $id)
     {
+        $request->validate([
+            'reason' => 'required|string|max:255',
+        ]);
+
         $car = Cars::findOrFail($id);
         $car->id_estado = 5; // Rechazado
+        $car->rejection_reason = $request->reason;
         $car->save();
 
-        return redirect()->back()->with('success', 'Coche rechazado.');
+        // Enviar correo de rechazo
+        if ($car->vendedor && $car->vendedor->user) {
+            Mail::to($car->vendedor->user->email)->send(new CarRejected($car, $request->reason));
+        }
+
+        return redirect()->back()->with('success', 'Coche rechazado. Razón: ' . $request->reason);
     }
 }

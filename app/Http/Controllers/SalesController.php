@@ -2,46 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cars;
+use App\Models\Rental;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
 {
-    public function buy(Request $request, Cars $car)
+    public function index()
     {
-        // Ensure user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to buy a car.');
+        if (!Auth::check() || !Auth::user()->customer) {
+            return redirect()->route('login');
         }
 
-        $user = Auth::user();
+        $customerId = Auth::user()->customer->id;
 
-        // Ensure user has a customer profile
-        if (!$user->customer) {
-             return redirect()->back()->with('error', 'You need a customer profile to buy a car.');
-        }
+        // 1. Ofertas Recibidas (Pendientes) - Ya se pasa desde OfferController? No, aquí lo consultamos de nuevo o lo pasamos.
+        // Espera, en el código anterior lo pasé. Lo mantengo.
+        $receivedOffers = \App\Models\Offer::where('id_vendedor', $customerId)
+            ->where('estado', 'pending')
+            ->with(['car', 'buyer'])
+            ->get();
 
-        // Prevent buying own car
-        if ($car->id_vendedor == $user->customer->id) {
-            return redirect()->back()->with('error', 'You cannot buy your own car.');
-        }
+        // 2. Mis Compras (Yo compré)
+        $purchases = Sales::where('id_comprador', $customerId)
+            ->with(['vehiculo', 'vendedor', 'status'])
+            ->latest()
+            ->get();
 
-        // Create Sale record
-        Sales::create([
-            'id_vehiculo' => $car->id,
-            'id_vendedor' => $car->id_vendedor,
-            'id_comprador' => $user->customer->id,
-            'precio' => $car->precio,
-            'fecha_venta' => now(),
-            'estado' => 'completed' // Assuming simple flow
-        ]);
+        // 3. Mis Ventas (Yo vendí)
+        $sales = Sales::where('id_vendedor', $customerId)
+            ->with(['vehiculo', 'comprador', 'status'])
+            ->latest()
+            ->get();
 
-        // Optionally mark car as sold or delete it?
-        // For now, let's just record the sale.
-        // If we want to hide sold cars, we would need a status column on cars table.
+        // 4. Mis Alquileres (Yo alquilé un coche de otro)
+        $rentals = Rental::where('id_cliente', $customerId)
+            ->with(['car', 'status'])
+            ->latest()
+            ->get();
 
-        return redirect()->route('cars.index')->with('success', 'Car purchased successfully!');
+        // 5. Mis Arrendamientos (Yo alquilé MI coche a otro)
+        // Buscamos rentals donde el coche pertenece al usuario actual
+        $myRentalsAsOwner = Rental::whereHas('car', function ($query) use ($customerId) {
+                $query->where('id_vendedor', $customerId);
+            })
+            ->with(['car', 'customer', 'status'])
+            ->latest()
+            ->get();
+
+        return view('sales.index', compact('receivedOffers', 'purchases', 'sales', 'rentals', 'myRentalsAsOwner'));
     }
 }

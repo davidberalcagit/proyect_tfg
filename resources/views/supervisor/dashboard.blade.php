@@ -54,7 +54,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($pendingCars as $car)
-                                <tr>
+                                <tr x-data="{ showRejectForm: false }">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a href="{{ route('cars.show', $car) }}" class="text-indigo-600 hover:text-indigo-900 font-medium">
                                             {{ $car->title }}
@@ -81,14 +81,34 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ number_format($car->precio, 2) }} €</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex justify-end space-x-2">
+                                        <div class="flex justify-end space-x-2" x-show="!showRejectForm">
                                             <form action="{{ route('supervisor.approve', $car->id) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="text-green-600 hover:text-green-900 font-bold">Aprobar</button>
+                                                <x-button class="bg-green-600 hover:bg-green-700 active:bg-green-900 border-green-600 focus:border-green-900 ring-green-300">
+                                                    Aprobar
+                                                </x-button>
                                             </form>
-                                            <form action="{{ route('supervisor.reject', $car->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de rechazar este coche?');">
+                                            <x-danger-button @click="showRejectForm = true">
+                                                Rechazar
+                                            </x-danger-button>
+                                        </div>
+
+                                        <!-- Formulario de Rechazo -->
+                                        <div x-show="showRejectForm" class="mt-2 text-left bg-red-50 p-3 rounded-md border border-red-200" style="display: none;">
+                                            <form action="{{ route('supervisor.reject', $car->id) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="text-red-600 hover:text-red-900">Rechazar</button>
+                                                <div class="mb-2">
+                                                    <x-label for="reason" value="Razón del rechazo:" class="text-red-700" />
+                                                    <x-textarea name="reason" id="reason" class="block w-full text-xs mt-1" rows="2" required placeholder="Escribe la razón aquí..."></x-textarea>
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <x-secondary-button @click="showRejectForm = false" type="button" class="text-xs px-2 py-1">
+                                                        Cancelar
+                                                    </x-secondary-button>
+                                                    <x-danger-button type="submit" class="text-xs px-2 py-1">
+                                                        Confirmar
+                                                    </x-danger-button>
+                                                </div>
                                             </form>
                                         </div>
                                     </td>

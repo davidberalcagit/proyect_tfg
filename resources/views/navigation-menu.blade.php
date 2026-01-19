@@ -23,8 +23,9 @@
                             {{ __('My Cars') }}
                         </x-nav-link>
 
-                        <x-nav-link href="{{ route('offers.index') }}" :active="request()->routeIs('offers.index')">
-                            {{ __('Received Offers') }}
+                        <!-- CAMBIO: Apuntar a sales.index y cambiar nombre -->
+                        <x-nav-link href="{{ route('sales.index') }}" :active="request()->routeIs('sales.index')">
+                            {{ __('My Transactions') }}
                         </x-nav-link>
 
                         <!-- Admin Link -->

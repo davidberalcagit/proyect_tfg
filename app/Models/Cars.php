@@ -23,7 +23,8 @@ class Cars extends Model
         'descripcion',
         'image',
         'id_estado',
-        'id_listing_type', // Cambiado
+        'rejection_reason',
+        'id_listing_type',
         'temp_brand',
         'temp_model',
         'temp_color',
@@ -39,6 +40,15 @@ class Cars extends Model
 
     public function rentals(){
         return $this->hasMany(Rental::class, 'id_vehiculo');
+    }
+
+    // Relación N:N con Customers a través de rentals
+    public function renters()
+    {
+        return $this->belongsToMany(Customers::class, 'rentals', 'id_vehiculo', 'id_cliente')
+                    ->withPivot('fecha_inicio', 'fecha_fin', 'precio_total', 'id_estado')
+                    ->withTimestamps();
+                    // Eliminado ->using(Rental::class) para evitar error de Pivot
     }
 
     public function marcha(){

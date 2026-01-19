@@ -100,8 +100,8 @@
                             </div>
 
                             <!-- Acciones -->
-                            <div class="mt-8 flex flex-wrap gap-3">
-                                <a href="{{ route('cars.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition">
+                            <div class="mt-8 flex flex-wrap gap-3 items-end">
+                                <a href="javascript:history.back()" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition h-10">
                                     {{ __('Back to list') }}
                                 </a>
 
@@ -110,17 +110,23 @@
                                     @if(Auth::user()->customer && Auth::user()->customer->id !== $car->id_vendedor)
                                         @if($car->id_estado === 1)
                                             @if(Auth::user()->can('buy cars'))
-                                                <form action="{{ route('offers.store', $car) }}" method="POST" class="flex items-center gap-2">
+                                                <form action="{{ route('offers.store', $car) }}" method="POST" class="flex flex-col gap-2">
                                                     @csrf
-                                                    <input type="number" name="cantidad" value="{{ $car->precio }}" class="form-input rounded-md shadow-sm w-32 text-sm" required min="1">
-                                                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
-                                                        {{ __('Make Offer') }}
-                                                    </button>
+                                                    <div class="flex items-center gap-2">
+                                                        <input type="number" name="cantidad" value="{{ $car->precio }}" class="form-input rounded-md shadow-sm w-32 text-sm h-10" required min="1">
+                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition h-10">
+                                                            {{ __('Make Offer') }}
+                                                        </button>
+                                                    </div>
+                                                    <label class="flex items-center mt-1">
+                                                        <x-checkbox name="terms" required />
+                                                        <span class="ml-2 text-xs text-gray-600">{{ __('I agree to the purchase terms') }}</span>
+                                                    </label>
                                                 </form>
                                             @endif
                                         @elseif($car->id_estado === 3)
                                             {{-- Alquiler (Solo si está en alquiler) --}}
-                                            <a href="{{ route('rentals.create', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+                                            <a href="{{ route('rentals.create', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
                                                 {{ __('Rent Car') }}
                                             </a>
                                         @endif
@@ -128,13 +134,13 @@
 
                                     {{-- Editar/Borrar (Admin siempre, Dueño solo si pendiente) --}}
                                     @if(Auth::user()->hasRole('admin') || (Auth::user()->customer && Auth::user()->customer->id === $car->id_vendedor && $car->id_estado == 4))
-                                        <a href="{{ route('cars.edit', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+                                        <a href="{{ route('cars.edit', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
                                             {{ __('Edit') }}
                                         </a>
                                         <form action="{{ route('cars.destroy', $car) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition">
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition h-10">
                                                 {{ __('Delete') }}
                                             </button>
                                         </form>

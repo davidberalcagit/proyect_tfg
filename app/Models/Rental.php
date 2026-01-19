@@ -15,7 +15,7 @@ class Rental extends Model
         'fecha_inicio',
         'fecha_fin',
         'precio_total',
-        'estado',
+        'id_estado', // Cambiado
     ];
 
     protected $casts = [
@@ -31,5 +31,10 @@ class Rental extends Model
     public function customer()
     {
         return $this->belongsTo(Customers::class, 'id_cliente');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(RentalStatus::class, 'id_estado');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCarRequest;
+use App\Http\Requests\UpdateCarRequest;
 use App\Jobs\ProcessCarImageJob;
 use App\Models\Brands;
 use App\Models\CarModels;
@@ -9,14 +11,17 @@ use App\Models\Cars;
 use App\Models\Color;
 use App\Models\Fuels;
 use App\Models\Gears;
-use App\Models\ListingType; // Importar
+use App\Models\ListingType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CarsController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -24,7 +29,8 @@ class CarsController extends Controller
 
     public function index()
     {
-        $cars = Cars::where('id_estado', 1)->inRandomOrder()->paginate(51);
+        // Mostrar coches En Venta (1) o En Alquiler (3)
+        $cars = Cars::whereIn('id_estado', [1, 3])->inRandomOrder()->paginate(51);
         return view('cars.index', compact('cars'));
     }
 
@@ -42,17 +48,14 @@ class CarsController extends Controller
 
     public function create(Request $request)
     {
+        $this->authorize('create', Cars::class);
+
         $brands = Brands::all();
         $fuels  = Fuels::all();
         $gears = Gears::all();
         $colors = Color::all();
 
-        // Obtener tipo de listado (sale/rent) y buscar su ID
-        $typeSlug = $request->query('type', 'sale');
-        $listingType = ListingType::where('nombre', $typeSlug === 'rent' ? 'Alquiler' : 'Venta')->first();
-
-        // Si no existe, fallback al primero (Venta)
-        if (!$listingType) $listingType = ListingType::first();
+        $listingType = ListingType::where('nombre', $request->query('type', 'sale') === 'rent' ? 'Alquiler' : 'Venta')->first() ?? ListingType::first();
 
         return view('cars.create', compact('brands','fuels', 'gears', 'colors', 'listingType'));
     }
@@ -63,47 +66,13 @@ class CarsController extends Controller
         return response()->json($models);
     }
 
-    public function store(Request $request)
+    public function store(StoreCarRequest $request)
     {
+        $this->authorize('create', Cars::class);
+
         $user = Auth::user();
 
-        if (!$user) abort(401);
-        if (!$user->customer) abort(403, 'El usuario no tiene un perfil de vendedor asociado.');
-
-        $input = $request->all();
-        if ($request->id_marca === 'other') $input['id_marca'] = null;
-        if ($request->id_modelo === 'other') $input['id_modelo'] = null;
-        if ($request->id_color === 'other') $input['id_color'] = null;
-
-        $request->replace($input);
-
-        $request->validate([
-            'id_marca' => 'nullable|exists:brands,id',
-            'id_modelo' => 'nullable|exists:car_models,id',
-            'temp_brand' => 'required_without:id_marca|nullable|string|max:50',
-            'temp_model' => 'required_without:id_modelo|nullable|string|max:50',
-            'id_combustible' => 'required|integer|exists:fuels,id',
-            'id_marcha' => 'required|integer|exists:gears,id',
-            'precio' => 'required|numeric|min:0',
-            'anyo_matri' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'km' => 'required|integer',
-            'matricula' => ['required', 'string', 'max:255'],
-            'id_color' => 'nullable|exists:colors,id',
-            'temp_color' => 'required_without:id_color|nullable|string|max:50',
-            'descripcion' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'id_listing_type' => 'required|exists:listing_types,id', // Validar ID
-        ]);
-
-        // Validaciones duplicados (Omitidas por brevedad)
-        if ($request->temp_brand) {
-            $tempBrand = trim($request->temp_brand);
-            if (Brands::where('nombre', 'LIKE', $tempBrand)->exists()) {
-                throw ValidationException::withMessages(['temp_brand' => 'La marca "' . $tempBrand . '" ya existe.']);
-            }
-        }
-        // ...
-
+        // Generar Título
         $brandName = $request->temp_brand ? trim($request->temp_brand) : Brands::find($request->id_marca)->nombre;
         $modelName = $request->temp_model ? trim($request->temp_model) : CarModels::find($request->id_modelo)->nombre;
         $title = trim("$brandName $modelName " . $request->anyo_matri);
@@ -133,7 +102,6 @@ class CarsController extends Controller
         return redirect()->route('cars.show', $car)->with('success', 'Coche creado correctamente. Está pendiente de revisión.');
     }
 
-    // ... show, edit, update, destroy ...
     public function show(Cars $car)
     {
         $car->load('vendedor', 'marcha', 'combustible', 'color', 'marca', 'modelo', 'status');
@@ -142,9 +110,7 @@ class CarsController extends Controller
 
     public function edit(Cars $car)
     {
-        if ($car->id_estado == 1 && !Auth::user()->hasRole('admin')) {
-            return redirect()->back()->with('error', 'No puedes editar un coche aprobado.');
-        }
+        $this->authorize('update', $car);
 
         $brands = Brands::all();
         $fuels = Fuels::all();
@@ -153,25 +119,9 @@ class CarsController extends Controller
         return view('cars.edit', compact('car', 'brands', 'fuels', 'gears', 'colors'));
     }
 
-    public function update(Request $request, Cars $car)
+    public function update(UpdateCarRequest $request, Cars $car)
     {
-        if ($car->id_estado == 1 && !Auth::user()->hasRole('admin')) {
-            return redirect()->back()->with('error', 'No puedes editar un coche aprobado.');
-        }
-
-        $request->validate([
-            'id_marca' => 'nullable|exists:brands,id',
-            'id_modelo' => 'nullable|exists:car_models,id',
-            'id_combustible' => 'required|integer|exists:fuels,id',
-            'id_marcha' => 'required|integer|exists:gears,id',
-            'precio' => 'required|numeric|min:0',
-            'anyo_matri' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'km' => 'required|integer',
-            'matricula' => 'required|string|max:255',
-            'id_color' => 'nullable|exists:colors,id',
-            'descripcion' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $this->authorize('update', $car);
 
         $car->fill($request->except('image'));
 
@@ -188,6 +138,8 @@ class CarsController extends Controller
 
     public function destroy(Cars $car)
     {
+        $this->authorize('delete', $car);
+
         $car->delete();
         return redirect()->route('cars.index')->with('success', 'Coche eliminado correctamente.');
     }
@@ -195,7 +147,6 @@ class CarsController extends Controller
     public function setStatusSale(Cars $car)
     {
         if ($car->id_vendedor !== Auth::user()->customer->id) abort(403);
-        // Buscar ID de Venta
         $saleType = ListingType::where('nombre', 'Venta')->first()->id;
 
         if (in_array($car->id_estado, [3, 6])) {
@@ -208,7 +159,6 @@ class CarsController extends Controller
     public function setStatusRent(Cars $car)
     {
         if ($car->id_vendedor !== Auth::user()->customer->id) abort(403);
-        // Buscar ID de Alquiler
         $rentType = ListingType::where('nombre', 'Alquiler')->first()->id;
 
         if ($car->id_estado == 1) {

@@ -45,4 +45,13 @@ class Customers extends Model
     {
         return $this->hasMany(Rental::class, 'id_cliente');
     }
+
+    // Relación N:N con Cars a través de rentals
+    public function rentedCars()
+    {
+        return $this->belongsToMany(Cars::class, 'rentals', 'id_cliente', 'id_vehiculo')
+                    ->withPivot('fecha_inicio', 'fecha_fin', 'precio_total', 'id_estado')
+                    ->withTimestamps();
+                    // Eliminado ->using(Rental::class)
+    }
 }
