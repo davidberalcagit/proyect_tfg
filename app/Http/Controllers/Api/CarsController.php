@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCarRequest;
+use App\Http\Requests\UpdateCarRequest;
 use App\Models\Brands;
 use App\Models\CarModels;
 use App\Models\Cars;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CarsController extends Controller
@@ -18,28 +19,9 @@ class CarsController extends Controller
             ->paginate(20);
     }
 
-    public function store(Request $request)
+    public function store(StoreCarRequest $request)
     {
-        $request->validate([
-            'id_marca' => 'nullable|exists:brands,id',
-            'id_modelo' => 'nullable|exists:car_models,id',
-            'temp_brand' => 'required_without:id_marca|nullable|string|max:50',
-            'temp_model' => 'required_without:id_modelo|nullable|string|max:50',
-
-            'id_marcha' => 'required|exists:gears,id',
-            'id_combustible' => 'required|exists:fuels,id',
-
-            // Validación Color
-            'id_color' => 'nullable|exists:colors,id',
-            'temp_color' => 'required_without:id_color|nullable|string|max:50',
-
-            'matricula' => 'required|string|max:20',
-            'anyo_matri' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'km' => 'required|integer|min:0',
-            'precio' => 'required|numeric|min:0',
-            'descripcion' => 'nullable|string',
-            'image' => 'nullable|string',
-        ]);
+        // Validation is handled by StoreCarRequest
 
         $user = Auth::user();
 
@@ -74,7 +56,7 @@ class CarsController extends Controller
 
         if ($request->temp_brand) $car->id_marca = null;
         if ($request->temp_model) $car->id_modelo = null;
-        if ($request->temp_color) $car->id_color = null; // Nuevo
+        if ($request->temp_color) $car->id_color = null;
 
         $car->save();
 
@@ -89,7 +71,7 @@ class CarsController extends Controller
         return Cars::with(['marca', 'modelo', 'status'])->findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCarRequest $request, $id)
     {
         $car = Cars::findOrFail($id);
 

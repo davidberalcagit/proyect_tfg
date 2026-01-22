@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\NewOfferReceived;
 use App\Models\Offer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,36 +11,32 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-// Asegúrate de tener un Mailable creado, si no, usaremos Log para simular
-// use App\Mail\OfferReceived;
 
 class SendOfferNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $offer;
+    public $offer;
 
-    /**
-     * Create a new job instance.
-     */
     public function __construct(Offer $offer)
     {
         $this->offer = $offer;
+        $this->afterCommit();
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-        Log::info("Enviando notificación de oferta ID: {$this->offer->id} al vendedor...");
+        if (!$this->offer) {
+            Log::error("Offer is null in SendOfferNotificationJob");
+            return;
+        }
 
-        // Simulación de envío de correo (puede tardar 1-3 segundos)
-        sleep(1);
+        $this->offer->load('car.vendedor.user');
+        $sellerUser = $this->offer->car->vendedor->user ?? null;
 
-        // Código real de envío de correo:
-        // Mail::to($this->offer->seller->user->email)->send(new OfferReceived($this->offer));
-
-        Log::info("Correo de oferta enviado exitosamente a: " . $this->offer->seller->user->email);
+        if ($sellerUser) {
+            Mail::to($sellerUser->email)->send(new NewOfferReceived($this->offer));
+            Log::info("Notificación de nueva oferta enviada a: {$sellerUser->email}");
+        }
     }
 }

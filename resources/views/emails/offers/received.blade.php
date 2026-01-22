@@ -13,7 +13,7 @@
 
     <p>You can review, accept, or reject this offer in your dashboard:</p>
     <p>
-        <a href="{{ route('offers.index') }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+        <a href="{{ route('sales.index') }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
             View Received Offers
         </a>
     </p>

@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/cars', // CAMBIADO de /dashboard a /cars
+    'home' => '/', // CAMBIADO a raíz
 
     /*
     |--------------------------------------------------------------------------

@@ -7,20 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
+// use Laravel\Jetstream\HasProfilePhoto; // Eliminado
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-    use HasRoles;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-    use HasProfilePhoto;
+    // use HasProfilePhoto; // Eliminado
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -31,17 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        // 'type', // Removed type
-        'telefono',
-        'nombre_contacto',
-        'id_entidad',
-        'is_verified'
     ];
 
-    public function customer()
-    {
-        return $this->hasOne(Customers::class,'id_usuario');
-    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -55,25 +44,30 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url',
+        // 'profile_photo_url', // Eliminado
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function customer()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'is_verified' => 'boolean',
-        ];
+        return $this->hasOne(Customers::class, 'id_usuario');
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Cars::class, 'favorites', 'user_id', 'car_id')->withTimestamps();
     }
 }

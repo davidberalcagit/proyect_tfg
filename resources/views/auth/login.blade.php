@@ -6,11 +6,11 @@
 
         <x-validation-errors class="mb-4" />
 
-        @session('status')
+        @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+                {{ session('status') }}
             </div>
-        @endsession
+        @endif
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -32,14 +32,9 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end gap-2 mt-4">
-                @if (Route::has('register'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " href="{{ route('register') }}">
-                        {{ __('Not registered yet?') }}
-                    </a>
-                @endif
+            <div class="flex items-center justify-between mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -47,6 +42,19 @@
                 <x-button class="ms-4">
                     {{ __('Log in') }}
                 </x-button>
+            </div>
+
+            <div class="flex items-center justify-center mt-6 pt-4 border-t border-gray-200">
+                <a href="{{ route('register') }}" class="text-sm text-indigo-600 hover:text-indigo-900 font-semibold">
+                    {{ __('Not registered yet?') }} {{ __('Register') }}
+                </a>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="mt-6 flex justify-center space-x-4 text-sm text-gray-500">
+                <a href="{{ route('lang.switch', 'en') }}" class="hover:text-gray-900 {{ App::getLocale() == 'en' ? 'font-bold text-indigo-600' : '' }}">English</a>
+                <span>|</span>
+                <a href="{{ route('lang.switch', 'es') }}" class="hover:text-gray-900 {{ App::getLocale() == 'es' ? 'font-bold text-indigo-600' : '' }}">Español</a>
             </div>
         </form>
     </x-authentication-card>

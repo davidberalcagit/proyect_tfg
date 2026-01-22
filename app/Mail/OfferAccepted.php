@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Models\Offer;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,7 +29,7 @@ class OfferAccepted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Offer for ' . $this->offer->car->title . ' was Accepted!',
+            subject: '¡Tu oferta ha sido aceptada!',
         );
     }
 
@@ -51,11 +50,6 @@ class OfferAccepted extends Mailable
      */
     public function attachments(): array
     {
-        $pdf = Pdf::loadView('pdf.receipt', ['offer' => $this->offer]);
-
-        return [
-            Attachment::fromData(fn () => $pdf->output(), 'receipt.pdf')
-                ->withMime('application/pdf'),
-        ];
+        return []; // Sin adjuntos
     }
 }

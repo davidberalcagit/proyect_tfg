@@ -1,4 +1,4 @@
-@props(['id', 'maxWidth'])
+@props(['id', 'maxWidth', 'show' => false])
 
 @php
 $id = $id ?? md5($attributes->wire('model'));
@@ -13,7 +13,9 @@ $maxWidth = [
 @endphp
 
 <div
-    x-data="{ show: @entangle($attributes->wire('model')) }"
+    x-data="{
+        show: @if($attributes->wire('model')->value()) @entangle($attributes->wire('model')) @else {{ var_export($show) }} @endif
+    }"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-show="show"

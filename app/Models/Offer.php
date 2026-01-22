@@ -12,11 +12,25 @@ class Offer extends Model
     protected $fillable = [
         'id_vehiculo',
         'id_comprador',
-        'id_vendedor', // Added to fillable
+        'id_vendedor',
         'cantidad',
         'estado',
     ];
 
+    // Scopes
+    public function scopePending($query)
+    {
+        return $query->where('estado', 'pending');
+    }
+
+    public function scopeForSeller($query, $sellerId)
+    {
+        return $query->where('id_vendedor', $sellerId)
+                     ->with(['car', 'buyer'])
+                     ->latest();
+    }
+
+    // Relaciones
     public function car()
     {
         return $this->belongsTo(Cars::class, 'id_vehiculo');

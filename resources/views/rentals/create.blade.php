@@ -35,7 +35,12 @@
                     <div class="mt-4 block">
                         <label for="terms" class="flex items-center">
                             <x-checkbox id="terms" name="terms" required />
-                            <span class="ml-2 text-sm text-gray-600">{{ __('I agree to the rental terms and conditions') }}</span>
+                            <span class="ml-2 text-sm text-gray-600">
+                                {{ __('I agree to the') }}
+                                <a href="{{ route('rentals.terms') }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 underline">
+                                    {{ __('rental terms and conditions') }}
+                                </a>
+                            </span>
                         </label>
                     </div>
 
@@ -61,9 +66,12 @@
             const start = new Date(startDateInput.value);
             const end = new Date(endDateInput.value);
 
-            if (start && end && end > start) {
+            if (start && end && end >= start) {
                 const diffTime = Math.abs(end - start);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 0) diffDays = 1;
+
                 const total = diffDays * dailyPrice;
                 totalPriceSpan.textContent = total.toFixed(2) + '€';
             } else {
@@ -74,7 +82,6 @@
         startDateInput.addEventListener('change', calculateTotal);
         endDateInput.addEventListener('change', calculateTotal);
 
-        // Calcular al cargar si hay valores old
         if (startDateInput.value && endDateInput.value) {
             calculateTotal();
         }

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendOfferNotificationJob;
-use App\Mail\OfferAccepted;
+use App\Events\OfferCreated; // Importar Evento
+use App\Events\SaleCompleted; // Importar Evento
+use App\Jobs\SendOfferAcceptedJob;
+use App\Jobs\SendOfferRejectedJob;
 use App\Models\Cars;
 use App\Models\Offer;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class OfferController extends Controller
 {
     use AuthorizesRequests;
 
-    // El comprador hace una oferta
     public function store(Request $request, Cars $car)
     {
         $this->authorize('create', [Offer::class, $car]);
@@ -29,11 +29,11 @@ class OfferController extends Controller
 
         $existingOffer = Offer::where('id_vehiculo', $car->id)
             ->where('id_comprador', $buyerId)
-            ->where('estado', 'pending')
+            ->whereIn('estado', ['pending', 'accepted_by_seller'])
             ->first();
 
         if ($existingOffer) {
-            return redirect()->back()->with('error', 'Ya tienes una oferta pendiente por este coche.');
+            return redirect()->back()->with('error', 'Ya tienes una oferta activa por este coche.');
         }
 
         $offer = Offer::create([
@@ -44,24 +44,39 @@ class OfferController extends Controller
             'estado' => 'pending'
         ]);
 
-        SendOfferNotificationJob::dispatch($offer);
+        // Disparar evento en lugar de Job directo
+        OfferCreated::dispatch($offer);
 
         return redirect()->back()->with('success', 'Oferta enviada al vendedor.');
     }
 
-    // El vendedor ve las ofertas recibidas (YA NO SE USA DIRECTAMENTE, SE USA SALESCONTROLLER)
-    // Pero lo mantengo por si acaso se llama desde API o algo, aunque debería redirigir a sales.index
     public function index()
     {
         return redirect()->route('sales.index');
     }
 
-    // Aceptar oferta -> Crea Venta
     public function accept(Offer $offer)
     {
         $this->authorize('accept', $offer);
 
-        Sales::create([
+        $offer->update(['estado' => 'accepted_by_seller']);
+
+        SendOfferAcceptedJob::dispatch($offer);
+
+        return redirect()->route('sales.index')->with('success', 'Oferta aceptada. Esperando pago del comprador.');
+    }
+
+    public function pay(Offer $offer)
+    {
+        if (Auth::user()->customer->id !== $offer->id_comprador) {
+            abort(403);
+        }
+
+        if ($offer->estado !== 'accepted_by_seller') {
+            return redirect()->back()->with('error', 'Esta oferta no está lista para pago.');
+        }
+
+        $sale = Sales::create([
             'id_vehiculo' => $offer->id_vehiculo,
             'id_vendedor' => $offer->id_vendedor,
             'id_comprador' => $offer->id_comprador,
@@ -69,7 +84,7 @@ class OfferController extends Controller
             'id_estado' => 1
         ]);
 
-        $offer->update(['estado' => 'accepted']);
+        $offer->update(['estado' => 'completed']);
         $offer->car->update(['id_estado' => 2]);
 
         Offer::where('id_vehiculo', $offer->id_vehiculo)
@@ -77,17 +92,10 @@ class OfferController extends Controller
             ->where('estado', 'pending')
             ->update(['estado' => 'rejected']);
 
-        $buyerUser = $offer->buyer->user;
-        if ($buyerUser) {
-            Mail::to($buyerUser->email)->send(new OfferAccepted($offer));
-        }
+        // Disparar evento en lugar de Job directo
+        SaleCompleted::dispatch($sale);
 
-        $sellerUser = $offer->seller->user;
-        if ($sellerUser) {
-            Mail::to($sellerUser->email)->send(new OfferAccepted($offer));
-        }
-
-        return redirect()->route('sales.index')->with('success', 'Oferta aceptada y venta procesada.');
+        return redirect()->route('sales.index')->with('success', 'Pago realizado y venta completada.');
     }
 
     public function reject(Offer $offer)
@@ -95,6 +103,8 @@ class OfferController extends Controller
         $this->authorize('reject', $offer);
 
         $offer->update(['estado' => 'rejected']);
+
+        SendOfferRejectedJob::dispatch($offer);
 
         return redirect()->route('sales.index')->with('success', 'Oferta rechazada.');
     }

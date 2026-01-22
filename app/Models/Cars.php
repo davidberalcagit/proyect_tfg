@@ -30,6 +30,40 @@ class Cars extends Model
         'temp_color',
     ];
 
+    // Scopes
+    public function scopeAvailable($query)
+    {
+        return $query->whereIn('id_estado', [1, 3]);
+    }
+
+    public function scopeBySeller($query, $sellerId)
+    {
+        return $query->where('id_vendedor', $sellerId);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['brand'] ?? null, function ($q, $brand) {
+            $q->where('id_marca', $brand);
+        })
+        ->when($filters['min_price'] ?? null, function ($q, $price) {
+            $q->where('precio', '>=', $price);
+        })
+        ->when($filters['max_price'] ?? null, function ($q, $price) {
+            $q->where('precio', '<=', $price);
+        });
+    }
+
+    public function scopeSearch($query, $term)
+    {
+        return $query->where(function($q) use ($term) {
+            $q->where('title', 'like', "%{$term}%")
+              ->orWhere('descripcion', 'like', "%{$term}%")
+              ->orWhereHas('marca', fn($q2) => $q2->where('nombre', 'like', "%{$term}%"));
+        });
+    }
+
+    // Relaciones
     public function vendedor(){
         return $this->belongsTo(Customers::class, 'id_vendedor');
     }
@@ -42,13 +76,16 @@ class Cars extends Model
         return $this->hasMany(Rental::class, 'id_vehiculo');
     }
 
-    // Relación N:N con Customers a través de rentals
     public function renters()
     {
         return $this->belongsToMany(Customers::class, 'rentals', 'id_vehiculo', 'id_cliente')
                     ->withPivot('fecha_inicio', 'fecha_fin', 'precio_total', 'id_estado')
                     ->withTimestamps();
-                    // Eliminado ->using(Rental::class) para evitar error de Pivot
+    }
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'car_id', 'user_id')->withTimestamps();
     }
 
     public function marcha(){

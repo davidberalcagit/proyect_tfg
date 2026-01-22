@@ -8,6 +8,8 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\SupportController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -21,8 +23,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    // Restaurada ruta dashboard para compatibilidad con Jetstream, redirige a inicio
     Route::get('/dashboard', function () {
-        return redirect('/cars');
+        return redirect('/');
     })->name('dashboard');
 });
 
@@ -46,20 +49,31 @@ Route::resource('cars', CarsController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/my-cars', [CarsController::class, 'myCars'])->name('cars.my_cars');
 
+    // Favoritos
+    Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/cars/{car}/favorite', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
     Route::post('/cars/{car}/status/sale', [CarsController::class, 'setStatusSale'])->name('cars.status.sale');
     Route::post('/cars/{car}/status/rent', [CarsController::class, 'setStatusRent'])->name('cars.status.rent');
 
     // Ofertas
+    Route::get('/sales/terms', [SalesController::class, 'downloadSaleTerms'])->name('sales.terms');
     Route::post('/cars/{car}/offer', [OfferController::class, 'store'])->name('offers.store');
     Route::get('/transactions', [SalesController::class, 'index'])->name('sales.index');
+    Route::get('/sales/{sale}/receipt', [SalesController::class, 'downloadReceipt'])->name('sales.receipt');
+    Route::get('/rentals/{rental}/receipt', [SalesController::class, 'downloadRentalReceipt'])->name('rentals.receipt');
+
     Route::post('/offers/{offer}/accept', [OfferController::class, 'accept'])->name('offers.accept');
     Route::post('/offers/{offer}/reject', [OfferController::class, 'reject'])->name('offers.reject');
+    Route::post('/offers/{offer}/pay', [OfferController::class, 'pay'])->name('offers.pay');
 
     // Alquileres
+    Route::get('/rentals/terms', [RentalController::class, 'downloadTerms'])->name('rentals.terms');
     Route::get('/cars/{car}/rent', [RentalController::class, 'create'])->name('rentals.create');
     Route::post('/cars/{car}/rent', [RentalController::class, 'store'])->name('rentals.store');
-    Route::post('/rentals/{rental}/accept', [RentalController::class, 'accept'])->name('rentals.accept'); // Nueva
-    Route::post('/rentals/{rental}/reject', [RentalController::class, 'reject'])->name('rentals.reject'); // Nueva
+    Route::post('/rentals/{rental}/accept', [RentalController::class, 'accept'])->name('rentals.accept');
+    Route::post('/rentals/{rental}/reject', [RentalController::class, 'reject'])->name('rentals.reject');
+    Route::post('/rentals/{rental}/pay', [RentalController::class, 'pay'])->name('rentals.pay');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -74,8 +88,18 @@ Route::middleware('auth')->group(function () {
     // Supervisor
     Route::middleware(['role:supervisor|admin'])->group(function () {
         Route::get('/supervisor', [SupervisorController::class, 'index'])->name('supervisor.dashboard');
+        Route::get('/supervisor/report', [SupervisorController::class, 'downloadReport'])->name('supervisor.report');
         Route::post('/supervisor/approve/{id}', [SupervisorController::class, 'approveCar'])->name('supervisor.approve');
         Route::post('/supervisor/reject/{id}', [SupervisorController::class, 'rejectCar'])->name('supervisor.reject');
+    });
+
+    // Soporte
+    Route::middleware(['role:soporte|admin'])->group(function () {
+        Route::get('/support/users', [SupportController::class, 'index'])->name('support.users.index');
+        Route::get('/support/users/{user}', [SupportController::class, 'show'])->name('support.users.show');
+        Route::get('/support/users/{user}/edit', [SupportController::class, 'edit'])->name('support.users.edit');
+        Route::put('/support/users/{user}', [SupportController::class, 'update'])->name('support.users.update');
+        Route::delete('/support/users/{user}', [SupportController::class, 'destroy'])->name('support.users.destroy'); // Nueva ruta
     });
 });
 

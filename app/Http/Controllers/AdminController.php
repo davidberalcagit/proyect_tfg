@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use App\Jobs\ProcessCarImageJob;
 use App\Jobs\SendOfferNotificationJob;
 use App\Jobs\SendWelcomeEmailJob;
-use App\Jobs\GenerateMonthlyReportJob;
 use App\Jobs\CleanupRejectedOffersJob;
 use App\Jobs\AuditCarPricesJob;
 use App\Models\Cars;
@@ -53,12 +52,6 @@ class AdminController extends Controller
                     } else {
                         $output = "No hay coches para procesar.";
                     }
-                    break;
-
-                case 'generate-report':
-                    // Simulación con un ID fijo o aleatorio
-                    GenerateMonthlyReportJob::dispatch(1);
-                    $output = "Job 'GenerateMonthlyReportJob' enviado a la cola.";
                     break;
 
                 // Jobs Síncronos (Inmediatos)

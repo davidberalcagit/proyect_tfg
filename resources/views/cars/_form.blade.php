@@ -2,7 +2,7 @@
 
 <div class="grid grid-cols-1 gap-6">
 
-    <!-- Campo oculto para id_listing_type (Solo en creación si se pasa listingType) -->
+    <!-- Campo oculto para id_listing_type -->
     @if(!$car->exists && isset($listingType))
         <input type="hidden" name="id_listing_type" value="{{ $listingType->id }}">
     @endif
@@ -97,7 +97,6 @@
     </div>
 
     <div>
-        <!-- Label dinámico para Precio -->
         @php
             $priceLabel = __('Price');
             if (isset($listingType) && $listingType->nombre === 'Alquiler') {
@@ -108,6 +107,7 @@
         @endphp
         <x-label for="price" value="{{ $priceLabel }}" />
         <x-input type="number" step="0.01" name="precio" id="price" class="mt-1 block w-full" value="{{ old('precio', $car->precio) }}" />
+        <p class="text-xs text-gray-500 mt-1">{{ __('Note:The total price may increase due to VAT and fees.') }}</p>
     </div>
 
     <div>
@@ -120,12 +120,22 @@
         <x-textarea name="descripcion" id="descripcion" class="mt-1 block w-full">{{ old('descripcion', $car->descripcion) }}</x-textarea>
     </div>
 
+    <!-- Imagen -->
     <div>
         <x-label for="image" value="{{ __('Image') }}" />
         <x-input type="file" name="image" id="image" class="mt-1 block w-full" />
+
         @if ($car->image)
-            <div class="mt-2">
-                <img src="{{ Storage::url($car->image) }}" alt="{{ $car->title }}" class="h-20 w-20 object-cover rounded-md">
+            <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="text-sm text-gray-600 mb-2">{{ __('Current Image') }}:</p>
+                <div class="flex items-center gap-4">
+                    <img src="{{ Storage::url($car->image) }}" alt="{{ $car->title }}" class="h-24 w-24 object-cover rounded-md shadow-sm">
+
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" name="delete_image" value="1" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-red-600 font-medium">{{ __('Delete Image') }}</span>
+                    </label>
+                </div>
             </div>
         @endif
     </div>

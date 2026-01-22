@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customers;
 use App\Models\Dealerships;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CustomersController extends Controller
@@ -15,17 +16,9 @@ class CustomersController extends Controller
         return Customers::with(['user', 'entityType', 'dealership'])->paginate(20);
     }
 
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
-        $request->validate([
-            'telefono' => 'required|string|max:20',
-            'nombre_contacto' => 'required|string|max:255',
-            'id_entidad' => 'required|exists:entity_types,id',
-            // Validaciones condicionales para concesionario
-            'nombre_empresa' => 'required_if:id_entidad,2|string|max:255|nullable',
-            'nif' => 'required_if:id_entidad,2|string|max:20|nullable',
-            'direccion' => 'required_if:id_entidad,2|string|max:255|nullable',
-        ]);
+        // Validation handled by StoreCustomerRequest
 
         $user = Auth::user();
 
@@ -81,7 +74,7 @@ class CustomersController extends Controller
         return response()->json($customer->load(['entityType', 'cars', 'dealership']));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCustomerRequest $request, $id)
     {
         $customer = Customers::findOrFail($id);
 

@@ -19,9 +19,12 @@ Route::get('/user', function (Request $request) {
 
 // Public routes
 Route::apiResource('brands', BrandsController::class)->only(['index', 'show'])->names('api.brands');
-Route::get('brands/{id}/models', [BrandsController::class, 'models']); // Restaurada
+Route::get('brands/{id}/models', [BrandsController::class, 'models']);
 
 Route::apiResource('car-models', CarModelsController::class)->only(['index', 'show'])->names('api.car-models');
+
+// Coches públicos (lectura)
+Route::apiResource('cars', CarsController::class)->only(['index', 'show'])->names('api.cars');
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -31,7 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers/me', [CustomersController::class, 'me']);
     Route::apiResource('customers', CustomersController::class)->names('api.customers');
 
-    Route::apiResource('cars', CarsController::class)->names('api.cars');
+    // Coches protegidos (escritura)
+    Route::apiResource('cars', CarsController::class)->except(['index', 'show'])->names('api.cars');
+
     Route::apiResource('sales', SalesController::class)->names('api.sales');
     Route::apiResource('offers', OfferController::class)->names('api.offers');
 

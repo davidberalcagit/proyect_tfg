@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Offer Accepted</title>
+    <title>Oferta Aceptada</title>
 </head>
 <body>
-    <h1>Your offer has been accepted!</h1>
-    <p>Hello {{ $offer->buyer->nombre_contacto }},</p>
-    <p>Great news! The seller has accepted your offer for the car: <strong>{{ $offer->car->title }}</strong>.</p>
+    <h1>¡Buenas noticias!</h1>
+    <p>El vendedor ha aceptado tu oferta por el vehículo <strong>{{ $offer->car->title }}</strong>.</p>
 
-    <p><strong>Agreed Price:</strong> {{ $offer->cantidad }}€</p>
+    <p><strong>Cantidad Acordada:</strong> {{ number_format($offer->cantidad, 2) }} €</p>
 
-    <p>The sale has been processed successfully.</p>
+    <p>Para completar la compra y asegurar el vehículo, por favor realiza el pago lo antes posible.</p>
 
-    <p>Thanks,<br>
+    <p>
+        <a href="{{ route('sales.index') }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            Ir a Pagar
+        </a>
+    </p>
+
+    <p>Si no realizas el pago, el vehículo seguirá disponible para otros compradores.</p>
+
+    <p>Gracias,<br>
     {{ config('app.name') }}</p>
 </body>
 </html>

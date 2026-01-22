@@ -73,15 +73,6 @@
                             <button type="submit" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded w-full text-sm">Encolar Job</button>
                         </form>
                     </div>
-                    <div class="border rounded-lg p-4 bg-blue-50">
-                        <h4 class="font-bold text-blue-800">Generar Reporte Mensual</h4>
-                        <p class="text-xs text-gray-600 mb-3">Calcula ventas y genera archivo de texto en storage.</p>
-                        <form action="{{ route('admin.run-job') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="job" value="generate-report">
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded w-full text-sm">Encolar Job</button>
-                        </form>
-                    </div>
                 </div>
             </div>
 
