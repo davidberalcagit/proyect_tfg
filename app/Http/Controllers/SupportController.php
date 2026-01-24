@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customers;
+use App\Models\EntityType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -32,6 +34,45 @@ class SupportController extends Controller
         return view('support.users.index', compact('users'));
     }
 
+    public function create()
+    {
+        $this->authorize('create', User::class);
+        $roles = Role::all();
+        return view('support.users.create', compact('roles'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->authorize('create', User::class);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'exists:roles,name'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->assignRole($request->role);
+
+        if ($request->role === 'individual') {
+            $entityType = EntityType::first();
+
+            Customers::create([
+                'id_usuario' => $user->id,
+                'nombre_contacto' => $user->name,
+                'id_entidad' => $entityType ? $entityType->id : 1,
+            ]);
+        }
+
+        return redirect()->route('support.users.index')->with('success', 'Usuario creado correctamente.');
+    }
+
     public function show(User $user)
     {
         $this->authorize('view', $user);
@@ -45,6 +86,11 @@ class SupportController extends Controller
     {
         $this->authorize('update', $user);
 
+        // Evitar editarse a sí mismo desde el panel de soporte
+        if (auth()->id() === $user->id) {
+            return redirect()->route('support.users.index')->with('error', 'No puedes editar tu propio usuario desde aquí. Usa tu perfil.');
+        }
+
         $roles = Role::all();
 
         return view('support.users.edit', compact('user', 'roles'));
@@ -53,6 +99,11 @@ class SupportController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
+
+        // Evitar editarse a sí mismo
+        if (auth()->id() === $user->id) {
+            return redirect()->route('support.users.index')->with('error', 'No puedes editar tu propio usuario desde aquí.');
+        }
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -81,7 +132,6 @@ class SupportController extends Controller
     {
         $this->authorize('delete', $user);
 
-        // Evitar que se borre a sí mismo
         if (auth()->id() === $user->id) {
             return redirect()->back()->with('error', 'No puedes borrar tu propia cuenta desde aquí.');
         }

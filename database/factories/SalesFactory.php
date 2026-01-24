@@ -40,6 +40,15 @@ class SalesFactory extends Factory
 
         $precio = $car->precio;
 
+        // Ensure SaleStatus exists
+        $status = SaleStatus::inRandomOrder()->first();
+        if (!$status) {
+            // Create manually if factory doesn't exist
+            $status = new SaleStatus();
+            $status->nombre = 'Completada'; // Default
+            $status->save();
+        }
+
         return [
             'id_comprador' => $comprador->id,
             'id_vendedor' => $vendedor->id,
@@ -47,7 +56,7 @@ class SalesFactory extends Factory
             'precio' => $precio,
             'fecha' => $this->faker->date(),
             'metodo_pago' => $this->faker->randomElement(['Efectivo', 'Tarjeta', 'Transferencia']),
-            'id_estado' => SaleStatus::inRandomOrder()->first()->id ?? 1,
+            'id_estado' => $status->id,
         ];
     }
 }

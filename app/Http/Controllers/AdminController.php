@@ -43,6 +43,18 @@ class AdminController extends Controller
                     if (empty($output)) $output = "Cola procesada (o estaba vacía).";
                     break;
 
+                case 'check-rentals':
+                    Artisan::call('rentals:process-daily');
+                    $output = Artisan::output();
+                    if (empty($output)) $output = "Procesamiento de alquileres completado.";
+                    break;
+
+                case 'cleanup-images':
+                    Artisan::call('cars:cleanup-images');
+                    $output = Artisan::output();
+                    if (empty($output)) $output = "Limpieza de imágenes completada.";
+                    break;
+
                 // Jobs Asíncronos (Queue)
                 case 'process-image':
                     $car = Cars::first(); // Simulación con el primer coche

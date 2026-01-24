@@ -10,7 +10,8 @@ class CarModelsController extends Controller
 {
     public function index()
     {
-        return CarModels::with('marca')->get();
+        // Corrected relationship name from 'marca' to 'brand'
+        return CarModels::with('brand')->get();
     }
 
     public function store(Request $request)
@@ -25,7 +26,8 @@ class CarModelsController extends Controller
 
     public function show($id)
     {
-        return CarModels::with('marca')->findOrFail($id);
+        // Corrected relationship name from 'marca' to 'brand'
+        return CarModels::with('brand')->findOrFail($id);
     }
 
     public function update(Request $request, $id)

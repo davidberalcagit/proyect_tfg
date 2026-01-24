@@ -1,29 +1,61 @@
 <?php
 
 use App\Models\User;
+use App\Jobs\SendWelcomeEmailJob;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Queue;
 use Laravel\Sanctum\Sanctum;
 
-beforeEach(function () {
-    $this->seed(Database\Seeders\DatabaseSeeder::class);
-});
+test('login returns token with valid credentials', function () {
+    Queue::fake();
+    $user = User::factory()->create([
+        'email' => 'test@example.com',
+        'password' => Hash::make('password'),
+    ]);
 
-test('api user can get their profile', function () {
-    $user = User::factory()->create();
-
-    Sanctum::actingAs($user, ['*']);
-
-    $response = $this->getJson('/api/user');
+    $response = $this->postJson(route('api.login'), [
+        'email' => 'test@example.com',
+        'password' => 'password',
+    ]);
 
     $response->assertStatus(200)
-             ->assertJson(['id' => $user->id, 'email' => $user->email]);
+             ->assertJsonStructure(['accessToken', 'token_type', 'user']);
+
+    Queue::assertPushed(SendWelcomeEmailJob::class);
 });
 
-test('unauthenticated user cannot access protected api routes', function () {
-    $response = $this->getJson('/api/user');
+test('login fails with invalid credentials', function () {
+    $user = User::factory()->create([
+        'email' => 'test@example.com',
+        'password' => Hash::make('password'),
+    ]);
 
-    $response->assertStatus(401);
+    $response = $this->postJson(route('api.login'), [
+        'email' => 'test@example.com',
+        'password' => 'wrongpassword',
+    ]);
+
+    $response->assertStatus(401)
+             ->assertJson(['message' => 'Credenciales incorrectas']);
 });
 
-// Si tienes rutas de login/register específicas para API, añádelas aquí.
-// Por defecto Jetstream usa cookies para SPA o tokens manuales.
-// Asumimos que la autenticación funciona vía Sanctum.
+test('login validates input', function () {
+    $response = $this->postJson(route('api.login'), []);
+
+    $response->assertStatus(422)
+             ->assertJsonValidationErrors(['email', 'password']);
+});
+
+test('logout deletes tokens', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    $response = $this->postJson(route('api.logout'));
+
+    $response->assertStatus(200)
+             ->assertJson(['message' => 'Sesión cerrada correctamente']);
+
+    // Ensure tokens are deleted (Sanctum uses database tokens usually, but actingAs might mock it.
+    // If using DB driver, we can check DB. If using array driver in tests, it might be different.
+    // Assuming standard setup, we trust the controller logic calling $user->tokens()->delete())
+});

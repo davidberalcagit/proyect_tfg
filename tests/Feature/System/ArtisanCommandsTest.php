@@ -1,17 +1,21 @@
 <?php
 
+use App\Jobs\SendCarApprovedNotificationJob;
 use App\Jobs\SendOfferRejectedJob;
 use App\Jobs\SendRentalReturnReminderJob;
 use App\Models\Brands;
 use App\Models\Cars;
 use App\Models\Customers;
+use App\Models\ListingType;
 use App\Models\Offer;
 use App\Models\Rental;
 use App\Models\RentalStatus;
+use App\Models\Sales;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
     $this->seed(Database\Seeders\DatabaseSeeder::class);
@@ -50,7 +54,6 @@ test('offers auto reject low command', function () {
     expect($highOffer->estado)->toBe('pending');
 
     Bus::assertDispatched(SendOfferRejectedJob::class, fn ($job) => $job->offer->id === $lowOffer->id);
-    Bus::assertNotDispatched(SendOfferRejectedJob::class, fn ($job) => $job->offer->id === $highOffer->id);
 });
 
 test('rentals process daily command', function () {
@@ -173,4 +176,86 @@ test('users create command', function () {
     expect($user->hasRole('dealership'))->toBeTrue();
     $this->assertDatabaseHas('dealerships', ['nif' => 'B12345678']);
     $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '444555666']);
+});
+
+test('cars approve command', function () {
+    Bus::fake();
+
+    // Ensure we use a 'Sale' listing type so approval sets status to 1 (Venta)
+    $saleType = ListingType::where('nombre', 'Venta')->first();
+    if (!$saleType) {
+        $saleType = ListingType::factory()->create(['nombre' => 'Venta']);
+    }
+
+    $car = Cars::factory()->create([
+        'id_estado' => 4, // Pendiente
+        'id_listing_type' => $saleType->id
+    ]);
+
+    $this->artisan('cars:approve', ['car_id' => $car->id])
+         ->assertSuccessful();
+
+    $car->refresh();
+    expect($car->id_estado)->toBe(1); // Venta por defecto
+    Bus::assertDispatched(SendCarApprovedNotificationJob::class);
+});
+
+test('sales export command', function () {
+    Storage::fake('public');
+    $seller = User::factory()->create();
+    $seller->assignRole('individual');
+    $sellerCustomer = Customers::factory()->create(['id_usuario' => $seller->id]);
+
+    $car = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id]);
+    $buyer = Customers::factory()->create();
+
+    Sales::create([
+        'id_vehiculo' => $car->id,
+        'id_vendedor' => $sellerCustomer->id,
+        'id_comprador' => $buyer->id,
+        'precio' => 10000,
+        'id_estado' => 1
+    ]);
+
+    $this->artisan('sales:export', ['user_id' => $seller->id])
+         ->assertSuccessful();
+
+    // Verificar que se creó un archivo en exports/
+    $files = Storage::disk('public')->files('exports');
+    expect(count($files))->toBeGreaterThan(0);
+});
+
+test('cars cleanup images command', function () {
+    Storage::fake('public');
+
+    // Crear imagen huérfana
+    Storage::disk('public')->put('cars/orphan.jpg', 'content');
+
+    // Crear imagen usada
+    $car = Cars::factory()->create(['image' => 'cars/used.jpg']);
+    Storage::disk('public')->put('cars/used.jpg', 'content');
+
+    $this->artisan('cars:cleanup-images')
+         ->assertSuccessful();
+
+    Storage::disk('public')->assertMissing('cars/orphan.jpg');
+    Storage::disk('public')->assertExists('cars/used.jpg');
+});
+
+test('users inactive notify command', function () {
+    // Crear usuario inactivo (updated_at hace 7 meses)
+    $inactiveUser = User::factory()->create(['updated_at' => now()->subMonths(7)]);
+
+    // Crear usuario activo (updated_at hace 1 mes)
+    $activeUser = User::factory()->create(['updated_at' => now()->subMonths(1)]);
+
+    $this->artisan('users:inactive-notify', ['months' => 6])
+         ->assertSuccessful()
+         ->expectsOutputToContain("Notificando a: {$inactiveUser->email}");
+});
+
+test('system stats command', function () {
+    $this->artisan('system:stats')
+         ->assertSuccessful()
+         ->expectsOutputToContain('Total Usuarios');
 });

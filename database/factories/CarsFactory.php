@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brands;
 use App\Models\CarModels;
+use App\Models\CarStatus;
 use App\Models\Color;
 use App\Models\Customers;
 use App\Models\Fuels;
@@ -43,6 +44,26 @@ class CarsFactory extends Factory
 
         // Asignar listing type aleatorio (1: Venta, 2: Alquiler)
         $listingType = ListingType::inRandomOrder()->first() ?? ListingType::factory()->create();
+
+        // Ensure statuses exist
+        $statuses = [
+            1 => 'En Venta',
+            2 => 'Vendido',
+            3 => 'En Alquiler',
+            4 => 'Pendiente',
+            5 => 'Rechazado',
+            6 => 'Alquilado'
+        ];
+
+        foreach ($statuses as $id => $name) {
+            if (!CarStatus::find($id)) {
+                // Force create with specific ID
+                $status = new CarStatus();
+                $status->id = $id;
+                $status->nombre = $name;
+                $status->save();
+            }
+        }
 
         // Determinar estado coherente
         if ($listingType->nombre === 'Venta') {

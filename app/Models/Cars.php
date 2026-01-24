@@ -63,19 +63,45 @@ class Cars extends Model
         });
     }
 
+    // Nuevo Scope 8: Recientes
+    public function scopeRecent($query, $days = 7)
+    {
+        return $query->where('created_at', '>=', now()->subDays($days));
+    }
+
+    // Nuevo Scope 9: Baratos
+    public function scopeCheap($query, $maxPrice = 5000)
+    {
+        return $query->where('precio', '<=', $maxPrice);
+    }
+
     // Relaciones
     public function vendedor(){
         return $this->belongsTo(Customers::class, 'id_vendedor');
     }
 
     public function sales(){
-        return $this->belongsTo(Sales::class, 'id_vehiculo');
+        return $this->hasOne(Sales::class, 'id_vehiculo');
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class, 'id_vehiculo');
+    }
+
+    // Relación N:N para Ofertas (Bidders)
+    public function bidders()
+    {
+        return $this->belongsToMany(Customers::class, 'offers', 'id_vehiculo', 'id_comprador')
+                    ->withPivot('cantidad', 'estado', 'id_vendedor')
+                    ->withTimestamps();
     }
 
     public function rentals(){
         return $this->hasMany(Rental::class, 'id_vehiculo');
     }
 
+    // Relación N:N para Alquileres (Renters)
     public function renters()
     {
         return $this->belongsToMany(Customers::class, 'rentals', 'id_vehiculo', 'id_cliente')
@@ -83,9 +109,11 @@ class Cars extends Model
                     ->withTimestamps();
     }
 
+    // Relación N:N para Favoritos (FavoritedBy)
     public function favoritedBy()
     {
-        return $this->belongsToMany(User::class, 'favorites', 'car_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'favorites', 'car_id', 'user_id')
+                    ->withTimestamps();
     }
 
     public function marcha(){

@@ -17,11 +17,8 @@ class IndividualsFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->name(),
-            'apellidos' => $this->faker->lastName(),
-            'telefono' => $this->faker->numerify('6########'),
-            'dni'=>$this->faker->numerify("########"),
-            'correo' => $this->faker->unique()->safeEmail(),
+            'dni' => $this->faker->numerify("########") . $this->faker->randomLetter(),
+            'fecha_nacimiento' => $this->faker->date(),
         ];
     }
 }

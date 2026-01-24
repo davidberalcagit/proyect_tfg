@@ -10,6 +10,7 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CustomerController; // Importar
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +47,9 @@ Route::get('lang/{locale}', function ($locale) {
 
 Route::resource('cars', CarsController::class);
 
+// Ruta pública de perfil de vendedor
+Route::get('/seller/{customer}', [CustomerController::class, 'show'])->name('seller.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/my-cars', [CarsController::class, 'myCars'])->name('cars.my_cars');
 
@@ -60,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/sales/terms', [SalesController::class, 'downloadSaleTerms'])->name('sales.terms');
     Route::post('/cars/{car}/offer', [OfferController::class, 'store'])->name('offers.store');
     Route::get('/transactions', [SalesController::class, 'index'])->name('sales.index');
+    Route::get('/sales/export', [SalesController::class, 'export'])->name('sales.export');
     Route::get('/sales/{sale}/receipt', [SalesController::class, 'downloadReceipt'])->name('sales.receipt');
     Route::get('/rentals/{rental}/receipt', [SalesController::class, 'downloadRentalReceipt'])->name('rentals.receipt');
 
@@ -96,10 +101,12 @@ Route::middleware('auth')->group(function () {
     // Soporte
     Route::middleware(['role:soporte|admin'])->group(function () {
         Route::get('/support/users', [SupportController::class, 'index'])->name('support.users.index');
+        Route::get('/support/users/create', [SupportController::class, 'create'])->name('support.users.create');
+        Route::post('/support/users', [SupportController::class, 'store'])->name('support.users.store');
         Route::get('/support/users/{user}', [SupportController::class, 'show'])->name('support.users.show');
         Route::get('/support/users/{user}/edit', [SupportController::class, 'edit'])->name('support.users.edit');
         Route::put('/support/users/{user}', [SupportController::class, 'update'])->name('support.users.update');
-        Route::delete('/support/users/{user}', [SupportController::class, 'destroy'])->name('support.users.destroy'); // Nueva ruta
+        Route::delete('/support/users/{user}', [SupportController::class, 'destroy'])->name('support.users.destroy');
     });
 });
 

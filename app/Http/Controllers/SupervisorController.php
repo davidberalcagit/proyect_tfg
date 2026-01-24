@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\CarRejected; // Importar Evento
-use App\Jobs\SendCarApprovedNotificationJob;
-use App\Models\Brands;
-use App\Models\CarModels;
+use App\Events\CarRejected;
 use App\Models\Cars;
-use App\Models\Color;
 use App\Models\Rental;
 use App\Models\Sales;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class SupervisorController extends Controller
 {
@@ -86,42 +82,12 @@ class SupervisorController extends Controller
 
     public function approveCar(Request $request, $id)
     {
-        $car = Cars::findOrFail($id);
+        // Usar comando Artisan para aprobar el coche (Requisito del proyecto)
+        $exitCode = Artisan::call('cars:approve', ['car_id' => $id]);
 
-        DB::transaction(function () use ($car) {
-            if ($car->temp_brand) {
-                $brand = Brands::firstOrCreate(['nombre' => $car->temp_brand]);
-                $car->id_marca = $brand->id;
-                $car->temp_brand = null;
-            }
-
-            if ($car->temp_model) {
-                if (!$car->id_marca) throw new \Exception("Error: Marca no definida.");
-
-                $model = CarModels::firstOrCreate([
-                    'nombre' => $car->temp_model,
-                    'id_marca' => $car->id_marca
-                ]);
-                $car->id_modelo = $model->id;
-                $car->temp_model = null;
-            }
-
-            if ($car->temp_color) {
-                $color = Color::firstOrCreate(['nombre' => $car->temp_color]);
-                $car->id_color = $color->id;
-                $car->temp_color = null;
-            }
-
-            if ($car->listingType && $car->listingType->nombre === 'Alquiler') {
-                $car->id_estado = 3;
-            } else {
-                $car->id_estado = 1;
-            }
-
-            $car->save();
-        });
-
-        SendCarApprovedNotificationJob::dispatch($car);
+        if ($exitCode !== 0) {
+            return redirect()->back()->with('error', 'Error al aprobar el coche. Revise los logs.');
+        }
 
         return redirect()->back()->with('success', 'Coche aprobado correctamente.');
     }
@@ -137,7 +103,6 @@ class SupervisorController extends Controller
         $car->rejection_reason = $request->reason;
         $car->save();
 
-        // Disparar evento en lugar de Job directo
         CarRejected::dispatch($car, $request->reason);
 
         return redirect()->back()->with('success', 'Coche rechazado. Razón: ' . $request->reason);

@@ -16,6 +16,15 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: '#284961',
+                secondary: '#4C86B3',
+                accent: '#B35F12',
+                // 'border' ya existe en tailwind como borderColor, mejor no sobrescribir 'border' como color genérico si no es necesario, usaremos gray-200 (#E5E7EB) que es el estándar.
+                // Pero podemos definirlo como 'custom-border' si quieres.
+                'custom-border': '#E5E7EB',
+                'custom-text': '#6B7280',
+            },
         },
     },
 

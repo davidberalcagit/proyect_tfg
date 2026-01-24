@@ -20,8 +20,10 @@ class SalesController extends Controller
         }
 
         return Sales::with(['vehiculo', 'vendedor', 'comprador'])
-            ->where('id_vendedor', $userCustomer->id)
-            ->orWhere('id_comprador', $userCustomer->id)
+            ->where(function ($query) use ($userCustomer) {
+                $query->where('id_vendedor', $userCustomer->id)
+                      ->orWhere('id_comprador', $userCustomer->id);
+            })
             ->paginate(20);
     }
 

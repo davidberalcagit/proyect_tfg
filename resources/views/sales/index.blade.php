@@ -1,8 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Transactions') }}
-        </h2>
+        {{-- Eliminado text-gray-800 --}}
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl leading-tight">
+                {{ __('My Transactions') }}
+            </h2>
+            <a href="{{ route('sales.export') }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring focus:ring-green-300 disabled:opacity-25 transition">
+                {{ __('Export Sales (CSV)') }}
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12" x-data="{ activeTab: 'offers' }">
@@ -12,19 +18,19 @@
             <div class="border-b border-gray-200 mb-6">
                 <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                     <button @click="activeTab = 'offers'"
-                        :class="{ 'border-indigo-500 text-indigo-600': activeTab === 'offers', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'offers' }"
+                        :class="{ 'border-[#284961] text-[#284961]': activeTab === 'offers', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'offers' }"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         {{ __('Offers') }}
                     </button>
 
                     <button @click="activeTab = 'rentals'"
-                        :class="{ 'border-indigo-500 text-indigo-600': activeTab === 'rentals', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'rentals' }"
+                        :class="{ 'border-[#284961] text-[#284961]': activeTab === 'rentals', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'rentals' }"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         {{ __('Rentals') }}
                     </button>
 
                     <button @click="activeTab = 'history'"
-                        :class="{ 'border-indigo-500 text-indigo-600': activeTab === 'history', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'history' }"
+                        :class="{ 'border-[#284961] text-[#284961]': activeTab === 'history', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'history' }"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         {{ __('History') }}
                     </button>
@@ -36,7 +42,7 @@
                 <!-- 1. Ofertas Recibidas -->
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 border-b border-gray-200 bg-indigo-50">
-                        <h3 class="text-lg font-medium text-indigo-900 mb-4">{{ __('Received Offers (Sales)') }}</h3>
+                        <h3 class="text-lg font-medium text-[#284961] mb-4">{{ __('Received Offers (Sales)') }}</h3>
                         @if($receivedOffers->isEmpty())
                             <p class="text-gray-500">{{ __('No offers received.') }}</p>
                         @else
@@ -55,7 +61,7 @@
                                         @foreach($receivedOffers as $offer)
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <a href="{{ route('cars.show', $offer->car) }}" class="text-indigo-600 hover:text-indigo-900">{{ $offer->car->title }}</a>
+                                                    <a href="{{ route('cars.show', $offer->car) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $offer->car->title }}</a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $offer->buyer->nombre_contacto }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($offer->cantidad, 2) }} €</td>
@@ -112,7 +118,9 @@
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($sentOffers as $offer)
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">{{ $offer->car->title }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('cars.show', $offer->car) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $offer->car->title }}</a>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $offer->seller->nombre_contacto }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($offer->cantidad, 2) }} €</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -170,12 +178,14 @@
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($rentals as $rental)
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">{{ $rental->car->title }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('cars.show', $rental->car) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $rental->car->title }}</a>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     {{ $rental->fecha_inicio->format('d/m/Y') }} - {{ $rental->fecha_fin->format('d/m/Y') }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($rental->precio_total, 2) }} €</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-indigo-600 font-bold">
+                                                <td class="px-6 py-4 whitespace-nowrap text-[#284961] font-bold">
                                                     {{ $rental->fecha_fin->format('d/m/Y') }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -202,7 +212,7 @@
                                                     @elseif($rental->id_estado == 1)
                                                         <span class="text-gray-500 text-xs">{{ __('Waiting for owner') }}</span>
                                                     @elseif(in_array($rental->id_estado, [2, 3, 4, 5]))
-                                                        <a href="{{ route('rentals.receipt', $rental) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Download Receipt') }}</a>
+                                                        <a href="{{ route('rentals.receipt', $rental) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ __('Download Receipt') }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -236,7 +246,9 @@
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($myRentalsAsOwner as $rental)
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">{{ $rental->car->title }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('cars.show', $rental->car) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $rental->car->title }}</a>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $rental->customer->nombre_contacto }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     {{ $rental->fecha_inicio->format('d/m/Y') }} - {{ $rental->fecha_fin->format('d/m/Y') }}
@@ -266,7 +278,7 @@
                                                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('Reject rental?') }}')">{{ __('Reject') }}</button>
                                                         </form>
                                                     @elseif(in_array($rental->id_estado, [2, 3, 4, 5]))
-                                                        <a href="{{ route('rentals.receipt', $rental) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Download Receipt') }}</a>
+                                                        <a href="{{ route('rentals.receipt', $rental) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ __('Download Receipt') }}</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -302,12 +314,14 @@
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($purchases as $sale)
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">{{ $sale->vehiculo->title }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('cars.show', $sale->vehiculo) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $sale->vehiculo->title }}</a>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $sale->vendedor->nombre_contacto }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($sale->precio, 2) }} €</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $sale->created_at->format('d/m/Y') }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <a href="{{ route('sales.receipt', $sale) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Download Receipt') }}</a>
+                                                    <a href="{{ route('sales.receipt', $sale) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ __('Download Receipt') }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -339,12 +353,14 @@
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($sales as $sale)
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">{{ $sale->vehiculo->title }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('cars.show', $sale->vehiculo) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ $sale->vehiculo->title }}</a>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $sale->comprador->nombre_contacto }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($sale->precio, 2) }} €</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $sale->created_at->format('d/m/Y') }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <a href="{{ route('sales.receipt', $sale) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Download Receipt') }}</a>
+                                                    <a href="{{ route('sales.receipt', $sale) }}" class="text-[#284961] hover:text-[#4C86B3]">{{ __('Download Receipt') }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach

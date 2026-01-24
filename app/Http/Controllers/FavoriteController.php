@@ -14,16 +14,26 @@ class FavoriteController extends Controller
         return view('cars.favorites', compact('cars'));
     }
 
-    public function toggle(Cars $car)
+    public function toggle(Request $request, Cars $car)
     {
         $user = Auth::user();
+        $attached = false;
 
         if ($user->favorites()->where('car_id', $car->id)->exists()) {
             $user->favorites()->detach($car->id);
             $message = 'Eliminado de favoritos.';
+            $attached = false;
         } else {
             $user->favorites()->attach($car->id);
             $message = 'Añadido a favoritos.';
+            $attached = true;
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'attached' => $attached,
+                'message' => $message
+            ]);
         }
 
         return redirect()->back()->with('success', $message);

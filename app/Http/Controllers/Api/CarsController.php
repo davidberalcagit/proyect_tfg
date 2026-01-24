@@ -71,10 +71,11 @@ class CarsController extends Controller
         return Cars::with(['marca', 'modelo', 'status'])->findOrFail($id);
     }
 
-    public function update(UpdateCarRequest $request, $id)
+    public function update(UpdateCarRequest $request, Cars $car)
     {
-        $car = Cars::findOrFail($id);
+        // Model binding injects $car. Policy check is done in FormRequest.
 
+        // Additional check if policy didn't cover it (redundant if policy is correct)
         if ($car->id_vendedor !== Auth::user()->customer->id) {
              return response()->json(['message' => 'No tienes permiso para editar este coche.'], 403);
         }
@@ -87,10 +88,9 @@ class CarsController extends Controller
         return response()->json($car, 200);
     }
 
-    public function destroy($id)
+    public function destroy(Cars $car)
     {
-        $car = Cars::findOrFail($id);
-
+        // Using model binding for consistency
         if ($car->id_vendedor !== Auth::user()->customer->id) {
              return response()->json(['message' => 'No tienes permiso para eliminar este coche.'], 403);
         }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl leading-tight">
             {{ __('User Management') }}
         </h2>
     </x-slot>
@@ -10,16 +10,24 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 border-b border-gray-200">
 
-                    <!-- Buscador -->
-                    <form method="GET" action="{{ route('support.users.index') }}" class="mb-6 flex gap-4">
-                        <x-input type="text" name="search" placeholder="{{ __('Search by name or email...') }}" value="{{ request('search') }}" class="w-full md:w-1/3" />
-                        <x-button>{{ __('Search') }}</x-button>
-                        @if(request('search'))
-                            <a href="{{ route('support.users.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 transition">
-                                {{ __('Clear') }}
-                            </a>
-                        @endif
-                    </form>
+                    <!-- Barra de herramientas: Buscador y Botón Crear -->
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                        <!-- Buscador -->
+                        <form method="GET" action="{{ route('support.users.index') }}" class="flex w-full md:w-auto gap-2">
+                            <x-input type="text" name="search" placeholder="{{ __('Search by name or email...') }}" value="{{ request('search') }}" class="w-full md:w-64" />
+                            <x-button>{{ __('Search') }}</x-button>
+                            @if(request('search'))
+                                <a href="{{ route('support.users.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 transition">
+                                    {{ __('Clear') }}
+                                </a>
+                            @endif
+                        </form>
+
+                        <!-- Botón Crear -->
+                        <a href="{{ route('support.users.create') }}" class="inline-flex items-center px-4 py-2 bg-[#B35F12] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-[#9A5210] focus:outline-none focus:ring-2 focus:ring-[#B35F12] focus:ring-offset-2 transition whitespace-nowrap">
+                            {{ __('Create User') }}
+                        </a>
+                    </div>
 
                     <!-- Tabla -->
                     <div class="overflow-x-auto">

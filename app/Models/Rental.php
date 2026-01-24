@@ -38,6 +38,12 @@ class Rental extends Model
                      });
     }
 
+    // Nuevo Scope 10: Activos (Usando)
+    public function scopeActive($query)
+    {
+        return $query->where('id_estado', 3);
+    }
+
     // Relaciones
     public function car()
     {

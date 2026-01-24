@@ -7,7 +7,9 @@ use App\Models\Rental;
 use App\Models\Sales;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SalesController extends Controller
 {
@@ -19,8 +21,6 @@ class SalesController extends Controller
 
         $customerId = Auth::user()->customer->id;
 
-        // Usar Scope: pending() y forSeller()
-        // Nota: forSeller ya incluye with() y latest()
         $receivedOffers = Offer::forSeller($customerId)
             ->whereIn('estado', ['pending', 'accepted_by_seller'])
             ->get();
@@ -85,5 +85,33 @@ class SalesController extends Controller
     {
         $pdf = Pdf::loadView('pdf.sale_terms');
         return $pdf->stream('Terminos_Compraventa.pdf');
+    }
+
+    public function export()
+    {
+        $user = Auth::user();
+        if (!$user->customer) abort(403);
+
+        // Llamar al comando para exportar ventas
+        $exitCode = Artisan::call('sales:export', ['user_id' => $user->id]);
+
+        if ($exitCode !== 0) {
+            return redirect()->back()->with('error', 'Error al exportar ventas.');
+        }
+
+        // Buscar el archivo más reciente en exports/
+        $files = Storage::disk('public')->files('exports');
+        // Filtrar por ID de usuario para asegurar que es el suyo (aunque el comando usa timestamp)
+        $userFiles = array_filter($files, fn($f) => str_contains($f, "sales_export_{$user->id}_"));
+
+        if (empty($userFiles)) {
+            return redirect()->back()->with('info', 'No se encontraron ventas para exportar.');
+        }
+
+        // Ordenar para obtener el último
+        rsort($userFiles);
+        $latestFile = $userFiles[0];
+
+        return Storage::disk('public')->download($latestFile);
     }
 }

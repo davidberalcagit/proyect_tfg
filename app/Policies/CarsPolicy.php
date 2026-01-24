@@ -60,7 +60,10 @@ class CarsPolicy
         }
 
         if ($user->customer && $user->customer->id === $car->id_vendedor) {
-            return $car->id_estado === 4;
+            // Permitir borrar si es dueño, independientemente del estado (el controlador validará transacciones)
+            // O restringir estados "finales" como Vendido (2) si se desea.
+            // Por ahora permitimos todo y filtramos en controlador.
+            return true;
         }
 
         return false;

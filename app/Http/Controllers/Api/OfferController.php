@@ -20,8 +20,10 @@ class OfferController extends Controller
 
         // Mostrar ofertas hechas por mí O recibidas por mis coches
         return Offer::with(['car', 'buyer', 'seller'])
-            ->where('id_comprador', $userCustomer->id)
-            ->orWhere('id_vendedor', $userCustomer->id)
+            ->where(function ($query) use ($userCustomer) {
+                $query->where('id_comprador', $userCustomer->id)
+                      ->orWhere('id_vendedor', $userCustomer->id);
+            })
             ->paginate(20);
     }
 
@@ -48,7 +50,7 @@ class OfferController extends Controller
         // Validar si ya existe una oferta pendiente para este coche de este usuario (opcional)
         $existingOffer = Offer::where('id_vehiculo', $car->id)
             ->where('id_comprador', $buyer->id)
-            ->where('estado', 'pendiente') // Asumiendo que tienes un campo estado
+            ->where('estado', 'pendiente')
             ->first();
 
         if ($existingOffer) {
@@ -57,12 +59,11 @@ class OfferController extends Controller
 
         $offer = Offer::create([
             'id_vehiculo' => $car->id,
-            'id_vendedor' => $car->id_vendedor, // El vendedor es el dueño del coche
+            'id_vendedor' => $car->id_vendedor,
             'id_comprador' => $buyer->id,
-            'precio_oferta' => $request->precio_oferta,
+            'cantidad' => $request->precio_oferta,
             'mensaje' => $request->mensaje,
-            'estado' => 'pendiente', // Estado inicial
-            'fecha_oferta' => now(),
+            'estado' => 'pendiente',
         ]);
 
         return response()->json($offer, 201);
@@ -87,17 +88,18 @@ class OfferController extends Controller
         $offer = Offer::findOrFail($id);
         $userCustomer = Auth::user()->customer;
 
-        // Lógica de actualización:
-        // - El comprador puede cambiar el precio si la oferta está pendiente.
-        // - El vendedor puede ACEPTAR o RECHAZAR la oferta (cambiar estado).
-
         if ($offer->id_comprador === $userCustomer->id) {
             // Es el comprador editando su oferta
             $request->validate([
                 'precio_oferta' => 'numeric|min:0',
-                'mensaje' => 'string|max:500',
             ]);
-            $offer->update($request->only(['precio_oferta', 'mensaje']));
+
+            $data = [];
+            if ($request->has('precio_oferta')) {
+                $data['cantidad'] = $request->precio_oferta;
+            }
+
+            $offer->update($data);
 
         } elseif ($offer->id_vendedor === $userCustomer->id) {
             // Es el vendedor respondiendo a la oferta

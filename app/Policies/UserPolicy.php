@@ -26,6 +26,14 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $user->hasRole(['admin', 'soporte']);
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, User $model): bool
@@ -33,7 +41,7 @@ class UserPolicy
         if ($user->hasRole('admin')) {
             return true;
         }
-        // Soporte puede editar (opcional, si quieres)
+        // Soporte puede editar
         if ($user->hasRole('soporte')) {
             return true;
         }

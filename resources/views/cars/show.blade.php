@@ -24,20 +24,7 @@
                             @auth
                                 @if(!Auth::user()->customer || Auth::user()->customer->id !== $car->id_vendedor)
                                     <div class="absolute top-2 right-2 z-10">
-                                        <form action="{{ route('favorites.toggle', $car) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="p-2 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 transition shadow-md">
-                                                @if(Auth::user()->favorites->contains($car->id))
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                                                    </svg>
-                                                @else
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                                    </svg>
-                                                @endif
-                                            </button>
-                                        </form>
+                                        <livewire:toggle-favorite :car="$car" />
                                     </div>
                                 @endif
                             @endauth
@@ -51,6 +38,26 @@
                                 <div class="col-span-2">
                                     <span class="text-gray-500 block">{{ __('Price') }}</span>
                                     <span class="text-2xl font-bold text-indigo-600">{{ number_format($car->precio, 2) }} €</span>
+                                </div>
+
+                                {{-- Vendedor --}}
+                                <div class="col-span-2">
+                                    <span class="text-gray-500 block">{{ __('Seller') }}</span>
+                                    <span class="font-medium">
+                                        @if($car->vendedor)
+                                            @if(Auth::check() && Auth::user()->can('view users') && $car->vendedor->user)
+                                                <a href="{{ route('support.users.show', $car->vendedor->user) }}" class="text-indigo-600 hover:underline">
+                                                    {{ $car->vendedor->nombre_contacto }}
+                                                </a>
+                                            @else
+                                                <a href="{{ route('seller.show', $car->vendedor) }}" class="text-indigo-600 hover:underline">
+                                                    {{ $car->vendedor->nombre_contacto }}
+                                                </a>
+                                            @endif
+                                        @else
+                                            N/A
+                                        @endif
+                                    </span>
                                 </div>
 
                                 <div>
@@ -132,24 +139,7 @@
                                     @if(Auth::user()->customer && Auth::user()->customer->id !== $car->id_vendedor)
                                         @if($car->id_estado === 1)
                                             @if(Auth::user()->can('buy cars'))
-                                                <form action="{{ route('offers.store', $car) }}" method="POST" class="flex flex-col gap-2">
-                                                    @csrf
-                                                    <div class="flex items-center gap-2">
-                                                        <input type="number" name="cantidad" value="{{ $car->precio }}" class="form-input rounded-md shadow-sm w-32 text-sm h-10" required min="1">
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition h-10">
-                                                            {{ __('Make Offer') }}
-                                                        </button>
-                                                    </div>
-                                                    <label class="flex items-center mt-1">
-                                                        <x-checkbox name="terms" required />
-                                                        <span class="ml-2 text-xs text-gray-600">
-                                                            {{ __('I agree to the') }}
-                                                            <a href="{{ route('sales.terms') }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 underline">
-                                                                {{ __('purchase terms') }}
-                                                            </a>
-                                                        </span>
-                                                    </label>
-                                                </form>
+                                                <livewire:make-offer :car="$car" />
                                             @endif
                                         @elseif($car->id_estado === 3)
                                             {{-- Alquiler (Solo si está en alquiler) --}}
@@ -160,10 +150,13 @@
                                     @endif
 
                                     {{-- Editar/Borrar (Admin siempre, Dueño solo si pendiente) --}}
-                                    @if(Auth::user()->hasRole('admin') || (Auth::user()->customer && Auth::user()->customer->id === $car->id_vendedor && $car->id_estado == 4))
+                                    @can('update', $car)
                                         <a href="{{ route('cars.edit', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
                                             {{ __('Edit') }}
                                         </a>
+                                    @endcan
+
+                                    @can('delete', $car)
                                         <form action="{{ route('cars.destroy', $car) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
                                             @csrf
                                             @method('DELETE')
@@ -171,7 +164,7 @@
                                                 {{ __('Delete') }}
                                             </button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 @endauth
                             </div>
                         </div>

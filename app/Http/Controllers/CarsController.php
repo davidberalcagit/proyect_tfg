@@ -36,9 +36,34 @@ class CarsController extends Controller
             $query->search($request->search);
         }
 
-        $cars = $query->inRandomOrder()->paginate(51);
+        // Filtros avanzados usando scopeFilter
+        $filters = $request->only(['brand', 'min_price', 'max_price']);
+        // Limpiar filtros vacíos
+        $filters = array_filter($filters, fn($value) => !is_null($value) && $value !== '');
 
-        return view('cars.index', compact('cars'));
+        if (!empty($filters)) {
+            $query->filter($filters);
+        }
+
+        // Ordenamiento y Scopes adicionales
+        if ($request->has('sort')) {
+            if ($request->sort === 'recent') {
+                $query->recent(30)->latest(); // Usando scopeRecent
+            } elseif ($request->sort === 'cheap') {
+                $query->orderBy('precio', 'asc');
+            } elseif ($request->sort === 'expensive') {
+                $query->orderBy('precio', 'desc');
+            }
+        } else {
+            $query->inRandomOrder();
+        }
+
+        $cars = $query->paginate(51)->withQueryString(); // Mantener filtros en paginación
+
+        // Obtener marcas con sus modelos para el sidebar
+        $brands = Brands::with('models')->orderBy('nombre')->get();
+
+        return view('cars.index', compact('cars', 'brands'));
     }
 
     public function myCars()
@@ -157,6 +182,20 @@ class CarsController extends Controller
     public function destroy(Cars $car)
     {
         $this->authorize('delete', $car);
+
+        // Verificar si el coche tiene transacciones activas o completadas
+        if ($car->sales()->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene ventas asociadas.');
+        }
+
+        if ($car->rentals()->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene alquileres asociados.');
+        }
+
+        // Si tiene ofertas aceptadas, también debería bloquearse
+        if ($car->offers()->whereIn('estado', ['accepted_by_seller', 'accepted_by_buyer'])->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene ofertas aceptadas.');
+        }
 
         if ($car->image) {
             Storage::disk('public')->delete($car->image);
