@@ -11,6 +11,8 @@ class ModelManager extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'tailwind';
+
     public $nombre, $id_marca, $model_id;
     public $isModalOpen = false;
 

@@ -10,142 +10,180 @@
 
             <!-- Mensajes de éxito/error -->
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <strong class="font-bold">Success!</strong>
-                    <span class="block sm:inline">{{ session('success') }}</span>
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-sm" role="alert">
+                    <p class="font-bold">¡Éxito!</p>
+                    <p>{{ session('success') }}</p>
                     @if(session('output'))
-                        <pre class="mt-2 text-xs bg-gray-100 p-2 rounded">{{ session('output') }}</pre>
+                        <div class="mt-2 bg-gray-800 text-green-400 p-3 rounded text-xs font-mono overflow-x-auto">
+                            {{ session('output') }}
+                        </div>
                     @endif
                 </div>
             @endif
 
             @if (session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <strong class="font-bold">Error!</strong>
-                    <span class="block sm:inline">{{ session('error') }}</span>
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm" role="alert">
+                    <p class="font-bold">Error</p>
+                    <p>{{ session('error') }}</p>
                 </div>
             @endif
 
-            <!-- Sección de Estadísticas -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Resumen del Sistema</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-blue-100 p-4 rounded-lg">
-                        <span class="block text-2xl font-bold">{{ \App\Models\User::count() }}</span>
-                        <span class="text-gray-600">Usuarios</span>
+            <!-- 1. Sección de Estadísticas -->
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8 border-t-4 border-[#284961]">
+                <h3 class="text-lg font-bold text-[#284961] mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    Resumen del Sistema
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-500 text-sm font-medium uppercase">Usuarios</span>
+                            <span class="block text-3xl font-bold text-[#284961]">{{ \App\Models\User::count() }}</span>
+                        </div>
+                        <div class="p-3 bg-blue-100 rounded-full text-[#284961]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
                     </div>
-                    <div class="bg-green-100 p-4 rounded-lg">
-                        <span class="block text-2xl font-bold">{{ \App\Models\Cars::count() }}</span>
-                        <span class="text-gray-600">Coches</span>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-500 text-sm font-medium uppercase">Coches</span>
+                            <span class="block text-3xl font-bold text-[#284961]">{{ \App\Models\Cars::count() }}</span>
+                        </div>
+                        <div class="p-3 bg-green-100 rounded-full text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
                     </div>
-                    <div class="bg-yellow-100 p-4 rounded-lg">
-                        <span class="block text-2xl font-bold">{{ \App\Models\Sales::count() }}</span>
-                        <span class="text-gray-600">Ventas</span>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-500 text-sm font-medium uppercase">Ventas</span>
+                            <span class="block text-3xl font-bold text-[#284961]">{{ \App\Models\Sales::count() }}</span>
+                        </div>
+                        <div class="p-3 bg-yellow-100 rounded-full text-yellow-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Acciones del Sistema (Restaurado) -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Acciones del Sistema</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+            <!-- 2. Gestión de Tablas Auxiliares (Livewire CRUDs) -->
+            @livewire('admin.dashboard')
+
+            <!-- 3. Acciones del Sistema (Mantenimiento) -->
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8 border-t-4 border-[#B35F12]">
+                <h3 class="text-lg font-bold text-[#B35F12] mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Mantenimiento y Acciones
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Grupo: Mantenimiento -->
+                    <div class="col-span-full mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Mantenimiento del Servidor</div>
+
+                    <!-- Limpiar Caché -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="clear-cache">
-                        <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                            Limpiar Caché
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Limpiar Caché</h4>
+                            <p class="text-sm text-gray-600 mt-1">Elimina la caché de la aplicación para refrescar configuraciones.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344] text-white font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Optimizar -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="optimize">
-                        <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                            Optimizar
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Optimizar Sistema</h4>
+                            <p class="text-sm text-gray-600 mt-1">Reconstruye la caché y optimiza la carga de clases y rutas.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344] text-white font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Ejecutar Cola -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="queue-work">
-                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                            Ejecutar Cola
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Procesar Cola</h4>
+                            <p class="text-sm text-gray-600 mt-1">Ejecuta trabajos pendientes en la cola (emails, procesos en segundo plano).</p>
+                        </div>
+                        <button type="submit" class="w-full bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Grupo: Datos -->
+                    <div class="col-span-full mt-4 mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Gestión de Datos</div>
+
+                    <!-- Revisar Alquileres -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="check-rentals">
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Revisar Alquileres
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Revisar Alquileres</h4>
+                            <p class="text-sm text-gray-600 mt-1">Verifica estados de alquileres y actualiza disponibilidades.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-white border border-[#284961] text-[#284961] hover:bg-gray-100 font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Limpiar Imágenes -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-images">
-                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                            Limpiar Imágenes
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Limpiar Imágenes</h4>
+                            <p class="text-sm text-gray-600 mt-1">Elimina imágenes huérfanas que no están asociadas a ningún coche.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-white border border-red-500 text-red-600 hover:bg-red-50 font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="job" value="process-image">
-                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
-                            Procesar Imagen (Test)
-                        </button>
-                    </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Limpiar Ofertas -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-offers">
-                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
-                            Limpiar Ofertas
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Limpiar Ofertas</h4>
+                            <p class="text-sm text-gray-600 mt-1">Borra ofertas rechazadas antiguas para liberar espacio.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-white border border-orange-500 text-orange-600 hover:bg-orange-50 font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                    <form action="{{ route('admin.run-job') }}" method="POST">
+
+                    <!-- Auditar Precios -->
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="audit-prices">
-                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
-                            Auditar Precios
+                        <div class="mb-4">
+                            <h4 class="font-bold text-gray-800">Auditar Precios</h4>
+                            <p class="text-sm text-gray-600 mt-1">Genera un reporte de precios anómalos o fuera de rango.</p>
+                        </div>
+                        <button type="submit" class="w-full bg-white border border-[#284961] text-[#284961] hover:bg-gray-100 font-bold py-2 px-4 rounded transition text-sm">
+                            Ejecutar
                         </button>
                     </form>
-                </div>
-            </div>
-
-            <!-- Gestión de Tablas Auxiliares (Livewire CRUDs) -->
-            <div x-data="{ activeTab: 'brands' }" class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="border-b border-gray-200">
-                    <nav class="-mb-px flex" aria-label="Tabs">
-                        <button @click="activeTab = 'brands'" :class="{'border-[#B35F12] text-[#B35F12]': activeTab === 'brands', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'brands'}" class="w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm">
-                            Marcas
-                        </button>
-                        <button @click="activeTab = 'models'" :class="{'border-[#B35F12] text-[#B35F12]': activeTab === 'models', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'models'}" class="w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm">
-                            Modelos
-                        </button>
-                        <button @click="activeTab = 'fuels'" :class="{'border-[#B35F12] text-[#B35F12]': activeTab === 'fuels', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'fuels'}" class="w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm">
-                            Combustibles
-                        </button>
-                        <button @click="activeTab = 'colors'" :class="{'border-[#B35F12] text-[#B35F12]': activeTab === 'colors', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'colors'}" class="w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm">
-                            Colores
-                        </button>
-                        <button @click="activeTab = 'gears'" :class="{'border-[#B35F12] text-[#B35F12]': activeTab === 'gears', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'gears'}" class="w-1/5 py-4 px-1 text-center border-b-2 font-medium text-sm">
-                            Marchas
-                        </button>
-                    </nav>
-                </div>
-
-                <div class="p-6">
-                    <div x-show="activeTab === 'brands'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100">
-                        @livewire('admin.brand-manager')
-                    </div>
-                    <div x-show="activeTab === 'models'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
-                        @livewire('admin.model-manager')
-                    </div>
-                    <div x-show="activeTab === 'fuels'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
-                        @livewire('admin.fuel-manager')
-                    </div>
-                    <div x-show="activeTab === 'colors'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
-                        @livewire('admin.color-manager')
-                    </div>
-                    <div x-show="activeTab === 'gears'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
-                        @livewire('admin.gear-manager')
-                    </div>
                 </div>
             </div>
         </div>

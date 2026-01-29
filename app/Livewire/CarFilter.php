@@ -11,6 +11,8 @@ class CarFilter extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'tailwind'; // Fix pagination style
+
     public $search = '';
     public $brand = '';
     public $min_price = '';

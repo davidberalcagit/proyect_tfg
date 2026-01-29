@@ -1,26 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight truncate">
             {{ $car->title }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6 lg:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-4 sm:p-6 lg:p-8 bg-white border-b border-gray-200">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Imagen -->
-                        <div class="relative">
+                        <div class="relative w-full">
                             @if ($car->image)
-                                <img src="{{ Storage::url($car->image) }}" alt="{{ $car->title }}" class="w-full h-auto rounded-lg shadow-md object-cover">
+                                <img src="{{ Str::startsWith($car->image, 'http') ? $car->image : Storage::url($car->image) }}"
+                                     alt="{{ $car->title }}"
+                                     class="w-full h-auto rounded-lg shadow-md object-cover aspect-video lg:aspect-auto"
+                                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg\'><span class=\'text-gray-500\'>{{ __('Image Not Found') }}</span></div>'">
                             @else
                                 <div class="bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg">
                                     <span class="text-gray-500">{{ __('No Image') }}</span>
                                 </div>
                             @endif
 
-                            <!-- Botón Favorito (Solo si NO es el dueño) -->
+                            <!-- Botón Favorito -->
                             @auth
                                 @if(!Auth::user()->customer || Auth::user()->customer->id !== $car->id_vendedor)
                                     <div class="absolute top-2 right-2 z-10">
@@ -31,18 +34,18 @@
                         </div>
 
                         <!-- Detalles -->
-                        <div>
-                            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $car->title }}</h1>
+                        <div class="flex flex-col h-full">
+                            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{{ $car->title }}</h1>
 
-                            <div class="grid grid-cols-2 gap-4 text-sm">
-                                <div class="col-span-2">
-                                    <span class="text-gray-500 block">{{ __('Price') }}</span>
-                                    <span class="text-2xl font-bold text-indigo-600">{{ number_format($car->precio, 2) }} €</span>
+                            <div class="grid grid-cols-2 gap-4 text-sm sm:text-base mb-6">
+                                <div class="col-span-2 flex justify-between items-end border-b pb-2">
+                                    <span class="text-gray-500">{{ __('Price') }}</span>
+                                    <span class="text-2xl sm:text-3xl font-bold text-indigo-600">{{ number_format($car->precio, 0) }} €</span>
                                 </div>
 
                                 {{-- Vendedor --}}
-                                <div class="col-span-2">
-                                    <span class="text-gray-500 block">{{ __('Seller') }}</span>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Seller') }}</span>
                                     <span class="font-medium">
                                         @if($car->vendedor)
                                             @if(Auth::check() && Auth::user()->can('view users') && $car->vendedor->user)
@@ -61,53 +64,48 @@
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Brand') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Brand') }}</span>
                                     <span class="font-medium">
                                         {{ $car->marca->nombre ?? ($car->temp_brand ? $car->temp_brand . ' (New)' : '-') }}
                                     </span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Model') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Model') }}</span>
                                     <span class="font-medium">
                                         {{ $car->modelo->nombre ?? ($car->temp_model ? $car->temp_model . ' (New)' : '-') }}
                                     </span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Year') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Year') }}</span>
                                     <span class="font-medium">{{ $car->anyo_matri }}</span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('KM') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('KM') }}</span>
                                     <span class="font-medium">{{ number_format($car->km) }} km</span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Fuels') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Fuel') }}</span>
                                     <span class="font-medium">{{ $car->combustible->nombre ?? '-' }}</span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Gear') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Gear') }}</span>
                                     <span class="font-medium">{{ $car->marcha->tipo ?? '-' }}</span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Color') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Color') }}</span>
                                     <span class="font-medium">
                                         {{ $car->color->nombre ?? ($car->temp_color ? $car->temp_color . ' (New)' : '-') }}
                                     </span>
                                 </div>
 
                                 <div>
-                                    <span class="text-gray-500 block">{{ __('Matricula') }}</span>
-                                    <span class="font-medium uppercase">{{ $car->matricula }}</span>
-                                </div>
-
-                                <div>
-                                    <span class="text-gray-500 block">{{ __('Status') }}</span>
+                                    <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Status') }}</span>
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                         @if($car->id_estado == 1) bg-green-100 text-green-800
                                         @elseif($car->id_estado == 2) bg-gray-100 text-gray-800
@@ -121,17 +119,17 @@
                                 </div>
                             </div>
 
-                            <div class="mt-6">
-                                <span class="text-gray-500 block mb-1">{{ __('Descripcion') }}</span>
-                                <p class="text-gray-700 bg-gray-50 p-3 rounded-md text-sm leading-relaxed">
+                            <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                                <span class="text-gray-500 block mb-2 text-xs uppercase tracking-wide">{{ __('Description') }}</span>
+                                <p class="text-gray-700 text-sm leading-relaxed">
                                     {{ $car->descripcion }}
                                 </p>
                             </div>
 
                             <!-- Acciones -->
-                            <div class="mt-8 flex flex-wrap gap-3 items-end">
-                                <a href="javascript:history.back()" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition h-10">
-                                    {{ __('Back to list') }}
+                            <div class="mt-8 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
+                                <a href="javascript:history.back()" class="w-full sm:w-auto justify-center inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition h-10">
+                                    {{ __('Back') }}
                                 </a>
 
                                 @auth
@@ -139,28 +137,30 @@
                                     @if(Auth::user()->customer && Auth::user()->customer->id !== $car->id_vendedor)
                                         @if($car->id_estado === 1)
                                             @if(Auth::user()->can('buy cars'))
-                                                <livewire:make-offer :car="$car" />
+                                                <div class="w-full sm:w-auto">
+                                                    <livewire:make-offer :car="$car" />
+                                                </div>
                                             @endif
                                         @elseif($car->id_estado === 3)
                                             {{-- Alquiler (Solo si está en alquiler) --}}
-                                            <a href="{{ route('rentals.create', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
+                                            <a href="{{ route('rentals.create', $car) }}" class="w-full sm:w-auto justify-center inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
                                                 {{ __('Rent Car') }}
                                             </a>
                                         @endif
                                     @endif
 
-                                    {{-- Editar/Borrar (Admin siempre, Dueño solo si pendiente) --}}
+                                    {{-- Editar/Borrar --}}
                                     @can('update', $car)
-                                        <a href="{{ route('cars.edit', $car) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
+                                        <a href="{{ route('cars.edit', $car) }}" class="w-full sm:w-auto justify-center inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition h-10">
                                             {{ __('Edit') }}
                                         </a>
                                     @endcan
 
                                     @can('delete', $car)
-                                        <form action="{{ route('cars.destroy', $car) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
+                                        <form action="{{ route('cars.destroy', $car) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');" class="w-full sm:w-auto">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition h-10">
+                                            <button type="submit" class="w-full justify-center inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition h-10">
                                                 {{ __('Delete') }}
                                             </button>
                                         </form>

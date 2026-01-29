@@ -6,6 +6,7 @@ use Livewire\WithPagination;
 
 class FuelManager extends Component {
     use WithPagination;
+    protected $paginationTheme = 'tailwind';
     public $nombre, $fuel_id, $isModalOpen = false;
     protected $rules = ['nombre' => 'required|string|max:255|unique:fuels,nombre'];
 

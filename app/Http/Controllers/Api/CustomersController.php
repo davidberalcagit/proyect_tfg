@@ -9,13 +9,50 @@ use App\Models\Customers;
 use App\Models\Dealerships;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Clientes
+ *
+ * Gestión de perfiles de usuario (Vendedores/Compradores).
+ */
 class CustomersController extends Controller
 {
+    /**
+     * Listar Clientes
+     *
+     * Obtiene una lista paginada de todos los perfiles de clientes.
+     *
+     * @response {
+     *  "data": [
+     *    {
+     *      "id": 1,
+     *      "nombre_contacto": "Juan Perez",
+     *      "telefono": "666777888",
+     *      "entity_type": { "nombre": "Particular" }
+     *    }
+     *  ]
+     * }
+     */
     public function index()
     {
         return Customers::with(['user', 'entityType', 'dealership'])->paginate(20);
     }
 
+    /**
+     * Crear Perfil de Cliente
+     *
+     * Crea un perfil de vendedor/comprador para el usuario autenticado.
+     *
+     * @authenticated
+     * @bodyParam id_entidad int required Tipo de entidad (1: Particular, 2: Concesionario). Example: 1
+     * @bodyParam nombre_contacto string required Nombre completo. Example: Juan Perez
+     * @bodyParam telefono string required Teléfono de contacto. Example: 666777888
+     * @bodyParam nombre_empresa string Nombre de la empresa (solo si es concesionario). Example: Coches SL
+     * @bodyParam nif string NIF de la empresa (solo si es concesionario). Example: B12345678
+     * @bodyParam direccion string Dirección de la empresa (solo si es concesionario).
+     *
+     * @response 201 { ... }
+     * @response 409 { "message": "Este usuario ya tiene un perfil de cliente creado." }
+     */
     public function store(StoreCustomerRequest $request)
     {
         // Validation handled by StoreCustomerRequest
@@ -58,11 +95,33 @@ class CustomersController extends Controller
         return response()->json($customer->load('dealership'), 201);
     }
 
+    /**
+     * Ver Perfil Público
+     *
+     * Muestra la información pública de un cliente (vendedor).
+     *
+     * @urlParam id int required El ID del cliente. Example: 1
+     *
+     * @response {
+     *  "id": 1,
+     *  "nombre_contacto": "Juan Perez",
+     *  "cars": [ ... ]
+     * }
+     */
     public function show($id)
     {
         return Customers::with(['user', 'entityType', 'cars', 'dealership'])->findOrFail($id);
     }
 
+    /**
+     * Mi Perfil
+     *
+     * Obtiene el perfil de cliente del usuario autenticado.
+     *
+     * @authenticated
+     * @response { ... }
+     * @response 404 { "message": "No tienes perfil de cliente." }
+     */
     public function me()
     {
         $customer = Auth::user()->customer;
@@ -74,6 +133,17 @@ class CustomersController extends Controller
         return response()->json($customer->load(['entityType', 'cars', 'dealership']));
     }
 
+    /**
+     * Actualizar Perfil
+     *
+     * Modifica los datos de contacto. Solo el propio usuario puede hacerlo.
+     *
+     * @authenticated
+     * @urlParam id int required El ID del cliente. Example: 1
+     * @bodyParam telefono string Nuevo teléfono.
+     *
+     * @response 200 { ... }
+     */
     public function update(UpdateCustomerRequest $request, $id)
     {
         $customer = Customers::findOrFail($id);
@@ -92,6 +162,16 @@ class CustomersController extends Controller
         return response()->json($customer->load('dealership'), 200);
     }
 
+    /**
+     * Eliminar Perfil
+     *
+     * Elimina el perfil de cliente.
+     *
+     * @authenticated
+     * @urlParam id int required El ID del cliente. Example: 1
+     *
+     * @response 204 {}
+     */
     public function destroy($id)
     {
         $customer = Customers::findOrFail($id);

@@ -4,6 +4,9 @@ use App\Models\Cars;
 use App\Models\Customers;
 use App\Models\Offer;
 use App\Models\User;
+use Livewire\Livewire;
+use App\Livewire\CarFilter;
+use Laravel\Fortify\Features;
 
 beforeEach(function () {
     $this->seed(Database\Seeders\DatabaseSeeder::class);
@@ -12,10 +15,15 @@ beforeEach(function () {
 test('cars index view renders correctly', function () {
     $car = Cars::factory()->create(['title' => 'Coche Visible', 'id_estado' => 1]);
 
-    $response = $this->get(route('cars.index'));
+    // Test the Livewire component directly to ensure it renders the car
+    Livewire::test(CarFilter::class)
+        ->set('search', 'Coche Visible')
+        ->assertSee('Coche Visible');
 
+    // Test the page loads and contains the Livewire component
+    $response = $this->get(route('cars.index'));
     $response->assertStatus(200);
-    $response->assertSee('Coche Visible');
+    $response->assertSeeLivewire('car-filter');
 });
 
 test('cars create view renders correctly', function () {
@@ -89,4 +97,19 @@ test('sales index view renders correctly', function () {
     $response->assertSee('Received Offers');
     $response->assertSee('Coche con Oferta');
     $response->assertSee('18,000.00');
+});
+
+test('profile view shows two factor authentication option', function () {
+    if (! Features::canManageTwoFactorAuthentication()) {
+        $this->markTestSkipped('Two factor authentication is not enabled.');
+    }
+
+    $user = User::factory()->create();
+    $user->assignRole('individual');
+
+    $response = $this->actingAs($user)->get(route('profile.show'));
+
+    $response->assertStatus(200);
+    $response->assertSee('Two Factor Authentication');
+    $response->assertSeeLivewire('profile.two-factor-authentication-form');
 });

@@ -61,6 +61,16 @@ class User extends Authenticatable
         // 'profile_photo_url', // Eliminado
     ];
 
+    // Scope Complejo: Usuarios Activos (Vendedores o Compradores recientes)
+    public function scopeActiveTraders($query)
+    {
+        return $query->whereHas('customer.cars', function ($q) {
+            $q->where('id_estado', 1); // Tienen coches en venta
+        })->orWhereHas('customer.sales', function ($q) { // Compras realizadas (sales donde es comprador)
+            $q->where('created_at', '>=', now()->subDays(30));
+        });
+    }
+
     public function customer()
     {
         return $this->hasOne(Customers::class, 'id_usuario');

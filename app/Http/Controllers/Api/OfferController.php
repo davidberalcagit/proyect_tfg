@@ -8,8 +8,34 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Ofertas
+ *
+ * Gestión de ofertas de compra y venta.
+ */
 class OfferController extends Controller
 {
+    /**
+     * Listar Mis Ofertas
+     * Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (como vendedor).
+     * @authenticated
+     * @queryParam page int El número de página. Example: 1
+     *
+     * @response {
+     *  "data": [
+     *    {
+     *      "id": 1,
+     *      "cantidad": 14000,
+     *      "estado": "pending",
+     *      "car": { "id": 1, "title": "Toyota Corolla" },
+     *      "buyer": { "id": 2, "nombre_contacto": "Juan Perez" },
+     *      "seller": { "id": 3, "nombre_contacto": "Concesionario X" }
+     *    }
+     *  ],
+     *  "links": { ... },
+     *  "meta": { ... }
+     * }
+     */
     public function index()
     {
         $userCustomer = Auth::user()->customer;
@@ -27,6 +53,30 @@ class OfferController extends Controller
             ->paginate(20);
     }
 
+    /**
+     * Crear Oferta
+     *
+     * Envía una oferta por un coche.
+     *
+     * @authenticated
+     * @bodyParam id_vehiculo int required ID del coche. Example: 5
+     * @bodyParam precio_oferta number required Cantidad ofrecida. Example: 14000
+     * @bodyParam mensaje string Mensaje opcional para el vendedor. Example: Estoy interesado...
+     *
+     * @response 201 {
+     *  "id": 10,
+     *  "id_vehiculo": 5,
+     *  "cantidad": 14000,
+     *  "estado": "pending",
+     *  "created_at": "2023-10-27T10:00:00.000000Z"
+     * }
+     * @response 409 {
+     *  "message": "Ya tienes una oferta pendiente para este coche."
+     * }
+     * @response 400 {
+     *  "message": "No puedes hacer una oferta por tu propio coche."
+     * }
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -47,11 +97,11 @@ class OfferController extends Controller
             return response()->json(['message' => 'No puedes hacer una oferta por tu propio coche.'], 400);
         }
 
-        // Validar si ya existe una oferta pendiente para este coche de este usuario (opcional)
+        // Validar si ya existe una oferta pendiente para este coche de este usuario (usando scope)
         $existingOffer = Offer::where('id_vehiculo', $car->id)
             ->where('id_comprador', $buyer->id)
-            ->where('estado', 'pendiente')
-            ->first();
+            ->pending() // Scope
+            ->exists();
 
         if ($existingOffer) {
             return response()->json(['message' => 'Ya tienes una oferta pendiente para este coche.'], 409);
@@ -63,12 +113,32 @@ class OfferController extends Controller
             'id_comprador' => $buyer->id,
             'cantidad' => $request->precio_oferta,
             'mensaje' => $request->mensaje,
-            'estado' => 'pendiente',
+            'estado' => 'pending',
         ]);
 
         return response()->json($offer, 201);
     }
 
+    /**
+     * Ver Oferta
+     *
+     * Muestra los detalles de una oferta. Solo visible para el comprador o el vendedor.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la oferta. Example: 1
+     *
+     * @response {
+     *  "id": 1,
+     *  "cantidad": 14000,
+     *  "estado": "pending",
+     *  "car": { ... },
+     *  "buyer": { ... },
+     *  "seller": { ... }
+     * }
+     * @response 403 {
+     *  "message": "No tienes permiso para ver esta oferta."
+     * }
+     */
     public function show($id)
     {
         $offer = Offer::with(['car', 'buyer', 'seller'])->findOrFail($id);
@@ -83,6 +153,24 @@ class OfferController extends Controller
         return $offer;
     }
 
+    /**
+     * Actualizar Oferta
+     *
+     * Permite modificar una oferta.
+     * - El **comprador** puede cambiar el precio (`precio_oferta`) si está pendiente.
+     * - El **vendedor** puede cambiar el estado (`estado`) a 'aceptada' o 'rechazada'.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la oferta. Example: 1
+     * @bodyParam precio_oferta number Nuevo precio (solo comprador). Example: 14500
+     * @bodyParam estado string Nuevo estado (solo vendedor). Example: aceptada
+     *
+     * @response 200 {
+     *  "id": 1,
+     *  "cantidad": 14500,
+     *  "estado": "pending"
+     * }
+     */
     public function update(Request $request, $id)
     {
         $offer = Offer::findOrFail($id);
@@ -114,6 +202,19 @@ class OfferController extends Controller
         return response()->json($offer, 200);
     }
 
+    /**
+     * Eliminar Oferta
+     *
+     * Cancela (elimina) una oferta pendiente. Solo el creador puede hacerlo.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la oferta. Example: 1
+     *
+     * @response 204 {}
+     * @response 403 {
+     *  "message": "Solo el creador de la oferta puede eliminarla."
+     * }
+     */
     public function destroy($id)
     {
         $offer = Offer::findOrFail($id);

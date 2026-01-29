@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomersController;
 use App\Http\Controllers\Api\VehicleController;
+use App\Http\Controllers\Api\FuelsController;
+use App\Http\Controllers\Api\ColorsController;
+use App\Http\Controllers\Api\GearsController;
 
 // Ruta pública para obtener el token
 Route::post('/login', [AuthController::class, 'login'])->name('api.login');
@@ -23,6 +26,10 @@ Route::apiResource('brands', BrandsController::class)->only(['index', 'show'])->
 Route::get('brands/{id}/models', [BrandsController::class, 'models'])->name('api.brands.models');
 
 Route::apiResource('car-models', CarModelsController::class)->only(['index', 'show'])->names('api.car-models');
+Route::apiResource('fuels', FuelsController::class)->only(['index', 'show'])->names('api.fuels');
+Route::apiResource('colors', ColorsController::class)->only(['index', 'show'])->names('api.colors');
+Route::apiResource('gears', GearsController::class)->only(['index', 'show'])->names('api.gears');
+Route::apiResource('vehicles', VehicleController::class)->only(['index'])->names('api.vehicles'); // Restaurada y pública
 
 // Coches públicos (lectura)
 Route::apiResource('cars', CarsController::class)->only(['index', 'show'])->names('api.cars');
@@ -42,10 +49,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('sales', SalesController::class)->names('api.sales');
     Route::apiResource('offers', OfferController::class)->names('api.offers');
 
-    // Admin-only routes for Brands and Models
+    // Admin-only routes for Brands and Models (y ahora Fuels, Colors, Gears)
     Route::apiResource('brands', BrandsController::class)->except(['index', 'show'])->names('api.brands');
     Route::apiResource('car-models', CarModelsController::class)->except(['index', 'show'])->names('api.car-models');
-
-    // Vehicle Controller (Placeholder)
-    Route::apiResource('vehicles', VehicleController::class)->names('api.vehicles');
+    Route::apiResource('fuels', FuelsController::class)->except(['index', 'show'])->names('api.fuels');
+    Route::apiResource('colors', ColorsController::class)->except(['index', 'show'])->names('api.colors');
+    Route::apiResource('gears', GearsController::class)->except(['index', 'show'])->names('api.gears');
 });

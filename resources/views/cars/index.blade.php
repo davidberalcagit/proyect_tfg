@@ -5,15 +5,23 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6 lg:py-12">
         <div class="max-w-[95%] mx-auto sm:px-6 lg:px-8">
 
             <div class="flex flex-col lg:flex-row gap-6">
 
-                <!-- Sidebar (Izquierda) - Solo Marcas -->
-                <div class="w-full lg:w-1/5">
-                    <div class="bg-white p-6 rounded-lg shadow sticky top-24 border border-custom-border max-h-[calc(100vh_-_8rem)] overflow-y-auto overscroll-y-contain">
-                        <h3 class="text-lg font-bold text-[#284961] mb-4 border-b pb-2 sticky top-0 bg-white z-10">{{ __('Brands & Models') }}</h3>
+                <!-- Sidebar (Izquierda) - Marcas -->
+                <!-- En móvil: Acordeón colapsable. En escritorio: Sidebar fijo -->
+                <div class="w-full lg:w-1/5" x-data="{ mobileFiltersOpen: false }">
+
+                    <!-- Botón móvil para mostrar filtros -->
+                    <button @click="mobileFiltersOpen = !mobileFiltersOpen" class="lg:hidden w-full bg-white p-4 rounded-lg shadow border border-custom-border flex justify-between items-center mb-4 text-[#284961] font-bold">
+                        <span>{{ __('Brands & Models') }}</span>
+                        <svg class="w-5 h-5 transform transition-transform" :class="{'rotate-180': mobileFiltersOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+
+                    <div :class="{'hidden': !mobileFiltersOpen, 'block': mobileFiltersOpen}" class="lg:block bg-white p-6 rounded-lg shadow lg:sticky lg:top-24 border border-custom-border max-h-[60vh] lg:max-h-[calc(100vh_-_8rem)] overflow-y-auto overscroll-y-contain transition-all duration-300">
+                        <h3 class="text-lg font-bold text-[#284961] mb-4 border-b pb-2 sticky top-0 bg-white z-10 hidden lg:block">{{ __('Brands & Models') }}</h3>
 
                         <div x-data="{ showAll: false }">
                             <ul class="space-y-4">
@@ -49,7 +57,7 @@
                     </div>
                 </div>
 
-                <!-- Contenido Principal (Derecha) - Reemplazado por Livewire -->
+                <!-- Contenido Principal (Derecha) -->
                 <div class="w-full lg:w-4/5">
                     @livewire('car-filter')
                 </div>

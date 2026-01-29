@@ -10,8 +10,56 @@ use App\Models\CarModels;
 use App\Models\Cars;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Coches
+ *
+ * Gestión del inventario de vehículos.
+ */
 class CarsController extends Controller
 {
+    /**
+     * Listar Coches Disponibles
+     *
+     * Obtiene una lista paginada de coches que están en estado "En Venta" (1).
+     *
+     * @queryParam page int El número de página. Example: 1
+     * @queryParam search string Término de búsqueda opcional. Example: Toyota
+     *
+     * @response {
+     *  "current_page": 1,
+     *  "data": [
+     *    {
+     *      "id": 1,
+     *      "title": "Toyota Corolla 2020",
+     *      "precio": 15000,
+     *      "km": 50000,
+     *      "image": "cars/imagen.jpg",
+     *      "marca": {
+     *        "id": 1,
+     *        "nombre": "Toyota"
+     *      },
+     *      "modelo": {
+     *        "id": 1,
+     *        "nombre": "Corolla"
+     *      },
+     *      "status": {
+     *        "id": 1,
+     *        "nombre": "En Venta"
+     *      }
+     *    }
+     *  ],
+     *  "first_page_url": "http://localhost/api/cars?page=1",
+     *  "from": 1,
+     *  "last_page": 5,
+     *  "last_page_url": "http://localhost/api/cars?page=5",
+     *  "next_page_url": "http://localhost/api/cars?page=2",
+     *  "path": "http://localhost/api/cars",
+     *  "per_page": 20,
+     *  "prev_page_url": null,
+     *  "to": 20,
+     *  "total": 100
+     * }
+     */
     public function index()
     {
         return Cars::with(['marca', 'modelo', 'status'])
@@ -19,6 +67,41 @@ class CarsController extends Controller
             ->paginate(20);
     }
 
+    /**
+     * Crear Coche
+     *
+     * Publica un nuevo vehículo. El estado inicial será "Pendiente" (4).
+     * Requiere que el usuario tenga un perfil de vendedor (Customer).
+     *
+     * @authenticated
+     * @bodyParam id_marca int ID de la marca (opcional si usa temp_brand). Example: 1
+     * @bodyParam id_modelo int ID del modelo (opcional si usa temp_model). Example: 1
+     * @bodyParam temp_brand string Nombre de marca nueva (si no existe). Example: Tesla
+     * @bodyParam temp_model string Nombre de modelo nuevo (si no existe). Example: Cybertruck
+     * @bodyParam precio number required Precio en euros. Example: 15000
+     * @bodyParam anyo_matri int required Año de matriculación. Example: 2020
+     * @bodyParam km int required Kilometraje. Example: 50000
+     * @bodyParam matricula string required Matrícula del vehículo. Example: 1234ABC
+     * @bodyParam id_combustible int required ID del tipo de combustible. Example: 1
+     * @bodyParam id_marcha int required ID del tipo de marcha. Example: 1
+     * @bodyParam id_color int ID del color. Example: 1
+     * @bodyParam id_listing_type int required ID del tipo de listado (Venta/Alquiler). Example: 1
+     * @bodyParam descripcion string required Descripción detallada. Example: Coche en perfecto estado...
+     * @bodyParam image file Imagen del vehículo.
+     *
+     * @response 201 {
+     *  "message": "Coche creado correctamente. Está pendiente de revisión por un supervisor.",
+     *  "data": {
+     *      "id": 10,
+     *      "title": "Toyota Corolla 2020",
+     *      "id_estado": 4,
+     *      "created_at": "2023-10-27T10:00:00.000000Z"
+     *  }
+     * }
+     * @response 403 {
+     *  "message": "El usuario no tiene un perfil de vendedor asociado."
+     * }
+     */
     public function store(StoreCarRequest $request)
     {
         // Validation is handled by StoreCarRequest
@@ -66,11 +149,51 @@ class CarsController extends Controller
         ], 201);
     }
 
+    /**
+     * Ver Detalle de Coche
+     *
+     * Obtiene los detalles completos de un coche específico.
+     *
+     * @urlParam id int required El ID del coche. Example: 1
+     *
+     * @response {
+     *  "id": 1,
+     *  "title": "Toyota Corolla 2020",
+     *  "precio": 15000,
+     *  "descripcion": "Coche en perfecto estado...",
+     *  "marca": { "id": 1, "nombre": "Toyota" },
+     *  "modelo": { "id": 1, "nombre": "Corolla" },
+     *  "status": { "id": 1, "nombre": "En Venta" }
+     * }
+     * @response 404 {
+     *  "message": "No query results for model [App\\Models\\Cars] 999"
+     * }
+     */
     public function show($id)
     {
         return Cars::with(['marca', 'modelo', 'status'])->findOrFail($id);
     }
 
+    /**
+     * Actualizar Coche
+     *
+     * Modifica los datos de un coche existente. Solo el dueño puede hacerlo y solo si el coche está en estado "Pendiente" (4).
+     *
+     * @authenticated
+     * @urlParam id int required El ID del coche. Example: 1
+     * @bodyParam precio number Nuevo precio. Example: 14500
+     * @bodyParam descripcion string Nueva descripción.
+     *
+     * @response {
+     *  "id": 1,
+     *  "title": "Toyota Corolla 2020",
+     *  "precio": 14500,
+     *  "updated_at": "2023-10-28T12:00:00.000000Z"
+     * }
+     * @response 403 {
+     *  "message": "No tienes permiso para editar este coche."
+     * }
+     */
     public function update(UpdateCarRequest $request, Cars $car)
     {
         // Model binding injects $car. Policy check is done in FormRequest.
@@ -88,6 +211,19 @@ class CarsController extends Controller
         return response()->json($car, 200);
     }
 
+    /**
+     * Eliminar Coche
+     *
+     * Elimina un coche del sistema. Solo el dueño puede hacerlo.
+     *
+     * @authenticated
+     * @urlParam id int required El ID del coche. Example: 1
+     *
+     * @response 204 {}
+     * @response 403 {
+     *  "message": "No tienes permiso para eliminar este coche."
+     * }
+     */
     public function destroy(Cars $car)
     {
         // Using model binding for consistency
@@ -99,6 +235,26 @@ class CarsController extends Controller
         return response()->json(null, 204);
     }
 
+    /**
+     * Mis Coches
+     *
+     * Lista los coches publicados por el usuario autenticado.
+     *
+     * @authenticated
+     *
+     * @response [
+     *  {
+     *      "id": 1,
+     *      "title": "Toyota Corolla 2020",
+     *      "status": { "nombre": "En Venta" }
+     *  },
+     *  {
+     *      "id": 2,
+     *      "title": "Ford Fiesta 2018",
+     *      "status": { "nombre": "Pendiente" }
+     *  }
+     * ]
+     */
     public function myCars()
     {
         $user = Auth::user();

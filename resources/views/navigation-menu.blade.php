@@ -10,7 +10,7 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links (Desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')" class="text-white hover:text-[#D1D5DB] active:text-white border-transparent hover:border-white focus:border-white">
                         {{ __('Cars') }}
@@ -59,139 +59,127 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none transition ease-in-out duration-150">
                             <div>{{ strtoupper(App::getLocale()) }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
                     </x-slot>
-
                     <x-slot name="content">
-                        <x-dropdown-link href="{{ route('lang.switch', 'en') }}">
-                            English
-                        </x-dropdown-link>
-                        <x-dropdown-link href="{{ route('lang.switch', 'es') }}">
-                            Español
-                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('lang.switch', 'en') }}">English</x-dropdown-link>
+                        <x-dropdown-link href="{{ route('lang.switch', 'es') }}">Español</x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
 
                 @auth
-                <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                    <!-- Settings Dropdown -->
                     <div class="ms-3 relative">
-                        <x-dropdown align="right" width="60">
+                        <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->currentTeam->name }}
-
-                                        <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Team Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
-                                    </div>
-
-                                    <!-- Team Settings -->
-                                    <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
-                                    </x-dropdown-link>
-
-                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
-                                        </x-dropdown-link>
-                                    @endcan
-
-                                    <!-- Team Switcher -->
-                                    @if (Auth::user()->allTeams()->count() > 1)
-                                        <div class="border-t border-custom-border"></div>
-
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Switch Teams') }}
-                                        </div>
-
-                                        @foreach (Auth::user()->allTeams() as $team)
-                                            <x-switchable-team :team="$team" />
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endif
-
-                <!-- Settings Dropdown -->
-                <div class="ms-3 relative">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <span class="inline-flex rounded-md">
                                 <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none transition ease-in-out duration-150">
-                                    <div class="flex flex-col items-start text-left">
-                                        <span>{{ Auth::user()->name }}</span>
-                                        <span class="text-xs opacity-75">
-                                            {{ ucfirst(Auth::user()->getRoleNames()->first() ?? 'User') }}
-                                        </span>
-                                    </div>
-
+                                    {{ Auth::user()->name }}
                                     <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                     </svg>
                                 </button>
-                            </span>
-                        </x-slot>
+                            </x-slot>
 
-                        <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
+                            <x-slot name="content">
+                                <div class="block px-4 py-2 text-xs text-gray-400">{{ __('Manage Account') }}</div>
+                                <x-dropdown-link href="{{ route('profile.show') }}">{{ __('Profile') }}</x-dropdown-link>
 
-                            <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
+                                {{-- Eliminado enlace API Tokens de aquí --}}
 
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
-                                </x-dropdown-link>
-                            @endif
-
-                            <div class="border-t border-custom-border"></div>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
+                                <div class="border-t border-gray-200"></div>
+                                <form method="POST" action="{{ route('logout') }}" x-data>
+                                    @csrf
+                                    <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">{{ __('Log Out') }}</x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @else
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="text-white hover:text-[#D1D5DB] active:text-white">{{ __('Log in') }}</x-nav-link>
+                        <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="text-white hover:text-[#D1D5DB] active:text-white">{{ __('Register') }}</x-nav-link>
+                    </div>
+                @endauth
             </div>
+
+            <!-- Hamburger -->
+            <div class="-me-2 flex items-center sm:hidden">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 hover:bg-[#1c3344] focus:outline-none focus:bg-[#1c3344] focus:text-white transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-[#284961]">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                {{ __('Cars') }}
+            </x-responsive-nav-link>
+
+            @auth
+                <x-responsive-nav-link href="{{ route('cars.my_cars') }}" :active="request()->routeIs('cars.my_cars')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('My Cars') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('sales.index') }}" :active="request()->routeIs('sales.index')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('My Transactions') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('favorites.index') }}" :active="request()->routeIs('favorites.index')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('My Favorites') }}
+                </x-responsive-nav-link>
+
+                @role('admin')
+                    <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                        {{ __('Admin Panel') }}
+                    </x-responsive-nav-link>
+                @endrole
+
+                @hasanyrole('supervisor|admin')
+                    <x-responsive-nav-link href="{{ route('supervisor.dashboard') }}" :active="request()->routeIs('supervisor.dashboard')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                        {{ __('Supervisor Panel') }}
+                    </x-responsive-nav-link>
+                @endhasanyrole
+
+                @hasanyrole('soporte|admin')
+                    <x-responsive-nav-link href="{{ route('support.users.index') }}" :active="request()->routeIs('support.users.*')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                        {{ __('User Management') }}
+                    </x-responsive-nav-link>
+                @endhasanyrole
+
+                <!-- Opciones de Perfil Simplificadas en Móvil -->
+                <div class="border-t border-[#1c3344] my-2"></div>
+
+                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                {{-- Eliminado enlace API Tokens de aquí también --}}
+
+                <form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                </form>
             @else
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="text-white hover:text-[#D1D5DB] active:text-white">
-                        {{ __('Log in') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="text-white hover:text-[#D1D5DB] active:text-white">
-                        {{ __('Register') }}
-                    </x-nav-link>
-                </div>
-            </div>
-        @endauth
+                <x-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('Log in') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+            @endauth
+        </div>
     </div>
 </nav>

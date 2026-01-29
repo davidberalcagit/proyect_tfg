@@ -6,6 +6,7 @@ use Livewire\WithPagination;
 
 class GearManager extends Component {
     use WithPagination;
+    protected $paginationTheme = 'tailwind';
     public $tipo, $gear_id, $isModalOpen = false;
     protected $rules = ['tipo' => 'required|string|max:255|unique:gears,tipo'];
 

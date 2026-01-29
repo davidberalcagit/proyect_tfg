@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * @group Vehículos (Placeholder)
+ *
+ * Controlador reservado para futura expansión de tipos de vehículos.
+ */
 class VehicleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Listar Vehículos
+     *
+     * @response 200 []
      */
     public function index()
     {
-        //
+        return response()->json([], 200);
     }
 
     /**

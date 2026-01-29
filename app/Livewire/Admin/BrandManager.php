@@ -10,10 +10,15 @@ class BrandManager extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'tailwind';
+
+    // Variables para Crear (Modal)
     public $nombre;
-    public $brand_id;
     public $isModalOpen = false;
-    public $confirmingDeletion = false;
+
+    // Variables para Edición en Línea
+    public $editingId = null;
+    public $editingNombre = '';
 
     protected $rules = [
         'nombre' => 'required|string|max:255|unique:brands,nombre',
@@ -25,6 +30,8 @@ class BrandManager extends Component
             'brands' => Brands::orderBy('id', 'desc')->paginate(10),
         ]);
     }
+
+    // --- Lógica de Creación (Modal) ---
 
     public function create()
     {
@@ -46,7 +53,6 @@ class BrandManager extends Component
     private function resetInputFields()
     {
         $this->nombre = '';
-        $this->brand_id = null;
         $this->resetErrorBag();
     }
 
@@ -54,22 +60,43 @@ class BrandManager extends Component
     {
         $this->validate();
 
-        Brands::updateOrCreate(['id' => $this->brand_id], [
+        Brands::create([
             'nombre' => $this->nombre
         ]);
 
-        session()->flash('message', $this->brand_id ? 'Marca actualizada.' : 'Marca creada.');
-
+        session()->flash('message', 'Marca creada correctamente.');
         $this->closeModal();
     }
 
+    // --- Lógica de Edición en Línea ---
+
     public function edit($id)
     {
-        $brand = Brands::findOrFail($id);
-        $this->brand_id = $id;
-        $this->nombre = $brand->nombre;
+        $this->editingId = $id;
+        $this->editingNombre = Brands::find($id)->nombre;
+    }
 
-        $this->openModal();
+    public function cancelEdit()
+    {
+        $this->editingId = null;
+        $this->editingNombre = '';
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'editingNombre' => 'required|string|max:255|unique:brands,nombre,' . $this->editingId,
+        ]);
+
+        if ($this->editingId) {
+            $brand = Brands::find($this->editingId);
+            $brand->update([
+                'nombre' => $this->editingNombre
+            ]);
+
+            session()->flash('message', 'Marca actualizada correctamente.');
+            $this->cancelEdit();
+        }
     }
 
     public function delete($id)

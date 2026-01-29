@@ -8,8 +8,37 @@ use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Ventas
+ *
+ * Gestión de transacciones de venta.
+ */
 class SalesController extends Controller
 {
+    /**
+     * Listar Mis Ventas
+     *
+     * Muestra el historial de ventas donde el usuario es vendedor o comprador.
+     *
+     * @authenticated
+     * @queryParam page int El número de página. Example: 1
+     *
+     * @response {
+     *  "data": [
+     *    {
+     *      "id": 1,
+     *      "precio": 15000,
+     *      "fecha": "2023-10-27",
+     *      "metodo_pago": "Transferencia",
+     *      "vehiculo": { "id": 1, "title": "Toyota Corolla" },
+     *      "vendedor": { "id": 3, "nombre_contacto": "Concesionario X" },
+     *      "comprador": { "id": 2, "nombre_contacto": "Juan Perez" }
+     *    }
+     *  ],
+     *  "links": { ... },
+     *  "meta": { ... }
+     * }
+     */
     public function index()
     {
         // Mostrar ventas donde el usuario es vendedor o comprador
@@ -27,6 +56,29 @@ class SalesController extends Controller
             ->paginate(20);
     }
 
+    /**
+     * Registrar Venta
+     *
+     * Registra manualmente una venta completada. Solo el vendedor puede hacerlo.
+     *
+     * @authenticated
+     * @bodyParam id_vehiculo int required ID del coche. Example: 1
+     * @bodyParam id_comprador int required ID del cliente comprador. Example: 2
+     * @bodyParam precio number required Precio final de venta. Example: 14500
+     * @bodyParam fecha date required Fecha de la venta (YYYY-MM-DD). Example: 2023-10-27
+     * @bodyParam metodo_pago string required Método de pago. Example: Transferencia
+     * @bodyParam estado int required ID del estado de la venta (1: Pendiente, 2: Completada). Example: 2
+     *
+     * @response 201 {
+     *  "id": 10,
+     *  "precio": 14500,
+     *  "fecha": "2023-10-27",
+     *  "created_at": "2023-10-27T10:00:00.000000Z"
+     * }
+     * @response 403 {
+     *  "message": "No puedes vender un coche que no es tuyo."
+     * }
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -73,6 +125,22 @@ class SalesController extends Controller
         return response()->json($sale, 201);
     }
 
+    /**
+     * Ver Detalle de Venta
+     *
+     * Muestra los detalles de una venta específica. Solo visible para las partes involucradas.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la venta. Example: 1
+     *
+     * @response {
+     *  "id": 1,
+     *  "precio": 15000,
+     *  "vehiculo": { ... },
+     *  "vendedor": { ... },
+     *  "comprador": { ... }
+     * }
+     */
     public function show($id)
     {
         $sale = Sales::with(['vehiculo', 'vendedor', 'comprador'])->findOrFail($id);
@@ -86,6 +154,18 @@ class SalesController extends Controller
         return $sale;
     }
 
+    /**
+     * Actualizar Venta
+     *
+     * Modifica los datos de una venta. Solo el vendedor puede hacerlo.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la venta. Example: 1
+     * @bodyParam precio number Nuevo precio. Example: 14000
+     * @bodyParam estado int Nuevo estado. Example: 2
+     *
+     * @response 200 { ... }
+     */
     public function update(Request $request, $id)
     {
         $sale = Sales::findOrFail($id);
@@ -106,6 +186,16 @@ class SalesController extends Controller
         return response()->json($sale, 200);
     }
 
+    /**
+     * Eliminar Venta
+     *
+     * Elimina un registro de venta. Solo el vendedor puede hacerlo.
+     *
+     * @authenticated
+     * @urlParam id int required El ID de la venta. Example: 1
+     *
+     * @response 204 {}
+     */
     public function destroy($id)
     {
         $sale = Sales::findOrFail($id);

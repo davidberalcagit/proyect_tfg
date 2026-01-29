@@ -47,14 +47,26 @@ class MakeOffer extends Component
         $this->validate();
 
         if (!Auth::user()->customer) {
-            // Redirigir o crear customer si no existe (simplificado aquí)
             session()->flash('error', 'Necesitas un perfil de cliente.');
+            return;
+        }
+
+        $buyerId = Auth::user()->customer->id;
+
+        // Validar si ya existe una oferta pendiente para este coche y usuario
+        $existingOffer = Offer::where('id_vehiculo', $this->car->id)
+            ->where('id_comprador', $buyerId)
+            ->pending() // Usando el scope
+            ->exists();
+
+        if ($existingOffer) {
+            session()->flash('error', 'Ya tienes una oferta pendiente para este coche.');
             return;
         }
 
         Offer::create([
             'id_vehiculo' => $this->car->id,
-            'id_comprador' => Auth::user()->customer->id,
+            'id_comprador' => $buyerId,
             'id_vendedor' => $this->car->id_vendedor,
             'cantidad' => $this->cantidad,
             'estado' => 'pending'

@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/', // CAMBIADO a raíz
+    'home' => '/',
 
     /*
     |--------------------------------------------------------------------------
@@ -146,7 +146,7 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(), // Descomentado
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([

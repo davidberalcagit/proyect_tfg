@@ -17,6 +17,15 @@ class Sales extends Model
         'id_estado' // Changed from estado
     ];
 
+    // Scope Complejo: Reporte Mensual
+    public function scopeMonthlyReport($query, $sellerId, $month, $year)
+    {
+        return $query->where('id_vendedor', $sellerId)
+                     ->whereMonth('created_at', $month) // Usamos created_at si no hay campo fecha
+                     ->whereYear('created_at', $year)
+                     ->where('id_estado', 1); // Asumiendo 1 es completada
+    }
+
     public function vehiculo(){
         return $this->belongsTo(Cars::class, 'id_vehiculo');
     }

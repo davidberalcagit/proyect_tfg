@@ -9,35 +9,35 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group Autenticación
+ * Endpoints para gestion de sesion de usuarios
+ */
 class AuthController extends Controller
 {
+    /**
+     *          Iniciar sesion
+     * Autenticación de un usuario y devuelve un token de acceso
+     * @bodyParam email string required El email del usuario. Ejemplo: user@example.com
+     * @bodyParam password string required La contraseña del usuario. Ejemplo: password
+     *
+     */
     public function login(Request $request)
     {
-        // Validar los datos de entrada
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        // Intentar autenticar
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Credenciales incorrectas'
             ], 401);
         }
 
-        // Buscar el usuario
         $user = User::where('email', $request['email'])->firstOrFail();
-
-        // Crear el token (borra tokens anteriores si quieres sesión única, opcional)
-        // $user->tokens()->delete();
-
         $token = $user->createToken('auth_token')->plainTextToken;
-        
-        // JOB: Enviar email de bienvenida (Demo en login)
         SendWelcomeEmailJob::dispatch($user);
 
-        // Devolver el token
         return response()->json([
             'message' => 'Hola ' . $user->name,
             'accessToken' => $token,
@@ -45,6 +45,14 @@ class AuthController extends Controller
             'user' => $user,
         ]);
     }
+    /**
+     *          Cerrar Sesión
+     * Revoca el token actual del usuario.
+     * @authenticated
+     * @response {
+     *  "message": "Logged out"
+     * }
+     */
 
     public function logout()
     {

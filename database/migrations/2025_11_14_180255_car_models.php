@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
-            $table->string('id_marca')->constrained('brands')->onDelete('cascade');
+            // Creamos la columna como unsignedBigInteger pero SIN la restricción foránea aún
+            // para evitar el error de orden de migraciones.
+            $table->unsignedBigInteger('id_marca');
             $table->string('nombre');
             $table->timestamps();
             $table->unique(['id_marca', 'nombre']);
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('models');
+        Schema::dropIfExists('car_models');
     }
 };

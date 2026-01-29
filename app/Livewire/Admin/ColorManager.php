@@ -6,6 +6,7 @@ use Livewire\WithPagination;
 
 class ColorManager extends Component {
     use WithPagination;
+    protected $paginationTheme = 'tailwind';
     public $nombre, $color_id, $isModalOpen = false;
     protected $rules = ['nombre' => 'required|string|max:255|unique:colors,nombre'];
 
