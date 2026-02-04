@@ -71,6 +71,26 @@ test('api colors store creates color', function () {
     $this->assertDatabaseHas('colors', ['nombre' => 'Magenta']);
 });
 
+test('api colors update modifies color', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+    $color = Color::factory()->create();
+
+    $this->putJson(route('api.colors.update', $color->id), ['nombre' => 'Cyan'])
+         ->assertStatus(200);
+    $this->assertDatabaseHas('colors', ['id' => $color->id, 'nombre' => 'Cyan']);
+});
+
+test('api colors destroy deletes color', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+    $color = Color::factory()->create();
+
+    $this->deleteJson(route('api.colors.destroy', $color->id))
+         ->assertStatus(204);
+    $this->assertDatabaseMissing('colors', ['id' => $color->id]);
+});
+
 // --- Gears ---
 test('api gears index returns list', function () {
     Gears::factory()
@@ -92,9 +112,22 @@ test('api gears store creates gear', function () {
     $this->assertDatabaseHas('gears', ['tipo' => 'CVT']);
 });
 
-// --- Vehicle (Placeholder) ---
-test('api vehicle controller index returns empty', function () {
-    $this->getJson(route('api.vehicles.index'))
-         ->assertStatus(200)
-         ->assertJson([]);
+test('api gears update modifies gear', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+    $gear = Gears::factory()->create();
+
+    $this->putJson(route('api.gears.update', $gear->id), ['tipo' => 'DSG'])
+         ->assertStatus(200);
+    $this->assertDatabaseHas('gears', ['id' => $gear->id, 'tipo' => 'DSG']);
+});
+
+test('api gears destroy deletes gear', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+    $gear = Gears::factory()->create();
+
+    $this->deleteJson(route('api.gears.destroy', $gear->id))
+         ->assertStatus(204);
+    $this->assertDatabaseMissing('gears', ['id' => $gear->id]);
 });

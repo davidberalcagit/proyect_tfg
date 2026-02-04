@@ -1,6 +1,6 @@
 <div>
     <!-- Barra de Herramientas -->
-    <div class="bg-white p-4 rounded-lg shadow border border-custom-border mb-6">
+    <div class="bg-white p-4 lg:p-6 rounded-lg shadow border border-custom-border mb-6">
         <div class="flex flex-col xl:flex-row justify-between items-center gap-4">
             <h3 class="text-lg font-medium text-gray-900 whitespace-nowrap hidden xl:block">{{ __('Available Vehicles') }}</h3>
 
@@ -61,6 +61,19 @@
                                 </svg>
                             </div>
                         @endif
+
+                        <!-- Etiqueta Venta/Alquiler -->
+                        <div class="absolute top-2 left-2 z-20">
+                            @if($car->id_listing_type == 2)
+                                <span class="bg-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded shadow">
+                                    {{ __('For Rent') }}
+                                </span>
+                            @else
+                                <span class="bg-green-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded shadow">
+                                    {{ __('For Sale') }}
+                                </span>
+                            @endif
+                        </div>
 
                         <!-- Componente ToggleFavorite (Botón Me Gusta) -->
                         @auth

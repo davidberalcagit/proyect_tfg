@@ -2,6 +2,7 @@
 
 use App\Models\Cars;
 use App\Models\Customers;
+use App\Models\ListingType;
 use App\Models\Offer;
 use App\Models\User;
 use Livewire\Livewire;
@@ -64,12 +65,20 @@ test('car show view shows rent button for rental cars', function () {
     $user->assignRole('individual');
     Customers::factory()->create(['id_usuario' => $user->id]);
 
-    $car = Cars::factory()->create(['id_estado' => 3]); // En Alquiler
+    // Ensure listing type is Rent (2) and status is Available for Rent (3)
+    $rentType = ListingType::where('nombre', 'Alquiler')->first();
+    if (!$rentType) $rentType = ListingType::factory()->create(['id' => 2, 'nombre' => 'Alquiler']);
+
+    $car = Cars::factory()->create([
+        'id_estado' => 3, // En Alquiler
+        'id_listing_type' => $rentType->id
+    ]);
 
     $response = $this->actingAs($user)->get(route('cars.show', $car));
 
     $response->assertStatus(200);
-    $response->assertSee('Rent Car');
+    // The text might be translated or different case
+    $response->assertSee(__('Rent Car'));
 });
 
 test('sales index view renders correctly', function () {

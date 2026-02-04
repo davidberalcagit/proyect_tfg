@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://trademycar";
+        var tryItOutBaseUrl = "http://proyect.test";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -72,12 +72,10 @@
                 </li>
                                     <ul id="tocify-subheader-autenticacion" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="autenticacion-POSTapi-login">
-                                <a href="#autenticacion-POSTapi-login">Iniciar sesion
-Autenticación de un usuario y devuelve un token de acceso</a>
+                                <a href="#autenticacion-POSTapi-login">Iniciar Sesión</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="autenticacion-POSTapi-logout">
-                                <a href="#autenticacion-POSTapi-logout">Cerrar Sesión
-Revoca el token actual del usuario.</a>
+                                <a href="#autenticacion-POSTapi-logout">Cerrar Sesión</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -249,16 +247,6 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-vehiculos-placeholder" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="vehiculos-placeholder">
-                    <a href="#vehiculos-placeholder">Vehículos (Placeholder)</a>
-                </li>
-                                    <ul id="tocify-subheader-vehiculos-placeholder" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="vehiculos-placeholder-GETapi-vehicles">
-                                <a href="#vehiculos-placeholder-GETapi-vehicles">Listar Vehículos</a>
-                            </li>
-                                                                        </ul>
-                            </ul>
                     <ul id="tocify-header-ventas" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="ventas">
                     <a href="#ventas">Ventas</a>
@@ -299,7 +287,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://trademycar</code>
+    <strong>Base URL</strong>: <code>http://proyect.test</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -315,13 +303,12 @@ You can switch the language used with the tabs at the top right (or from the nav
 
     <p>Endpoints para gestion de sesion de usuarios</p>
 
-                                <h2 id="autenticacion-POSTapi-login">Iniciar sesion
-Autenticación de un usuario y devuelve un token de acceso</h2>
+                                <h2 id="autenticacion-POSTapi-login">Iniciar Sesión</h2>
 
 <p>
 </p>
 
-
+<p>Autentica a un usuario y devuelve un token de acceso.</p>
 
 <span id="example-requests-POSTapi-login">
 <blockquote>Example request:</blockquote>
@@ -329,19 +316,19 @@ Autenticación de un usuario y devuelve un token de acceso</h2>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/login" \
+    "http://proyect.test/api/login" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"gbailey@example.net\",
-    \"password\": \"|]|{+-\"
+    \"email\": \"admin@example.com\",
+    \"password\": \"password\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/login"
+    "http://proyect.test/api/login"
 );
 
 const headers = {
@@ -350,8 +337,8 @@ const headers = {
 };
 
 let body = {
-    "email": "gbailey@example.net",
-    "password": "|]|{+-"
+    "email": "admin@example.com",
+    "password": "password"
 };
 
 fetch(url, {
@@ -363,7 +350,32 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-login">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Hola Admin&quot;,
+    &quot;accessToken&quot;: &quot;1|laravel_sanctum_token...&quot;,
+    &quot;token_type&quot;: &quot;Bearer&quot;,
+    &quot;user&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Admin&quot;,
+        &quot;email&quot;: &quot;admin@example.com&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Credenciales incorrectas&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-login"></span>:
@@ -443,10 +455,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="email"                data-endpoint="POSTapi-login"
-               value="gbailey@example.net"
+               value="admin@example.com"
                data-component="body">
     <br>
-<p>El email del usuario. Ejemplo: user@example.com Example: <code>gbailey@example.net</code></p>
+<p>El email del usuario. Example: <code>admin@example.com</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -455,21 +467,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="password"                data-endpoint="POSTapi-login"
-               value="|]|{+-"
+               value="password"
                data-component="body">
     <br>
-<p>La contraseña del usuario. Ejemplo: password Example: <code>|]|{+-</code></p>
+<p>La contraseña del usuario. Example: <code>password</code></p>
         </div>
         </form>
 
-                    <h2 id="autenticacion-POSTapi-logout">Cerrar Sesión
-Revoca el token actual del usuario.</h2>
+                    <h2 id="autenticacion-POSTapi-logout">Cerrar Sesión</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-
+<p>Revoca el token actual del usuario.</p>
 
 <span id="example-requests-POSTapi-logout">
 <blockquote>Example request:</blockquote>
@@ -477,7 +488,7 @@ Revoca el token actual del usuario.</h2>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/logout" \
+    "http://proyect.test/api/logout" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -485,7 +496,7 @@ Revoca el token actual del usuario.</h2>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/logout"
+    "http://proyect.test/api/logout"
 );
 
 const headers = {
@@ -508,7 +519,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Logged out&quot;
+    &quot;message&quot;: &quot;Sesi&oacute;n cerrada correctamente&quot;
 }</code>
  </pre>
     </span>
@@ -615,7 +626,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/customers/me" \
+    --get "http://proyect.test/api/customers/me" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -623,7 +634,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers/me"
+    "http://proyect.test/api/customers/me"
 );
 
 const headers = {
@@ -755,14 +766,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/customers" \
+    --get "http://proyect.test/api/customers" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers"
+    "http://proyect.test/api/customers"
 );
 
 const headers = {
@@ -884,7 +895,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/customers" \
+    "http://proyect.test/api/customers" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -901,7 +912,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers"
+    "http://proyect.test/api/customers"
 );
 
 const headers = {
@@ -1116,14 +1127,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/customers/1" \
+    --get "http://proyect.test/api/customers/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers/1"
+    "http://proyect.test/api/customers/1"
 );
 
 const headers = {
@@ -1251,7 +1262,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/customers/1" \
+    "http://proyect.test/api/customers/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -1266,7 +1277,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers/1"
+    "http://proyect.test/api/customers/1"
 );
 
 const headers = {
@@ -1464,7 +1475,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/customers/1" \
+    "http://proyect.test/api/customers/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1472,7 +1483,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/customers/1"
+    "http://proyect.test/api/customers/1"
 );
 
 const headers = {
@@ -1611,14 +1622,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/cars?page=1&amp;search=Toyota" \
+    --get "http://proyect.test/api/cars?page=1&amp;search=Toyota" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/cars"
+    "http://proyect.test/api/cars"
 );
 
 const params = {
@@ -1793,14 +1804,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/cars/1" \
+    --get "http://proyect.test/api/cars/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/cars/1"
+    "http://proyect.test/api/cars/1"
 );
 
 const headers = {
@@ -1950,7 +1961,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/my-cars" \
+    --get "http://proyect.test/api/my-cars" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1958,7 +1969,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/my-cars"
+    "http://proyect.test/api/my-cars"
 );
 
 const headers = {
@@ -1987,15 +1998,17 @@ fetch(url, {
         &quot;status&quot;: {
             &quot;nombre&quot;: &quot;En Venta&quot;
         }
-    },
-    {
-        &quot;id&quot;: 2,
-        &quot;title&quot;: &quot;Ford Fiesta 2018&quot;,
-        &quot;status&quot;: {
-            &quot;nombre&quot;: &quot;Pendiente&quot;
-        }
     }
 ]</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-my-cars" hidden>
@@ -2098,7 +2111,7 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/cars" \
+    "http://proyect.test/api/cars" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
@@ -2116,12 +2129,12 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
     --form "temp_color=g"\
     --form "descripcion=Coche en perfecto estado..."\
     --form "id_listing_type=1"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpFA16.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php636C.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/cars"
+    "http://proyect.test/api/cars"
 );
 
 const headers = {
@@ -2431,7 +2444,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpFA16.tmp</code></p>
+<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php636C.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>id_listing_type</code></b>&nbsp;&nbsp;
@@ -2461,7 +2474,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/cars/1" \
+    "http://proyect.test/api/cars/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
@@ -2472,12 +2485,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "km=16"\
     --form "matricula=n"\
     --form "descripcion=architecto"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpFB20.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php63FA.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/cars/1"
+    "http://proyect.test/api/cars/1"
 );
 
 const headers = {
@@ -2758,7 +2771,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpFB20.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php63FA.tmp</code></p>
         </div>
         </form>
 
@@ -2776,7 +2789,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/cars/1" \
+    "http://proyect.test/api/cars/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2784,7 +2797,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/cars/1"
+    "http://proyect.test/api/cars/1"
 );
 
 const headers = {
@@ -2932,14 +2945,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/user" \
+    --get "http://proyect.test/api/user" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/user"
+    "http://proyect.test/api/user"
 );
 
 const headers = {
@@ -2968,7 +2981,8 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;No autenticado.&quot;,
+    &quot;error&quot;: &quot;Unauthorized&quot;
 }</code>
  </pre>
     </span>
@@ -3064,7 +3078,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/offers?page=1" \
+    --get "http://proyect.test/api/offers?page=1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3072,7 +3086,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/offers"
+    "http://proyect.test/api/offers"
 );
 
 const params = {
@@ -3228,21 +3242,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/offers" \
+    "http://proyect.test/api/offers" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"id_vehiculo\": 5,
-    \"precio_oferta\": 14000,
-    \"mensaje\": \"Estoy interesado...\"
+    \"precio_oferta\": 14000
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/offers"
+    "http://proyect.test/api/offers"
 );
 
 const headers = {
@@ -3253,8 +3266,7 @@ const headers = {
 
 let body = {
     "id_vehiculo": 5,
-    "precio_oferta": 14000,
-    "mensaje": "Estoy interesado..."
+    "precio_oferta": 14000
 };
 
 fetch(url, {
@@ -3406,18 +3418,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Cantidad ofrecida. Example: <code>14000</code></p>
         </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>mensaje</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="mensaje"                data-endpoint="POSTapi-offers"
-               value="Estoy interesado..."
-               data-component="body">
-    <br>
-<p>Mensaje opcional para el vendedor. Example: <code>Estoy interesado...</code></p>
-        </div>
         </form>
 
                     <h2 id="ofertas-GETapi-offers--id-">Ver Oferta</h2>
@@ -3434,7 +3434,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/offers/1" \
+    --get "http://proyect.test/api/offers/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3442,7 +3442,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/offers/1"
+    "http://proyect.test/api/offers/1"
 );
 
 const headers = {
@@ -3599,7 +3599,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/offers/1" \
+    "http://proyect.test/api/offers/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -3612,7 +3612,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/offers/1"
+    "http://proyect.test/api/offers/1"
 );
 
 const headers = {
@@ -3788,7 +3788,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/offers/1" \
+    "http://proyect.test/api/offers/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3796,7 +3796,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/offers/1"
+    "http://proyect.test/api/offers/1"
 );
 
 const headers = {
@@ -3944,14 +3944,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/brands" \
+    --get "http://proyect.test/api/brands" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands"
+    "http://proyect.test/api/brands"
 );
 
 const headers = {
@@ -4070,14 +4070,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/brands/1" \
+    --get "http://proyect.test/api/brands/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands/1"
+    "http://proyect.test/api/brands/1"
 );
 
 const headers = {
@@ -4203,14 +4203,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/brands/1/models" \
+    --get "http://proyect.test/api/brands/1/models" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands/1/models"
+    "http://proyect.test/api/brands/1/models"
 );
 
 const headers = {
@@ -4344,14 +4344,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/car-models" \
+    --get "http://proyect.test/api/car-models" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/car-models"
+    "http://proyect.test/api/car-models"
 );
 
 const headers = {
@@ -4470,14 +4470,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/car-models/1" \
+    --get "http://proyect.test/api/car-models/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/car-models/1"
+    "http://proyect.test/api/car-models/1"
 );
 
 const headers = {
@@ -4600,14 +4600,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/fuels" \
+    --get "http://proyect.test/api/fuels" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/fuels"
+    "http://proyect.test/api/fuels"
 );
 
 const headers = {
@@ -4726,14 +4726,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/fuels/1" \
+    --get "http://proyect.test/api/fuels/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/fuels/1"
+    "http://proyect.test/api/fuels/1"
 );
 
 const headers = {
@@ -4859,14 +4859,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/colors" \
+    --get "http://proyect.test/api/colors" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/colors"
+    "http://proyect.test/api/colors"
 );
 
 const headers = {
@@ -4981,14 +4981,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/colors/16" \
+    --get "http://proyect.test/api/colors/16" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/colors/16"
+    "http://proyect.test/api/colors/16"
 );
 
 const headers = {
@@ -5114,14 +5114,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/gears" \
+    --get "http://proyect.test/api/gears" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/gears"
+    "http://proyect.test/api/gears"
 );
 
 const headers = {
@@ -5236,14 +5236,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/gears/16" \
+    --get "http://proyect.test/api/gears/16" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/gears/16"
+    "http://proyect.test/api/gears/16"
 );
 
 const headers = {
@@ -5370,7 +5370,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/brands" \
+    "http://proyect.test/api/brands" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -5382,7 +5382,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands"
+    "http://proyect.test/api/brands"
 );
 
 const headers = {
@@ -5528,7 +5528,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/brands/1" \
+    "http://proyect.test/api/brands/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -5540,7 +5540,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands/1"
+    "http://proyect.test/api/brands/1"
 );
 
 const headers = {
@@ -5699,7 +5699,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/brands/1" \
+    "http://proyect.test/api/brands/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5707,7 +5707,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/brands/1"
+    "http://proyect.test/api/brands/1"
 );
 
 const headers = {
@@ -5843,7 +5843,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/car-models" \
+    "http://proyect.test/api/car-models" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -5856,7 +5856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/car-models"
+    "http://proyect.test/api/car-models"
 );
 
 const headers = {
@@ -6011,7 +6011,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/car-models/1" \
+    "http://proyect.test/api/car-models/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -6023,7 +6023,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/car-models/1"
+    "http://proyect.test/api/car-models/1"
 );
 
 const headers = {
@@ -6182,7 +6182,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/car-models/1" \
+    "http://proyect.test/api/car-models/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6190,7 +6190,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/car-models/1"
+    "http://proyect.test/api/car-models/1"
 );
 
 const headers = {
@@ -6326,7 +6326,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/fuels" \
+    "http://proyect.test/api/fuels" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -6338,7 +6338,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/fuels"
+    "http://proyect.test/api/fuels"
 );
 
 const headers = {
@@ -6484,7 +6484,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/fuels/1" \
+    "http://proyect.test/api/fuels/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -6496,7 +6496,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/fuels/1"
+    "http://proyect.test/api/fuels/1"
 );
 
 const headers = {
@@ -6655,7 +6655,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/fuels/1" \
+    "http://proyect.test/api/fuels/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6663,7 +6663,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/fuels/1"
+    "http://proyect.test/api/fuels/1"
 );
 
 const headers = {
@@ -6799,7 +6799,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/colors" \
+    "http://proyect.test/api/colors" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -6811,7 +6811,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/colors"
+    "http://proyect.test/api/colors"
 );
 
 const headers = {
@@ -6953,7 +6953,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/colors/16" \
+    "http://proyect.test/api/colors/16" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -6965,7 +6965,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/colors/16"
+    "http://proyect.test/api/colors/16"
 );
 
 const headers = {
@@ -7124,7 +7124,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/colors/16" \
+    "http://proyect.test/api/colors/16" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7132,7 +7132,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/colors/16"
+    "http://proyect.test/api/colors/16"
 );
 
 const headers = {
@@ -7268,7 +7268,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/gears" \
+    "http://proyect.test/api/gears" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -7280,7 +7280,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/gears"
+    "http://proyect.test/api/gears"
 );
 
 const headers = {
@@ -7422,7 +7422,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/gears/16" \
+    "http://proyect.test/api/gears/16" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -7434,7 +7434,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/gears/16"
+    "http://proyect.test/api/gears/16"
 );
 
 const headers = {
@@ -7593,7 +7593,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/gears/16" \
+    "http://proyect.test/api/gears/16" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7601,7 +7601,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/gears/16"
+    "http://proyect.test/api/gears/16"
 );
 
 const headers = {
@@ -7723,127 +7723,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                <h1 id="vehiculos-placeholder">Vehículos (Placeholder)</h1>
-
-    <p>Controlador reservado para futura expansión de tipos de vehículos.</p>
-
-                                <h2 id="vehiculos-placeholder-GETapi-vehicles">Listar Vehículos</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-vehicles">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/vehicles" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/vehicles"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-vehicles">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">[]</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-vehicles" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-vehicles"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-vehicles"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-vehicles" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-vehicles">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-vehicles" data-method="GET"
-      data-path="api/vehicles"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-vehicles', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-vehicles"
-                    onclick="tryItOut('GETapi-vehicles');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-vehicles"
-                    onclick="cancelTryOut('GETapi-vehicles');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-vehicles"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/vehicles</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-vehicles"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-vehicles"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
                 <h1 id="ventas">Ventas</h1>
 
     <p>Gestión de transacciones de venta.</p>
@@ -7862,7 +7741,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/sales?page=1" \
+    --get "http://proyect.test/api/sales?page=1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7870,7 +7749,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/sales"
+    "http://proyect.test/api/sales"
 );
 
 const params = {
@@ -8027,7 +7906,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://trademycar/api/sales" \
+    "http://proyect.test/api/sales" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -8044,7 +7923,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/sales"
+    "http://proyect.test/api/sales"
 );
 
 const headers = {
@@ -8265,7 +8144,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://trademycar/api/sales/1" \
+    --get "http://proyect.test/api/sales/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8273,7 +8152,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/sales/1"
+    "http://proyect.test/api/sales/1"
 );
 
 const headers = {
@@ -8416,13 +8295,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://trademycar/api/sales/1" \
+    "http://proyect.test/api/sales/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"precio\": 14000,
-    \"fecha\": \"2026-01-29T22:07:38\",
+    \"fecha\": \"2026-01-29T23:16:54\",
     \"metodo_pago\": \"n\",
     \"estado\": 2
 }"
@@ -8431,7 +8310,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/sales/1"
+    "http://proyect.test/api/sales/1"
 );
 
 const headers = {
@@ -8442,7 +8321,7 @@ const headers = {
 
 let body = {
     "precio": 14000,
-    "fecha": "2026-01-29T22:07:38",
+    "fecha": "2026-01-29T23:16:54",
     "metodo_pago": "n",
     "estado": 2
 };
@@ -8584,10 +8463,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha"                data-endpoint="PUTapi-sales--id-"
-               value="2026-01-29T22:07:38"
+               value="2026-01-29T23:16:54"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-01-29T22:07:38</code></p>
+<p>Must be a valid date. Example: <code>2026-01-29T23:16:54</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>metodo_pago</code></b>&nbsp;&nbsp;
@@ -8629,7 +8508,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://trademycar/api/sales/1" \
+    "http://proyect.test/api/sales/1" \
     --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8637,7 +8516,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://trademycar/api/sales/1"
+    "http://proyect.test/api/sales/1"
 );
 
 const headers = {

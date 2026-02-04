@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Fuels extends Model
 {
     use HasFactory;
-    protected $table = 'fuels';
+
     protected $fillable = ['nombre'];
-    public function cars()
+
+    public function getLabel(): string
     {
-        return $this->hasMany(Cars::class,'id_combustible');
+        return $this->nombre ?? '';
     }
 }

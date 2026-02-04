@@ -11,8 +11,8 @@ class SaleStatus extends Model
 
     protected $fillable = ['id', 'nombre'];
 
-    public function sales()
+    public function getLabel(): string
     {
-        return $this->hasMany(Sales::class, 'id_estado');
+        return $this->nombre ?? '';
     }
 }

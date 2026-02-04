@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\SalesController;
 use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomersController;
-use App\Http\Controllers\Api\VehicleController;
 use App\Http\Controllers\Api\FuelsController;
 use App\Http\Controllers\Api\ColorsController;
 use App\Http\Controllers\Api\GearsController;
@@ -29,15 +28,16 @@ Route::apiResource('car-models', CarModelsController::class)->only(['index', 'sh
 Route::apiResource('fuels', FuelsController::class)->only(['index', 'show'])->names('api.fuels');
 Route::apiResource('colors', ColorsController::class)->only(['index', 'show'])->names('api.colors');
 Route::apiResource('gears', GearsController::class)->only(['index', 'show'])->names('api.gears');
-Route::apiResource('vehicles', VehicleController::class)->only(['index'])->names('api.vehicles'); // Restaurada y pública
 
 // Coches públicos (lectura)
 Route::apiResource('cars', CarsController::class)->only(['index', 'show'])->names('api.cars');
-Route::get('/my-cars', [CarsController::class, 'myCars'])->name('api.cars.myCars');
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
+
+    // Mis Coches (Movido aquí para requerir autenticación)
+    Route::get('/my-cars', [CarsController::class, 'myCars'])->name('api.cars.myCars');
 
     // Rutas de Clientes (Perfil de vendedor)
     Route::get('/customers/me', [CustomersController::class, 'me']);

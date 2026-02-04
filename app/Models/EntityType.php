@@ -9,10 +9,10 @@ class EntityType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre']; // Corregido de 'name' a 'nombre'
+    protected $fillable = ['nombre'];
 
-    public function customers()
+    public function getLabel(): string
     {
-        return $this->hasMany(Customers::class, 'id_entidad');
+        return $this->nombre ?? '';
     }
 }

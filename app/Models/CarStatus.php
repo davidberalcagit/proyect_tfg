@@ -11,8 +11,8 @@ class CarStatus extends Model
 
     protected $fillable = ['id', 'nombre'];
 
-    public function cars()
+    public function getLabel(): string
     {
-        return $this->hasMany(Cars::class, 'id_estado');
+        return $this->nombre ?? '';
     }
 }

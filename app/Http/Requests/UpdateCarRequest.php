@@ -11,7 +11,11 @@ class UpdateCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('car'));
+        try {
+            return $this->user()->can('update', $this->route('car'));
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 
     /**

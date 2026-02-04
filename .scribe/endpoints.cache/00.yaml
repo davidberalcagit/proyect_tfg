@@ -14,10 +14,8 @@ endpoints:
       groupDescription: 'Endpoints para gestion de sesion de usuarios'
       subgroup: ''
       subgroupDescription: ''
-      title: |-
-        Iniciar sesion
-        Autenticación de un usuario y devuelve un token de acceso
-      description: ''
+      title: 'Iniciar Sesión'
+      description: 'Autentica a un usuario y devuelve un token de acceso.'
       authenticated: false
       deprecated: false
     headers:
@@ -31,30 +29,51 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'El email del usuario. Ejemplo: user@example.com'
+        description: 'El email del usuario.'
         required: true
-        example: gbailey@example.net
+        example: admin@example.com
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       password:
         custom: []
         name: password
-        description: 'La contraseña del usuario. Ejemplo: password'
+        description: 'La contraseña del usuario.'
         required: true
-        example: '|]|{+-'
+        example: password
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      email: gbailey@example.net
-      password: '|]|{+-'
+      email: admin@example.com
+      password: password
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "message": "Hola Admin",
+           "accessToken": "1|laravel_sanctum_token...",
+           "token_type": "Bearer",
+           "user": { "id": 1, "name": "Admin", "email": "admin@example.com" }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+           "message": "Credenciales incorrectas"
+          }
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -71,10 +90,8 @@ endpoints:
       groupDescription: 'Endpoints para gestion de sesion de usuarios'
       subgroup: ''
       subgroupDescription: ''
-      title: |-
-        Cerrar Sesión
-        Revoca el token actual del usuario.
-      description: ''
+      title: 'Cerrar Sesión'
+      description: 'Revoca el token actual del usuario.'
       authenticated: true
       deprecated: false
     headers:
@@ -94,7 +111,7 @@ endpoints:
         status: 200
         content: |-
           {
-           "message": "Logged out"
+           "message": "Sesión cerrada correctamente"
           }
         headers: []
         description: ''

@@ -11,8 +11,8 @@ class ListingType extends Model
 
     protected $fillable = ['nombre'];
 
-    public function cars()
+    public function getLabel(): string
     {
-        return $this->hasMany(Cars::class, 'id_listing_type');
+        return $this->nombre ?? '';
     }
 }

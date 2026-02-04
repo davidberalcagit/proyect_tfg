@@ -11,7 +11,7 @@ class CarFilter extends Component
 {
     use WithPagination;
 
-    protected $paginationTheme = 'tailwind'; // Fix pagination style
+    protected $paginationTheme = 'tailwind';
 
     public $search = '';
     public $brand = '';
@@ -35,7 +35,7 @@ class CarFilter extends Component
     public function render()
     {
         $query = Cars::with(['marca', 'modelo', 'status'])
-            ->where('id_estado', 1); // Solo coches en venta
+            ->whereIn('id_estado', [1, 3]); // Mostrar En Venta (1) y En Alquiler (3)
 
         if ($this->search) {
             $query->where(function($q) {

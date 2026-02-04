@@ -1,23 +1,25 @@
-name: Ventas
+name: Ofertas
 description: |-
 
-  Gestión de transacciones de venta.
+  Gestión de ofertas de compra y venta.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/sales
+    uri: api/offers
     metadata:
       custom: []
-      groupName: Ventas
+      groupName: Ofertas
       groupDescription: |-
 
-        Gestión de transacciones de venta.
+        Gestión de ofertas de compra y venta.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Listar Mis Ventas'
-      description: 'Muestra el historial de ventas donde el usuario es vendedor o comprador.'
+      title: |-
+        Listar Mis Ofertas
+        Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (como vendedor).
+      description: ''
       authenticated: true
       deprecated: false
     headers:
@@ -52,12 +54,11 @@ endpoints:
            "data": [
              {
                "id": 1,
-               "precio": 15000,
-               "fecha": "2023-10-27",
-               "metodo_pago": "Transferencia",
-               "vehiculo": { "id": 1, "title": "Toyota Corolla" },
-               "vendedor": { "id": 3, "nombre_contacto": "Concesionario X" },
-               "comprador": { "id": 2, "nombre_contacto": "Juan Perez" }
+               "cantidad": 14000,
+               "estado": "pending",
+               "car": { "id": 1, "title": "Toyota Corolla" },
+               "buyer": { "id": 2, "nombre_contacto": "Juan Perez" },
+               "seller": { "id": 3, "nombre_contacto": "Concesionario X" }
              }
            ],
            "links": { ... },
@@ -77,17 +78,17 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/sales
+    uri: api/offers
     metadata:
       custom: []
-      groupName: Ventas
+      groupName: Ofertas
       groupDescription: |-
 
-        Gestión de transacciones de venta.
+        Gestión de ofertas de compra y venta.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Registrar Venta'
-      description: 'Registra manualmente una venta completada. Solo el vendedor puede hacerlo.'
+      title: 'Crear Oferta'
+      description: 'Envía una oferta por un coche.'
       authenticated: true
       deprecated: false
     headers:
@@ -104,74 +105,26 @@ endpoints:
         name: id_vehiculo
         description: 'ID del coche.'
         required: true
-        example: 1
+        example: 5
         type: integer
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      id_comprador:
+      precio_oferta:
         custom: []
-        name: id_comprador
-        description: 'ID del cliente comprador.'
+        name: precio_oferta
+        description: 'Cantidad ofrecida.'
         required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      precio:
-        custom: []
-        name: precio
-        description: 'Precio final de venta.'
-        required: true
-        example: 14500.0
+        example: 14000.0
         type: number
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      fecha:
-        custom: []
-        name: fecha
-        description: 'Fecha de la venta (YYYY-MM-DD).'
-        required: true
-        example: '2023-10-27'
-        type: date
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      metodo_pago:
-        custom: []
-        name: metodo_pago
-        description: 'Método de pago.'
-        required: true
-        example: Transferencia
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      estado:
-        custom: []
-        name: estado
-        description: 'ID del estado de la venta (1: Pendiente, 2: Completada).'
-        required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanBodyParameters:
-      id_vehiculo: 1
-      id_comprador: 2
-      precio: 14500.0
-      fecha: '2023-10-27'
-      metodo_pago: Transferencia
-      estado: 2
+      id_vehiculo: 5
+      precio_oferta: 14000.0
     fileParameters: []
     responses:
       -
@@ -180,18 +133,28 @@ endpoints:
         content: |-
           {
            "id": 10,
-           "precio": 14500,
-           "fecha": "2023-10-27",
+           "id_vehiculo": 5,
+           "cantidad": 14000,
+           "estado": "pending",
            "created_at": "2023-10-27T10:00:00.000000Z"
           }
         headers: []
         description: ''
       -
         custom: []
-        status: 403
+        status: 400
         content: |-
           {
-           "message": "No puedes vender un coche que no es tuyo."
+           "message": "No puedes hacer una oferta por tu propio coche."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 409
+        content: |-
+          {
+           "message": "Ya tienes una oferta pendiente para este coche."
           }
         headers: []
         description: ''
@@ -207,17 +170,17 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/sales/{id}'
+    uri: 'api/offers/{id}'
     metadata:
       custom: []
-      groupName: Ventas
+      groupName: Ofertas
       groupDescription: |-
 
-        Gestión de transacciones de venta.
+        Gestión de ofertas de compra y venta.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Ver Detalle de Venta'
-      description: 'Muestra los detalles de una venta específica. Solo visible para las partes involucradas.'
+      title: 'Ver Oferta'
+      description: 'Muestra los detalles de una oferta. Solo visible para el comprador o el vendedor.'
       authenticated: true
       deprecated: false
     headers:
@@ -228,7 +191,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'El ID de la venta.'
+        description: 'El ID de la oferta.'
         required: true
         example: 1
         type: integer
@@ -250,10 +213,20 @@ endpoints:
         content: |-
           {
            "id": 1,
-           "precio": 15000,
-           "vehiculo": { ... },
-           "vendedor": { ... },
-           "comprador": { ... }
+           "cantidad": 14000,
+           "estado": "pending",
+           "car": { ... },
+           "buyer": { ... },
+           "seller": { ... }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: |-
+          {
+           "message": "No tienes permiso para ver esta oferta."
           }
         headers: []
         description: ''
@@ -270,17 +243,20 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/sales/{id}'
+    uri: 'api/offers/{id}'
     metadata:
       custom: []
-      groupName: Ventas
+      groupName: Ofertas
       groupDescription: |-
 
-        Gestión de transacciones de venta.
+        Gestión de ofertas de compra y venta.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Actualizar Venta'
-      description: 'Modifica los datos de una venta. Solo el vendedor puede hacerlo.'
+      title: 'Actualizar Oferta'
+      description: |-
+        Permite modificar una oferta.
+        - El **comprador** puede cambiar el precio (`precio_oferta`) si está pendiente.
+        - El **vendedor** puede cambiar el estado (`estado`) a 'aceptada' o 'rechazada'.
       authenticated: true
       deprecated: false
     headers:
@@ -291,7 +267,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'El ID de la venta.'
+        description: 'El ID de la oferta.'
         required: true
         example: 1
         type: integer
@@ -304,61 +280,42 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      precio:
+      precio_oferta:
         custom: []
-        name: precio
-        description: 'Nuevo precio.'
+        name: precio_oferta
+        description: 'Nuevo precio (solo comprador).'
         required: false
-        example: 14000.0
+        example: 14500.0
         type: number
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      fecha:
-        custom: []
-        name: fecha
-        description: 'Must be a valid date.'
-        required: false
-        example: '2026-01-29T22:07:38'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      metodo_pago:
-        custom: []
-        name: metodo_pago
-        description: 'Must not be greater than 50 characters.'
-        required: false
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       estado:
         custom: []
         name: estado
-        description: 'Nuevo estado.'
+        description: 'Nuevo estado (solo vendedor).'
         required: false
-        example: 2
-        type: integer
+        example: aceptada
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      precio: 14000.0
-      fecha: '2026-01-29T22:07:38'
-      metodo_pago: 'n'
-      estado: 2
+      precio_oferta: 14500.0
+      estado: aceptada
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{ ... }'
+        content: |-
+          {
+           "id": 1,
+           "cantidad": 14500,
+           "estado": "pending"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -373,17 +330,17 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/sales/{id}'
+    uri: 'api/offers/{id}'
     metadata:
       custom: []
-      groupName: Ventas
+      groupName: Ofertas
       groupDescription: |-
 
-        Gestión de transacciones de venta.
+        Gestión de ofertas de compra y venta.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Eliminar Venta'
-      description: 'Elimina un registro de venta. Solo el vendedor puede hacerlo.'
+      title: 'Eliminar Oferta'
+      description: 'Cancela (elimina) una oferta pendiente. Solo el creador puede hacerlo.'
       authenticated: true
       deprecated: false
     headers:
@@ -394,7 +351,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'El ID de la venta.'
+        description: 'El ID de la oferta.'
         required: true
         example: 1
         type: integer
@@ -414,6 +371,15 @@ endpoints:
         custom: []
         status: 204
         content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: |-
+          {
+           "message": "Solo el creador de la oferta puede eliminarla."
+          }
         headers: []
         description: ''
     responseFields: []

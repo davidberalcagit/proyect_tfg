@@ -95,6 +95,20 @@ test('gear manager validates unique gear', function () {
         ->assertHasErrors(['tipo' => 'unique']);
 });
 
+test('gear manager can edit gear', function () {
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+    $gear = Gears::create(['tipo' => 'Manual']);
+
+    Livewire::actingAs($admin)
+        ->test(GearManager::class)
+        ->call('edit', $gear->id)
+        ->set('tipo', 'CVT')
+        ->call('store');
+
+    $this->assertDatabaseHas('gears', ['id' => $gear->id, 'tipo' => 'CVT']);
+});
+
 test('gear manager can delete gear', function () {
     $admin = User::factory()->create();
     $admin->assignRole('admin');
@@ -131,6 +145,32 @@ test('fuel manager validates required name', function () {
         ->assertHasErrors(['nombre' => 'required']);
 });
 
+test('fuel manager can edit fuel', function () {
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+    $fuel = Fuels::factory()->create(['nombre' => 'Old Fuel']);
+
+    Livewire::actingAs($admin)
+        ->test(FuelManager::class)
+        ->call('edit', $fuel->id)
+        ->set('nombre', 'Updated Fuel')
+        ->call('store');
+
+    $this->assertDatabaseHas('fuels', ['id' => $fuel->id, 'nombre' => 'Updated Fuel']);
+});
+
+test('fuel manager can delete fuel', function () {
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+    $fuel = Fuels::factory()->create();
+
+    Livewire::actingAs($admin)
+        ->test(FuelManager::class)
+        ->call('delete', $fuel->id);
+
+    $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
+});
+
 // --- ColorManager Tests ---
 test('color manager can create color', function () {
     $admin = User::factory()->create();
@@ -154,4 +194,30 @@ test('color manager validates unique color', function () {
         ->set('nombre', 'Blue')
         ->call('store')
         ->assertHasErrors(['nombre' => 'unique']);
+});
+
+test('color manager can edit color', function () {
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+    $color = Color::factory()->create(['nombre' => 'Old Color']);
+
+    Livewire::actingAs($admin)
+        ->test(ColorManager::class)
+        ->call('edit', $color->id)
+        ->set('nombre', 'Updated Color')
+        ->call('store');
+
+    $this->assertDatabaseHas('colors', ['id' => $color->id, 'nombre' => 'Updated Color']);
+});
+
+test('color manager can delete color', function () {
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+    $color = Color::factory()->create();
+
+    Livewire::actingAs($admin)
+        ->test(ColorManager::class)
+        ->call('delete', $color->id);
+
+    $this->assertDatabaseMissing('colors', ['id' => $color->id]);
 });

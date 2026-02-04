@@ -19,15 +19,19 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-[#284961] text-white">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider w-20">ID</th>
+                    {{-- text-center añadido aquí --}}
+                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider w-20">ID</th>
+                    {{-- text-left ya estaba aquí --}}
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
+                    {{-- text-right ya estaba aquí --}}
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider w-48">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($brands as $brand)
                     <tr wire:key="brand-{{ $brand->id }}" class="hover:bg-gray-50 transition duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{-- text-center añadido aquí --}}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                             {{ $brand->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

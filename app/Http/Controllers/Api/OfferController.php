@@ -61,7 +61,6 @@ class OfferController extends Controller
      * @authenticated
      * @bodyParam id_vehiculo int required ID del coche. Example: 5
      * @bodyParam precio_oferta number required Cantidad ofrecida. Example: 14000
-     * @bodyParam mensaje string Mensaje opcional para el vendedor. Example: Estoy interesado...
      *
      * @response 201 {
      *  "id": 10,
@@ -82,7 +81,6 @@ class OfferController extends Controller
         $request->validate([
             'id_vehiculo' => 'required|exists:cars,id',
             'precio_oferta' => 'required|numeric|min:0',
-            'mensaje' => 'nullable|string|max:500',
         ]);
 
         $buyer = Auth::user()->customer;
@@ -112,7 +110,6 @@ class OfferController extends Controller
             'id_vendedor' => $car->id_vendedor,
             'id_comprador' => $buyer->id,
             'cantidad' => $request->precio_oferta,
-            'mensaje' => $request->mensaje,
             'estado' => 'pending',
         ]);
 

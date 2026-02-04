@@ -17,7 +17,11 @@ class StoreCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Cars::class);
+        try {
+            return $this->user()->can('create', Cars::class);
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 
     /**

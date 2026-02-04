@@ -24,7 +24,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Restaurada ruta dashboard para compatibilidad con Jetstream, redirige a inicio
     Route::get('/dashboard', function () {
         return redirect('/');
     })->name('dashboard');

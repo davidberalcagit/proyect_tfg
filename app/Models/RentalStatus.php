@@ -9,10 +9,10 @@ class RentalStatus extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['id', 'nombre'];
 
-    public function rentals()
+    public function getLabel(): string
     {
-        return $this->hasMany(Rental::class, 'id_estado');
+        return $this->nombre ?? '';
     }
 }

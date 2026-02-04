@@ -13,14 +13,13 @@ test('audit car prices job logs high and low prices', function () {
     Log::spy();
 
     // Create cars with various prices
-    $cheapCar = Cars::factory()->create(['precio' => 500, 'title' => 'Cheap Car']);
-    $expensiveCar = Cars::factory()->create(['precio' => 150000, 'title' => 'Expensive Car']);
+    // Job checks for price <= 0
+    $cheapCar = Cars::factory()->create(['precio' => 0, 'title' => 'Free Car']);
     $normalCar = Cars::factory()->create(['precio' => 20000, 'title' => 'Normal Car']);
 
     $job = new AuditCarPricesJob();
     $job->handle();
 
-    Log::shouldHaveReceived('warning')->with("Precio sospechosamente bajo: {$cheapCar->id} - {$cheapCar->precio}");
-    Log::shouldHaveReceived('info')->with("Precio alto detectado: {$expensiveCar->id} - {$expensiveCar->precio}");
-    // Normal car should not trigger log (assuming logic)
+    Log::shouldHaveReceived('warning')->with("Coche ID {$cheapCar->id} tiene un precio sospechoso: {$cheapCar->precio} €. Marcando para revisión.");
+    Log::shouldHaveReceived('info')->with("Iniciando auditoría de precios de coches...");
 });

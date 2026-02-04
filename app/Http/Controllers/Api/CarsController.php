@@ -241,24 +241,30 @@ class CarsController extends Controller
      * Lista los coches publicados por el usuario autenticado.
      *
      * @authenticated
-     *
      * @response [
      *  {
      *      "id": 1,
      *      "title": "Toyota Corolla 2020",
      *      "status": { "nombre": "En Venta" }
-     *  },
-     *  {
-     *      "id": 2,
-     *      "title": "Ford Fiesta 2018",
-     *      "status": { "nombre": "Pendiente" }
      *  }
      * ]
+     * @response 401 {
+     *  "message": "Unauthenticated."
+     * }
      */
     public function myCars()
     {
         $user = Auth::user();
-        if (!$user->customer) return response()->json([], 200);
+
+        // Verificar si el usuario está autenticado
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
+
+        // Verificar si tiene perfil de cliente
+        if (!$user->customer) {
+            return response()->json([], 200);
+        }
 
         return Cars::with(['marca', 'modelo', 'status'])
             ->where('id_vendedor', $user->customer->id)
