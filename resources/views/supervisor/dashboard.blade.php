@@ -86,11 +86,11 @@
                                         <div class="flex justify-end items-center gap-2 flex-wrap">
                                             <form action="{{ route('supervisor.approve', $car->id) }}" method="POST" class="inline-block">
                                                 @csrf
-                                                <x-button class="bg-green-600 hover:bg-green-700 active:bg-green-900 border-green-600 focus:border-green-900 ring-green-300 whitespace-nowrap">
+                                                <x-button class="bg-green-600 hover:bg-green-700 active:bg-green-900 w-24 border-green-600 focus:border-green-900 ring-green-300 whitespace-nowrap">
                                                     Aprobar
                                                 </x-button>
                                             </form>
-                                            <x-danger-button @click="showRejectForm = !showRejectForm" class="whitespace-nowrap">
+                                            <x-danger-button @click="showRejectForm = !showRejectForm" class="w-24 whitespace-nowrap">
                                                 Rechazar
                                             </x-danger-button>
                                         </div>

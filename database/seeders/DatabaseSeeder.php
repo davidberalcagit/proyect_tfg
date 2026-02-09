@@ -30,30 +30,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Restaurar imagen de prueba
         if (!Storage::disk('public')->exists('cars')) {
             Storage::disk('public')->makeDirectory('cars');
         }
 
-        $sourcePath = resource_path('img/ford-fiesta.png');
-        $destPath = 'cars/ford-fiesta.png';
 
-        if (file_exists($sourcePath)) {
-            // Copiar desde resources si existe
-            Storage::disk('public')->put($destPath, file_get_contents($sourcePath));
-        } else {
-            // Si no existe, descargar un placeholder o crear uno dummy
-            // Usamos un servicio de placeholder fiable
-            try {
-                $imageUrl = 'https://placehold.co/600x400/284961/white?text=Ford+Fiesta';
-                $content = file_get_contents($imageUrl);
-                if ($content) {
-                    Storage::disk('public')->put($destPath, $content);
-                }
-            } catch (\Exception $e) {
-                // Fallback silencioso si no hay internet
-            }
-        }
 
         $this->call(RolesAndPermissionsSeeder::class);
 
