@@ -42,10 +42,8 @@ class CarsFactory extends Factory
         $color = Color::inRandomOrder()->first() ?? Color::factory()->create();
         $combustible = Fuels::inRandomOrder()->first() ?? Fuels::factory()->create();
 
-        // Asignar listing type aleatorio (1: Venta, 2: Alquiler)
         $listingType = ListingType::inRandomOrder()->first() ?? ListingType::factory()->create();
 
-        // Ensure statuses exist
         $statuses = [
             1 => 'En Venta',
             2 => 'Vendido',
@@ -57,7 +55,6 @@ class CarsFactory extends Factory
 
         foreach ($statuses as $id => $name) {
             if (!CarStatus::find($id)) {
-                // Force create with specific ID
                 $status = new CarStatus();
                 $status->id = $id;
                 $status->nombre = $name;
@@ -65,12 +62,9 @@ class CarsFactory extends Factory
             }
         }
 
-        // Determinar estado coherente
         if ($listingType->nombre === 'Venta') {
-            // Estados posibles: 1 (En Venta), 2 (Vendido), 4 (Pendiente), 5 (Rechazado)
-            $estado = $this->faker->randomElement([1, 1, 1, 2, 4, 5]); // Más probabilidad de estar en venta
+            $estado = $this->faker->randomElement([1, 1, 1, 2, 4, 5]);
         } else {
-            // Estados posibles: 3 (En Alquiler), 6 (Alquilado), 4 (Pendiente), 5 (Rechazado)
             $estado = $this->faker->randomElement([3, 3, 3, 6, 4, 5]);
         }
 
@@ -89,7 +83,7 @@ class CarsFactory extends Factory
             "km" => $this->faker->numberBetween(100, 100000),
             "precio" => $this->faker->numberBetween(2000, 100000),
             "descripcion" => $this->faker->text(),
-            "image" => 'cars/ford-fiesta.jpg', // Updated image path
+            "image" => 'cars/ford-fiesta.jpg',
             "id_estado" => $estado,
             "id_listing_type" => $listingType->id,
         ];

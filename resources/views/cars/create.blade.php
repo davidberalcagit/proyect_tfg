@@ -21,8 +21,6 @@
                     <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Incluimos el formulario parcial -->
-                        <!-- Pasamos un objeto Cars vacío para que el parcial funcione -->
                         @include('cars._form', [
                             'car' => new \App\Models\Cars(),
                             'listingType' => $listingType

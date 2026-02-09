@@ -13,7 +13,7 @@ test('adjust iva command adds iva to specific car', function () {
          ->assertExitCode(0);
 
     $car->refresh();
-    expect($car->precio)->toEqual(121); // 100 * 1.21
+    expect($car->precio)->toEqual(121);
 });
 
 test('adjust iva command removes iva from specific car', function () {
@@ -23,7 +23,7 @@ test('adjust iva command removes iva from specific car', function () {
          ->assertExitCode(0);
 
     $car->refresh();
-    expect($car->precio)->toEqual(100); // 121 / 1.21
+    expect($car->precio)->toEqual(100);
 });
 
 test('adjust iva command handles invalid action', function () {
@@ -42,7 +42,6 @@ test('adjust iva command updates cars by role', function () {
     $role = Role::firstOrCreate(['name' => 'individual']);
     $user = User::factory()->create();
     $user->assignRole($role);
-    // Corrected user_id to id_usuario
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
 
     $car = Cars::factory()->create([

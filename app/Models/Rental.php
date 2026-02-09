@@ -23,11 +23,10 @@ class Rental extends Model
         'fecha_fin' => 'date',
     ];
 
-    // Scopes
     public function scopeOverlapping($query, $carId, $start, $end)
     {
         return $query->where('id_vehiculo', $carId)
-                     ->whereIn('id_estado', [1, 2, 3, 7]) // Activos/Pendientes
+                     ->whereIn('id_estado', [1, 2, 3, 7])
                      ->where(function ($q) use ($start, $end) {
                          $q->whereBetween('fecha_inicio', [$start, $end])
                            ->orWhereBetween('fecha_fin', [$start, $end])
@@ -38,13 +37,12 @@ class Rental extends Model
                      });
     }
 
-    // Nuevo Scope 10: Activos (Usando)
+
     public function scopeActive($query)
     {
         return $query->where('id_estado', 3);
     }
 
-    // Relaciones
     public function car()
     {
         return $this->belongsTo(Cars::class, 'id_vehiculo');

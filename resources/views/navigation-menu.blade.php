@@ -1,31 +1,25 @@
 <nav x-data="{ open: false }" class="bg-[#284961] border-b border-custom-border sticky top-0 z-50">
-    <!-- Primary Navigation Menu -->
-    <!-- Cambiado max-w-7xl a un ancho más fluido para pantallas grandes -->
     <div class="max-w-[95%] 2xl:max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300">
         <div class="flex justify-between h-20">
             <div class="flex">
-                <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="hover:scale-110 transition duration-300 ease-in-out">
                         <x-application-mark class="block h-10 w-auto animate-pulse" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')" class="text-white hover:text-[#D1D5DB] active:text-white border-transparent hover:border-white focus:border-white">
                         {{ __('Cars') }}
                     </x-nav-link>
 
                     @auth
-                        <!-- My Garage Dropdown -->
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
                                     <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none transition ease-in-out duration-150">
                                         <span>{{ __('My Garage') }}</span>
 
-                                        <!-- Badge Logic -->
                                         @php
                                             $notificationCount = 0;
                                             if(Auth::user()->customer) {
@@ -90,7 +84,6 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <!-- Contact Link -->
                 <a href="{{ route('contact') }}"
                    x-data="{ hover: false }"
                    @mouseenter="hover = true"
@@ -114,7 +107,6 @@
                     </svg>
                 </a>
 
-                <!-- Language Switcher -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none transition ease-in-out duration-150">
@@ -131,7 +123,6 @@
                 </x-dropdown>
 
                 @auth
-                    <!-- Settings Dropdown -->
                     <div class="ms-3 relative">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
@@ -162,7 +153,6 @@
                 @endauth
             </div>
 
-            <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 hover:bg-[#1c3344] focus:outline-none focus:bg-[#1c3344] focus:text-white transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -174,7 +164,6 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-[#284961]">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('cars.index') }}" :active="request()->routeIs('cars.index')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">
@@ -182,7 +171,6 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white flex items-center" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
-                <!-- Icono Sobre Cerrado -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="h-5 w-5 mr-2"
                      x-show="!hover && !{{ request()->routeIs('contact') ? 'true' : 'false' }}"
@@ -191,7 +179,6 @@
                     <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
                 </svg>
 
-                <!-- Icono Sobre Abierto -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                      class="h-5 w-5 mr-2"
                      x-show="hover || {{ request()->routeIs('contact') ? 'true' : 'false' }}"
@@ -250,7 +237,6 @@
                     </x-responsive-nav-link>
                 @endhasanyrole
 
-                <!-- Opciones de Perfil -->
                 <div class="border-t border-[#1c3344] my-2"></div>
 
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white">

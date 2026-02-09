@@ -141,14 +141,13 @@ test('prices modify command increase decrease', function () {
 });
 
 test('users create command', function () {
-    // Test Individual
     $this->artisan('users:create')
         ->expectsQuestion('¿Qué tipo de usuario quieres crear?', 'individual')
         ->expectsQuestion('Nombre completo (Usuario)', 'Test Individual')
         ->expectsQuestion('Correo electrónico', 'individual@example.com')
         ->expectsQuestion('Contraseña', 'password')
         ->expectsQuestion('Confirmar contraseña', 'password')
-        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', 'Test Contact') // Nueva pregunta
+        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', 'Test Contact')
         ->expectsQuestion('Teléfono', '111222333')
         ->expectsQuestion('DNI', '12345678X')
         ->expectsQuestion('Fecha de Nacimiento (YYYY-MM-DD)', '1990-01-01')
@@ -160,13 +159,12 @@ test('users create command', function () {
     $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '111222333', 'nombre_contacto' => 'Test Contact']);
     $this->assertDatabaseHas('individuals', ['id_cliente' => $user->customer->id, 'dni' => '12345678X']);
 
-    // Test Dealership
     $this->artisan('users:create dealership')
         ->expectsQuestion('Nombre completo (Usuario)', 'Test Dealership')
         ->expectsQuestion('Correo electrónico', 'dealership@example.com')
         ->expectsQuestion('Contraseña', 'password')
         ->expectsQuestion('Confirmar contraseña', 'password')
-        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', '') // Dejar vacío
+        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', '')
         ->expectsQuestion('Teléfono', '444555666')
         ->expectsQuestion('Nombre de la Empresa', 'Test Motors')
         ->expectsQuestion('NIF', 'B12345678')
@@ -177,7 +175,7 @@ test('users create command', function () {
     $user = User::where('email', 'dealership@example.com')->first();
     expect($user->hasRole('dealership'))->toBeTrue();
     $this->assertDatabaseHas('dealerships', ['nif' => 'B12345678']);
-    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '444555666', 'nombre_contacto' => 'Test Dealership']); // Fallback
+    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '444555666', 'nombre_contacto' => 'Test Dealership']);
 });
 
 test('cars approve command', function () {
@@ -189,7 +187,7 @@ test('cars approve command', function () {
     }
 
     $car = Cars::factory()->create([
-        'id_estado' => 4, // Pendiente
+        'id_estado' => 4,
         'id_listing_type' => $saleType->id
     ]);
 
@@ -197,7 +195,7 @@ test('cars approve command', function () {
          ->assertSuccessful();
 
     $car->refresh();
-    expect($car->id_estado)->toBe(1); // Venta por defecto
+    expect($car->id_estado)->toBe(1);
     Bus::assertDispatched(SendCarApprovedNotificationJob::class);
 });
 

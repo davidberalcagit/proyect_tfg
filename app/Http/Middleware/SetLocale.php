@@ -18,11 +18,9 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check cookie first
         if ($request->hasCookie('locale')) {
             App::setLocale($request->cookie('locale'));
         }
-        // Fallback to session if needed (optional, but good for immediate changes before cookie is set in browser)
         elseif (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         }

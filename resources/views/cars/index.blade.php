@@ -10,11 +10,8 @@
 
             <div class="flex flex-col lg:flex-row gap-6">
 
-                <!-- Sidebar (Izquierda) - Marcas -->
-                <!-- En móvil: Acordeón colapsable. En escritorio: Sidebar fijo -->
                 <div class="w-full lg:w-1/5" x-data="{ mobileFiltersOpen: false }">
 
-                    <!-- Botón móvil para mostrar filtros -->
                     <button @click="mobileFiltersOpen = !mobileFiltersOpen" class="lg:hidden w-full bg-white p-4 rounded-lg shadow border border-custom-border flex justify-between items-center mb-4 text-[#284961] font-bold">
                         <span>{{ __('Brands & Models') }}</span>
                         <svg class="w-5 h-5 transform transition-transform" :class="{'rotate-180': mobileFiltersOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -57,7 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Contenido Principal (Derecha) -->
                 <div class="w-full lg:w-4/5">
                     @livewire('car-filter')
                 </div>

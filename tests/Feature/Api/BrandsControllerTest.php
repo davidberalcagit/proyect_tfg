@@ -65,11 +65,9 @@ test('api brands destroy deletes brand', function () {
 
 test('api brands models returns associated models', function () {
     $brand = Brands::factory()->create();
-    // Use unique names for models to avoid collision
     CarModels::factory()->create(['id_marca' => $brand->id, 'nombre' => 'Model A ' . uniqid()]);
     CarModels::factory()->create(['id_marca' => $brand->id, 'nombre' => 'Model B ' . uniqid()]);
 
-    // Create unrelated model to ensure filtering works
     $otherBrand = Brands::factory()->create();
     CarModels::factory()->create(['id_marca' => $otherBrand->id, 'nombre' => 'Model C ' . uniqid()]);
 

@@ -31,7 +31,6 @@
                         <p class="text-gray-700 mt-2">{{ __('Total Estimated') }}: <span id="total_price" class="font-bold text-xl text-indigo-600">0.00€</span></p>
                     </div>
 
-                    <!-- Checkbox de términos -->
                     <div class="mt-4 block">
                         <label for="terms" class="flex items-center">
                             <x-checkbox id="terms" name="terms" required />

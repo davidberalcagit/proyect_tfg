@@ -12,8 +12,6 @@ uses(RefreshDatabase::class);
 test('audit car prices job logs high and low prices', function () {
     Log::spy();
 
-    // Create cars with various prices
-    // Job checks for price <= 0
     $cheapCar = Cars::factory()->create(['precio' => 0, 'title' => 'Free Car']);
     $normalCar = Cars::factory()->create(['precio' => 20000, 'title' => 'Normal Car']);
 

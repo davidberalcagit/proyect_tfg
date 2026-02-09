@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\RentalPaid; // Importar Evento
+use App\Events\RentalPaid;
 use App\Mail\NewRentalRequest;
 use App\Mail\RentalAccepted;
 use App\Mail\RentalRejected;
@@ -101,7 +101,6 @@ class RentalController extends Controller
         $rental->update(['id_estado' => $initialStatus]);
         $rental->car->update(['id_estado' => 6]);
 
-        // Disparar evento en lugar de Job directo
         RentalPaid::dispatch($rental);
 
         return redirect()->route('sales.index')->with('success', 'Pago realizado. Alquiler confirmado.');

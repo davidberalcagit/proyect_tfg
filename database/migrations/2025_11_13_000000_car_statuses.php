@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('car_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique(); // En venta, Vendido, Reservado...
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
     }

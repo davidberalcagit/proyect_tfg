@@ -41,13 +41,7 @@ test('process car image job is dispatched when car is created', function () {
     ]);
 
     $this->assertDatabaseHas('cars', ['matricula' => 'JOB123']);
-    // Nota: Ahora se despacha CarCreated event, y el listener despacha el job.
-    // Si el test falla, es porque Bus::fake() intercepta el job despachado por el listener.
-    // Pero si el listener es síncrono en el test, debería funcionar.
-    // Si no, verificar Event::fake() vs Bus::fake().
-    // En el controlador actual: CarCreated::dispatch($car);
-    // En el listener: ProcessCarImageJob::dispatch($event->car->id);
-    // Bus::fake() debería capturarlo.
+
     Bus::assertDispatched(ProcessCarImageJob::class);
 });
 

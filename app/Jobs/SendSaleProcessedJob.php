@@ -23,19 +23,16 @@ class SendSaleProcessedJob implements ShouldQueue
         $this->sale = $sale;
         $this->afterCommit();
     }
-
     public function handle(): void
     {
         Log::info("Procesando venta #{$this->sale->id}");
 
-        // Enviar al comprador
         $buyerUser = $this->sale->comprador->user;
         if ($buyerUser) {
             Mail::to($buyerUser->email)->send(new SaleProcessed($this->sale));
             Log::info("Recibo enviado al comprador: {$buyerUser->email}");
         }
 
-        // Enviar al vendedor
         $sellerUser = $this->sale->vendedor->user;
         if ($sellerUser) {
             Mail::to($sellerUser->email)->send(new SaleProcessed($this->sale));

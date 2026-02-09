@@ -25,7 +25,7 @@ test('profile information can be updated', function () {
     $response = $this->actingAs($user)->patch(route('profile.update'), [
         'name' => 'New Name',
         'email' => $user->email,
-        'type' => 'particular', // Añadido campo requerido
+        'type' => 'particular',
     ]);
 
     $response->assertRedirect(route('profile.edit'));

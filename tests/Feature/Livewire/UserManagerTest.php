@@ -70,9 +70,9 @@ test('user manager can sort users', function () {
 
     Livewire::actingAs($admin)
         ->test(UserManager::class)
-        ->call('sortBy', 'name') // Ascending
+        ->call('sortBy', 'name')
         ->assertSeeInOrder(['AAA', 'ZZZ'])
-        ->call('sortBy', 'name') // Descending
+        ->call('sortBy', 'name')
         ->assertSeeInOrder(['ZZZ', 'AAA']);
 });
 

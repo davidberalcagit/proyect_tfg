@@ -8,23 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class CleanupCarImages extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'cars:cleanup-images {--dry-run : Solo simular la eliminación}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Elimina imágenes de coches que no están en la base de datos.';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $dryRun = $this->option('dry-run');

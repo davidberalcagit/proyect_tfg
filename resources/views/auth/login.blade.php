@@ -50,7 +50,6 @@
                 </a>
             </div>
 
-            <!-- Language Switcher -->
             <div class="mt-6 flex justify-center space-x-4 text-sm text-gray-500">
                 <a href="{{ route('lang.switch', 'en') }}" class="hover:text-gray-900 {{ App::getLocale() == 'en' ? 'font-bold text-indigo-600' : '' }}">English</a>
                 <span>|</span>

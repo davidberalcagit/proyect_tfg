@@ -17,18 +17,11 @@ class SendRentalReturnReminderJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $rental;
-
-    /**
-     * Create a new job instance.
-     */
     public function __construct(Rental $rental)
     {
         $this->rental = $rental;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         $user = $this->rental->customer->user;
@@ -39,7 +32,7 @@ class SendRentalReturnReminderJob implements ShouldQueue
                 Log::info("Recordatorio de devolución enviado al cliente {$user->email} para el alquiler #{$this->rental->id}");
             } catch (\Exception $e) {
                 Log::error("Error al enviar recordatorio de devolución: " . $e->getMessage());
-                throw $e; // Reintentar el job si falla
+                throw $e;
             }
         } else {
             Log::warning("No se encontró usuario para el cliente del alquiler #{$this->rental->id}");

@@ -18,9 +18,8 @@ beforeEach(function () {
 
 test('api offer index returns user offers', function () {
     Offer::factory()->create(['id_comprador' => $this->buyer->id]);
-    Offer::factory()->create(['id_vendedor' => $this->buyer->id]); // As seller
+    Offer::factory()->create(['id_vendedor' => $this->buyer->id]);
 
-    // Create unrelated offer with distinct users
     $otherUser = User::factory()->create();
     $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
     $otherSellerUser = User::factory()->create();
@@ -112,13 +111,12 @@ test('api offer update allows buyer to change price', function () {
 });
 
 test('api offer update allows seller to change status', function () {
-    // Ensure buyer is NOT the seller
     $otherUser = User::factory()->create();
     $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
 
     $offer = Offer::factory()->create([
         'id_vendedor' => $this->seller->id,
-        'id_comprador' => $otherCustomer->id, // Explicitly set buyer
+        'id_comprador' => $otherCustomer->id,
         'estado' => 'pendiente'
     ]);
 
@@ -144,7 +142,6 @@ test('api offer destroy deletes offer by buyer', function () {
 });
 
 test('api offer destroy forbids seller deletion', function () {
-    // Ensure buyer is NOT the seller
     $otherUser = User::factory()->create();
     $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
 

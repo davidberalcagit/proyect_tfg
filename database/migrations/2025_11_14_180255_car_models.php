@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
-            // Creamos la columna como unsignedBigInteger pero SIN la restricción foránea aún
-            // para evitar el error de orden de migraciones.
             $table->unsignedBigInteger('id_marca');
             $table->string('nombre');
             $table->timestamps();

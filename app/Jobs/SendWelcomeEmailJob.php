@@ -22,7 +22,6 @@ class SendWelcomeEmailJob implements ShouldQueue
         $this->user = $user;
         $this->afterCommit();
     }
-
     public function handle(): void
     {
         Mail::to($this->user->email)->send(new WelcomeEmail($this->user));

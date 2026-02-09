@@ -7,45 +7,34 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Favicon -->
         <link rel="icon" href="{{ asset('storage/logos/logo_mini_trans.png') }}" type="image/png">
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Styles -->
         @livewireStyles
     </head>
     <body class="font-sans antialiased bg-gray-100">
         <div class="min-h-screen flex flex-col justify-between">
 
-            <!-- Navigation Menu (Standard) -->
             <div class="fixed w-full z-50 top-0">
                 @livewire('navigation-menu')
             </div>
 
-            <!-- Hero Section con Video -->
             <header class="relative h-[85vh] flex items-center justify-center overflow-hidden mt-16">
-                <!-- Video de Fondo -->
                 <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
                     <source src="{{ asset('storage/184734-873923034_small.mp4') }}" type="video/mp4">
                 </video>
 
-                <!-- Capa oscura -->
                 <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
 
-                <!-- Contenido -->
                 <div class="relative z-20 text-center text-white p-6 max-w-4xl 2xl:max-w-6xl mx-auto">
-                    {{-- Título Escalable con todos los breakpoints --}}
                     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-extrabold leading-tight mb-6 drop-shadow-xl animate-fade-in-up">
                         {{ __('Find Your Dream Car Today') }}
                     </h1>
 
-                    {{-- Subtítulo Escalable --}}
                     <p class="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl mb-10 drop-shadow-md font-light">
                         {{ __('Explore a wide selection of new and used cars, compare prices, and connect with sellers.') }}
                     </p>
@@ -58,12 +47,10 @@
                 </div>
             </header>
 
-            <!-- Features Section -->
             <section class="py-16 sm:py-20 2xl:py-32 bg-white">
                 <div class="max-w-7xl 2xl:max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 class="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-[#284961] mb-12 2xl:mb-20">{{ __('Why Choose Us?') }}</h2>
 
-                    {{-- Grid Responsivo Completo --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10 2xl:gap-16">
 
                         <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50">
@@ -101,7 +88,6 @@
                 </div>
             </section>
 
-            <!-- Call to Action Section -->
             <section class="bg-[#284961] py-20 2xl:py-32 text-white text-center">
                 <div class="max-w-4xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 class="text-3xl sm:text-4xl 2xl:text-6xl font-bold mb-6 2xl:mb-10">{{ __('Ready to Sell Your Car?') }}</h2>
@@ -115,7 +101,6 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <footer class="bg-gray-900 text-gray-400 py-10 2xl:py-16">
                 <div class="max-w-7xl 2xl:max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm 2xl:text-lg">
                     <p class="mb-4">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>

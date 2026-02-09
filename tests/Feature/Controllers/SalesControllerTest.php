@@ -65,8 +65,6 @@ test('sales receipt download forbids unauthorized user', function () {
     $thirdUser = User::factory()->create();
     $thirdCustomer = Customers::factory()->create(['id_usuario' => $thirdUser->id]);
 
-    // Create sale between otherCustomer and thirdCustomer
-    // Explicitly set both buyer and seller to ensure $userCustomer is neither
     $sale = Sales::factory()->create([
         'id_comprador' => $otherCustomer->id,
         'id_vendedor' => $thirdCustomer->id

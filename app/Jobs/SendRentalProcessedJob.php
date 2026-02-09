@@ -28,13 +28,11 @@ class SendRentalProcessedJob implements ShouldQueue
     {
         Log::info("Procesando alquiler #{$this->rental->id}");
 
-        // Enviar al cliente
         $customerUser = $this->rental->customer->user;
         if ($customerUser) {
             Mail::to($customerUser->email)->send(new RentalProcessed($this->rental));
         }
 
-        // Enviar al dueño
         $ownerUser = $this->rental->car->vendedor->user;
         if ($ownerUser) {
             Mail::to($ownerUser->email)->send(new RentalProcessed($this->rental));

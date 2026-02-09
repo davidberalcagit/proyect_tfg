@@ -15,7 +15,7 @@ test('owner can edit pending car', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $customer->id,
-        'id_estado' => 4 // Pendiente (Editable)
+        'id_estado' => 4
     ]);
 
     $response = $this->actingAs($user)->get(route('cars.edit', $car));
@@ -29,14 +29,12 @@ test('cannot edit approved car unless admin', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $customer->id,
-        'id_estado' => 1 // Aprobado (No editable por dueño)
+        'id_estado' => 1
     ]);
 
-    // Dueño intenta editar -> 403
     $response = $this->actingAs($user)->get(route('cars.edit', $car));
     $response->assertStatus(403);
 
-    // Admin intenta editar -> 200
     $admin = User::factory()->create();
     $admin->assignRole('admin');
 

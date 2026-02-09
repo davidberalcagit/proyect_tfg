@@ -28,7 +28,6 @@ class AdminController extends Controller
 
         try {
             switch ($job) {
-                // Comandos Artisan
                 case 'clear-cache':
                     Artisan::call('cache:clear');
                     $output = Artisan::output();
@@ -55,9 +54,8 @@ class AdminController extends Controller
                     if (empty($output)) $output = "Limpieza de imágenes completada.";
                     break;
 
-                // Jobs Asíncronos (Queue)
                 case 'process-image':
-                    $car = Cars::first(); // Simulación con el primer coche
+                    $car = Cars::first();
                     if ($car) {
                         ProcessCarImageJob::dispatch($car->id);
                         $output = "Job 'ProcessCarImageJob' enviado a la cola para el coche ID: {$car->id}";
@@ -66,7 +64,6 @@ class AdminController extends Controller
                     }
                     break;
 
-                // Jobs Síncronos (Inmediatos)
                 case 'cleanup-offers':
                     CleanupRejectedOffersJob::dispatch();
                     $output = "Job 'CleanupRejectedOffersJob' ejecutado correctamente (Síncrono).";

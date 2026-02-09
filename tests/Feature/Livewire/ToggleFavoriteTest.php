@@ -35,10 +35,8 @@ test('toggle favorite adds and removes favorite', function () {
         'id_listing_type' => $listingType->id,
     ]);
 
-    // Ensure clean state
     $user->favorites()->detach();
 
-    // Test Toggle ON
     Livewire::actingAs($user)
         ->test(ToggleFavorite::class, ['car' => $car])
         ->assertSet('isFavorite', false)
@@ -47,8 +45,6 @@ test('toggle favorite adds and removes favorite', function () {
 
     $this->assertDatabaseHas('favorites', ['user_id' => $user->id, 'car_id' => $car->id]);
 
-    // Test Toggle OFF (New component instance to simulate page reload)
-    // We need to refresh user to see the new relation
     $user = $user->fresh();
 
     Livewire::actingAs($user)

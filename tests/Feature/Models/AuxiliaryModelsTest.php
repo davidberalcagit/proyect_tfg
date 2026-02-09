@@ -13,7 +13,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-// --- SaleStatus ---
 test('sale status can be created and updated', function () {
     $status = SaleStatus::create(['id' => 1, 'nombre' => 'Pendiente']);
     $this->assertDatabaseHas('sale_statuses', ['nombre' => 'Pendiente']);
@@ -22,7 +21,6 @@ test('sale status can be created and updated', function () {
     $this->assertDatabaseHas('sale_statuses', ['nombre' => 'Vendido']);
 });
 
-// --- RentalStatus ---
 test('rental status can be created and updated', function () {
     $status = RentalStatus::create(['nombre' => 'Activo']);
     $this->assertDatabaseHas('rental_statuses', ['nombre' => 'Activo']);
@@ -31,7 +29,6 @@ test('rental status can be created and updated', function () {
     $this->assertDatabaseHas('rental_statuses', ['nombre' => 'Finalizado']);
 });
 
-// --- ListingType ---
 test('listing type can be created and updated', function () {
     $type = ListingType::create(['nombre' => 'Venta']);
     $this->assertDatabaseHas('listing_types', ['nombre' => 'Venta']);
@@ -40,7 +37,7 @@ test('listing type can be created and updated', function () {
     $this->assertDatabaseHas('listing_types', ['nombre' => 'Alquiler']);
 });
 
-// --- Gears ---
+
 test('gears can be created, updated and deleted', function () {
     $gear = Gears::create(['tipo' => 'Manual']);
     $this->assertDatabaseHas('gears', ['tipo' => 'Manual']);
@@ -52,7 +49,7 @@ test('gears can be created, updated and deleted', function () {
     $this->assertDatabaseMissing('gears', ['id' => $gear->id]);
 });
 
-// --- Fuels ---
+
 test('fuels can be created, updated and deleted', function () {
     $fuel = Fuels::create(['nombre' => 'Gasolina']);
     $this->assertDatabaseHas('fuels', ['nombre' => 'Gasolina']);
@@ -64,7 +61,7 @@ test('fuels can be created, updated and deleted', function () {
     $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
 });
 
-// --- EntityType ---
+
 test('entity type can be created and updated', function () {
     $type = EntityType::create(['nombre' => 'Particular']);
     $this->assertDatabaseHas('entity_types', ['nombre' => 'Particular']);
@@ -73,7 +70,7 @@ test('entity type can be created and updated', function () {
     $this->assertDatabaseHas('entity_types', ['nombre' => 'Empresa']);
 });
 
-// --- CarStatus ---
+
 test('car status can be created and updated', function () {
     $status = CarStatus::create(['id' => 1, 'nombre' => 'En Venta']);
     $this->assertDatabaseHas('car_statuses', ['nombre' => 'En Venta']);

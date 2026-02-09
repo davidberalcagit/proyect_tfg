@@ -16,7 +16,6 @@ beforeEach(function () {
     Role::create(['name' => 'individual']);
 });
 
-// --- Customer Policy ---
 
 test('admin can view any customer', function () {
     $admin = User::factory()->create();
@@ -28,7 +27,7 @@ test('admin can view any customer', function () {
 
 test('user can view own customer profile', function () {
     $user = User::factory()->create();
-    $user->assignRole('individual'); // Assign role
+    $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
 
     expect($user->can('view', $customer))->toBeTrue();
@@ -36,22 +35,19 @@ test('user can view own customer profile', function () {
 
 test('user cannot view other customer profile', function () {
     $user = User::factory()->create();
-    $user->assignRole('individual'); // Assign role
+    $user->assignRole('individual');
     $otherCustomer = Customers::factory()->create();
 
     expect($user->can('view', $otherCustomer))->toBeFalse();
 });
 
-// --- Cars Policy ---
 
 test('owner can update own car', function () {
     $user = User::factory()->create();
-    $user->assignRole('individual'); // Assign role to ensure permissions
+    $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
-    // Car must be in pending state (4) to be editable by owner
     $car = Cars::factory()->create(['id_vendedor' => $customer->id, 'id_estado' => 4]);
 
-    // Reload user to ensure relations/permissions are fresh
     $user = $user->fresh();
 
     expect($user->can('update', $car))->toBeTrue();

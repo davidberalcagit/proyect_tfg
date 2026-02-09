@@ -43,7 +43,7 @@ test('car created for rent is approved as for rent', function () {
     $this->actingAs($supervisor)->post(route('supervisor.approve', $car->id));
 
     $car->refresh();
-    expect($car->id_estado)->toBe(3); // 3 = En Alquiler
+    expect($car->id_estado)->toBe(3);
 });
 
 test('car created for sale is approved as for sale', function () {
@@ -78,5 +78,5 @@ test('car created for sale is approved as for sale', function () {
     $this->actingAs($supervisor)->post(route('supervisor.approve', $car->id));
 
     $car->refresh();
-    expect($car->id_estado)->toBe(1); // 1 = En Venta
+    expect($car->id_estado)->toBe(1);
 });

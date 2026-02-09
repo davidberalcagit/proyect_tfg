@@ -9,7 +9,7 @@ class StoreCustomerRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // Controller checks if user already has customer, but basic auth is handled by middleware
+        return true;
     }
 
     public function rules(): array

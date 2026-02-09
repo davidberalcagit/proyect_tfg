@@ -35,7 +35,7 @@ class CarFilter extends Component
     public function render()
     {
         $query = Cars::with(['marca', 'modelo', 'status'])
-            ->whereIn('id_estado', [1, 3]); // Mostrar En Venta (1) y En Alquiler (3)
+            ->whereIn('id_estado', [1, 3]);
 
         if ($this->search) {
             $query->where(function($q) {

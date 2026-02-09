@@ -13,7 +13,6 @@ beforeEach(function () {
     Role::create(['name' => 'soporte']);
     Role::create(['name' => 'individual']);
 
-    // Use DB insert to ensure ID 1 exists for EntityType
     DB::table('entity_types')->insertOrIgnore([
         ['id' => 1, 'nombre' => 'Particular'],
         ['id' => 2, 'nombre' => 'Concesionario'],

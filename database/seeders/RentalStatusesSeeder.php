@@ -17,7 +17,7 @@ class RentalStatusesSeeder extends Seeder
             4 => 'Fecha expirada',
             5 => 'Devuelto/Completado',
             6 => 'Rechazado',
-            7 => 'Aceptado por dueño (Esperando pago)' // NUEVO
+            7 => 'Aceptado por dueño (Esperando pago)'
         ];
 
         foreach ($statuses as $id => $nombre) {

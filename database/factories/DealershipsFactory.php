@@ -17,9 +17,8 @@ class DealershipsFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'id_cliente' => ... ELIMINADO
             'nombre_empresa' => $this->faker->company(),
-            'nif' => $this->faker->bothify('?########'), // Genera un NIF falso
+            'nif' => $this->faker->bothify('?########'),
             'direccion' => $this->faker->address(),
         ];
     }

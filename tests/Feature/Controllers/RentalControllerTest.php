@@ -174,17 +174,16 @@ test('rental pay updates status', function () {
         'fecha_inicio' => now()->addDay(),
         'fecha_fin' => now()->addDays(3),
         'precio_total' => 100,
-        'id_estado' => 7 // Aceptado, esperando pago
+        'id_estado' => 7
     ]);
 
     $this->actingAs($user)
          ->post(route('rentals.pay', $rental->id))
          ->assertRedirect();
 
-    // Should be 2 (En espera de entrega) if not today, or 3 if today.
-    // Since we set start date to tomorrow, it should be 2.
+
     $this->assertDatabaseHas('rentals', ['id' => $rental->id, 'id_estado' => 2]);
-    $this->assertDatabaseHas('cars', ['id' => $car->id, 'id_estado' => 6]); // Alquilado
+    $this->assertDatabaseHas('cars', ['id' => $car->id, 'id_estado' => 6]);
 });
 
 test('rental terms download', function () {

@@ -12,16 +12,10 @@ use Illuminate\Support\Facades\Log;
 
 class CleanupRejectedOffersJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;    public function handle(): void
     {
         Log::info("Iniciando limpieza de ofertas rechazadas antiguas...");
 
-        // Eliminar ofertas rechazadas de hace más de 30 días
         $deleted = Offer::where('estado', 'rechazada')
             ->where('updated_at', '<', now()->subDays(30))
             ->delete();

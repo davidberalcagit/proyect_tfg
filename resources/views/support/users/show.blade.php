@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-                    <!-- Info Básica -->
                     <div>
                         <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Basic Information') }}</h3>
                         <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 overflow-hidden">
@@ -39,7 +38,6 @@
                         </dl>
                     </div>
 
-                    <!-- Info Cliente -->
                     @if($user->customer)
                         <div>
                             <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Customer Profile') }}</h3>

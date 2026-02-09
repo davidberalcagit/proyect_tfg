@@ -47,7 +47,6 @@ class AuthController extends Controller
 
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
-        // SendWelcomeEmailJob::dispatch($user); // Deshabilitado para evitar envío de correos en login API
 
         return response()->json([
             'message' => 'Hola ' . $user->name,

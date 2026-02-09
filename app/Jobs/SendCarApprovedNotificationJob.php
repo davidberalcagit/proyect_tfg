@@ -31,7 +31,6 @@ class SendCarApprovedNotificationJob implements ShouldQueue
 
         if ($user) {
             try {
-                // Enviar correo (el PDF se genera dentro del Mailable)
                 Mail::to($user->email)->send(new CarApproved($this->car));
                 Log::info("Correo enviado a: {$user->email}");
             } catch (\Exception $e) {

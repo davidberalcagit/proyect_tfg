@@ -21,7 +21,7 @@ test('create new user action creates user and customer', function () {
 
     $user = $action->create([
         'name' => 'Test User',
-        'contact_name' => 'Test Contact', // Added
+        'contact_name' => 'Test Contact',
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',

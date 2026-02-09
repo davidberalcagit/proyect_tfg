@@ -11,7 +11,6 @@ beforeEach(function () {
 });
 
 test('rental can be created with custom status', function () {
-    // Crear un nuevo estado y dejar que la BD asigne el ID
     $status = RentalStatus::create(['nombre' => 'Estado Personalizado']);
     $statusId = $status->id;
 
@@ -21,7 +20,7 @@ test('rental can be created with custom status', function () {
     $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
 
-    $car = Cars::factory()->create(['id_estado' => 3]); // En Alquiler
+    $car = Cars::factory()->create(['id_estado' => 3]);
 
     $rental = Rental::create([
         'id_vehiculo' => $car->id,

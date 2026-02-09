@@ -9,10 +9,6 @@ class UpdateCustomerRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Authorization logic is currently in the controller (checking ID).
-        // We can move it here or keep it in controller.
-        // For now, return true and let controller handle specific resource ownership
-        // or implement logic here: $this->route('customer')->id_usuario === Auth::id()
         return true;
     }
 

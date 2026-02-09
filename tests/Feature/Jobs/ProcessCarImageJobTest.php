@@ -26,6 +26,6 @@ test('job processes car image', function () {
 test('job handles missing car', function () {
     Log::shouldReceive('info')->never();
 
-    $job = new ProcessCarImageJob(99999); // Non-existent ID
+    $job = new ProcessCarImageJob(99999);
     $job->handle();
 });

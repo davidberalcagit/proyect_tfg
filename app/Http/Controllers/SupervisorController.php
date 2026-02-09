@@ -82,7 +82,6 @@ class SupervisorController extends Controller
 
     public function approveCar(Request $request, $id)
     {
-        // Usar comando Artisan para aprobar el coche (Requisito del proyecto)
         $exitCode = Artisan::call('cars:approve', ['car_id' => $id]);
 
         if ($exitCode !== 0) {

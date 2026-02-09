@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->decimal('precio_total', 10, 2);
-            $table->string('estado')->default('active'); // active, completed, cancelled
+            $table->string('estado')->default('active');
             $table->timestamps();
         });
     }

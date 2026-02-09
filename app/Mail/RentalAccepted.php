@@ -27,7 +27,6 @@ class RentalAccepted extends Mailable implements ShouldQueue
             subject: 'Alquiler Aceptado',
         );
     }
-
     public function content(): Content
     {
         return new Content(

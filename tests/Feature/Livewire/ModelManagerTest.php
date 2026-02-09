@@ -51,8 +51,8 @@ test('model manager can edit model', function () {
     Livewire::actingAs($admin)
         ->test(ModelManager::class)
         ->call('edit', $model->id)
-        ->set('nombre', 'Updated Model') // Corrected property
-        ->call('store'); // Uses store for update
+        ->set('nombre', 'Updated Model')
+        ->call('store');
 
     $this->assertDatabaseHas('car_models', ['id' => $model->id, 'nombre' => 'Updated Model']);
 });

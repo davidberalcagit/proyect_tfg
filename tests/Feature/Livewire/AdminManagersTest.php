@@ -19,7 +19,6 @@ beforeEach(function () {
     Role::create(['name' => 'admin']);
 });
 
-// --- BrandManager Tests ---
 test('brand manager can create brand', function () {
     $admin = User::factory()->create();
     $admin->assignRole('admin');
@@ -52,8 +51,8 @@ test('brand manager can edit brand', function () {
     Livewire::actingAs($admin)
         ->test(BrandManager::class)
         ->call('edit', $brand->id)
-        ->set('editingNombre', 'Updated Brand')
-        ->call('update');
+        ->set('nombre', 'Updated Brand')
+        ->call('store');
 
     $this->assertDatabaseHas('brands', ['id' => $brand->id, 'nombre' => 'Updated Brand']);
 });
@@ -70,7 +69,6 @@ test('brand manager can delete brand', function () {
     $this->assertDatabaseMissing('brands', ['id' => $brand->id]);
 });
 
-// --- GearManager Tests ---
 test('gear manager can create gear', function () {
     $admin = User::factory()->create();
     $admin->assignRole('admin');
@@ -121,7 +119,6 @@ test('gear manager can delete gear', function () {
     $this->assertDatabaseMissing('gears', ['id' => $gear->id]);
 });
 
-// --- FuelManager Tests ---
 test('fuel manager can create fuel', function () {
     $admin = User::factory()->create();
     $admin->assignRole('admin');
@@ -171,7 +168,6 @@ test('fuel manager can delete fuel', function () {
     $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
 });
 
-// --- ColorManager Tests ---
 test('color manager can create color', function () {
     $admin = User::factory()->create();
     $admin->assignRole('admin');

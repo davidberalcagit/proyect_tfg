@@ -14,7 +14,6 @@ test('buyer can view sale', function () {
     $buyer->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $buyer->id]);
 
-    // Crear vendedor real
     $seller = Customers::factory()->create();
 
     $car = Cars::factory()->create();
@@ -28,7 +27,6 @@ test('seller can view sale', function () {
     $seller->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $seller->id]);
 
-    // Crear comprador real
     $buyer = Customers::factory()->create();
 
     $car = Cars::factory()->create();

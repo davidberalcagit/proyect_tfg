@@ -36,7 +36,6 @@ test('email can be verified', function () {
     Event::assertDispatched(Verified::class);
 
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
-    // Corrected redirection expectation to match config/fortify.php 'home' => '/'
     $response->assertRedirect('/?verified=1');
 })->skip(function () {
     return ! Features::enabled(Features::emailVerification());

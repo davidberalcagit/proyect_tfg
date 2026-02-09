@@ -17,8 +17,8 @@ return new class extends Migration
            $table->foreignId('id_comprador')->nullable()->references('id')->on('customers')->onDelete('cascade');
            $table->foreignId('id_vehiculo')->nullable()->constrained('cars')->onDelete('cascade');
            $table->integer('precio');
-           $table->date('fecha')->nullable(); // Añadido
-           $table->string('metodo_pago')->nullable(); // Añadido
+           $table->date('fecha')->nullable();
+           $table->string('metodo_pago')->nullable();
            $table->foreignId('id_estado')->default(1)->constrained('sale_statuses');
            $table->timestamps();
         });

@@ -14,7 +14,7 @@ test('admin can edit approved car', function () {
     Customers::factory()->create(['id_usuario' => $admin->id]);
 
     $car = Cars::factory()->create([
-        'id_estado' => 1 // Aprobado
+        'id_estado' => 1
     ]);
 
     $response = $this->actingAs($admin)->get(route('cars.edit', $car));
@@ -45,7 +45,7 @@ test('owner can edit pending car', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $customer->id,
-        'id_estado' => 4 // Pendiente
+        'id_estado' => 4
     ]);
 
     $response = $this->actingAs($user)->get(route('cars.edit', $car));
@@ -75,7 +75,7 @@ test('owner cannot edit approved car', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $customer->id,
-        'id_estado' => 1 // Aprobado
+        'id_estado' => 1
     ]);
 
     $response = $this->actingAs($user)->get(route('cars.edit', $car));
@@ -98,7 +98,7 @@ test('user cannot edit others car', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $ownerCustomer->id,
-        'id_estado' => 4 // Pendiente
+        'id_estado' => 4
     ]);
 
     $response = $this->actingAs($otherUser)->get(route('cars.edit', $car));

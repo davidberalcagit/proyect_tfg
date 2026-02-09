@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Log;
 class AuditCarPricesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         Log::info("Iniciando auditoría de precios de coches...");
@@ -25,9 +21,6 @@ class AuditCarPricesJob implements ShouldQueue
 
         foreach ($cars as $car) {
             Log::warning("Coche ID {$car->id} tiene un precio sospechoso: {$car->precio} €. Marcando para revisión.");
-
-            // Asumiendo que tienes un estado '4' para 'Revisión' o similar
-            // $car->update(['id_estado' => 4]);
         }
 
         if ($cars->isEmpty()) {

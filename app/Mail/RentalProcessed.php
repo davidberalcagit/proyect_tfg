@@ -17,7 +17,6 @@ class RentalProcessed extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $rental;
-
     public function __construct(Rental $rental)
     {
         $this->rental = $rental;

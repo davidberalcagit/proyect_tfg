@@ -20,7 +20,6 @@ beforeEach(function () {
 test('approval email is sent to seller', function () {
     Mail::fake();
 
-    // Vendedor
     $sellerUser = User::factory()->create();
     $sellerUser->assignRole('individual');
     $sellerCustomer = Customers::factory()->create(['id_usuario' => $sellerUser->id]);
@@ -30,11 +29,9 @@ test('approval email is sent to seller', function () {
         'id_estado' => 4
     ]);
 
-    // Ejecutar el Job directamente
     $job = new SendCarApprovedNotificationJob($car);
     $job->handle();
 
-    // Verificar que el correo se encoló para el vendedor
     Mail::assertQueued(CarApproved::class, function ($mail) use ($sellerUser) {
         return $mail->hasTo($sellerUser->email);
     });
@@ -43,7 +40,6 @@ test('approval email is sent to seller', function () {
 test('rejection email is sent to seller with reason', function () {
     Mail::fake();
 
-    // Vendedor
     $sellerUser = User::factory()->create();
     $sellerUser->assignRole('individual');
     $sellerCustomer = Customers::factory()->create(['id_usuario' => $sellerUser->id]);
@@ -55,11 +51,9 @@ test('rejection email is sent to seller with reason', function () {
 
     $reason = 'Fotos borrosas';
 
-    // Ejecutar el Job directamente
     $job = new SendCarRejectedNotificationJob($car, $reason);
     $job->handle();
 
-    // Verificar que el correo se encoló para el vendedor con la razón
     Mail::assertQueued(CarRejected::class, function ($mail) use ($sellerUser, $reason) {
         return $mail->hasTo($sellerUser->email) && $mail->reason === $reason;
     });

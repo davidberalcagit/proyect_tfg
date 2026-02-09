@@ -37,7 +37,7 @@ test('runJob dispatches process-image job', function () {
     $response = $this->actingAs($this->admin)->post(route('admin.run-job'), ['job' => 'process-image']);
 
     $response->assertRedirect();
-    $response->assertSessionHas('success'); // Ensure no error occurred
+    $response->assertSessionHas('success');
     Queue::assertPushed(ProcessCarImageJob::class);
 });
 
@@ -47,7 +47,7 @@ test('runJob dispatches cleanup-offers job', function () {
     $response = $this->actingAs($this->admin)->post(route('admin.run-job'), ['job' => 'cleanup-offers']);
 
     $response->assertRedirect();
-    $response->assertSessionHas('success'); // Ensure no error occurred
+    $response->assertSessionHas('success');
     Queue::assertPushed(CleanupRejectedOffersJob::class);
 });
 
@@ -57,7 +57,7 @@ test('runJob dispatches audit-prices job', function () {
     $response = $this->actingAs($this->admin)->post(route('admin.run-job'), ['job' => 'audit-prices']);
 
     $response->assertRedirect();
-    $response->assertSessionHas('success'); // Ensure no error occurred
+    $response->assertSessionHas('success');
     Queue::assertPushed(AuditCarPricesJob::class);
 });
 

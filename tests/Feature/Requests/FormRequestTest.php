@@ -12,14 +12,12 @@ test('store car request validation', function () {
     $rules = $request->rules();
 
     $validator = Validator::make([
-        'precio' => 'not-a-number', // Invalid
+        'precio' => 'not-a-number',
         'km' => 1000,
-        // Missing id_marca AND temp_brand
     ], $rules);
 
     expect($validator->fails())->toBeTrue();
     expect($validator->errors()->toArray())->toHaveKey('precio');
-    // id_marca is nullable, but temp_brand is required if id_marca is missing.
     expect($validator->errors()->toArray())->toHaveKey('temp_brand');
 });
 
@@ -28,8 +26,8 @@ test('store customer request validation', function () {
     $rules = $request->rules();
 
     $validator = Validator::make([
-        'telefono' => '', // Required
-        'id_entidad' => 99, // Invalid exists
+        'telefono' => '',
+        'id_entidad' => 99,
     ], $rules);
 
     expect($validator->fails())->toBeTrue();

@@ -8,14 +8,10 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display the specified resource (Public Seller Profile).
-     */
     public function show(Customers $customer)
     {
-        // Cargar coches disponibles del vendedor
         $cars = Cars::where('id_vendedor', $customer->id)
-                    ->available() // Scope available (estado 1 o 3)
+                    ->available()
                     ->latest()
                     ->paginate(12);
 

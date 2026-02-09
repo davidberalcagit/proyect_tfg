@@ -13,7 +13,6 @@ beforeEach(function () {
     $this->action = new CreateNewUser();
     $this->entityType = EntityType::factory()->create();
 
-    // Ensure roles exist
     Role::firstOrCreate(['name' => 'individual']);
     Role::firstOrCreate(['name' => 'dealership']);
     Role::firstOrCreate(['name' => 'admin']);
@@ -28,7 +27,7 @@ test('validates required fields', function () {
 test('creates individual user successfully', function () {
     $input = [
         'name' => 'John Doe',
-        'contact_name' => 'John Contact', // Added
+        'contact_name' => 'John Contact',
         'email' => 'john@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -53,7 +52,7 @@ test('creates individual user successfully', function () {
 test('creates dealership user successfully', function () {
     $input = [
         'name' => 'Jane Doe',
-        'contact_name' => 'Jane Contact', // Added
+        'contact_name' => 'Jane Contact',
         'email' => 'jane@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -72,7 +71,6 @@ test('creates dealership user successfully', function () {
     $this->assertDatabaseHas('users', ['email' => 'jane@example.com']);
     $this->assertDatabaseHas('dealerships', ['nif' => 'B12345678']);
 
-    // Check customer is linked to dealership
     $customer = Customers::where('telefono', '987654321')->first();
     expect($customer->dealership_id)->not->toBeNull();
     expect($customer->nombre_contacto)->toBe('Jane Contact');

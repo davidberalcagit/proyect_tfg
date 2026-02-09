@@ -12,23 +12,10 @@ use Illuminate\Support\Facades\DB;
 
 class ApproveCar extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'cars:approve {car_id : El ID del coche a aprobar}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Aprueba un coche pendiente de revisión, procesando marcas/modelos temporales.';
 
-    /**
-     * Execute the console command.
-     */
+
     public function handle()
     {
         $carId = $this->argument('car_id');
@@ -41,7 +28,6 @@ class ApproveCar extends Command
 
         try {
             DB::transaction(function () use ($car) {
-                // Procesar Marca Temporal
                 if ($car->temp_brand) {
                     $brand = Brands::firstOrCreate(['nombre' => $car->temp_brand]);
                     $car->id_marca = $brand->id;
@@ -49,7 +35,6 @@ class ApproveCar extends Command
                     $this->info("Marca temporal '{$brand->nombre}' procesada.");
                 }
 
-                // Procesar Modelo Temporal
                 if ($car->temp_model) {
                     if (!$car->id_marca) {
                         throw new \Exception("Error: Marca no definida para el modelo temporal.");
@@ -64,7 +49,6 @@ class ApproveCar extends Command
                     $this->info("Modelo temporal '{$model->nombre}' procesado.");
                 }
 
-                // Procesar Color Temporal
                 if ($car->temp_color) {
                     $color = Color::firstOrCreate(['nombre' => $car->temp_color]);
                     $car->id_color = $color->id;
@@ -72,17 +56,15 @@ class ApproveCar extends Command
                     $this->info("Color temporal '{$color->nombre}' procesado.");
                 }
 
-                // Determinar estado final
                 if ($car->listingType && $car->listingType->nombre === 'Alquiler') {
-                    $car->id_estado = 3; // En Alquiler
+                    $car->id_estado = 3;
                 } else {
-                    $car->id_estado = 1; // En Venta
+                    $car->id_estado = 1;
                 }
 
                 $car->save();
             });
 
-            // Enviar notificación
             SendCarApprovedNotificationJob::dispatch($car);
 
             $this->info("Coche ID {$carId} aprobado correctamente (Estado: {$car->id_estado}).");

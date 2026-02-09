@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Brands extends Model
 {
     use HasFactory;
-    // Corregido: 'marca' cambiado a 'nombre' para coincidir con la DB y el controlador
     protected $fillable=['nombre'];
 
     public function models()

@@ -4,7 +4,6 @@ use App\Models\Cars;
 use App\Models\User;
 
 beforeEach(function () {
-    // Seeding ensures all lookup tables (Statuses, ListingTypes, etc.) are populated
     $this->seed(Database\Seeders\DatabaseSeeder::class);
 });
 

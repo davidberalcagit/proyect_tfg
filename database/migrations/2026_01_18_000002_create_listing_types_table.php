@@ -10,15 +10,11 @@ return new class extends Migration
     {
         Schema::create('listing_types', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique(); // 'Venta', 'Alquiler'
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
 
-        // Modificar cars para usar la FK
         Schema::table('cars', function (Blueprint $table) {
-            // Primero eliminamos la columna antigua (si existe, cuidado con datos existentes en producción)
-            // Como es desarrollo, podemos permitir perder datos o migrarlos.
-            // Para simplificar, asumimos fresh migration o drop column.
             $table->dropColumn('listing_type');
 
             $table->foreignId('id_listing_type')->nullable()->constrained('listing_types')->onDelete('set null');

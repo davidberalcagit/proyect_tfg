@@ -13,12 +13,11 @@ test('rental end date must be after or equal start date', function () {
     $user->assignRole('individual');
     Customers::factory()->create(['id_usuario' => $user->id]);
 
-    $car = Cars::factory()->create(['id_estado' => 3]); // En Alquiler
+    $car = Cars::factory()->create(['id_estado' => 3]);
 
     $today = now()->format('Y-m-d');
     $yesterday = now()->subDay()->format('Y-m-d');
 
-    // Intentar crear con fecha fin ANTERIOR a inicio (debe fallar)
     $response = $this->actingAs($user)->post(route('rentals.store', $car), [
         'fecha_inicio' => $today,
         'fecha_fin' => $yesterday,
@@ -26,7 +25,6 @@ test('rental end date must be after or equal start date', function () {
 
     $response->assertSessionHasErrors(['fecha_fin']);
 
-    // Intentar crear con fecha fin IGUAL a inicio (debe pasar)
     $responseSuccess = $this->actingAs($user)->post(route('rentals.store', $car), [
         'fecha_inicio' => $today,
         'fecha_fin' => $today,

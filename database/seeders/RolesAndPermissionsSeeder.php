@@ -15,10 +15,8 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // --- 1. Crear Permisos ---
         $permissions = [
             'create cars',
             'crud own cars',
@@ -36,11 +34,9 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
         }
 
-        // --- 2. Crear Roles y Asignar los Permisos ---
-        // Individuals
         $role = Role::firstOrCreate(['name' => 'individual', 'guard_name' => 'web']);
         $role->syncPermissions([
-            'create cars', // AÑADIDO
+            'create cars',
             'crud own cars',
             'buy cars',
             'offers for individuals',
@@ -48,7 +44,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // Dealerships
         $role = Role::firstOrCreate(['name' => 'dealership', 'guard_name' => 'web']);
         $role->syncPermissions([
             'create cars',
@@ -59,11 +54,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // Admin
         $role = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $role->syncPermissions(Permission::all());
 
-        // Supervisores
         $role = Role::firstOrCreate(['name' => 'supervisor', 'guard_name' => 'web']);
         $role->syncPermissions([
             'crud all cars',
@@ -71,7 +64,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'view cars'
         ]);
 
-        // Soporte
         $role = Role::firstOrCreate(['name' => 'soporte', 'guard_name' => 'web']);
         $role->syncPermissions([
             'view cars',

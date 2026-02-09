@@ -14,7 +14,6 @@ beforeEach(function () {
 test('approval email is sent', function () {
     Mail::fake();
 
-    // Crear coche pendiente
     $user = User::factory()->create();
     $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
@@ -25,13 +24,11 @@ test('approval email is sent', function () {
         'title' => 'Coche Pendiente'
     ]);
 
-    // Supervisor aprueba
     $supervisor = User::factory()->create();
     $supervisor->assignRole('supervisor');
 
     $this->actingAs($supervisor)->post(route('supervisor.approve', $car->id));
 
-    // Verificar correo en cola (porque implementa ShouldQueue)
     Mail::assertQueued(CarApproved::class, function ($mail) use ($user) {
         return $mail->hasTo($user->email);
     });
@@ -40,7 +37,6 @@ test('approval email is sent', function () {
 test('rejection email is sent with reason', function () {
     Mail::fake();
 
-    // Crear coche pendiente
     $user = User::factory()->create();
     $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
@@ -51,7 +47,6 @@ test('rejection email is sent with reason', function () {
         'title' => 'Coche Malo'
     ]);
 
-    // Supervisor rechaza
     $supervisor = User::factory()->create();
     $supervisor->assignRole('supervisor');
 
@@ -59,7 +54,6 @@ test('rejection email is sent with reason', function () {
         'reason' => 'Fotos borrosas'
     ]);
 
-    // Verificar correo en cola
     Mail::assertQueued(CarRejected::class, function ($mail) use ($user) {
         return $mail->hasTo($user->email) && $mail->reason === 'Fotos borrosas';
     });

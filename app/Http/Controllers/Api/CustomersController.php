@@ -56,7 +56,6 @@ class CustomersController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        // Validation handled by StoreCustomerRequest
 
         $user = Auth::user();
 
@@ -66,16 +65,12 @@ class CustomersController extends Controller
 
         $dealershipId = null;
 
-        // Lógica para Concesionarios (id_entidad = 2)
         if ($request->id_entidad == 2) {
-            // Buscar si la empresa ya existe por NIF
             $existingDealership = Dealerships::where('nif', $request->nif)->first();
 
             if ($existingDealership) {
-                // Si existe, nos unimos a ella
                 $dealershipId = $existingDealership->id;
             } else {
-                // Si no existe, la creamos
                 $newDealership = Dealerships::create([
                     'nombre_empresa' => $request->nombre_empresa,
                     'nif' => $request->nif,
@@ -90,7 +85,7 @@ class CustomersController extends Controller
             'id_entidad' => $request->id_entidad,
             'nombre_contacto' => $request->nombre_contacto,
             'telefono' => $request->telefono,
-            'dealership_id' => $dealershipId, // Asignamos el ID del concesionario (o null si es particular)
+            'dealership_id' => $dealershipId,
         ]);
 
         return response()->json($customer->load('dealership'), 201);
@@ -156,7 +151,6 @@ class CustomersController extends Controller
 
         $customer->update($request->only(['telefono', 'nombre_contacto']));
 
-        // Si es concesionario, permitir actualizar datos de la empresa (Opcional: ¿Todos pueden editar la empresa?)
         if ($customer->dealership_id && $request->has('nombre_empresa')) {
              $customer->dealership->update($request->only(['nombre_empresa', 'direccion']));
         }

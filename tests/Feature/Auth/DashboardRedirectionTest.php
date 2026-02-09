@@ -10,7 +10,6 @@ test('authenticated user is redirected to home after login', function () {
         'password' => 'password',
     ]);
 
-    // Jetstream redirige a /dashboard, que ahora redirige a /
-    // El test ve la primera redirección
+
     $response->assertRedirect('/dashboard');
 });

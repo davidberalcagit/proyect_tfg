@@ -44,7 +44,6 @@ class OfferController extends Controller
             return response()->json(['message' => 'Usuario no tiene perfil de cliente'], 403);
         }
 
-        // Mostrar ofertas hechas por mí O recibidas por mis coches
         return Offer::with(['car', 'buyer', 'seller'])
             ->where(function ($query) use ($userCustomer) {
                 $query->where('id_comprador', $userCustomer->id)
@@ -90,15 +89,13 @@ class OfferController extends Controller
 
         $car = Cars::findOrFail($request->id_vehiculo);
 
-        // Validar que no te hagas una oferta a ti mismo
         if ($car->id_vendedor === $buyer->id) {
             return response()->json(['message' => 'No puedes hacer una oferta por tu propio coche.'], 400);
         }
 
-        // Validar si ya existe una oferta pendiente para este coche de este usuario (usando scope)
         $existingOffer = Offer::where('id_vehiculo', $car->id)
             ->where('id_comprador', $buyer->id)
-            ->pending() // Scope
+            ->pending()
             ->exists();
 
         if ($existingOffer) {
@@ -142,7 +139,6 @@ class OfferController extends Controller
 
         $myCustomerId = Auth::user()->customer->id;
 
-        // Solo ver la oferta si soy el comprador o el vendedor
         if ($offer->id_comprador !== $myCustomerId && $offer->id_vendedor !== $myCustomerId) {
             return response()->json(['message' => 'No tienes permiso para ver esta oferta.'], 403);
         }
@@ -174,7 +170,6 @@ class OfferController extends Controller
         $userCustomer = Auth::user()->customer;
 
         if ($offer->id_comprador === $userCustomer->id) {
-            // Es el comprador editando su oferta
             $request->validate([
                 'precio_oferta' => 'numeric|min:0',
             ]);
@@ -187,7 +182,6 @@ class OfferController extends Controller
             $offer->update($data);
 
         } elseif ($offer->id_vendedor === $userCustomer->id) {
-            // Es el vendedor respondiendo a la oferta
             $request->validate([
                 'estado' => 'required|in:aceptada,rechazada,pendiente',
             ]);
@@ -217,7 +211,6 @@ class OfferController extends Controller
         $offer = Offer::findOrFail($id);
         $userCustomer = Auth::user()->customer;
 
-        // Solo el comprador puede cancelar (eliminar) su oferta
         if ($offer->id_comprador !== $userCustomer->id) {
             return response()->json(['message' => 'Solo el creador de la oferta puede eliminarla.'], 403);
         }

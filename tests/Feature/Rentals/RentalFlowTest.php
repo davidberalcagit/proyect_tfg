@@ -30,7 +30,7 @@ test('full rental flow request accept pay', function () {
 
     $car = Cars::factory()->create([
         'id_vendedor' => $ownerCustomer->id,
-        'id_estado' => 3, // En Alquiler
+        'id_estado' => 3,
         'precio' => 50
     ]);
 
@@ -43,7 +43,7 @@ test('full rental flow request accept pay', function () {
 
     $rental = Rental::where('id_vehiculo', $car->id)->first();
     expect($rental)->not->toBeNull();
-    expect($rental->id_estado)->toBe(1); // Pendiente
+    expect($rental->id_estado)->toBe(1);
 
     Mail::assertQueued(NewRentalRequest::class, fn ($mail) => $mail->hasTo($ownerUser->email));
 
@@ -51,7 +51,7 @@ test('full rental flow request accept pay', function () {
     $response->assertRedirect();
 
     $rental->refresh();
-    expect($rental->id_estado)->toBe(7); // Aceptado por dueño
+    expect($rental->id_estado)->toBe(7);
 
     Mail::assertQueued(RentalAccepted::class, fn ($mail) => $mail->hasTo($renterUser->email));
 
@@ -59,10 +59,10 @@ test('full rental flow request accept pay', function () {
     $response->assertRedirect();
 
     $rental->refresh();
-    expect($rental->id_estado)->toBe(2); // En espera
+    expect($rental->id_estado)->toBe(2);
 
     $car->refresh();
-    expect($car->id_estado)->toBe(6); // Alquilado
+    expect($car->id_estado)->toBe(6);
 
     Bus::assertDispatched(SendRentalProcessedJob::class);
 });
@@ -87,12 +87,12 @@ test('owner can reject rental request', function () {
         'fecha_inicio' => now()->addDay(),
         'fecha_fin' => now()->addDays(2),
         'precio_total' => 100,
-        'id_estado' => 1 // Pendiente
+        'id_estado' => 1
     ]);
 
     $response = $this->actingAs($ownerUser)->post(route('rentals.reject', $rental));
     $response->assertRedirect();
 
     $rental->refresh();
-    expect($rental->id_estado)->toBe(6); // Rechazado
+    expect($rental->id_estado)->toBe(6);
 });

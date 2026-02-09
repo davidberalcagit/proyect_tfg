@@ -129,6 +129,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
+                                <a href="#endpoints-GETapi-user">GET api/user</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-ofertas" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="ofertas">
                     <a href="#ofertas">Ofertas</a>
@@ -268,7 +278,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 7, 2026</li>
+        <li>Last updated: February 9, 2026</li>
     </ul>
 </div>
 
@@ -2194,7 +2204,7 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
     --form "temp_color=g"\
     --form "descripcion=Coche en perfecto estado..."\
     --form "id_listing_type=1"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php35AE.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpA479.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2509,7 +2519,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php35AE.tmp</code></p>
+<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpA479.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>id_listing_type</code></b>&nbsp;&nbsp;
@@ -2550,7 +2560,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "km=16"\
     --form "matricula=n"\
     --form "descripcion=architecto"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php3F15.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpA545.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2836,7 +2846,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php3F15.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpA545.tmp</code></p>
         </div>
         </form>
 
@@ -2992,6 +3002,154 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>El ID del coche. Example: <code>1</code></p>
             </div>
                     </form>
+
+                <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-GETapi-user">GET api/user</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-user">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/user" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/user"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-user">
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Error interno del servidor.&quot;,
+    &quot;error&quot;: &quot;Internal Server Error&quot;,
+    &quot;file&quot;: null,
+    &quot;line&quot;: null
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-user" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-user"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-user"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-user" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-user">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-user" data-method="GET"
+      data-path="api/user"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-user"
+                    onclick="tryItOut('GETapi-user');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-user"
+                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-user"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/user</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-user"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-user"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-user"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                 <h1 id="ofertas">Ofertas</h1>
 
@@ -8400,7 +8558,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"precio\": 14000,
-    \"fecha\": \"2026-02-07T07:56:39\",
+    \"fecha\": \"2026-02-09T17:03:38\",
     \"metodo_pago\": \"n\",
     \"estado\": 2
 }"
@@ -8420,7 +8578,7 @@ const headers = {
 
 let body = {
     "precio": 14000,
-    "fecha": "2026-02-07T07:56:39",
+    "fecha": "2026-02-09T17:03:38",
     "metodo_pago": "n",
     "estado": 2
 };
@@ -8562,10 +8720,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha"                data-endpoint="PUTapi-sales--id-"
-               value="2026-02-07T07:56:39"
+               value="2026-02-09T17:03:38"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-07T07:56:39</code></p>
+<p>Must be a valid date. Example: <code>2026-02-09T17:03:38</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>metodo_pago</code></b>&nbsp;&nbsp;

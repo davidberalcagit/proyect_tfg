@@ -15,7 +15,6 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Incluimos el formulario parcial -->
                         @include('cars._form', ['car' => $car])
 
                     </form>

@@ -41,7 +41,6 @@ class SalesController extends Controller
      */
     public function index()
     {
-        // Mostrar ventas donde el usuario es vendedor o comprador
         $userCustomer = Auth::user()->customer;
 
         if (!$userCustomer) {
@@ -83,11 +82,11 @@ class SalesController extends Controller
     {
         $request->validate([
             'id_vehiculo' => 'required|exists:cars,id',
-            'id_comprador' => 'required|exists:customers,id', // El ID del cliente que compra
+            'id_comprador' => 'required|exists:customers,id',
             'precio' => 'required|numeric|min:0',
             'fecha' => 'required|date',
             'metodo_pago' => 'required|string|max:50',
-            'estado' => 'required|exists:sale_statuses,id', // 1: Pendiente, 2: Completada, etc.
+            'estado' => 'required|exists:sale_statuses,id',
         ]);
 
         $car = Cars::findOrFail($request->id_vehiculo);
@@ -97,13 +96,11 @@ class SalesController extends Controller
             return response()->json(['message' => 'No tienes perfil de vendedor.'], 403);
         }
 
-        // Verificar que el coche pertenece al usuario autenticado
         if ($car->id_vendedor !== $seller->id) {
             return response()->json(['message' => 'No puedes vender un coche que no es tuyo.'], 403);
         }
 
-        // Verificar que el coche no esté ya vendido (opcional, depende de tu lógica)
-        if ($car->id_estado == 3) { // Asumiendo 3 es 'Vendido'
+        if ($car->id_estado == 3) {
              return response()->json(['message' => 'Este coche ya ha sido vendido.'], 400);
         }
 
@@ -117,10 +114,9 @@ class SalesController extends Controller
             'estado' => $request->estado,
         ]);
 
-        // Opcional: Actualizar estado del coche a "Vendido" si la venta es completada
-        // if ($request->estado == 2) { // Asumiendo 2 es Completada
-        //     $car->update(['id_estado' => 3]); // 3 = Vendido
-        // }
+         if ($request->estado == 2) {
+             $car->update(['id_estado' => 3]);
+         }
 
         return response()->json($sale, 201);
     }
@@ -145,7 +141,6 @@ class SalesController extends Controller
     {
         $sale = Sales::with(['vehiculo', 'vendedor', 'comprador'])->findOrFail($id);
 
-        // Seguridad: Solo ver la venta si eres parte de ella (vendedor o comprador)
         $myCustomerId = Auth::user()->customer->id;
         if ($sale->id_vendedor !== $myCustomerId && $sale->id_comprador !== $myCustomerId) {
             return response()->json(['message' => 'No tienes permiso para ver esta venta.'], 403);
@@ -169,8 +164,6 @@ class SalesController extends Controller
     public function update(Request $request, $id)
     {
         $sale = Sales::findOrFail($id);
-
-        // Solo el vendedor puede actualizar la venta
         if ($sale->id_vendedor !== Auth::user()->customer->id) {
             return response()->json(['message' => 'No tienes permiso para editar esta venta.'], 403);
         }

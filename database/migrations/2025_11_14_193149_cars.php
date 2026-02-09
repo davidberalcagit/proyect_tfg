@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('precio');
             $table->text('descripcion');
             $table->string('image')->nullable();
-            $table->foreignId('id_estado')->default(1)->constrained('car_statuses'); // Changed to FK, default 1 (En venta)
+            $table->foreignId('id_estado')->default(1)->constrained('car_statuses');
             $table->timestamps();
         });
 

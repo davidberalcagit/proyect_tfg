@@ -14,7 +14,6 @@ class LogCarCreation
     {
         Log::info("Nuevo coche creado: {$event->car->title} (ID: {$event->car->id})");
 
-        // También podemos mover aquí el despacho del Job de imagen
         if ($event->car->image) {
             ProcessCarImageJob::dispatch($event->car->id);
         }

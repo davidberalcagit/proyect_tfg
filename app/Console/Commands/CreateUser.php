@@ -8,23 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 class CreateUser extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'users:create {role? : El rol del usuario (individual, dealership, admin, supervisor, soporte)}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Crea un nuevo usuario interactivamente.';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $role = $this->argument('role');
@@ -36,7 +21,6 @@ class CreateUser extends Command
 
         $this->info("Creando usuario con rol: {$role}");
 
-        // Datos Básicos
         $name = $this->ask('Nombre completo (Usuario)');
         $email = $this->ask('Correo electrónico');
         $password = $this->secret('Contraseña');
@@ -51,14 +35,12 @@ class CreateUser extends Command
             'terms' => 'on',
         ];
 
-        // Datos Específicos
         if (in_array($role, ['individual', 'dealership'])) {
             $contactName = $this->ask('Nombre de Contacto (Dejar vacío para usar Nombre completo)');
             $input['contact_name'] = $contactName ?: $name;
 
             $input['telefono'] = $this->ask('Teléfono');
 
-            // Entidad (1: Particular, 2: Empresa)
             $input['id_entidad'] = ($role === 'dealership') ? 2 : 1;
 
             if ($role === 'individual') {

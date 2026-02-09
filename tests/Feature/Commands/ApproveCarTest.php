@@ -14,7 +14,7 @@ test('command approves car and processes temp data', function () {
     $listingType = ListingType::factory()->create(['nombre' => 'Venta']);
 
     $car = Cars::factory()->create([
-        'id_estado' => 4, // Pending
+        'id_estado' => 4,
         'temp_brand' => 'New Brand',
         'temp_model' => 'New Model',
         'temp_color' => 'New Color',
@@ -29,7 +29,7 @@ test('command approves car and processes temp data', function () {
 
     $car->refresh();
 
-    expect($car->id_estado)->toBe(1); // Sale
+    expect($car->id_estado)->toBe(1);
     expect($car->temp_brand)->toBeNull();
     expect($car->temp_model)->toBeNull();
     expect($car->temp_color)->toBeNull();

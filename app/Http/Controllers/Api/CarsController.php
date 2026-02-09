@@ -104,7 +104,6 @@ class CarsController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        // Validation is handled by StoreCarRequest
 
         $user = Auth::user();
 
@@ -112,9 +111,8 @@ class CarsController extends Controller
             return response()->json(['message' => 'El usuario no tiene un perfil de vendedor asociado.'], 403);
         }
 
-        $estadoInicial = 4; // Siempre pendiente
+        $estadoInicial = 4;
 
-        // Generar Título Automático
         $brandName = '';
         $modelName = '';
 
@@ -196,9 +194,7 @@ class CarsController extends Controller
      */
     public function update(UpdateCarRequest $request, Cars $car)
     {
-        // Model binding injects $car. Policy check is done in FormRequest.
 
-        // Additional check if policy didn't cover it (redundant if policy is correct)
         if ($car->id_vendedor !== Auth::user()->customer->id) {
              return response()->json(['message' => 'No tienes permiso para editar este coche.'], 403);
         }
@@ -226,7 +222,6 @@ class CarsController extends Controller
      */
     public function destroy(Cars $car)
     {
-        // Using model binding for consistency
         if ($car->id_vendedor !== Auth::user()->customer->id) {
              return response()->json(['message' => 'No tienes permiso para eliminar este coche.'], 403);
         }
@@ -256,12 +251,10 @@ class CarsController extends Controller
     {
         $user = Auth::user();
 
-        // Verificar si el usuario está autenticado
         if (!$user) {
             return response()->json(['message' => 'Unauthenticated.'], 401);
         }
 
-        // Verificar si tiene perfil de cliente
         if (!$user->customer) {
             return response()->json([], 200);
         }

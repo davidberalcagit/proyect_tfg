@@ -50,19 +50,13 @@
             </tbody>
         </table>
     </div>
-
-    <!-- Paginación -->
     <div class="mt-6">
         {{ $brands->links() }}
     </div>
 
-    <!-- Modal para CREAR / EDITAR -->
     @if($isModalOpen)
         <div class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <!-- Backdrop -->
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" wire:click="closeModal"></div>
-
-            <!-- Modal Panel -->
             <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition-all sm:max-w-lg w-full p-6 relative z-10 border border-gray-200">
                 <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">
                     {{ $brand_id ? 'Editar Marca' : 'Crear Nueva Marca' }}

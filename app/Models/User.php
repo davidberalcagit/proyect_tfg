@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-// use Laravel\Jetstream\HasProfilePhoto; // Eliminado
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -15,7 +13,6 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    // use HasProfilePhoto; // Eliminado
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
@@ -57,16 +54,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $appends = [
-        // 'profile_photo_url', // Eliminado
-    ];
 
-    // Scope Complejo: Usuarios Activos (Vendedores o Compradores recientes)
+
     public function scopeActiveTraders($query)
     {
         return $query->whereHas('customer.cars', function ($q) {
-            $q->where('id_estado', 1); // Tienen coches en venta
-        })->orWhereHas('customer.sales', function ($q) { // Compras realizadas (sales donde es comprador)
+            $q->where('id_estado', 1);
+        })->orWhereHas('customer.sales', function ($q) {
             $q->where('created_at', '>=', now()->subDays(30));
         });
     }

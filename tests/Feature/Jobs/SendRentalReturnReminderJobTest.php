@@ -116,7 +116,6 @@ test('send rental return reminder job logs error on exception', function () {
     try {
         $job->handle();
     } catch (\Exception $e) {
-        // Expected
     }
 
     Log::shouldHaveReceived('error');

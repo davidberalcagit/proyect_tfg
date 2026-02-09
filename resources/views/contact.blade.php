@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
 
-                    <!-- Información de Contacto -->
                     <div class="p-6 sm:p-12 bg-[#284961] text-white flex flex-col justify-center">
                         <h3 class="text-2xl font-bold mb-6">{{ __('Get in Touch') }}</h3>
                         <p class="mb-8 text-gray-300">
@@ -49,7 +48,6 @@
                         </div>
                     </div>
 
-                    <!-- Formulario -->
                     <div class="p-6 sm:p-12 bg-[#4C86B3] text-white">
                         <form action="#" method="POST" onsubmit="event.preventDefault(); alert('{{ __('Message sent successfully!') }}');">
                             <div class="mb-6">

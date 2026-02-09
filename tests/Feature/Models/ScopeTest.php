@@ -11,9 +11,9 @@ beforeEach(function () {
 });
 
 test('cars available scope', function () {
-    $car1 = Cars::factory()->create(['id_estado' => 1]); // En Venta
-    $car2 = Cars::factory()->create(['id_estado' => 3]); // En Alquiler
-    $car3 = Cars::factory()->create(['id_estado' => 2]); // Vendido
+    $car1 = Cars::factory()->create(['id_estado' => 1]);
+    $car2 = Cars::factory()->create(['id_estado' => 3]);
+    $car3 = Cars::factory()->create(['id_estado' => 2]);
 
     $availableCars = Cars::available()->whereIn('id', [$car1->id, $car2->id, $car3->id])->get();
 
@@ -44,7 +44,6 @@ test('cars search scope', function () {
     $car2 = Cars::factory()->create(['title' => 'Camión Azul', 'descripcion' => 'Es muy rápido']);
     $car3 = Cars::factory()->create(['title' => 'Otro Coche', 'id_marca' => $brand->id]);
 
-    // Filtramos por IDs para evitar falsos positivos del seeder
     $ids = [$car1->id, $car2->id, $car3->id];
 
     $results = Cars::search('Rojo')->whereIn('id', $ids)->get();
@@ -131,8 +130,8 @@ test('rental active scope', function () {
     $car = Cars::factory()->create(['id_estado' => 3]);
     $customer = Customers::factory()->create();
 
-    $active = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 3]); // Activo
-    $pending = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 2]); // Pendiente
+    $active = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 3]);
+    $pending = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 2]);
 
     $activeRentals = Rental::active()->whereIn('id', [$active->id, $pending->id])->get();
 

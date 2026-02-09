@@ -36,19 +36,16 @@ class CarsController extends Controller
             $query->search($request->search);
         }
 
-        // Filtros avanzados usando scopeFilter
         $filters = $request->only(['brand', 'min_price', 'max_price']);
-        // Limpiar filtros vacíos
         $filters = array_filter($filters, fn($value) => !is_null($value) && $value !== '');
 
         if (!empty($filters)) {
             $query->filter($filters);
         }
 
-        // Ordenamiento y Scopes adicionales
         if ($request->has('sort')) {
             if ($request->sort === 'recent') {
-                $query->recent(30)->latest(); // Usando scopeRecent
+                $query->recent(30)->latest();
             } elseif ($request->sort === 'cheap') {
                 $query->orderBy('precio', 'asc');
             } elseif ($request->sort === 'expensive') {
@@ -58,9 +55,8 @@ class CarsController extends Controller
             $query->inRandomOrder();
         }
 
-        $cars = $query->paginate(51)->withQueryString(); // Mantener filtros en paginación
+        $cars = $query->paginate(51)->withQueryString();
 
-        // Obtener marcas con sus modelos para el sidebar
         $brands = Brands::with('models')->orderBy('nombre')->get();
 
         return view('cars.index', compact('cars', 'brands'));
@@ -108,7 +104,6 @@ class CarsController extends Controller
         $modelName = $request->temp_model ? trim($request->temp_model) : CarModels::find($request->id_modelo)->nombre;
         $title = trim("$brandName $modelName " . $request->anyo_matri);
 
-        // Aplicar IVA (21%) y Comisión (5%) al precio base
         $data = $request->all();
         $basePrice = $data['precio'];
         $iva = $basePrice * 0.21;
@@ -183,7 +178,6 @@ class CarsController extends Controller
     {
         $this->authorize('delete', $car);
 
-        // Verificar si el coche tiene transacciones activas o completadas
         if ($car->sales()->exists()) {
             return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene ventas asociadas.');
         }
@@ -192,7 +186,6 @@ class CarsController extends Controller
             return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene alquileres asociados.');
         }
 
-        // Si tiene ofertas aceptadas, también debería bloquearse
         if ($car->offers()->whereIn('estado', ['accepted_by_seller', 'accepted_by_buyer'])->exists()) {
             return redirect()->back()->with('error', 'No se puede eliminar el coche porque tiene ofertas aceptadas.');
         }

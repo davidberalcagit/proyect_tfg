@@ -29,21 +29,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Roles and Permissions first
         $this->call(RolesAndPermissionsSeeder::class);
 
         $this->call(EntityTypesSeeder::class);
         $this->call(ColorsSeeder::class);
         $this->call(BrandsSeeder::class);
         $this->call(CarModelsSeeder::class);
-
         $this->call(GearSeeder::class);
         $this->call(FuelsSeeder::class);
         $this->call(StatusesSeeder::class);
         $this->call(ListingTypesSeeder::class);
         $this->call(RentalStatusesSeeder::class);
 
-        // Create specific user for testing only if it doesn't exist
         $testUser = User::where('email', 'a@gmail.com')->first();
         if (!$testUser) {
             $testUser = User::create([
@@ -51,13 +48,13 @@ class DatabaseSeeder extends Seeder
                 'email' => 'a@gmail.com',
                 'password' => Hash::make('12345678'),
             ]);
-            $testUser->assignRole('admin'); // Changed to admin
+            $testUser->assignRole('admin');
 
             $testCustomer = Customers::create([
                 'id_usuario' => $testUser->id,
                 'nombre_contacto' => 'Test User',
                 'telefono' => '600000000',
-                'id_entidad' => 1, // Individual
+                'id_entidad' => 1,
             ]);
 
             $testCustomer->individual()->create([
@@ -67,7 +64,6 @@ class DatabaseSeeder extends Seeder
             ]);
         } else {
             $testCustomer = $testUser->customer;
-            // Ensure role is admin if user already exists
             if(!$testUser->hasRole('admin')) {
                 $testUser->syncRoles(['admin']);
             }
@@ -76,8 +72,6 @@ class DatabaseSeeder extends Seeder
 
         $users = User::factory()->count(20)->create();
         $users->each(function ($user) {
-            // Assign random role for seeded users
-            // 50% individual, 50% dealership
             $role = rand(0, 1) ? 'individual' : 'dealership';
             $user->assignRole($role);
 
@@ -85,7 +79,6 @@ class DatabaseSeeder extends Seeder
             $dealershipId = null;
 
             if ($role === 'dealership') {
-                // Crear primero el concesionario
                 $dealership = Dealerships::create([
                     'nombre_empresa' => $faker->company(),
                     'nif'            => $faker->regexify('[A-Z][0-9]{8}'),
@@ -97,7 +90,7 @@ class DatabaseSeeder extends Seeder
             $customer = Customers::factory()->create([
                 'id_usuario' => $user->id,
                 'id_entidad' => $role === 'individual' ? 1 : 2,
-                'dealership_id' => $dealershipId // Asignar el concesionario creado
+                'dealership_id' => $dealershipId
             ]);
 
             if ($role === 'individual') {
@@ -111,9 +104,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CarsSeeder::class);
         Sales::factory()->count(10)->create();
-        $this->call(RentalsSeeder::class); // Nuevo
+        $this->call(RentalsSeeder::class);
 
-        // Crear un coche de cada estado para el usuario de prueba
         $statuses = [
             1 => 'En Venta',
             2 => 'Vendido',
@@ -128,7 +120,7 @@ class DatabaseSeeder extends Seeder
                 'id_vendedor' => $testCustomer->id,
                 'id_estado' => $id,
                 'title' => "Coche $name de Prueba",
-                'id_listing_type' => ($id == 3 || $id == 6) ? 2 : 1, // 2=Alquiler, 1=Venta
+                'id_listing_type' => ($id == 3 || $id == 6) ? 2 : 1,
             ];
 
             if ($id == 4 || $id == 5) {
@@ -148,7 +140,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // Create some random offers
         Offer::factory()->count(10)->create();
 
     }

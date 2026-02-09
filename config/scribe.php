@@ -55,7 +55,7 @@ return [
 
     'auth' => [
         'enabled' => true,
-        'default' => true, // Changed to true to force auth field on all endpoints by default
+        'default' => true,
         'in' => 'bearer',
         'name' => 'Authorization',
         'use_value' => env('SCRIBE_AUTH_KEY'),

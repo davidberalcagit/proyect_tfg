@@ -34,7 +34,7 @@ class RentalFactory extends Factory
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
             'precio_total' => $precioTotal,
-            'id_estado' => RentalStatus::inRandomOrder()->first()->id ?? 2, // Default 2 (En espera)
+            'id_estado' => RentalStatus::inRandomOrder()->first()->id ?? 2,
         ];
     }
 }

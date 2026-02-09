@@ -10,23 +10,11 @@ use Illuminate\Console\Command;
 
 class SystemStats extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'system:stats';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Muestra estadísticas generales del sistema.';
 
-    /**
-     * Execute the console command.
-     */
+
     public function handle()
     {
         $this->info('=== ESTADÍSTICAS DEL SISTEMA ===');

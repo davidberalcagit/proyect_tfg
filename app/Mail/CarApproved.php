@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CarApproved extends Mailable implements ShouldQueue
+class  CarApproved extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -39,7 +39,6 @@ class CarApproved extends Mailable implements ShouldQueue
 
     public function attachments(): array
     {
-        // Generar PDF aquí
         $pdf = Pdf::loadView('pdf.certificate', ['car' => $this->car]);
 
         return [

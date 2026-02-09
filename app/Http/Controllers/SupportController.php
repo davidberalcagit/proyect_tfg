@@ -110,7 +110,7 @@ class SupportController extends Controller
             'role' => ['required', 'exists:roles,name'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'telefono' => ['nullable', 'string', 'max:20'],
-            'nombre_contacto' => ['nullable', 'string', 'max:255'], // Nuevo campo
+            'nombre_contacto' => ['nullable', 'string', 'max:255'],
             'dni' => ['nullable', 'string', 'max:20'],
             'nif' => ['nullable', 'string', 'max:20'],
         ]);
@@ -131,7 +131,7 @@ class SupportController extends Controller
         if ($user->customer) {
             $user->customer->update([
                 'telefono' => $request->telefono,
-                'nombre_contacto' => $request->nombre_contacto ?? $request->name, // Usar el nuevo campo o fallback al nombre de usuario
+                'nombre_contacto' => $request->nombre_contacto ?? $request->name,
             ]);
 
             if ($user->customer->individual && $request->filled('dni')) {

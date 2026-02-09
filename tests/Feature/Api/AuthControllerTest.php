@@ -21,7 +21,6 @@ test('login returns token with valid credentials', function () {
     $response->assertStatus(200)
              ->assertJsonStructure(['accessToken', 'token_type', 'user']);
 
-    // Email sending was disabled in controller to avoid SMTP errors
     Queue::assertNotPushed(SendWelcomeEmailJob::class);
 });
 

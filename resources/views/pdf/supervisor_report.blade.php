@@ -45,7 +45,6 @@
         <p>{{ __('Generated on') }}: {{ now()->format('d/m/Y H:i') }}</p>
     </div>
 
-    <!-- Estadísticas Principales -->
     <div class="stats-container">
         <div class="stat-box">
             <div class="stat-value">{{ $stats['total_users'] }}</div>
@@ -66,7 +65,6 @@
         <div class="clearfix"></div>
     </div>
 
-    <!-- Datos Destacados -->
     <div class="highlights">
         <h3>{{ __('Highlights') }}</h3>
         <ul>
@@ -92,7 +90,6 @@
         </ul>
     </div>
 
-    <!-- Top Vendedores -->
     <h2>{{ __('Top 5 Sellers') }}</h2>
     <table>
         <thead>
@@ -113,7 +110,6 @@
         </tbody>
     </table>
 
-    <!-- Ventas Recientes -->
     <h2>{{ __('Recent Sales') }}</h2>
     <table>
         <thead>
@@ -138,7 +134,6 @@
         </tbody>
     </table>
 
-    <!-- Alquileres Recientes -->
     <h2>{{ __('Recent Rentals') }}</h2>
     <table>
         <thead>

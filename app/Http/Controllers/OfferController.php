@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OfferCreated; // Importar Evento
-use App\Events\SaleCompleted; // Importar Evento
+use App\Events\OfferCreated;
+use App\Events\SaleCompleted;
 use App\Jobs\SendOfferAcceptedJob;
 use App\Jobs\SendOfferRejectedJob;
 use App\Models\Cars;
@@ -44,7 +44,6 @@ class OfferController extends Controller
             'estado' => 'pending'
         ]);
 
-        // Disparar evento en lugar de Job directo
         OfferCreated::dispatch($offer);
 
         return redirect()->back()->with('success', 'Oferta enviada al vendedor.');
@@ -92,7 +91,6 @@ class OfferController extends Controller
             ->where('estado', 'pending')
             ->update(['estado' => 'rejected']);
 
-        // Disparar evento en lugar de Job directo
         SaleCompleted::dispatch($sale);
 
         return redirect()->route('sales.index')->with('success', 'Pago realizado y venta completada.');

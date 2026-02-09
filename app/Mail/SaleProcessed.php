@@ -39,7 +39,6 @@ class SaleProcessed extends Mailable implements ShouldQueue
 
     public function attachments(): array
     {
-        // Generar PDF dentro del Mailable
         $pdf = Pdf::loadView('pdf.sale_receipt', ['sale' => $this->sale]);
 
         return [

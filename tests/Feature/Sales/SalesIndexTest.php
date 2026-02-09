@@ -12,7 +12,6 @@ beforeEach(function () {
 });
 
 test('sales index shows correct sections without duplication', function () {
-    // 1. Crear usuarios
     $sellerUser = User::factory()->create();
     $sellerUser->assignRole('individual');
     $sellerCustomer = Customers::factory()->create(['id_usuario' => $sellerUser->id]);
@@ -21,9 +20,6 @@ test('sales index shows correct sections without duplication', function () {
     $buyerUser->assignRole('individual');
     $buyerCustomer = Customers::factory()->create(['id_usuario' => $buyerUser->id]);
 
-    // 2. Crear datos
-
-    // A. Oferta Pendiente (Debe salir en Received Offers del vendedor)
     $carOffer = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id, 'title' => 'Coche Oferta']);
     Offer::create([
         'id_vehiculo' => $carOffer->id,
@@ -33,7 +29,6 @@ test('sales index shows correct sections without duplication', function () {
         'estado' => 'pending'
     ]);
 
-    // B. Venta Completada (Debe salir en My Sales del vendedor y My Purchases del comprador)
     $carSold = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id, 'title' => 'Coche Vendido']);
     Sales::create([
         'id_vehiculo' => $carSold->id,
@@ -43,7 +38,6 @@ test('sales index shows correct sections without duplication', function () {
         'id_estado' => 1
     ]);
 
-    // C. Alquiler (Debe salir en My Leases del vendedor y My Rentals del comprador)
     $carRented = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id, 'title' => 'Coche Alquilado']);
     Rental::create([
         'id_vehiculo' => $carRented->id,
@@ -54,15 +48,11 @@ test('sales index shows correct sections without duplication', function () {
         'id_estado' => 1
     ]);
 
-    // 3. Verificar vista del VENDEDOR
     $responseSeller = $this->actingAs($sellerUser)->get(route('sales.index'));
     $responseSeller->assertStatus(200);
 
-    // Debe ver Oferta Pendiente
     $responseSeller->assertSee('Coche Oferta');
-    // Debe ver Venta (My Sales)
     $responseSeller->assertSee('Coche Vendido');
-    // Debe ver Arrendamiento (My Leases)
     $responseSeller->assertSee('Coche Alquilado');
 
     $purchases = $responseSeller->viewData('purchases');
@@ -72,7 +62,6 @@ test('sales index shows correct sections without duplication', function () {
     expect($sales->count())->toBe(1);
     expect($sales->first()->vehiculo->title)->toBe('Coche Vendido');
 
-    // 4. Verificar vista del COMPRADOR
     $responseBuyer = $this->actingAs($buyerUser)->get(route('sales.index'));
     $responseBuyer->assertStatus(200);
 

@@ -107,7 +107,7 @@ test('rental paid event dispatches job', function () {
         'fecha_inicio' => now()->addDay(),
         'fecha_fin' => now()->addDays(2),
         'precio_total' => 100,
-        'id_estado' => 7 // Aceptado
+        'id_estado' => 7
     ]);
 
     $this->actingAs($renterUser)->post(route('rentals.pay', $rental));
@@ -121,7 +121,7 @@ test('car rejected event dispatches job', function () {
     $supervisorUser = User::factory()->create();
     $supervisorUser->assignRole('supervisor');
 
-    $car = Cars::factory()->create(['id_estado' => 4]); // Pendiente
+    $car = Cars::factory()->create(['id_estado' => 4]);
 
     $this->actingAs($supervisorUser)->post(route('supervisor.reject', $car), [
         'reason' => 'Test Reason'

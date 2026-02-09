@@ -14,21 +14,18 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 gap-6">
-                        <!-- Nombre Usuario -->
                         <div>
                             <x-label for="name" value="{{ __('Username') }}" />
                             <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required autofocus />
                             <x-input-error for="name" class="mt-2" />
                         </div>
 
-                        <!-- Email -->
                         <div>
                             <x-label for="email" value="{{ __('Email') }}" />
                             <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $user->email)" required />
                             <x-input-error for="email" class="mt-2" />
                         </div>
 
-                        <!-- Rol -->
                         <div>
                             <x-label for="role" value="{{ __('Role') }}" />
                             <x-select id="role" name="role" class="block mt-1 w-full">
@@ -41,13 +38,11 @@
                             <x-input-error for="role" class="mt-2" />
                         </div>
 
-                        <!-- Datos del Cliente -->
                         @if($user->customer)
                             <div class="border-t border-gray-200 pt-4 mt-2">
                                 <h3 class="text-sm font-medium text-gray-900 mb-2">{{ __('Customer Details') }}</h3>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Nombre de Contacto -->
                                     <div class="md:col-span-2">
                                         <x-label for="nombre_contacto" value="{{ __('Contact Name') }}" />
                                         <x-input id="nombre_contacto" class="block mt-1 w-full" type="text" name="nombre_contacto" :value="old('nombre_contacto', $user->customer->nombre_contacto)" />
@@ -79,7 +74,6 @@
                             </div>
                         @endif
 
-                        <!-- Password (Opcional) -->
                         <div class="border-t border-gray-200 pt-4 mt-2">
                             <h3 class="text-sm font-medium text-gray-900 mb-2">{{ __('Change Password (Optional)') }}</h3>
 

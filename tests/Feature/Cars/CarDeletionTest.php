@@ -24,7 +24,6 @@ test('cannot delete car with completed sale', function () {
 
     $car = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id]);
 
-    // Crear venta asociada
     Sales::create([
         'id_vehiculo' => $car->id,
         'id_vendedor' => $sellerCustomer->id,
@@ -48,7 +47,6 @@ test('cannot delete car with rental', function () {
 
     $car = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id]);
 
-    // Crear alquiler asociado
     Rental::create([
         'id_vehiculo' => $car->id,
         'id_cliente' => $renterCustomer->id,
@@ -73,7 +71,6 @@ test('cannot delete car with accepted offer', function () {
 
     $car = Cars::factory()->create(['id_vendedor' => $sellerCustomer->id]);
 
-    // Crear oferta aceptada
     Offer::create([
         'id_vehiculo' => $car->id,
         'id_vendedor' => $sellerCustomer->id,

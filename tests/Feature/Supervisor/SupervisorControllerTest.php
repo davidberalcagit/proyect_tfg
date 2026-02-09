@@ -25,7 +25,6 @@ test('approveCar calls artisan command', function () {
         ->with('cars:approve', ['car_id' => 1])
         ->andReturn(0);
 
-    // Corrected route name
     $response = $this->actingAs($this->supervisor)->post(route('supervisor.approve', 1));
 
     $response->assertRedirect();
@@ -36,7 +35,6 @@ test('rejectCar updates status and dispatches event', function () {
     Event::fake();
     $car = Cars::factory()->create(['id_estado' => 4]);
 
-    // Corrected route name
     $response = $this->actingAs($this->supervisor)->post(route('supervisor.reject', $car->id), [
         'reason' => 'Bad quality'
     ]);
@@ -50,7 +48,6 @@ test('downloadReport generates pdf', function () {
     Pdf::shouldReceive('loadView')->andReturnSelf();
     Pdf::shouldReceive('download')->andReturn(response('PDF Content'));
 
-    // Corrected route name
     $response = $this->actingAs($this->supervisor)->get(route('supervisor.report'));
 
     $response->assertStatus(200);

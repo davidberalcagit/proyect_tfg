@@ -46,7 +46,6 @@ test('support cannot delete themselves', function () {
 
     $response = $this->actingAs($support)->delete(route('support.users.destroy', $support));
 
-    // La Policy impide esto devolviendo 403
     $response->assertStatus(403);
 
     $this->assertDatabaseHas('users', ['id' => $support->id]);
@@ -56,12 +55,10 @@ test('support cannot edit themselves', function () {
     $support = User::factory()->create();
     $support->assignRole('soporte');
 
-    // Intentar acceder a la vista de edición
     $response = $this->actingAs($support)->get(route('support.users.edit', $support));
     $response->assertRedirect(route('support.users.index'));
     $response->assertSessionHas('error');
 
-    // Intentar actualizar
     $response = $this->actingAs($support)->put(route('support.users.update', $support), [
         'name' => 'New Name',
         'email' => $support->email,
@@ -71,5 +68,5 @@ test('support cannot edit themselves', function () {
     $response->assertRedirect(route('support.users.index'));
     $response->assertSessionHas('error');
 
-    $this->assertDatabaseHas('users', ['id' => $support->id, 'name' => $support->name]); // Nombre original
+    $this->assertDatabaseHas('users', ['id' => $support->id, 'name' => $support->name]);
 });

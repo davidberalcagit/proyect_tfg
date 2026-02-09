@@ -14,10 +14,10 @@ beforeEach(function () {
 });
 
 test('car has renters relationship', function () {
-    $car = Cars::factory()->create(['id_estado' => 3]); // En Alquiler
+    $car = Cars::factory()->create(['id_estado' => 3]);
+
     $customer = Customers::factory()->create();
 
-    // Crear alquiler
     Rental::create([
         'id_vehiculo' => $car->id,
         'id_cliente' => $customer->id,
@@ -27,11 +27,9 @@ test('car has renters relationship', function () {
         'id_estado' => 1
     ]);
 
-    // Verificar relación
     expect($car->renters->contains($customer))->toBeTrue();
     expect($car->renters)->toHaveCount(1);
 
-    // Verificar datos pivot
     $pivot = $car->renters->first()->pivot;
     expect($pivot->precio_total)->toEqual(500);
 });
@@ -60,7 +58,6 @@ test('sales index view shows rentals', function () {
 
     $car = Cars::factory()->create(['title' => 'Coche Alquilado Test']);
 
-    // Crear alquiler donde el usuario es el cliente
     Rental::create([
         'id_vehiculo' => $car->id,
         'id_cliente' => $customer->id,
@@ -90,7 +87,6 @@ test('sales index view shows leases as owner', function () {
         'title' => 'Mi Coche Arrendado'
     ]);
 
-    // Crear alquiler donde el usuario es el dueño del coche
     Rental::create([
         'id_vehiculo' => $car->id,
         'id_cliente' => $renterCustomer->id,

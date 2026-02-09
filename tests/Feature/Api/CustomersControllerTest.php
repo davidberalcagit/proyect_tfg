@@ -49,7 +49,7 @@ test('api customers store creates individual profile', function () {
     Sanctum::actingAs($user);
 
     $data = [
-        'id_entidad' => 1, // Particular
+        'id_entidad' => 1,
         'nombre_contacto' => 'Test User',
         'telefono' => '123456789',
     ];
@@ -66,7 +66,7 @@ test('api customers store creates dealership profile', function () {
     Sanctum::actingAs($user);
 
     $data = [
-        'id_entidad' => 2, // Concesionario
+        'id_entidad' => 2,
         'nombre_contacto' => 'Dealer User',
         'telefono' => '987654321',
         'nombre_empresa' => 'Auto Corp',

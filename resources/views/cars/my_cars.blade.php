@@ -1,7 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            {{-- Eliminado text-gray-800 --}}
             <h2 class="font-semibold text-xl leading-tight">
                 {{ __('My Cars') }}
             </h2>
@@ -38,7 +37,6 @@
                             @foreach ($cars as $car)
                                 <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col relative group border border-gray-100 h-full">
 
-                                    <!-- Imagen -->
                                     <div class="relative h-48 w-full">
                                         @if($car->image)
                                             <img src="{{ Storage::url($car->image) }}" alt="{{ $car->title }}" class="h-full w-full object-cover">
@@ -48,7 +46,6 @@
                                             </div>
                                         @endif
 
-                                        <!-- Badge de Estado -->
                                         <div class="absolute top-2 right-2 z-10">
                                             <span class="px-2 py-1 text-xs font-bold text-white rounded-full shadow-sm
                                                 @if($car->id_estado == 1) bg-green-600
@@ -78,7 +75,6 @@
                                         @endif
                                     </div>
 
-                                    <!-- Acciones -->
                                     <div class="p-4 bg-gray-50 border-t border-gray-200 flex flex-col gap-2">
                                         <div class="flex justify-between">
                                             <a href="{{ route('cars.edit', $car) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">{{ __('Edit') }}</a>
@@ -89,7 +85,6 @@
                                             </form>
                                         </div>
 
-                                        <!-- Botones de Cambio de Estado -->
                                         @if(in_array($car->id_estado, [1, 3, 6]))
                                             <div class="mt-2 flex flex-col gap-2">
                                                 @if($car->id_estado != 1)

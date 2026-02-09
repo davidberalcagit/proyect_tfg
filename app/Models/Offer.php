@@ -17,7 +17,6 @@ class Offer extends Model
         'estado',
     ];
 
-    // Scopes
     public function scopePending($query)
     {
         return $query->where('estado', 'pending');
@@ -30,7 +29,6 @@ class Offer extends Model
                      ->latest();
     }
 
-    // Relaciones
     public function car()
     {
         return $this->belongsTo(Cars::class, 'id_vehiculo');

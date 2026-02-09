@@ -21,13 +21,11 @@ class SalesFactory extends Factory
     {
         $car = Cars::inRandomOrder()->first();
 
-        // Si no hay coches, crear uno
         if (!$car) {
             $car = Cars::factory()->create();
         }
 
         $vendedor = Customers::find($car->id_vendedor);
-        // Si por alguna razón el vendedor no existe (raro), crear uno
         if (!$vendedor) {
              $vendedor = Customers::factory()->create();
              $car->update(['id_vendedor' => $vendedor->id]);
@@ -40,12 +38,10 @@ class SalesFactory extends Factory
 
         $precio = $car->precio;
 
-        // Ensure SaleStatus exists
         $status = SaleStatus::inRandomOrder()->first();
         if (!$status) {
-            // Create manually if factory doesn't exist
             $status = new SaleStatus();
-            $status->nombre = 'Completada'; // Default
+            $status->nombre = 'Completada';
             $status->save();
         }
 

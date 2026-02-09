@@ -27,7 +27,6 @@ class MakeOffer extends Component
         if (!Auth::check()) {
             return redirect()->route('login');
         }
-        // Verificar si es el dueño
         if (Auth::user()->customer && Auth::user()->customer->id === $this->car->id_vendedor) {
             session()->flash('error', 'No puedes ofertar por tu propio coche.');
             return;
@@ -53,10 +52,9 @@ class MakeOffer extends Component
 
         $buyerId = Auth::user()->customer->id;
 
-        // Validar si ya existe una oferta pendiente para este coche y usuario
         $existingOffer = Offer::where('id_vehiculo', $this->car->id)
             ->where('id_comprador', $buyerId)
-            ->pending() // Usando el scope
+            ->pending()
             ->exists();
 
         if ($existingOffer) {

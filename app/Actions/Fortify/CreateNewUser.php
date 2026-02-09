@@ -21,7 +21,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'contact_name' => ['required_if:type,individual,dealership', 'nullable', 'string', 'max:255'], // Nuevo campo
+            'contact_name' => ['required_if:type,individual,dealership', 'nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
@@ -29,11 +29,9 @@ class CreateNewUser implements CreatesNewUsers
             'telefono' => ['required_if:type,individual,dealership', 'nullable', 'string', 'max:15', 'unique:customers,telefono'],
             'id_entidad' => ['required_if:type,individual,dealership', 'nullable', 'exists:entity_types,id'],
 
-            // Individual
             'dni' => ['required_if:type,individual', 'string', 'max:9', 'unique:individuals,dni'],
             'fecha_nacimiento' => ['required_if:type,individual', 'date'],
 
-            // Dealership
             'nombre_empresa' => ['required_if:type,dealership', 'nullable', 'string', 'max:255'],
             'nif' => ['required_if:type,dealership', 'nullable', 'string', 'max:20'],
             'direccion' => ['required_if:type,dealership', 'nullable', 'string', 'max:255'],
@@ -54,7 +52,7 @@ class CreateNewUser implements CreatesNewUsers
                 $customer = Customers::create([
                     'id_usuario' => $user->id,
                     'id_entidad' => $input['id_entidad'],
-                    'nombre_contacto' => $input['contact_name'] ?? $input['name'], // Usar contact_name
+                    'nombre_contacto' => $input['contact_name'] ?? $input['name'],
                     'telefono' => $input['telefono'],
                 ]);
 
@@ -88,7 +86,7 @@ class CreateNewUser implements CreatesNewUsers
                  Customers::create([
                     'id_usuario' => $user->id,
                     'id_entidad' => $input['id_entidad'],
-                    'nombre_contacto' => $input['contact_name'] ?? $input['name'], // Usar contact_name
+                    'nombre_contacto' => $input['contact_name'] ?? $input['name'],
                     'telefono' => $input['telefono'],
                     'dealership_id' => $dealershipId
                 ]);

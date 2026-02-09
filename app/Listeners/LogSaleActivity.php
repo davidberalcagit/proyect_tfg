@@ -14,7 +14,7 @@ class LogSaleActivity
      */
     public function __construct()
     {
-        //
+
     }
 
     /**

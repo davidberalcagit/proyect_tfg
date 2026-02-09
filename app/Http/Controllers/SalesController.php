@@ -92,23 +92,19 @@ class SalesController extends Controller
         $user = Auth::user();
         if (!$user->customer) abort(403);
 
-        // Llamar al comando para exportar ventas
         $exitCode = Artisan::call('sales:export', ['user_id' => $user->id]);
 
         if ($exitCode !== 0) {
             return redirect()->back()->with('error', 'Error al exportar ventas.');
         }
 
-        // Buscar el archivo más reciente en exports/
         $files = Storage::disk('public')->files('exports');
-        // Filtrar por ID de usuario para asegurar que es el suyo (aunque el comando usa timestamp)
         $userFiles = array_filter($files, fn($f) => str_contains($f, "sales_export_{$user->id}_"));
 
         if (empty($userFiles)) {
             return redirect()->back()->with('info', 'No se encontraron ventas para exportar.');
         }
 
-        // Ordenar para obtener el último
         rsort($userFiles);
         $latestFile = $userFiles[0];
 

@@ -21,6 +21,5 @@ test('rental return reminder email renders correctly', function () {
 
     $mailable = new RentalReturnReminder($rental);
 
-    // Assert that the email contains the car title, which should be present in the view
     $mailable->assertSeeInHtml($rental->car->title);
 });

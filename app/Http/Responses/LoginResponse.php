@@ -14,9 +14,8 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        // dd('Entró en LoginResponse customizado');
         return $request->wantsJson()
                     ? response()->json(['two_factor' => false])
-                    : redirect()->intended('/cars'); // Redirigir a /cars
+                    : redirect()->intended('/cars');
     }
 }

@@ -17,19 +17,12 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
     public function store(Request $request): RedirectResponse
     {
         $rules = [
@@ -53,10 +46,8 @@ class RegisteredUserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                // 'type' => $request->type, // Removed
             ]);
 
-            // Assign Role
             if ($request->type === 'individual') {
                 $user->assignRole('individual');
             } elseif ($request->type === 'dealership') {
@@ -74,7 +65,7 @@ class RegisteredUserController extends Controller
                     'id_usuario'      => $user->id,
                     'nombre_contacto' => $request->name,
                     'telefono'        => $request->telefono,
-                    'id_entidad'      => $request->id_entidad, // 1 = individual, 2 = dealership
+                    'id_entidad'      => $request->id_entidad,
                 ]);
                 if ($customer->id_entidad == 2) {
 
@@ -86,7 +77,6 @@ class RegisteredUserController extends Controller
                     ]);
                 }
 
-                // 4. Si es individual → crear registro en individuals
                 if ($customer->id_entidad == 1) {
 
                     $customer->individual()->create([
@@ -106,25 +96,19 @@ class RegisteredUserController extends Controller
     }
     public function update(Request $request, User $user)
     {
-        // Validación básica
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:normal,empresa',
         ]);
 
-        // Actualiza los datos del usuario
         $user->update($data);
 
-        // Si el tipo es empresa y no existe una empresa asociada...
         if ($data['type'] === 'empresa') {
 
-            // Comprobar si ya tiene registro en empresas (opcional)
             if (!$user->empresa) {
 
-                // Crear registro en tabla empresas
                 \App\Models\Dealerships::create([
                     'user_id' => $user->id,
-                    // puedes añadir más campos obligatorios aquí
                 ]);
             }
         }

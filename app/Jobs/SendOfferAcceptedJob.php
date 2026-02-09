@@ -26,7 +26,6 @@ class SendOfferAcceptedJob implements ShouldQueue
 
     public function handle(): void
     {
-        // Enviar correo SOLO al comprador
         $buyerUser = $this->offer->buyer->user;
 
         if ($buyerUser) {

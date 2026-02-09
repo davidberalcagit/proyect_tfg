@@ -22,13 +22,11 @@ test('process car image job runs', function () {
 });
 
 test('cleanup rejected offers job deletes old offers', function () {
-    // Create old rejected offer
     $oldOffer = Offer::factory()->create([
         'estado' => 'rechazada',
         'updated_at' => now()->subDays(31)
     ]);
 
-    // Create recent rejected offer
     $recentOffer = Offer::factory()->create([
         'estado' => 'rechazada',
         'updated_at' => now()->subDays(10)

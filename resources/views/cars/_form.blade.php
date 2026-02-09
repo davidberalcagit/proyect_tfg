@@ -2,12 +2,11 @@
 
 <div class="grid grid-cols-1 gap-6">
 
-    <!-- Campo oculto para id_listing_type -->
     @if(!$car->exists && isset($listingType))
         <input type="hidden" name="id_listing_type" value="{{ $listingType->id }}">
     @endif
 
-    <!-- Marca -->
+
     <div>
         <x-label for="brand" value="{{ __('Brand') }}" />
         <x-select name="id_marca" id="brand" class="mt-1 block w-full">
@@ -27,7 +26,6 @@
         </div>
     </div>
 
-    <!-- Modelo -->
     <div>
         <x-label for="model" value="{{ __('Model') }}" />
         <x-select name="id_modelo" id="model" class="mt-1 block w-full" :disabled="!old('id_marca', $car->id_marca) && !$car->id_marca">
@@ -41,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Color -->
     <div>
         <x-label for="color" value="{{ __('Color') }}" />
         <x-select name="id_color" id="color" class="mt-1 block w-full">
@@ -60,7 +57,6 @@
         </div>
     </div>
 
-    <!-- Combustible -->
     <div>
         <x-label value="{{ __('Fuels') }}" />
         <div class="mt-2 flex flex-wrap gap-4">
@@ -73,7 +69,6 @@
         </div>
     </div>
 
-    <!-- Marchas -->
     <div>
         <x-label value="{{ __('Gear') }}" />
         <div class="mt-2 flex flex-wrap gap-4">
@@ -120,7 +115,6 @@
         <x-textarea name="descripcion" id="descripcion" class="mt-1 block w-full">{{ old('descripcion', $car->descripcion) }}</x-textarea>
     </div>
 
-    <!-- Imagen -->
     <div>
         <x-label for="image" value="{{ __('Image') }}" />
         <x-input type="file" name="image" id="image" class="mt-1 block w-full" />

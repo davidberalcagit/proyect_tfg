@@ -24,6 +24,4 @@ test('login is throttled after too many attempts', function () {
     ]);
 
     $response->assertSessionHasErrors();
-    // Check for throttle message (usually contains "seconds")
-    // $this->assertStringContainsString('seconds', session('errors')->first('email'));
 });

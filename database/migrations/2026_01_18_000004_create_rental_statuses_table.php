@@ -14,9 +14,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Actualizar tabla rentals para usar id_estado
         Schema::table('rentals', function (Blueprint $table) {
-            $table->dropColumn('estado'); // Eliminar columna string antigua
+            $table->dropColumn('estado');
             $table->foreignId('id_estado')->default(1)->constrained('rental_statuses');
         });
     }

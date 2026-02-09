@@ -2,7 +2,6 @@
         wire:loading.attr="disabled"
         class="bg-white rounded-full shadow hover:scale-110 transition text-gray-400 hover:text-[#B35F12] focus:outline-none w-10 h-10 flex items-center justify-center">
 
-    <!-- Icono Normal -->
     <div wire:loading.remove wire:target="toggle">
         @if($isFavorite)
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#B35F12] fill-current" viewBox="0 0 20 20" fill="currentColor">
@@ -15,7 +14,6 @@
         @endif
     </div>
 
-    <!-- Spinner -->
     <div wire:loading wire:target="toggle" style="display: none;">
         <svg class="animate-spin h-6 w-6 text-[#B35F12]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

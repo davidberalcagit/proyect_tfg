@@ -21,7 +21,7 @@ class CustomersFactory extends Factory
         $entityType = EntityType::inRandomOrder()->first() ?? EntityType::factory()->create();
 
         return [
-            'id_usuario' => User::factory(), // Siempre crear un nuevo usuario
+            'id_usuario' => User::factory(),
             'id_entidad' => $entityType->id,
             'nombre_contacto' => $this->faker->name(),
             'telefono'        => $this->faker->unique()->phoneNumber(),

@@ -9,26 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class ApplyDiscount extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'prices:modify
                             {percentage : Porcentaje a aplicar (1-100)}
                             {target : Objetivo (individual, dealership, all, ID numérico o Nombre de Marca)}
                             {mode=decrease : Modo de operación (decrease: bajar precio, increase: subir precio)}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Modifica masivamente el precio de los coches (descuento o aumento).';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $percentage = $this->argument('percentage');
@@ -48,7 +35,7 @@ class ApplyDiscount extends Command
         $actionText = $mode === 'increase' ? 'Aumentando' : 'Descontando';
         $this->info("{$actionText} un {$percentage}%...");
 
-        $query = Cars::where('id_estado', 1); // Solo coches en venta
+        $query = Cars::where('id_estado', 1);
 
         if (is_numeric($target)) {
             $query->where('id', $target);

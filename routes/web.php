@@ -10,7 +10,7 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\CustomerController; // Importar
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -44,20 +44,17 @@ Route::get('lang/{locale}', function ($locale) {
 
 Route::resource('cars', CarsController::class);
 
-// Ruta pública de perfil de vendedor
 Route::get('/seller/{customer}', [CustomerController::class, 'show'])->name('seller.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/my-cars', [CarsController::class, 'myCars'])->name('cars.my_cars');
 
-    // Favoritos
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/cars/{car}/favorite', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
     Route::post('/cars/{car}/status/sale', [CarsController::class, 'setStatusSale'])->name('cars.status.sale');
     Route::post('/cars/{car}/status/rent', [CarsController::class, 'setStatusRent'])->name('cars.status.rent');
 
-    // Ofertas
     Route::get('/sales/terms', [SalesController::class, 'downloadSaleTerms'])->name('sales.terms');
     Route::post('/cars/{car}/offer', [OfferController::class, 'store'])->name('offers.store');
     Route::get('/transactions', [SalesController::class, 'index'])->name('sales.index');
@@ -69,7 +66,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/offers/{offer}/reject', [OfferController::class, 'reject'])->name('offers.reject');
     Route::post('/offers/{offer}/pay', [OfferController::class, 'pay'])->name('offers.pay');
 
-    // Alquileres
     Route::get('/rentals/terms', [RentalController::class, 'downloadTerms'])->name('rentals.terms');
     Route::get('/cars/{car}/rent', [RentalController::class, 'create'])->name('rentals.create');
     Route::post('/cars/{car}/rent', [RentalController::class, 'store'])->name('rentals.store');
@@ -81,13 +77,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Admin
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::post('/admin/run-job', [AdminController::class, 'runJob'])->name('admin.run-job');
     });
 
-    // Supervisor
     Route::middleware(['role:supervisor|admin'])->group(function () {
         Route::get('/supervisor', [SupervisorController::class, 'index'])->name('supervisor.dashboard');
         Route::get('/supervisor/report', [SupervisorController::class, 'downloadReport'])->name('supervisor.report');
@@ -95,7 +89,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/supervisor/reject/{id}', [SupervisorController::class, 'rejectCar'])->name('supervisor.reject');
     });
 
-    // Soporte
     Route::middleware(['role:soporte|admin'])->group(function () {
         Route::get('/support/users', [SupportController::class, 'index'])->name('support.users.index');
         Route::get('/support/users/create', [SupportController::class, 'create'])->name('support.users.create');

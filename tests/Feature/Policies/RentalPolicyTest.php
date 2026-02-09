@@ -25,7 +25,6 @@ test('owner can view rental of their car', function () {
     $owner->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $owner->id]);
 
-    // Crear un cliente real para el alquiler
     $renter = Customers::factory()->create();
 
     $car = Cars::factory()->create(['id_vendedor' => $customer->id]);
@@ -38,7 +37,6 @@ test('other user cannot view rental', function () {
     $other = User::factory()->create();
     $other->assignRole('individual');
 
-    // Crear cliente real para el alquiler
     $renter = Customers::factory()->create();
 
     $car = Cars::factory()->create();

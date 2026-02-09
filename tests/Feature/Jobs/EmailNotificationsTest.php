@@ -29,7 +29,6 @@ beforeEach(function () {
     $this->seed(Database\Seeders\DatabaseSeeder::class);
 });
 
-// Helper function
 function createCustomer() {
     $user = User::factory()->create();
     $user->assignRole('individual');
@@ -45,7 +44,6 @@ test('new offer email is sent to seller', function () {
 
     (new SendOfferNotificationJob($offer))->handle();
 
-    // Este se envía síncronamente
     Mail::assertSent(NewOfferReceived::class, fn ($mail) => $mail->hasTo($seller->user->email));
 });
 
@@ -58,7 +56,6 @@ test('offer accepted email is sent to buyer', function () {
 
     (new SendOfferAcceptedJob($offer))->handle();
 
-    // Este se envía síncronamente
     Mail::assertSent(OfferAccepted::class, fn ($mail) => $mail->hasTo($buyer->user->email));
 });
 

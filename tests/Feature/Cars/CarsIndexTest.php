@@ -12,20 +12,17 @@ beforeEach(function () {
 });
 
 test('index displays available cars', function () {
-    // Use a unique name to avoid collision with seeder
     $brand = Brands::factory()->create(['nombre' => 'Toyota Test ' . uniqid()]);
     $car = Cars::factory()->create([
         'id_marca' => $brand->id,
         'precio' => 10000,
-        'id_estado' => 1 // Available
+        'id_estado' => 1
     ]);
 
-    // Test Livewire component
     Livewire::test(CarFilter::class)
         ->set('search', $car->title)
         ->assertSee($car->title);
 
-    // Test page load
     $response = $this->get(route('cars.index'));
     $response->assertStatus(200);
     $response->assertSeeLivewire('car-filter');

@@ -7,7 +7,6 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 test('api car models index returns list', function () {
-    // Ensure unique names to avoid constraint violation
     CarModels::factory()
         ->count(3)
         ->state(new Sequence(

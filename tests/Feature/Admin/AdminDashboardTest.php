@@ -43,14 +43,11 @@ test('dashboard can switch tabs and render components', function () {
 
     Livewire::actingAs($admin)
         ->test(AdminDashboard::class)
-        // Initially shows brands
         ->assertSeeText('Gestión de Marcas')
         ->assertDontSeeText('Gestión de Modelos')
-        // Switch to models
         ->call('setTab', 'models')
         ->assertSeeText('Gestión de Modelos')
         ->assertDontSeeText('Gestión de Marcas')
-        // Switch to fuels
         ->call('setTab', 'fuels')
         ->assertSeeText('Gestión de Combustibles')
         ->assertDontSeeText('Gestión de Modelos');

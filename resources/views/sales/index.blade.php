@@ -10,7 +10,6 @@
         </div>
     </x-slot>
 
-    <!-- Overlay de Carga Global -->
     <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center cursor-wait">
         <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
             <svg class="animate-spin h-10 w-10 text-[#B35F12] mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -24,7 +23,6 @@
     <div class="py-12" x-data="{ activeTab: 'offers' }">
         <div class="max-w-[95%] 2xl:max-w-[90%] mx-auto sm:px-6 lg:px-8 transition-all duration-300">
 
-            <!-- Tabs Navigation (Píldoras) -->
             <div class="flex space-x-4 mb-6 border-b border-gray-200 pb-4 overflow-x-auto">
                 <button @click="activeTab = 'offers'"
                     :class="{ 'bg-[#B35F12] text-white shadow-md': activeTab === 'offers', 'bg-white text-gray-600 hover:bg-gray-50': activeTab !== 'offers' }"
@@ -45,10 +43,9 @@
                 </button>
             </div>
 
-            <!-- Tab: Offers -->
             <div x-show="activeTab === 'offers'" class="space-y-8" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
 
-                <!-- 1. Ofertas Recibidas -->
+
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#284961]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#284961] mb-4 flex items-center">
@@ -108,7 +105,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Ofertas Enviadas -->
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#B35F12]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#B35F12] mb-4 flex items-center">
@@ -167,9 +163,7 @@
                 </div>
             </div>
 
-            <!-- Tab: Rentals -->
             <div x-show="activeTab === 'rentals'" class="space-y-8" style="display: none;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
-                <!-- 4. Mis Alquileres (Cliente) -->
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#284961]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#284961] mb-4">{{ __('My Rentals') }} ({{ __('As Customer') }})</h3>
@@ -237,7 +231,6 @@
                     </div>
                 </div>
 
-                <!-- 5. Mis Arrendamientos (Dueño) -->
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#B35F12]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#B35F12] mb-4">{{ __('My Leases') }} ({{ __('As Owner') }})</h3>
@@ -304,9 +297,7 @@
                 </div>
             </div>
 
-            <!-- Tab: History -->
             <div x-show="activeTab === 'history'" class="space-y-8" style="display: none;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
-                <!-- 3. Mis Compras (Cerradas) -->
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#284961]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#284961] mb-4">{{ __('My Purchases') }}</h3>
@@ -345,7 +336,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Mis Ventas (Cerradas) -->
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg border-t-4 border-[#B35F12]">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-bold text-[#B35F12] mb-4">{{ __('My Sales') }}</h3>

@@ -45,10 +45,9 @@ class UserManager extends Component
     public function render()
     {
         $query = User::query()
-            ->with('customer') // Cargar relación para mostrar nombre vendedor
-            ->select('users.*'); // Asegurar que seleccionamos campos de users para evitar conflictos de ID
+            ->with('customer')
+            ->select('users.*');
 
-        // Búsqueda
         if ($this->search) {
             $query->where(function($q) {
                 $q->where('users.name', 'like', '%' . $this->search . '%')
@@ -59,13 +58,10 @@ class UserManager extends Component
             });
         }
 
-        // Ordenación
         if ($this->sortField === 'seller_name') {
-            // Ordenar por nombre de contacto del cliente
             $query->leftJoin('customers', 'users.id', '=', 'customers.id_usuario')
                   ->orderBy('customers.nombre_contacto', $this->sortDirection);
         } else {
-            // Ordenar por columnas de la tabla users
             $query->orderBy($this->sortField, $this->sortDirection);
         }
 

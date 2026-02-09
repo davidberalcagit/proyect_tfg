@@ -10,7 +10,6 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-// --- Fuels ---
 test('api fuels index returns list', function () {
     Fuels::factory()->count(3)->create();
     $this->getJson(route('api.fuels.index'))
@@ -54,7 +53,6 @@ test('api fuels destroy deletes fuel', function () {
     $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
 });
 
-// --- Colors ---
 test('api colors index returns list', function () {
     Color::factory()->count(3)->create();
     $this->getJson(route('api.colors.index'))
@@ -91,7 +89,6 @@ test('api colors destroy deletes color', function () {
     $this->assertDatabaseMissing('colors', ['id' => $color->id]);
 });
 
-// --- Gears ---
 test('api gears index returns list', function () {
     Gears::factory()
         ->count(2)

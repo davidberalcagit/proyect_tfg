@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Brands;
-use App\Models\CarModels; // Importar CarModels
+use App\Models\CarModels;
 use App\Models\Cars;
-use App\Models\Color; // Importar Color
+use App\Models\Color;
 use App\Models\Customers;
 use App\Models\ListingType;
 use App\Models\User;
@@ -87,11 +87,9 @@ test('created car appears in my cars but not in public index', function () {
 
     $car = Cars::where('matricula', 'GHI9012')->first();
 
-    // Debe aparecer en "Mis Coches"
     $responseMyCars = $this->actingAs($user)->get(route('cars.my_cars'));
     $responseMyCars->assertSee($car->title);
 
-    // NO debe aparecer en el índice público (porque está pendiente de aprobación)
     $responseIndex = $this->get(route('cars.index'));
     $responseIndex->assertDontSee($car->title);
 });
@@ -181,7 +179,7 @@ test('cannot create car with invalid year', function () {
         'id_combustible' => 1,
         'id_color' => 1,
         'matricula' => 'STU5678',
-        'anyo_matri' => 1800, // Año inválido
+        'anyo_matri' => 1800,
         'km' => 1000,
         'precio' => 10000,
         'descripcion' => 'Descripción de prueba',
@@ -205,7 +203,7 @@ test('cannot create car with negative price', function () {
         'matricula' => 'VWX9012',
         'anyo_matri' => 2023,
         'km' => 1000,
-        'precio' => -100, // Precio negativo
+        'precio' => -100,
         'descripcion' => 'Descripción de prueba',
         'id_listing_type' => ListingType::where('nombre', 'Venta')->first()->id,
     ]);
@@ -232,9 +230,8 @@ test('unauthenticated user cannot create car', function () {
 });
 
 test('user without customer profile cannot create car', function () {
-    $user = User::factory()->create(); // Sin customer
-    $user->assignRole('admin'); // O cualquier rol sin customer
-
+    $user = User::factory()->create();
+    $user->assignRole('admin');
     $response = $this->actingAs($user)->post(route('cars.store'), [
         'temp_brand' => 'Brand',
         'temp_model' => 'Model',
@@ -249,5 +246,5 @@ test('user without customer profile cannot create car', function () {
         'id_listing_type' => ListingType::where('nombre', 'Venta')->first()->id,
     ]);
 
-    $response->assertStatus(403); // Forbidden por el controlador
+    $response->assertStatus(403);
 });

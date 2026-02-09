@@ -20,22 +20,13 @@ class OfferAccepted extends Mailable
      */
     public function __construct(public Offer $offer)
     {
-        //
     }
-
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
             subject: '¡Tu oferta ha sido aceptada!',
         );
     }
-
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
@@ -50,6 +41,6 @@ class OfferAccepted extends Mailable
      */
     public function attachments(): array
     {
-        return []; // Sin adjuntos
+        return [];
     }
 }

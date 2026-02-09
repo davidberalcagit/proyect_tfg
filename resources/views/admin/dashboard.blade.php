@@ -5,7 +5,6 @@
         </h2>
     </x-slot>
 
-    <!-- Overlay de Carga Global (Funciona para Forms y Livewire) -->
     <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center cursor-wait" wire:loading.class.remove="hidden" wire:target>
         <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
             <svg class="animate-spin h-10 w-10 text-[#B35F12] mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -19,7 +18,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <!-- Mensajes de éxito/error -->
             @if (session('success'))
                 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-sm" role="alert">
                     <p class="font-bold">¡Éxito!</p>
@@ -39,7 +37,6 @@
                 </div>
             @endif
 
-            <!-- 1. Sección de Estadísticas -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8 border-t-4 border-[#284961]">
                 <h3 class="text-lg font-bold text-[#284961] mb-4 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,10 +81,8 @@
                 </div>
             </div>
 
-            <!-- 2. Gestión de Tablas Auxiliares (Livewire CRUDs) -->
             @livewire('admin.dashboard')
 
-            <!-- 3. Acciones del Sistema (Mantenimiento) -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-8 border-t-4 border-[#B35F12]">
                 <h3 class="text-lg font-bold text-[#B35F12] mb-6 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -99,10 +94,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <!-- Grupo: Mantenimiento -->
                     <div class="col-span-full mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Mantenimiento del Servidor</div>
 
-                    <!-- Limpiar Caché -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="clear-cache">
@@ -115,7 +108,6 @@
                         </button>
                     </form>
 
-                    <!-- Optimizar -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="optimize">
@@ -128,7 +120,6 @@
                         </button>
                     </form>
 
-                    <!-- Ejecutar Cola -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="queue-work">
@@ -141,10 +132,8 @@
                         </button>
                     </form>
 
-                    <!-- Grupo: Datos -->
                     <div class="col-span-full mt-4 mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Gestión de Datos</div>
 
-                    <!-- Revisar Alquileres -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="check-rentals">
@@ -157,7 +146,6 @@
                         </button>
                     </form>
 
-                    <!-- Limpiar Imágenes -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-images">
@@ -170,7 +158,6 @@
                         </button>
                     </form>
 
-                    <!-- Limpiar Ofertas -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-offers">
@@ -183,7 +170,6 @@
                         </button>
                     </form>
 
-                    <!-- Auditar Precios -->
                     <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="audit-prices">
@@ -205,7 +191,6 @@
             const forms = document.querySelectorAll('.admin-action-form');
             const overlay = document.getElementById('loading-overlay');
 
-            // Mostrar overlay en submit de formularios normales
             forms.forEach(form => {
                 form.addEventListener('submit', function () {
                     overlay.classList.remove('hidden');
@@ -213,7 +198,6 @@
                 });
             });
 
-            // Mostrar overlay en acciones de Livewire
             if (typeof Livewire !== 'undefined') {
                 Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
                     overlay.classList.remove('hidden');

@@ -8,7 +8,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <!-- Info Vendedor -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mb-6 border border-custom-border">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 h-20 w-20">
@@ -50,14 +49,12 @@
                 </div>
             </div>
 
-            <!-- Coches del Vendedor -->
             <h3 class="text-lg font-medium text-[#284961] mb-4 px-2">{{ __('Cars for Sale/Rent by this Seller') }}</h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @forelse ($cars as $car)
                     <div class="bg-white p-4 text-center rounded shadow hover:shadow-xl transform hover:scale-105 transition relative flex flex-col h-full border border-custom-border">
 
-                        <!-- Imagen -->
                         <div class="relative mb-4 w-full aspect-square overflow-hidden rounded">
                             <a href="{{ route('cars.show', $car) }}" class="block h-full w-full">
                                 @if($car->image)
@@ -71,7 +68,6 @@
                                 @endif
                             </a>
 
-                            <!-- Badge Estado -->
                             <div class="absolute top-2 right-2">
                                 @if($car->id_estado == 1)
                                     <span class="bg-[#284961] text-white text-xs font-bold px-2 py-1 rounded shadow">
@@ -85,7 +81,6 @@
                             </div>
                         </div>
 
-                        <!-- Contenido -->
                         <h3 class="font-bold text-lg mb-1 truncate text-gray-900" title="{{ $car->title }}">{{ $car->title }}</h3>
                         <p class="text-[#4C86B3] font-semibold text-xl mb-2">{{ number_format($car->precio, 0) }}€</p>
 

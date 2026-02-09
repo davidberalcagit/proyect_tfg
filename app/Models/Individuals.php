@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Individuals extends Model
 {
-    use HasFactory; // Missing HasFactory trait
+    use HasFactory;
 
     protected $fillable = [
         'id_cliente',

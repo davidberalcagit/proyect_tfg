@@ -65,8 +65,6 @@ test('email with pdf is sent to buyer and seller when offer is accepted', functi
 
     $this->actingAs($sellerUser)->post(route('offers.accept', $offer));
 
-    // OfferAccepted es ShouldQueue, pero Mail::fake a veces lo captura como sent si se usa Mail::to()->send()
-    // Probamos assertSent primero
     Mail::assertSent(OfferAccepted::class, function ($mail) use ($buyerUser) {
         return $mail->hasTo($buyerUser->email);
     });

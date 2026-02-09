@@ -10,10 +10,8 @@ class ListingTypesSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1: Venta
         ListingType::firstOrCreate(['id' => 1], ['nombre' => 'Venta']);
 
-        // 2: Alquiler
         ListingType::firstOrCreate(['id' => 2], ['nombre' => 'Alquiler']);
     }
 }

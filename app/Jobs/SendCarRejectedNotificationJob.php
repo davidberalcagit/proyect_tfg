@@ -28,8 +28,6 @@ class SendCarRejectedNotificationJob implements ShouldQueue
     public function handle(): void
     {
         Log::info("Iniciando Job de Rechazo para coche: {$this->car->id}");
-
-        // Cargar relación si no está cargada
         $this->car->load('vendedor.user');
 
         $user = $this->car->vendedor->user ?? null;

@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_vehiculo')->constrained('cars')->onDelete('cascade');
             $table->foreignId('id_comprador')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('id_vendedor')->constrained('customers')->onDelete('cascade'); // Added id_vendedor
-            $table->decimal('cantidad', 10, 2); // El precio ofertado (normalmente el precio del coche)
-            $table->string('estado')->default('pending'); // pending, accepted, rejected
+            $table->foreignId('id_vendedor')->constrained('customers')->onDelete('cascade');
+            $table->decimal('cantidad', 10, 2);
+            $table->string('estado')->default('pending');
             $table->timestamps();
         });
     }

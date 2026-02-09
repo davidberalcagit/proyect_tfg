@@ -16,12 +16,12 @@ beforeEach(function () {
 test('cars index view renders correctly', function () {
     $car = Cars::factory()->create(['title' => 'Coche Visible', 'id_estado' => 1]);
 
-    // Test the Livewire component directly to ensure it renders the car
+
     Livewire::test(CarFilter::class)
         ->set('search', 'Coche Visible')
         ->assertSee('Coche Visible');
 
-    // Test the page loads and contains the Livewire component
+
     $response = $this->get(route('cars.index'));
     $response->assertStatus(200);
     $response->assertSeeLivewire('car-filter');
@@ -65,19 +65,19 @@ test('car show view shows rent button for rental cars', function () {
     $user->assignRole('individual');
     Customers::factory()->create(['id_usuario' => $user->id]);
 
-    // Ensure listing type is Rent (2) and status is Available for Rent (3)
+
     $rentType = ListingType::where('nombre', 'Alquiler')->first();
     if (!$rentType) $rentType = ListingType::factory()->create(['id' => 2, 'nombre' => 'Alquiler']);
 
     $car = Cars::factory()->create([
-        'id_estado' => 3, // En Alquiler
+        'id_estado' => 3,
         'id_listing_type' => $rentType->id
     ]);
 
     $response = $this->actingAs($user)->get(route('cars.show', $car));
 
     $response->assertStatus(200);
-    // The text might be translated or different case
+
     $response->assertSee(__('Rent Car'));
 });
 

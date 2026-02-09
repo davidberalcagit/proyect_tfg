@@ -18,18 +18,13 @@ use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
-        // Usar singleton en lugar de instance para asegurar que se resuelva correctamente
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);

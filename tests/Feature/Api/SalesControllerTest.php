@@ -14,7 +14,6 @@ beforeEach(function () {
     $this->buyerUser = User::factory()->create();
     $this->buyer = Customers::factory()->create(['id_usuario' => $this->buyerUser->id]);
 
-    // Ensure car is 'En Venta' (id_estado = 1)
     $this->car = Cars::factory()->create([
         'id_vendedor' => $this->seller->id,
         'id_estado' => 1
@@ -27,7 +26,6 @@ test('api sales index returns user sales', function () {
     Sales::factory()->create(['id_vendedor' => $this->seller->id]);
     Sales::factory()->create(['id_comprador' => $this->seller->id]);
 
-    // Create unrelated sale with distinct users
     $otherUser = User::factory()->create();
     $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
     $otherSellerUser = User::factory()->create();
@@ -69,7 +67,6 @@ test('api sales store creates sale', function () {
 });
 
 test('api sales store forbids selling not owned car', function () {
-    // Ensure other car belongs to someone else
     $otherUser = User::factory()->create();
     $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
     $otherCar = Cars::factory()->create([

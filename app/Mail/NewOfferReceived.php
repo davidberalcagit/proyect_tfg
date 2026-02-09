@@ -13,18 +13,10 @@ use Illuminate\Queue\SerializesModels;
 class NewOfferReceived extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(public Offer $offer)
+        public function __construct(public Offer $offer)
     {
-        //
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -32,9 +24,6 @@ class NewOfferReceived extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(

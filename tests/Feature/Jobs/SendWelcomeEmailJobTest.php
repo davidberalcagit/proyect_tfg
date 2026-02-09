@@ -17,7 +17,6 @@ test('send welcome email job sends email', function () {
     $job = new SendWelcomeEmailJob($user);
     $job->handle();
 
-    // Since WelcomeEmail implements ShouldQueue, it might be queued
     if (in_array(\Illuminate\Contracts\Queue\ShouldQueue::class, class_implements(WelcomeEmail::class))) {
         Mail::assertQueued(WelcomeEmail::class, function ($mail) use ($user) {
             return $mail->hasTo($user->email);
