@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\SalesController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,11 +27,17 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
-
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/privacy-policy', function () {
+    return view('policy');
+})->name('policy.show');
+
+Route::get('/terms-of-service', function () {
+    return view('terms');
+})->name('terms.show');
 
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {

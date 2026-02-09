@@ -106,7 +106,7 @@
                     <p class="mb-4">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
                     <div class="space-x-6">
                         <a href="{{ route('contact') }}" class="hover:text-white transition">{{ __('Contact') }}</a>
-                        <a href="#" class="hover:text-white transition">{{ __('Privacy Policy') }}</a>
+                        <a href="{{ route('policy.show') }}" class="hover:text-white transition">{{ __('Privacy Policy') }}</a>
                     </div>
                 </div>
             </footer>

@@ -24,12 +24,19 @@
                         <div class="bg-white p-2 sm:p-4 text-center rounded shadow hover:shadow-xl transition relative flex flex-col h-full border border-custom-border group">
                             <a href="{{ route('cars.show', $car) }}" class="absolute inset-0 z-10"></a>
 
+                            <!-- Imagen con Zoom -->
                             <div class="relative mb-2 sm:mb-4 w-full aspect-square overflow-hidden rounded bg-gray-100">
                                 @if($car->image)
                                     <img src="{{ Str::startsWith($car->image, 'http') ? $car->image : Storage::url($car->image) }}"
                                          alt="{{ $car->title }}"
                                          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                         onerror="this.onerror=null; this.src='{{ asset('storage/images/hero-car.jpg') }}'; this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><svg xmlns=\'http://www.w3.org/2000/svg\' class=\'h-12 w-12\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\' /></svg></div>'">
+                                         onerror="this.style.display='none'; document.getElementById('fallback-fav-{{ $car->id }}').classList.remove('hidden');">
+
+                                    <div id="fallback-fav-{{ $car->id }}" class="hidden bg-gray-200 h-full w-full flex items-center justify-center text-gray-400 absolute inset-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
                                 @else
                                     <div class="bg-gray-200 h-full w-full flex items-center justify-center text-gray-400">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-12 sm:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -38,6 +45,7 @@
                                     </div>
                                 @endif
 
+                                <!-- Etiqueta Venta/Alquiler -->
                                 <div class="absolute top-2 left-2 z-20">
                                     @if($car->id_listing_type == 2)
                                         <span class="bg-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded shadow">
@@ -50,6 +58,7 @@
                                     @endif
                                 </div>
 
+                                <!-- Componente ToggleFavorite (Botón Me Gusta) -->
                                 <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 z-20">
                                     @livewire('toggle-favorite', ['car' => $car], key('fav-'.$car->id))
                                 </div>
@@ -58,6 +67,7 @@
                             <h3 class="font-bold text-sm sm:text-lg mb-1 truncate text-gray-900 relative z-10 pointer-events-none" title="{{ $car->title }}">{{ $car->title }}</h3>
                             <p class="text-[#4C86B3] font-semibold text-base sm:text-xl mb-2 sm:mb-3 relative z-10 pointer-events-none">{{ number_format($car->precio, 0) }}€</p>
 
+                            <!-- Detalles Extra Simplificados -->
                             <div class="text-[10px] sm:text-xs text-gray-500 mb-2 sm:mb-4 flex flex-wrap justify-center items-center gap-1 sm:gap-2 relative z-10 pointer-events-none">
                                 <span class="bg-gray-100 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded">{{ $car->anyo_matri }}</span>
                                 <span class="hidden sm:inline">|</span>

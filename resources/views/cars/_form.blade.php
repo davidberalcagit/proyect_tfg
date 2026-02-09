@@ -102,7 +102,7 @@
         @endphp
         <x-label for="price" value="{{ $priceLabel }}" />
         <x-input type="number" step="0.01" name="precio" id="price" class="mt-1 block w-full" value="{{ old('precio', $car->precio) }}" />
-        <p class="text-xs text-gray-500 mt-1">{{ __('Note:The total price may increase due to VAT and fees.') }}</p>
+        <p class="text-xs text-gray-500 mt-1">{{ __('Note:The total price may increase due to VAT.') }}</p>
     </div>
 
     <div>

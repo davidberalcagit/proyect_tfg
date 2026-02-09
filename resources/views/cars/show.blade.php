@@ -16,17 +16,42 @@
                                 <img src="{{ Str::startsWith($car->image, 'http') ? $car->image : Storage::url($car->image) }}"
                                      alt="{{ $car->title }}"
                                      class="w-full h-auto rounded-lg shadow-md object-cover aspect-video lg:aspect-auto"
-                                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg\'><span class=\'text-gray-500\'>{{ __('Image Not Found') }}</span></div>'">
+                                     onerror="this.style.display='none'; document.getElementById('fallback-image-{{ $car->id }}').classList.remove('hidden');">
+
+                                <div id="fallback-image-{{ $car->id }}" class="hidden bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg shadow-md">
+                                    <span class="text-gray-500 flex flex-col items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        {{ __('Image Not Found') }}
+                                    </span>
+                                </div>
                             @else
-                                <div class="bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg">
-                                    <span class="text-gray-500">{{ __('No Image') }}</span>
+                                <div class="bg-gray-200 w-full h-64 flex items-center justify-center rounded-lg shadow-md">
+                                    <span class="text-gray-500 flex flex-col items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        {{ __('No Image') }}
+                                    </span>
                                 </div>
                             @endif
-
+                            <div class="absolute top-2 left-2 z-20">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold shadow-sm
+                                    @if($car->id_estado == 1) bg-green-600 text-white
+                                    @elseif($car->id_estado == 2) bg-gray-600 text-white
+                                    @elseif($car->id_estado == 3) bg-blue-600 text-white
+                                    @elseif($car->id_estado == 4) bg-orange-500 text-white
+                                    @elseif($car->id_estado == 5) bg-red-600 text-white
+                                    @elseif($car->id_estado == 6) bg-indigo-600 text-white
+                                    @else bg-gray-600 text-white @endif">
+                                    {{ $car->status->nombre ?? 'Unknown' }}
+                                </span>
+                            </div>
 
                             @auth
                                 @if(!Auth::user()->customer || Auth::user()->customer->id !== $car->id_vendedor)
-                                    <div class="absolute top-2 right-2 z-10">
+                                    <div class="absolute top-2 right-2 z-20">
                                         <livewire:toggle-favorite :car="$car" />
                                     </div>
                                 @endif
