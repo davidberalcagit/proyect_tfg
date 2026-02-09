@@ -36,4 +36,9 @@ class CarRejected extends Mailable implements ShouldQueue
             view: 'emails.cars.rejected',
         );
     }
+
+    public function attachments(): array
+    {
+        return [];
+    }
 }

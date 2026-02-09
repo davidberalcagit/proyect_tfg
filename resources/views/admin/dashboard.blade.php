@@ -115,7 +115,7 @@
                             <h4 class="font-bold text-gray-800">Optimizar Sistema</h4>
                             <p class="text-sm text-gray-600 mt-1">Reconstruye la caché y optimiza la carga de clases y rutas.</p>
                         </div>
-                        <button type="submit" class="w-full bg-[#B35F12] hover:bg-[#9A5210]] text-white font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
@@ -141,7 +141,7 @@
                             <h4 class="font-bold text-gray-800">Revisar Alquileres</h4>
                             <p class="text-sm text-gray-600 mt-1">Verifica estados de alquileres y actualiza disponibilidades.</p>
                         </div>
-                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344]] text-white  font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344] text-white  font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
@@ -153,7 +153,7 @@
                             <h4 class="font-bold text-gray-800">Limpiar Imágenes</h4>
                             <p class="text-sm text-gray-600 mt-1">Elimina imágenes huérfanas que no están asociadas a ningún coche.</p>
                         </div>
-                        <button type="submit" class="w-full bg-white border border-red-500 text-red-600 hover:bg-red-50 font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-red-700 text-white hover:bg-red-800 font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
@@ -165,7 +165,7 @@
                             <h4 class="font-bold text-gray-800">Limpiar Ofertas</h4>
                             <p class="text-sm text-gray-600 mt-1">Borra ofertas rechazadas antiguas para liberar espacio.</p>
                         </div>
-                        <button type="submit" class="w-full bg-white border border-orange-500 text-orange-600 hover:bg-orange-50 font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full  bg-[#B35F12] hover:bg-[#9A5210] text-white  font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
@@ -177,7 +177,7 @@
                             <h4 class="font-bold text-gray-800">Auditar Precios</h4>
                             <p class="text-sm text-gray-600 mt-1">Genera un reporte de precios anómalos o fuera de rango.</p>
                         </div>
-                        <button type="submit" class="w-full bg-white border border-[#284961] text-[#284961] hover:bg-gray-100 font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344]  text-white  font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>

@@ -34,4 +34,9 @@ class OfferRejected extends Mailable implements ShouldQueue
             view: 'emails.offers.rejected',
         );
     }
+
+    public function attachments(): array
+    {
+        return [];
+    }
 }
