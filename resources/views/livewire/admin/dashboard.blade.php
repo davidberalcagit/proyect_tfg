@@ -1,7 +1,7 @@
 <div>
     <!-- Gestión de Tablas Auxiliares (Livewire CRUDs) -->
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg border-t-4 border-gray-400 mb-8">
-        <div class="border-b border-gray-200 bg-gray-100 overflow-x-auto">
+        <div class="border-b border-gray-200 bg-gray-100 ">
             <nav class="-mb-px flex min-w-max" aria-label="Tabs">
 
                 <!-- Botón Marcas -->

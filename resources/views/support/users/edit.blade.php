@@ -14,9 +14,9 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 gap-6">
-                        <!-- Nombre -->
+                        <!-- Nombre Usuario -->
                         <div>
-                            <x-label for="name" value="{{ __('Name') }}" />
+                            <x-label for="name" value="{{ __('Username') }}" />
                             <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required autofocus />
                             <x-input-error for="name" class="mt-2" />
                         </div>
@@ -40,6 +40,44 @@
                             </x-select>
                             <x-input-error for="role" class="mt-2" />
                         </div>
+
+                        <!-- Datos del Cliente -->
+                        @if($user->customer)
+                            <div class="border-t border-gray-200 pt-4 mt-2">
+                                <h3 class="text-sm font-medium text-gray-900 mb-2">{{ __('Customer Details') }}</h3>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Nombre de Contacto -->
+                                    <div class="md:col-span-2">
+                                        <x-label for="nombre_contacto" value="{{ __('Contact Name') }}" />
+                                        <x-input id="nombre_contacto" class="block mt-1 w-full" type="text" name="nombre_contacto" :value="old('nombre_contacto', $user->customer->nombre_contacto)" />
+                                        <x-input-error for="nombre_contacto" class="mt-2" />
+                                    </div>
+
+                                    <div>
+                                        <x-label for="telefono" value="{{ __('Phone') }}" />
+                                        <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono', $user->customer->telefono)" />
+                                        <x-input-error for="telefono" class="mt-2" />
+                                    </div>
+
+                                    @if($user->customer->individual)
+                                        <div>
+                                            <x-label for="dni" value="{{ __('DNI') }}" />
+                                            <x-input id="dni" class="block mt-1 w-full" type="text" name="dni" :value="old('dni', $user->customer->individual->dni)" />
+                                            <x-input-error for="dni" class="mt-2" />
+                                        </div>
+                                    @endif
+
+                                    @if($user->customer->dealership)
+                                        <div>
+                                            <x-label for="nif" value="{{ __('NIF') }}" />
+                                            <x-input id="nif" class="block mt-1 w-full" type="text" name="nif" :value="old('nif', $user->customer->dealership->nif)" />
+                                            <x-input-error for="nif" class="mt-2" />
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
 
                         <!-- Password (Opcional) -->
                         <div class="border-t border-gray-200 pt-4 mt-2">

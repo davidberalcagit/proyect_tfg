@@ -66,17 +66,17 @@
                     {{-- Grid Responsivo Completo --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10 2xl:gap-16">
 
-                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-100 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50">
+                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50">
                             <div class="text-[#B35F12] mb-6 2xl:mb-8">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 2xl:h-20 2xl:w-20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948.684L10.5 4l-2 3m0 0l-2 3m2-3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 2xl:h-20 2xl:w-20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </div>
                             <h3 class="text-xl sm:text-2xl 2xl:text-3xl font-semibold text-[#284961] mb-4">{{ __('Wide Selection') }}</h3>
                             <p class="text-gray-600 leading-relaxed text-base 2xl:text-xl">{{ __('Discover thousands of vehicles from various brands and models tailored to your needs.') }}</p>
                         </div>
 
-                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-100 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50">
+                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50">
                             <div class="text-[#B35F12] mb-6 2xl:mb-8">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 2xl:h-20 2xl:w-20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -86,12 +86,12 @@
                             <p class="text-gray-600 leading-relaxed text-base 2xl:text-xl">{{ __('Compare and find the most competitive prices in the market with transparent deals.') }}</p>
                         </div>
 
-                        {{-- En MD (2 columnas), este ocupa el ancho completo o se centra --}}
-                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-100 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50 md:col-span-2 lg:col-span-1">
+                        <div class="p-8 2xl:p-12 shadow-lg rounded-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 bg-gray-50 md:col-span-2 lg:col-span-1">
                             <div class="text-[#B35F12] mb-6 2xl:mb-8">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 2xl:h-20 2xl:w-20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h2a2 2 0 002-2V9.66a1 1 0 00-.325-.75L15.375 4.21a2 2 0 00-1.5-.71H9.125a2 2 0 00-1.5.71L3.325 8.91a1 1 0 00-.325.75V18a2 2 0 002 2h2M7 10v4h10v-4M7 10a2 2 0 012-2h6a2 2 0 012 2M7 10h10" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12 w-12 sm:h-16 sm:w-16 2xl:h-20 2xl:w-20 mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                                 </svg>
+
                             </div>
                             <h3 class="text-xl sm:text-2xl 2xl:text-3xl font-semibold text-[#284961] mb-4">{{ __('Easy Process') }}</h3>
                             <p class="text-gray-600 leading-relaxed text-base 2xl:text-xl">{{ __('Simple and secure steps to buy or sell your vehicle without the hassle.') }}</p>
@@ -120,7 +120,6 @@
                 <div class="max-w-7xl 2xl:max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm 2xl:text-lg">
                     <p class="mb-4">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
                     <div class="space-x-6">
-                        <a href="{{ route('about') }}" class="hover:text-white transition">{{ __('About Us') }}</a>
                         <a href="{{ route('contact') }}" class="hover:text-white transition">{{ __('Contact') }}</a>
                         <a href="#" class="hover:text-white transition">{{ __('Privacy Policy') }}</a>
                     </div>

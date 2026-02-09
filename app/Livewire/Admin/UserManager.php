@@ -13,15 +13,26 @@ class UserManager extends Component
     protected $paginationTheme = 'tailwind';
 
     public $search = '';
+    public $sortField = 'id';
+    public $sortDirection = 'asc';
 
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function delete($id)
     {
-        // Evitar borrarse a sí mismo
         if ($id === auth()->id()) {
             session()->flash('error', 'No puedes eliminar tu propia cuenta.');
             return;
@@ -33,13 +44,37 @@ class UserManager extends Component
 
     public function render()
     {
-        $users = User::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('email', 'like', '%' . $this->search . '%')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $query = User::query()
+            ->with('customer') // Cargar relación para mostrar nombre vendedor
+            ->select('users.*'); // Asegurar que seleccionamos campos de users para evitar conflictos de ID
+
+        // Búsqueda
+        if ($this->search) {
+            $query->where(function($q) {
+                $q->where('users.name', 'like', '%' . $this->search . '%')
+                  ->orWhere('users.email', 'like', '%' . $this->search . '%')
+                  ->orWhereHas('customer', function($q2) {
+                      $q2->where('nombre_contacto', 'like', '%' . $this->search . '%');
+                  });
+            });
+        }
+
+        // Ordenación
+        if ($this->sortField === 'seller_name') {
+            // Ordenar por nombre de contacto del cliente
+            $query->leftJoin('customers', 'users.id', '=', 'customers.id_usuario')
+                  ->orderBy('customers.nombre_contacto', $this->sortDirection);
+        } else {
+            // Ordenar por columnas de la tabla users
+            $query->orderBy($this->sortField, $this->sortDirection);
+        }
+
+        $users = $query->paginate(10);
 
         return view('livewire.admin.user-manager', [
-            'users' => $users
+            'users' => $users,
+            'sortField' => $this->sortField,
+            'sortDirection' => $this->sortDirection,
         ]);
     }
 }

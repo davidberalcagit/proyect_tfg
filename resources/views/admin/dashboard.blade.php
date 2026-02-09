@@ -5,6 +5,17 @@
         </h2>
     </x-slot>
 
+    <!-- Overlay de Carga Global (Funciona para Forms y Livewire) -->
+    <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center cursor-wait" wire:loading.class.remove="hidden" wire:target>
+        <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
+            <svg class="animate-spin h-10 w-10 text-[#B35F12] mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-gray-700 font-semibold">{{ __('Processing...') }}</span>
+        </div>
+    </div>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -92,7 +103,7 @@
                     <div class="col-span-full mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Mantenimiento del Servidor</div>
 
                     <!-- Limpiar Caché -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="clear-cache">
                         <div class="mb-4">
@@ -105,27 +116,27 @@
                     </form>
 
                     <!-- Optimizar -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="optimize">
                         <div class="mb-4">
                             <h4 class="font-bold text-gray-800">Optimizar Sistema</h4>
                             <p class="text-sm text-gray-600 mt-1">Reconstruye la caché y optimiza la carga de clases y rutas.</p>
                         </div>
-                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344] text-white font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#B35F12] hover:bg-[#9A5210]] text-white font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
 
                     <!-- Ejecutar Cola -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="queue-work">
                         <div class="mb-4">
                             <h4 class="font-bold text-gray-800">Procesar Cola</h4>
                             <p class="text-sm text-gray-600 mt-1">Ejecuta trabajos pendientes en la cola (emails, procesos en segundo plano).</p>
                         </div>
-                        <button type="submit" class="w-full bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344] text-white font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
@@ -134,20 +145,20 @@
                     <div class="col-span-full mt-4 mb-2 border-b pb-2 text-gray-500 font-semibold text-sm uppercase tracking-wider">Gestión de Datos</div>
 
                     <!-- Revisar Alquileres -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="check-rentals">
                         <div class="mb-4">
                             <h4 class="font-bold text-gray-800">Revisar Alquileres</h4>
                             <p class="text-sm text-gray-600 mt-1">Verifica estados de alquileres y actualiza disponibilidades.</p>
                         </div>
-                        <button type="submit" class="w-full bg-white border border-[#284961] text-[#284961] hover:bg-gray-100 font-bold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" class="w-full bg-[#284961] hover:bg-[#1c3344]] text-white  font-bold py-2 px-4 rounded transition text-sm">
                             Ejecutar
                         </button>
                     </form>
 
                     <!-- Limpiar Imágenes -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-images">
                         <div class="mb-4">
@@ -160,7 +171,7 @@
                     </form>
 
                     <!-- Limpiar Ofertas -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="cleanup-offers">
                         <div class="mb-4">
@@ -173,7 +184,7 @@
                     </form>
 
                     <!-- Auditar Precios -->
-                    <form action="{{ route('admin.run-job') }}" method="POST" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
+                    <form action="{{ route('admin.run-job') }}" method="POST" class="admin-action-form bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition flex flex-col justify-between">
                         @csrf
                         <input type="hidden" name="job" value="audit-prices">
                         <div class="mb-4">
@@ -188,4 +199,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('.admin-action-form');
+            const overlay = document.getElementById('loading-overlay');
+
+            // Mostrar overlay en submit de formularios normales
+            forms.forEach(form => {
+                form.addEventListener('submit', function () {
+                    overlay.classList.remove('hidden');
+                    document.body.classList.add('cursor-wait');
+                });
+            });
+
+            // Mostrar overlay en acciones de Livewire
+            if (typeof Livewire !== 'undefined') {
+                Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+                    overlay.classList.remove('hidden');
+                    document.body.classList.add('cursor-wait');
+
+                    succeed(() => {
+                        overlay.classList.add('hidden');
+                        document.body.classList.remove('cursor-wait');
+                    });
+
+                    fail(() => {
+                        overlay.classList.add('hidden');
+                        document.body.classList.remove('cursor-wait');
+                    });
+                });
+            }
+        });
+    </script>
 </x-app-layout>

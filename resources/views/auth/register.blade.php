@@ -10,132 +10,141 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Name') }}" />
+                <x-label for="name" value="{{ __('Username') }}" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
-              <div class="mt-4">
-        <x-label for="type" value="Account type" />
-        <select
-            id="type"
-            name="type"
-            class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
-            required
-        >
-            <option value="" disabled selected>Select</option>
-            <option value="individual" {{ old('type') === 'individual' ? 'selected' : '' }}>
-                Individual
-            </option>
-            <option value="dealership" {{ old('type') === 'dealership' ? 'selected' : '' }}>
-                Dealership
-            </option>
-        </select>
-        {{-- Hidden input for id_entidad --}}
-        <input type="hidden" name="id_entidad" id="id_entidad" value="{{ old('id_entidad') }}">
-    </div>
-        <div id="individual_fields" class="hidden">
-        <div class="mt-4">
-            <x-label for="dni" value="DNI" />
-            <x-input
-                id="dni"
-                class="block mt-1 w-full"
-                type="text"
-                name="dni"
-                :value="old('dni')"
-            />
-        </div>
-          <div class="mt-4">
-<x-label for="fecha_nacimiento" value="Date of birth" />
-            <x-input
-                id="fecha_nacimiento"
-                class="block mt-1 w-full"
-                type="date"
-                name="fecha_nacimiento"
-                :value="old('fecha_nacimiento')"
-            />
-        </div>
-    </div>
-           <div id="company_fields" class="hidden">
-        <div class="mt-4">
-            <x-label for="nombre_empresa" value="Company name" />
-            <x-input
-                id="nombre_empresa"
-                class="block mt-1 w-full"
-                type="text"
-                name="nombre_empresa"
-                :value="old('nombre_empresa')"
-            />
-        </div>
+            <div class="mt-4">
+                <x-label for="contact_name" value="{{ __('Contact Name') }}" />
+                <x-input id="contact_name" class="block mt-1 w-full" type="text" name="contact_name" :value="old('contact_name')" required />
+            </div>
 
-        <div class="mt-4">
-            <x-label for="nif" value="VAT number" />
-            <x-input
-                id="nif"
-                class="block mt-1 w-full"
-                type="text"
-                name="nif"
-                :value="old('nif')"
-            />
-        </div>
+            <div class="mt-4">
+                <x-label for="type" value="{{ __('Account type') }}" />
+                <select
+                    id="type"
+                    name="type"
+                    class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                    required
+                >
+                    <option value="" disabled selected>{{ __('Select') }}</option>
+                    <option value="individual" {{ old('type') === 'individual' ? 'selected' : '' }}>
+                        {{ __('Individual') }}
+                    </option>
+                    <option value="dealership" {{ old('type') === 'dealership' ? 'selected' : '' }}>
+                        {{ __('Dealership') }}
+                    </option>
+                </select>
+                {{-- Hidden input for id_entidad --}}
+                <input type="hidden" name="id_entidad" id="id_entidad" value="{{ old('id_entidad') }}">
+            </div>
 
-        <div class="mt-4">
-            <x-label for="direccion" value="Address" />
-            <x-input
-                id="direccion"
-                class="block mt-1 w-full"
-                type="text"
-                name="direccion"
-                :value="old('direccion')"
-            />
-        </div>
-    </div>
-        <div class="mt-4">
-        <x-label for="telefono" value="Phone number" />
-        <x-input
-            id="telefono"
-            class="block mt-1 w-full"
-            type="text"
-            name="telefono"
-            :value="old('telefono')"
-            required
-        />
-    </div>
-     <div class="mt-4">
-        <x-label for="email" value="Email" />
-        <x-input
-            id="email"
-            class="block mt-1 w-full"
-            type="email"
-            name="email"
-            :value="old('email')"
-            required
-            autocomplete="username"
-        />
-    </div>
+            <div id="individual_fields" class="hidden">
+                <div class="mt-4">
+                    <x-label for="dni" value="{{ __('DNI') }}" />
+                    <x-input
+                        id="dni"
+                        class="block mt-1 w-full"
+                        type="text"
+                        name="dni"
+                        :value="old('dni')"
+                    />
+                </div>
+                <div class="mt-4">
+                    <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
+                    <x-input
+                        id="fecha_nacimiento"
+                        class="block mt-1 w-full"
+                        type="date"
+                        name="fecha_nacimiento"
+                        :value="old('fecha_nacimiento')"
+                    />
+                </div>
+            </div>
 
-       <div class="mt-4">
-        <x-label for="password" value="Password" />
-        <x-input
-            id="password"
-            class="block mt-1 w-full"
-            type="password"
-            name="password"
-            required
-            autocomplete="new-password"
-        />
-    </div>
+            <div id="company_fields" class="hidden">
+                <div class="mt-4">
+                    <x-label for="nombre_empresa" value="{{ __('Company name') }}" />
+                    <x-input
+                        id="nombre_empresa"
+                        class="block mt-1 w-full"
+                        type="text"
+                        name="nombre_empresa"
+                        :value="old('nombre_empresa')"
+                    />
+                </div>
 
-          <div class="mt-4">
-        <x-label for="password_confirmation" value="Confirm password" />
-        <x-input
-            id="password_confirmation"
-            class="block mt-1 w-full"
-            type="password"
-            name="password_confirmation"
-            required
-            autocomplete="new-password"
-        />
-    </div>
+                <div class="mt-4">
+                    <x-label for="nif" value="{{ __('VAT number') }}" />
+                    <x-input
+                        id="nif"
+                        class="block mt-1 w-full"
+                        type="text"
+                        name="nif"
+                        :value="old('nif')"
+                    />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="direccion" value="{{ __('Address') }}" />
+                    <x-input
+                        id="direccion"
+                        class="block mt-1 w-full"
+                        type="text"
+                        name="direccion"
+                        :value="old('direccion')"
+                    />
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <x-label for="telefono" value="{{ __('Phone number') }}" />
+                <x-input
+                    id="telefono"
+                    class="block mt-1 w-full"
+                    type="text"
+                    name="telefono"
+                    :value="old('telefono')"
+                    required
+                />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input
+                    id="email"
+                    class="block mt-1 w-full"
+                    type="email"
+                    name="email"
+                    :value="old('email')"
+                    required
+                    autocomplete="username"
+                />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input
+                    id="password"
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password_confirmation" value="{{ __('Confirm password') }}" />
+                <x-input
+                    id="password_confirmation"
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="password_confirmation"
+                    required
+                    autocomplete="new-password"
+                />
+            </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
@@ -162,6 +171,11 @@
                 <x-button class="ms-4">
                     {{ __('Register') }}
                 </x-button>
+            </div>
+            <div class="mt-6 flex justify-center space-x-4 text-sm text-gray-500">
+                <a href="{{ route('lang.switch', 'en') }}" class="hover:text-gray-900 {{ App::getLocale() == 'en' ? 'font-bold text-indigo-600' : '' }}">English</a>
+                <span>|</span>
+                <a href="{{ route('lang.switch', 'es') }}" class="hover:text-gray-900 {{ App::getLocale() == 'es' ? 'font-bold text-indigo-600' : '' }}">Español</a>
             </div>
         </form>
         <script>

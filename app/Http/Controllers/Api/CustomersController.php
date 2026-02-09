@@ -21,6 +21,7 @@ class CustomersController extends Controller
      *
      * Obtiene una lista paginada de todos los perfiles de clientes.
      *
+     * @authenticated
      * @response {
      *  "data": [
      *    {
@@ -100,6 +101,7 @@ class CustomersController extends Controller
      *
      * Muestra la información pública de un cliente (vendedor).
      *
+     * @authenticated
      * @urlParam id int required El ID del cliente. Example: 1
      *
      * @response {

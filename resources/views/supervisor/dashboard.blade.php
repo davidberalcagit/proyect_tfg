@@ -42,11 +42,11 @@
             </div>
 
             <!-- Tabla de Coches Pendientes -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-8 overflow-visible">
                 <div class="p-6 border-b border-gray-200 bg-orange-50">
                     <h3 class="text-lg font-medium text-orange-800">Coches Pendientes de Aprobación</h3>
                 </div>
-                <div class="p-6">
+                <div class="p-6 overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -54,12 +54,13 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendedor</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marca/Modelo</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                <!-- Aumentado ancho mínimo de columna acciones -->
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($pendingCars as $car)
-                                <tr x-data="{ showRejectForm: false }">
+                                <tr x-data="{ showRejectForm: false }" class="relative">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a href="{{ route('cars.show', $car) }}" class="text-indigo-600 hover:text-indigo-900 font-medium">
                                             {{ $car->title }}
@@ -85,26 +86,31 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ number_format($car->precio, 2) }} €</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex justify-end space-x-2" x-show="!showRejectForm">
-                                            <form action="{{ route('supervisor.approve', $car->id) }}" method="POST">
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
+                                        <!-- Flex container con wrap para evitar desbordamiento -->
+                                        <div class="flex justify-end items-center gap-2 flex-wrap">
+                                            <form action="{{ route('supervisor.approve', $car->id) }}" method="POST" class="inline-block">
                                                 @csrf
-                                                <x-button class="bg-green-600 hover:bg-green-700 active:bg-green-900 border-green-600 focus:border-green-900 ring-green-300">
+                                                <x-button class="bg-green-600 hover:bg-green-700 active:bg-green-900 border-green-600 focus:border-green-900 ring-green-300 whitespace-nowrap">
                                                     Aprobar
                                                 </x-button>
                                             </form>
-                                            <x-danger-button @click="showRejectForm = true">
+                                            <x-danger-button @click="showRejectForm = !showRejectForm" class="whitespace-nowrap">
                                                 Rechazar
                                             </x-danger-button>
                                         </div>
 
-                                        <!-- Formulario de Rechazo -->
-                                        <div x-show="showRejectForm" class="mt-2 text-left bg-red-50 p-3 rounded-md border border-red-200" style="display: none;">
+                                        <!-- Formulario de Rechazo (Popover) -->
+                                        <div x-show="showRejectForm"
+                                             @click.away="showRejectForm = false"
+                                             class="absolute right-0 mt-2 w-72 bg-white p-4 rounded-lg shadow-xl border border-gray-200 z-50 text-left"
+                                             style="display: none;">
+                                            <h4 class="font-bold text-gray-700 mb-2">Rechazar Vehículo</h4>
                                             <form action="{{ route('supervisor.reject', $car->id) }}" method="POST">
                                                 @csrf
-                                                <div class="mb-2">
-                                                    <x-label for="reason" value="Razón del rechazo:" class="text-red-700" />
-                                                    <x-textarea name="reason" id="reason" class="block w-full text-xs mt-1" rows="2" required placeholder="Escribe la razón aquí..."></x-textarea>
+                                                <div class="mb-3">
+                                                    <x-label for="reason" value="Motivo:" class="text-xs" />
+                                                    <x-textarea name="reason" id="reason" class="block w-full text-xs mt-1" rows="3" required placeholder="Explica por qué se rechaza..."></x-textarea>
                                                 </div>
                                                 <div class="flex justify-end space-x-2">
                                                     <x-secondary-button @click="showRejectForm = false" type="button" class="text-xs px-2 py-1">

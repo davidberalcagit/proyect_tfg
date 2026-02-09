@@ -129,16 +129,6 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
-                </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
-                                <a href="#endpoints-GETapi-user">GET api/user</a>
-                            </li>
-                                                                        </ul>
-                            </ul>
                     <ul id="tocify-header-ofertas" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="ofertas">
                     <a href="#ofertas">Ofertas</a>
@@ -278,7 +268,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: January 29, 2026</li>
+        <li>Last updated: February 7, 2026</li>
     </ul>
 </div>
 
@@ -306,6 +296,7 @@ You can switch the language used with the tabs at the top right (or from the nav
                                 <h2 id="autenticacion-POSTapi-login">Iniciar Sesión</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Autentica a un usuario y devuelve un token de acceso.</p>
@@ -317,6 +308,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://proyect.test/api/login" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -332,6 +324,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -393,7 +386,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-login" data-method="POST"
       data-path="api/login"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -423,6 +416,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/login</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-login"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -756,6 +761,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="clientes-GETapi-customers">Listar Clientes</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene una lista paginada de todos los perfiles de clientes.</p>
@@ -767,6 +773,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/customers" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -777,6 +784,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -825,7 +833,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-customers" data-method="GET"
       data-path="api/customers"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -855,6 +863,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/customers</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-customers"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1117,6 +1137,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="clientes-GETapi-customers--id-">Ver Perfil Público</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Muestra la información pública de un cliente (vendedor).</p>
@@ -1128,6 +1149,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/customers/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1138,6 +1160,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1179,7 +1202,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-customers--id-" data-method="GET"
       data-path="api/customers/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1209,6 +1232,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/customers/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-customers--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1612,6 +1647,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                                 <h2 id="coches-GETapi-cars">Listar Coches Disponibles</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene una lista paginada de coches que están en estado &quot;En Venta&quot; (1).</p>
@@ -1623,6 +1659,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/cars?page=1&amp;search=Toyota" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1640,6 +1677,7 @@ Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1710,7 +1748,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-cars" data-method="GET"
       data-path="api/cars"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1740,6 +1778,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/cars</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-cars"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1794,6 +1844,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="coches-GETapi-cars--id-">Ver Detalle de Coche</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene los detalles completos de un coche específico.</p>
@@ -1805,6 +1856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/cars/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1815,6 +1867,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1878,7 +1931,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-cars--id-" data-method="GET"
       data-path="api/cars/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1908,6 +1961,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/cars/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-cars--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2129,7 +2194,7 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
     --form "temp_color=g"\
     --form "descripcion=Coche en perfecto estado..."\
     --form "id_listing_type=1"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php636C.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php35AE.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2444,7 +2509,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php636C.tmp</code></p>
+<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php35AE.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>id_listing_type</code></b>&nbsp;&nbsp;
@@ -2485,7 +2550,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "km=16"\
     --form "matricula=n"\
     --form "descripcion=architecto"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php63FA.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php3F15.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2771,7 +2836,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php63FA.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php3F15.tmp</code></p>
         </div>
         </form>
 
@@ -2927,137 +2992,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>El ID del coche. Example: <code>1</code></p>
             </div>
                     </form>
-
-                <h1 id="endpoints">Endpoints</h1>
-
-    
-
-                                <h2 id="endpoints-GETapi-user">GET api/user</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-user">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/user" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/user"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-user">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No autenticado.&quot;,
-    &quot;error&quot;: &quot;Unauthorized&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-user" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-user"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-user"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-user" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-user">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-user" data-method="GET"
-      data-path="api/user"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-user"
-                    onclick="tryItOut('GETapi-user');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-user"
-                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-user"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/user</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-user"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-user"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
 
                 <h1 id="ofertas">Ofertas</h1>
 
@@ -3934,6 +3868,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                                 <h2 id="tablas-auxiliares-GETapi-brands">Listar Marcas</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene todas las marcas de coches registradas.</p>
@@ -3945,6 +3880,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/brands" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -3955,6 +3891,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4001,7 +3938,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-brands" data-method="GET"
       data-path="api/brands"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4032,6 +3969,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-brands"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -4060,6 +4009,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-brands--id-">Ver Marca</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene los detalles de una marca.</p>
@@ -4071,6 +4021,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/brands/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4081,6 +4032,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4121,7 +4073,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-brands--id-" data-method="GET"
       data-path="api/brands/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4151,6 +4103,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/brands/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-brands--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4193,6 +4157,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-brands--id--models">Listar Modelos de una Marca</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene todos los modelos asociados a una marca específica.</p>
@@ -4204,6 +4169,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/brands/1/models" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4214,6 +4180,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4262,7 +4229,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-brands--id--models" data-method="GET"
       data-path="api/brands/{id}/models"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4292,6 +4259,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/brands/{id}/models</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-brands--id--models"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4334,6 +4313,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-car-models">Listar Modelos</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene todos los modelos de coches registrados.</p>
@@ -4345,6 +4325,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/car-models" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4355,6 +4336,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4401,7 +4383,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-car-models" data-method="GET"
       data-path="api/car-models"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4432,6 +4414,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -4460,6 +4454,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-car-models--id-">Ver Modelo</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene los detalles de un modelo.</p>
@@ -4471,6 +4466,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/car-models/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4481,6 +4477,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4518,7 +4515,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-car-models--id-" data-method="GET"
       data-path="api/car-models/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4548,6 +4545,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/car-models/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4590,6 +4599,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-fuels">Listar Combustibles</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Obtiene la lista de tipos de combustible disponibles.</p>
@@ -4601,6 +4611,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/fuels" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4611,6 +4622,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4657,7 +4669,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-fuels" data-method="GET"
       data-path="api/fuels"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4688,6 +4700,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -4716,6 +4740,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-fuels--id-">Ver Combustible</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4727,6 +4752,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/fuels/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4737,6 +4763,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4777,7 +4804,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-fuels--id-" data-method="GET"
       data-path="api/fuels/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4807,6 +4834,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/fuels/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4849,6 +4888,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-colors">Listar Colores</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4860,6 +4900,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/colors" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4870,6 +4911,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4912,7 +4954,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-colors" data-method="GET"
       data-path="api/colors"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4943,6 +4985,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -4971,6 +5025,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-colors--id-">Ver Color</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4982,6 +5037,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/colors/16" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4992,6 +5048,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5032,7 +5089,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-colors--id-" data-method="GET"
       data-path="api/colors/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5062,6 +5119,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/colors/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5104,6 +5173,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-gears">Listar Marchas</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5115,6 +5185,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/gears" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -5125,6 +5196,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5167,7 +5239,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-gears" data-method="GET"
       data-path="api/gears"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5198,6 +5270,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -5226,6 +5310,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="tablas-auxiliares-GETapi-gears--id-">Ver Marcha</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5237,6 +5322,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://proyect.test/api/gears/16" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -5247,6 +5333,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5287,7 +5374,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-gears--id-" data-method="GET"
       data-path="api/gears/{id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5317,6 +5404,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/gears/{id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -8301,7 +8400,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"precio\": 14000,
-    \"fecha\": \"2026-01-29T23:16:54\",
+    \"fecha\": \"2026-02-07T07:56:39\",
     \"metodo_pago\": \"n\",
     \"estado\": 2
 }"
@@ -8321,7 +8420,7 @@ const headers = {
 
 let body = {
     "precio": 14000,
-    "fecha": "2026-01-29T23:16:54",
+    "fecha": "2026-02-07T07:56:39",
     "metodo_pago": "n",
     "estado": 2
 };
@@ -8463,10 +8562,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha"                data-endpoint="PUTapi-sales--id-"
-               value="2026-01-29T23:16:54"
+               value="2026-02-07T07:56:39"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-01-29T23:16:54</code></p>
+<p>Must be a valid date. Example: <code>2026-02-07T07:56:39</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>metodo_pago</code></b>&nbsp;&nbsp;

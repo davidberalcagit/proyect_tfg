@@ -144,10 +144,11 @@ test('users create command', function () {
     // Test Individual
     $this->artisan('users:create')
         ->expectsQuestion('¿Qué tipo de usuario quieres crear?', 'individual')
-        ->expectsQuestion('Nombre completo', 'Test Individual')
+        ->expectsQuestion('Nombre completo (Usuario)', 'Test Individual')
         ->expectsQuestion('Correo electrónico', 'individual@example.com')
         ->expectsQuestion('Contraseña', 'password')
         ->expectsQuestion('Confirmar contraseña', 'password')
+        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', 'Test Contact') // Nueva pregunta
         ->expectsQuestion('Teléfono', '111222333')
         ->expectsQuestion('DNI', '12345678X')
         ->expectsQuestion('Fecha de Nacimiento (YYYY-MM-DD)', '1990-01-01')
@@ -156,15 +157,16 @@ test('users create command', function () {
     $this->assertDatabaseHas('users', ['email' => 'individual@example.com']);
     $user = User::where('email', 'individual@example.com')->first();
     expect($user->hasRole('individual'))->toBeTrue();
-    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '111222333']);
+    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '111222333', 'nombre_contacto' => 'Test Contact']);
     $this->assertDatabaseHas('individuals', ['id_cliente' => $user->customer->id, 'dni' => '12345678X']);
 
-    // Test Dealership (Restaurado)
+    // Test Dealership
     $this->artisan('users:create dealership')
-        ->expectsQuestion('Nombre completo', 'Test Dealership')
+        ->expectsQuestion('Nombre completo (Usuario)', 'Test Dealership')
         ->expectsQuestion('Correo electrónico', 'dealership@example.com')
         ->expectsQuestion('Contraseña', 'password')
         ->expectsQuestion('Confirmar contraseña', 'password')
+        ->expectsQuestion('Nombre de Contacto (Dejar vacío para usar Nombre completo)', '') // Dejar vacío
         ->expectsQuestion('Teléfono', '444555666')
         ->expectsQuestion('Nombre de la Empresa', 'Test Motors')
         ->expectsQuestion('NIF', 'B12345678')
@@ -175,13 +177,12 @@ test('users create command', function () {
     $user = User::where('email', 'dealership@example.com')->first();
     expect($user->hasRole('dealership'))->toBeTrue();
     $this->assertDatabaseHas('dealerships', ['nif' => 'B12345678']);
-    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '444555666']);
+    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'telefono' => '444555666', 'nombre_contacto' => 'Test Dealership']); // Fallback
 });
 
 test('cars approve command', function () {
     Bus::fake();
 
-    // Ensure we use a 'Sale' listing type so approval sets status to 1 (Venta)
     $saleType = ListingType::where('nombre', 'Venta')->first();
     if (!$saleType) {
         $saleType = ListingType::factory()->create(['nombre' => 'Venta']);
@@ -220,7 +221,6 @@ test('sales export command', function () {
     $this->artisan('sales:export', ['user_id' => $seller->id])
          ->assertSuccessful();
 
-    // Verificar que se creó un archivo en exports/
     $files = Storage::disk('public')->files('exports');
     expect(count($files))->toBeGreaterThan(0);
 });
@@ -228,10 +228,8 @@ test('sales export command', function () {
 test('cars cleanup images command', function () {
     Storage::fake('public');
 
-    // Crear imagen huérfana
     Storage::disk('public')->put('cars/orphan.jpg', 'content');
 
-    // Crear imagen usada
     $car = Cars::factory()->create(['image' => 'cars/used.jpg']);
     Storage::disk('public')->put('cars/used.jpg', 'content');
 
@@ -243,10 +241,7 @@ test('cars cleanup images command', function () {
 });
 
 test('users inactive notify command', function () {
-    // Crear usuario inactivo (updated_at hace 7 meses)
     $inactiveUser = User::factory()->create(['updated_at' => now()->subMonths(7)]);
-
-    // Crear usuario activo (updated_at hace 1 mes)
     $activeUser = User::factory()->create(['updated_at' => now()->subMonths(1)]);
 
     $this->artisan('users:inactive-notify', ['months' => 6])

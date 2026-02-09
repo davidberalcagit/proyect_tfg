@@ -19,57 +19,31 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-[#284961] text-white">
                 <tr>
-                    {{-- text-center añadido aquí --}}
                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider w-20">ID</th>
-                    {{-- text-left ya estaba aquí --}}
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
-                    {{-- text-right ya estaba aquí --}}
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider w-48">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($brands as $brand)
                     <tr wire:key="brand-{{ $brand->id }}" class="hover:bg-gray-50 transition duration-150">
-                        {{-- text-center añadido aquí --}}
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                             {{ $brand->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            @if($editingId === $brand->id)
-                                <div class="flex flex-col">
-                                    <input type="text"
-                                           wire:model="editingNombre"
-                                           wire:keydown.enter="update"
-                                           class="w-full border-gray-300 rounded-md shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50 text-sm"
-                                           placeholder="Nombre de la marca">
-                                    @error('editingNombre') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
-                                </div>
-                            @else
-                                {{ $brand->nombre }}
-                            @endif
+                            {{ $brand->nombre }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            @if($editingId === $brand->id)
-                                <div class="flex justify-end space-x-2">
-                                    <button wire:click="update" class="text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded shadow transition">
-                                        Guardar
-                                    </button>
-                                    <button wire:click="cancelEdit" class="text-gray-700 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded shadow transition">
-                                        Cancelar
-                                    </button>
-                                </div>
-                            @else
-                                <div class="flex justify-end space-x-3">
-                                    <button wire:click="edit({{ $brand->id }})" class="text-[#284961] hover:text-[#1c3344] font-bold transition">
-                                        Editar
-                                    </button>
-                                    <button wire:click="delete({{ $brand->id }})"
-                                            wire:confirm="¿Estás seguro de que quieres eliminar esta marca? Esta acción no se puede deshacer."
-                                            class="text-red-600 hover:text-red-800 font-bold transition">
-                                        Borrar
-                                    </button>
-                                </div>
-                            @endif
+                            <div class="flex justify-end space-x-3">
+                                <button wire:click="edit({{ $brand->id }})" class="text-[#284961] hover:text-[#1c3344] font-bold transition">
+                                    Editar
+                                </button>
+                                <button wire:click="delete({{ $brand->id }})"
+                                        wire:confirm="¿Estás seguro de que quieres eliminar esta marca? Esta acción no se puede deshacer."
+                                        class="text-red-600 hover:text-red-800 font-bold transition">
+                                    Borrar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -82,7 +56,7 @@
         {{ $brands->links() }}
     </div>
 
-    <!-- Modal para CREAR -->
+    <!-- Modal para CREAR / EDITAR -->
     @if($isModalOpen)
         <div class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <!-- Backdrop -->
@@ -90,7 +64,9 @@
 
             <!-- Modal Panel -->
             <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition-all sm:max-w-lg w-full p-6 relative z-10 border border-gray-200">
-                <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">Crear Nueva Marca</h3>
+                <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">
+                    {{ $brand_id ? 'Editar Marca' : 'Crear Nueva Marca' }}
+                </h3>
 
                 <div class="mb-6">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Marca</label>
@@ -103,7 +79,7 @@
                         Cancelar
                     </button>
                     <button wire:click="store" class="bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded-lg shadow transition">
-                        Guardar
+                        {{ $brand_id ? 'Actualizar' : 'Guardar' }}
                     </button>
                 </div>
             </div>

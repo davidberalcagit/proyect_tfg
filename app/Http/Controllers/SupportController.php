@@ -86,12 +86,12 @@ class SupportController extends Controller
     {
         $this->authorize('update', $user);
 
-        // Evitar editarse a sí mismo desde el panel de soporte
         if (auth()->id() === $user->id) {
             return redirect()->route('support.users.index')->with('error', 'No puedes editar tu propio usuario desde aquí. Usa tu perfil.');
         }
 
         $roles = Role::all();
+        $user->load(['customer.individual', 'customer.dealership']);
 
         return view('support.users.edit', compact('user', 'roles'));
     }
@@ -100,7 +100,6 @@ class SupportController extends Controller
     {
         $this->authorize('update', $user);
 
-        // Evitar editarse a sí mismo
         if (auth()->id() === $user->id) {
             return redirect()->route('support.users.index')->with('error', 'No puedes editar tu propio usuario desde aquí.');
         }
@@ -110,6 +109,10 @@ class SupportController extends Controller
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'role' => ['required', 'exists:roles,name'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+            'nombre_contacto' => ['nullable', 'string', 'max:255'], // Nuevo campo
+            'dni' => ['nullable', 'string', 'max:20'],
+            'nif' => ['nullable', 'string', 'max:20'],
         ]);
 
         $user->update([
@@ -124,6 +127,21 @@ class SupportController extends Controller
         }
 
         $user->syncRoles([$request->role]);
+
+        if ($user->customer) {
+            $user->customer->update([
+                'telefono' => $request->telefono,
+                'nombre_contacto' => $request->nombre_contacto ?? $request->name, // Usar el nuevo campo o fallback al nombre de usuario
+            ]);
+
+            if ($user->customer->individual && $request->filled('dni')) {
+                $user->customer->individual->update(['dni' => $request->dni]);
+            }
+
+            if ($user->customer->dealership && $request->filled('nif')) {
+                $user->customer->dealership->update(['nif' => $request->nif]);
+            }
+        }
 
         return redirect()->route('support.users.show', $user)->with('success', 'Usuario actualizado correctamente.');
     }

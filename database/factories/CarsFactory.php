@@ -89,7 +89,7 @@ class CarsFactory extends Factory
             "km" => $this->faker->numberBetween(100, 100000),
             "precio" => $this->faker->numberBetween(2000, 100000),
             "descripcion" => $this->faker->text(),
-            "image" => 'cars/chat-im-cooked-v0-3z8fc1lv9khe1.webp',
+            "image" => 'cars/ford-fiesta.jpg', // Updated image path
             "id_estado" => $estado,
             "id_listing_type" => $listingType->id,
         ];

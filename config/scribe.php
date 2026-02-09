@@ -54,12 +54,12 @@ return [
     ],
 
     'auth' => [
-        'enabled' => true, // Habilitado
-        'default' => false,
-        'in' => 'bearer', // Bearer Token (Sanctum)
+        'enabled' => true,
+        'default' => true, // Changed to true to force auth field on all endpoints by default
+        'in' => 'bearer',
         'name' => 'Authorization',
-        'use_value' => null, // No hardcoded value
-        'placeholder' => 'e.g. 1|laravel_sanctum_token...', // Placeholder útil
+        'use_value' => env('SCRIBE_AUTH_KEY'),
+        'placeholder' => 'e.g. 1|laravel_sanctum_token...',
         'extra_info' => 'You can retrieve your token by logging in via <b>POST /api/login</b>.',
     ],
 
@@ -119,6 +119,20 @@ return [
                 only: ['GET *'],
                 config: [
                     'app.debug' => false,
+                    'auth' => [
+                        'enabled' => true,
+                        'login' => function () {
+                            $user = \App\Models\User::first();
+                            if (!$user) {
+                                $user = \App\Models\User::factory()->create();
+                            }
+                            $token = $user->createToken('Scribe')->plainTextToken;
+                            return $token;
+                        },
+                        'use_value' => true,
+                        'param_name' => 'Authorization',
+                        'prefix' => 'Bearer ',
+                    ],
                 ]
             )
         ),

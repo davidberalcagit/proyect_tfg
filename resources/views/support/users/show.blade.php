@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight overflow-hidden">
             {{ __('User Details') }}: {{ $user->name }}
         </h2>
     </x-slot>
@@ -9,14 +9,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                     <!-- Info Básica -->
                     <div>
                         <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Basic Information') }}</h3>
-                        <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                        <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 overflow-hidden">
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-500">{{ __('Name') }}</dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $user->name }}</dd>
+                                <dd class="mt-1 text-sm text-gray-900 overflow-hidden">{{ $user->name }}</dd>
                             </div>
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-500">{{ __('Email') }}</dt>

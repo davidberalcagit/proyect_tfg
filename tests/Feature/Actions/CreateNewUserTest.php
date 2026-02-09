@@ -28,6 +28,7 @@ test('validates required fields', function () {
 test('creates individual user successfully', function () {
     $input = [
         'name' => 'John Doe',
+        'contact_name' => 'John Contact', // Added
         'email' => 'john@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -43,7 +44,7 @@ test('creates individual user successfully', function () {
 
     expect($user)->toBeInstanceOf(User::class);
     $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
-    $this->assertDatabaseHas('customers', ['telefono' => '123456789']);
+    $this->assertDatabaseHas('customers', ['telefono' => '123456789', 'nombre_contacto' => 'John Contact']);
     $this->assertDatabaseHas('individuals', ['dni' => '12345678A']);
 
     expect($user->hasRole('individual'))->toBeTrue();
@@ -52,6 +53,7 @@ test('creates individual user successfully', function () {
 test('creates dealership user successfully', function () {
     $input = [
         'name' => 'Jane Doe',
+        'contact_name' => 'Jane Contact', // Added
         'email' => 'jane@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -73,6 +75,7 @@ test('creates dealership user successfully', function () {
     // Check customer is linked to dealership
     $customer = Customers::where('telefono', '987654321')->first();
     expect($customer->dealership_id)->not->toBeNull();
+    expect($customer->nombre_contacto)->toBe('Jane Contact');
 
     expect($user->hasRole('dealership'))->toBeTrue();
 });

@@ -14,9 +14,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Iniciar Sesión'
       description: 'Autentica a un usuario y devuelve un token de acceso.'
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -73,7 +74,10 @@ endpoints:
         headers: []
         description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null

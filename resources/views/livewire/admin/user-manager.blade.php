@@ -31,11 +31,34 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-[#284961] text-white">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Rol</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Acciones</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer hover:bg-[#1c3344] transition" wire:click="sortBy('id')">
+                        ID
+                        @if($sortField === 'id')
+                            <span>{!! $sortDirection === 'asc' ? '&#8593;' : '&#8595;' !!}</span>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer hover:bg-[#1c3344] transition" wire:click="sortBy('name')">
+                        Nombre
+                        @if($sortField === 'name')
+                            <span>{!! $sortDirection === 'asc' ? '&#8593;' : '&#8595;' !!}</span>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer hover:bg-[#1c3344] transition" wire:click="sortBy('email')">
+                        Email
+                        @if($sortField === 'email')
+                            <span>{!! $sortDirection === 'asc' ? '&#8593;' : '&#8595;' !!}</span>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer hover:bg-[#1c3344] transition" wire:click="sortBy('seller_name')">
+                        Nombre Vendedor
+                        @if($sortField === 'seller_name')
+                            <span>{!! $sortDirection === 'asc' ? '&#8593;' : '&#8595;' !!}</span>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                        Rol
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -44,6 +67,9 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $user->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $user->customer->nombre_contacto ?? '-' }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $user->hasRole('admin') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                                 {{ $user->getRoleNames()->first() ?? 'Usuario' }}

@@ -37,7 +37,7 @@ class CreateUser extends Command
         $this->info("Creando usuario con rol: {$role}");
 
         // Datos Básicos
-        $name = $this->ask('Nombre completo');
+        $name = $this->ask('Nombre completo (Usuario)');
         $email = $this->ask('Correo electrónico');
         $password = $this->secret('Contraseña');
         $passwordConfirmation = $this->secret('Confirmar contraseña');
@@ -48,14 +48,17 @@ class CreateUser extends Command
             'password' => $password,
             'password_confirmation' => $passwordConfirmation,
             'type' => $role,
-            'terms' => 'on', // Aceptar términos por defecto en consola
+            'terms' => 'on',
         ];
 
         // Datos Específicos
         if (in_array($role, ['individual', 'dealership'])) {
+            $contactName = $this->ask('Nombre de Contacto (Dejar vacío para usar Nombre completo)');
+            $input['contact_name'] = $contactName ?: $name;
+
             $input['telefono'] = $this->ask('Teléfono');
 
-            // Entidad (1: Particular, 2: Empresa) - Simplificación basada en rol
+            // Entidad (1: Particular, 2: Empresa)
             $input['id_entidad'] = ($role === 'dealership') ? 2 : 1;
 
             if ($role === 'individual') {
@@ -68,7 +71,6 @@ class CreateUser extends Command
             }
         }
 
-        // Validación Previa (Opcional, CreateNewUser ya valida, pero mejor fallar rápido)
         $validator = Validator::make($input, [
             'email' => 'unique:users,email',
             'password' => 'confirmed|min:8',

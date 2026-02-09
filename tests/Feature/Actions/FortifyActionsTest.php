@@ -21,12 +21,12 @@ test('create new user action creates user and customer', function () {
 
     $user = $action->create([
         'name' => 'Test User',
+        'contact_name' => 'Test Contact', // Added
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
-        'type' => 'individual', // Corrected from 'role'
+        'type' => 'individual',
         'terms' => 'on',
-        // Required fields for individual
         'telefono' => '123456789',
         'id_entidad' => 1,
         'dni' => '12345678A',
@@ -35,7 +35,7 @@ test('create new user action creates user and customer', function () {
 
     expect($user)->toBeInstanceOf(User::class);
     $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
-    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id]);
+    $this->assertDatabaseHas('customers', ['id_usuario' => $user->id, 'nombre_contacto' => 'Test Contact']);
     expect($user->hasRole('individual'))->toBeTrue();
 });
 

@@ -44,15 +44,15 @@
     <div wire:loading.class="opacity-50" class="transition-opacity duration-200">
         <section class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             @forelse ($cars as $car)
-                <div wire:key="car-{{ $car->id }}" class="bg-white p-2 sm:p-4 text-center rounded shadow hover:shadow-xl transform hover:scale-105 transition relative flex flex-col h-full border border-custom-border group">
+                <div wire:key="car-{{ $car->id }}" class="bg-white p-2 sm:p-4 text-center rounded shadow hover:shadow-xl transition relative flex flex-col h-full border border-custom-border group">
                     <a href="{{ route('cars.show', $car) }}" class="absolute inset-0 z-10"></a>
 
-                    <!-- Imagen -->
+                    <!-- Imagen con Zoom -->
                     <div class="relative mb-2 sm:mb-4 w-full aspect-square overflow-hidden rounded bg-gray-100">
                         @if($car->image)
                             <img src="{{ Str::startsWith($car->image, 'http') ? $car->image : Storage::url($car->image) }}"
                                  alt="{{ $car->title }}"
-                                 class="h-full w-full object-cover"
+                                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                  onerror="this.onerror=null; this.src='{{ asset('storage/images/hero-car.jpg') }}'; this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><svg xmlns=\'http://www.w3.org/2000/svg\' class=\'h-12 w-12\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\' /></svg></div>'">
                         @else
                             <div class="bg-gray-200 h-full w-full flex items-center justify-center text-gray-400">

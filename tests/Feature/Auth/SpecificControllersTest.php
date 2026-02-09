@@ -6,12 +6,13 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest; // Corrected Request Type
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 uses(RefreshDatabase::class);
 
@@ -31,8 +32,31 @@ test('email verification prompt controller renders view', function () {
     }
 });
 
+test('email verification prompt redirects if already verified', function () {
+    $user = User::factory()->create(['email_verified_at' => now()]);
+    $controller = new EmailVerificationPromptController();
+
+    $request = Request::create('/email/verify', 'GET');
+    $request->setUserResolver(fn () => $user);
+
+    $response = $controller->__invoke($request);
+
+    expect($response->isRedirect())->toBeTrue();
+});
+
 test('email verification notification controller sends notification', function () {
     $user = User::factory()->create(['email_verified_at' => null]);
+    $controller = new EmailVerificationNotificationController();
+
+    $request = Request::create('/email/verification-notification', 'POST');
+    $request->setUserResolver(fn () => $user);
+
+    $response = $controller->store($request);
+    expect($response->isRedirect())->toBeTrue();
+});
+
+test('email verification notification redirects if already verified', function () {
+    $user = User::factory()->create(['email_verified_at' => now()]);
     $controller = new EmailVerificationNotificationController();
 
     $request = Request::create('/email/verification-notification', 'POST');
@@ -66,6 +90,26 @@ test('confirmable password controller store confirms password', function () {
     expect($session->has('auth.password_confirmed_at'))->toBeTrue();
 });
 
+test('confirmable password controller store fails with wrong password', function () {
+    $user = User::factory()->create(['password' => Hash::make('password')]);
+    $controller = new ConfirmablePasswordController();
+
+    $request = Request::create('/user/confirm-password', 'POST', ['password' => 'wrong']);
+    $request->setUserResolver(fn () => $user);
+
+    $session = new \Illuminate\Session\Store('test', new \Illuminate\Session\ArraySessionHandler(10));
+    $request->setLaravelSession($session);
+
+    try {
+        $controller->store($request);
+    } catch (ValidationException $e) {
+        expect($e->errors())->toHaveKey('password');
+        return;
+    }
+
+    $this->fail('ValidationException was not thrown');
+});
+
 test('verify email controller verifies email', function () {
     Event::fake();
     $user = User::factory()->create(['email_verified_at' => null]);
@@ -77,7 +121,6 @@ test('verify email controller verifies email', function () {
         ['id' => $user->id, 'hash' => sha1($user->getEmailForVerification())]
     );
 
-    // Use the correct EmailVerificationRequest from Illuminate
     $request = EmailVerificationRequest::create($url, 'GET');
     $request->setUserResolver(fn () => $user);
 
@@ -91,4 +134,28 @@ test('verify email controller verifies email', function () {
 
     expect($response->isRedirect())->toBeTrue();
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
+});
+
+test('verify email controller redirects if already verified', function () {
+    $user = User::factory()->create(['email_verified_at' => now()]);
+    $controller = new VerifyEmailController();
+
+    $url = URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $user->id, 'hash' => sha1($user->getEmailForVerification())]
+    );
+
+    $request = EmailVerificationRequest::create($url, 'GET');
+    $request->setUserResolver(fn () => $user);
+
+    $route = new \Illuminate\Routing\Route('GET', '/email/verify/{id}/{hash}', []);
+    $route->bind($request);
+    $route->setParameter('id', $user->id);
+    $route->setParameter('hash', sha1($user->getEmailForVerification()));
+    $request->setRouteResolver(fn () => $route);
+
+    $response = $controller->__invoke($request);
+
+    expect($response->isRedirect())->toBeTrue();
 });

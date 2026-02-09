@@ -8,7 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" href="{{ asset('storage/logos/logo_mini_trans_blanco.png.png') }}" type="image/png">
+        <link rel="icon" href="{{ asset('storage/logos/logo_mini_trans_blanco.png') }}" type="image/png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
