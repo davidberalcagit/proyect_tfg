@@ -30,12 +30,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!Storage::disk('public')->exists('cars')) {
-            Storage::disk('public')->makeDirectory('cars');
-        }
-
-
-
         $this->call(RolesAndPermissionsSeeder::class);
 
         $this->call(EntityTypesSeeder::class);

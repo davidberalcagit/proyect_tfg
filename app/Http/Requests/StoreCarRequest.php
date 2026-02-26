@@ -53,9 +53,9 @@ class StoreCarRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id_marca' => $this->id_marca === 'other' ? null : $this->id_marca,
-            'id_modelo' => $this->id_modelo === 'other' ? null : $this->id_modelo,
-            'id_color' => $this->id_color === 'other' ? null : $this->id_color,
+            'id_marca' => $this->id_marca === '0'||$this->id_marca === 'other' ? null : $this->id_marca,
+            'id_modelo' => $this->id_modelo === '0'||$this->id_modelo === 'other' ? null : $this->id_modelo,
+            'id_color' => $this->id_color === '0'||$this->id_color === 'other' ? null : $this->id_color,
         ]);
     }
 

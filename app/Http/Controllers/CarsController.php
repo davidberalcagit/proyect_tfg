@@ -163,14 +163,11 @@ class CarsController extends Controller
             if ($car->image && !$request->has('delete_image')) {
                  Storage::disk('public')->delete($car->image);
             }
-
             $path = $request->file('image')->store('cars', 'public');
             $car->image = $path;
             ProcessCarImageJob::dispatch($car->id);
         }
-
         $car->save();
-
         return redirect()->route('cars.index')->with('success', 'Coche actualizado correctamente.');
     }
 

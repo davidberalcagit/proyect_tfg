@@ -278,7 +278,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 9, 2026</li>
+        <li>Last updated: February 17, 2026</li>
     </ul>
 </div>
 
@@ -2204,7 +2204,7 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
     --form "temp_color=g"\
     --form "descripcion=Coche en perfecto estado..."\
     --form "id_listing_type=1"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpA479.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php9DE9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2519,7 +2519,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpA479.tmp</code></p>
+<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php9DE9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>id_listing_type</code></b>&nbsp;&nbsp;
@@ -2560,7 +2560,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "km=16"\
     --form "matricula=n"\
     --form "descripcion=architecto"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpA545.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php9E77.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2846,7 +2846,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpA545.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php9E77.tmp</code></p>
         </div>
         </form>
 
@@ -8558,7 +8558,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"precio\": 14000,
-    \"fecha\": \"2026-02-09T17:03:38\",
+    \"fecha\": \"2026-02-17T14:55:07\",
     \"metodo_pago\": \"n\",
     \"estado\": 2
 }"
@@ -8578,7 +8578,7 @@ const headers = {
 
 let body = {
     "precio": 14000,
-    "fecha": "2026-02-09T17:03:38",
+    "fecha": "2026-02-17T14:55:07",
     "metodo_pago": "n",
     "estado": 2
 };
@@ -8720,10 +8720,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha"                data-endpoint="PUTapi-sales--id-"
-               value="2026-02-09T17:03:38"
+               value="2026-02-17T14:55:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-09T17:03:38</code></p>
+<p>Must be a valid date. Example: <code>2026-02-17T14:55:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>metodo_pago</code></b>&nbsp;&nbsp;

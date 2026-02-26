@@ -39,11 +39,11 @@
                 </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-8 overflow-visible">
+            <div class="bg-white  shadow-xl sm:rounded-lg mb-8 ">
                 <div class="p-6 border-b border-gray-200 bg-orange-50">
                     <h3 class="text-lg font-medium text-orange-800">Coches Pendientes de Aprobación</h3>
                 </div>
-                <div class="p-6 overflow-x-auto">
+                <div class="p-6 overflow-scroll">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>

@@ -69,12 +69,15 @@ class RegisteredUserController extends Controller
                 ]);
                 if ($customer->id_entidad == 2) {
 
-                    $customer->dealership()->create([
-                        'id_cliente'      => $customer->id,
-                        'nombre_empresa'  => $request->nombre_empresa,
-                        'nif'             => $request->nif,
-                        'direccion'       => $request->direccion
-                    ]);
+                    $dealership = Dealerships::firstOrCreate(
+                        ['nif' => $request->nif],
+                        [ //error1
+                            'nombre_empresa'  => $request->nombre_empresa,
+                            'direccion'       => $request->direccion
+                        ]
+                    );
+
+                    $customer->update(['dealership_id' => $dealership->id]);
                 }
 
                 if ($customer->id_entidad == 1) {
@@ -105,9 +108,9 @@ class RegisteredUserController extends Controller
 
         if ($data['type'] === 'empresa') {
 
-            if (!$user->empresa) {
+            if (!$user->customer()->empresa) {
 
-                \App\Models\Dealerships::create([
+                \App\Models\Dealerships::firstOrCreate([
                     'user_id' => $user->id,
                 ]);
             }

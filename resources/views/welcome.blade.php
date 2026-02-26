@@ -31,7 +31,7 @@
                 <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
 
                 <div class="relative z-20 text-center text-white p-6 max-w-4xl 2xl:max-w-6xl mx-auto">
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-extrabold leading-tight mb-6 drop-shadow-xl animate-fade-in-up">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-extrabold leading-tight mb-6 drop-shadow-xl">
                         {{ __('Find Your Dream Car Today') }}
                     </h1>
 

@@ -20,7 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetLocale::class,
         ]);
 
-        // Registrar alias para Spatie Permissions
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
@@ -28,7 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        // Manejo personalizado para API
         $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
             if ($request->is('api/*')) {
                 return true;
@@ -36,7 +34,6 @@ return Application::configure(basePath: dirname(__DIR__))
             return $request->expectsJson();
         });
 
-        // Personalizar respuesta 404
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
@@ -46,7 +43,6 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
-        // Personalizar respuesta 401 (No autenticado)
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
@@ -56,11 +52,8 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
-        // Personalizar error general 500 (para ocultar stack trace en producción o formatearlo)
         $exceptions->render(function (Throwable $e, Request $request) {
             if ($request->is('api/*') && !$e instanceof ValidationException) {
-                // En local queremos ver el error real, pero en formato JSON
-                // En producción, mensaje genérico
                 $debug = config('app.debug');
 
                 return response()->json([
@@ -68,8 +61,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     'error' => 'Internal Server Error',
                     'file' => $debug ? $e->getFile() : null,
                     'line' => $debug ? $e->getLine() : null,
-                    // 'trace' => $debug ? $e->getTrace() : null, // Opcional, puede ser muy largo
-                ], 500);
+                 ], 500);
             }
         });
     })->create();

@@ -39,7 +39,7 @@ class SupervisorController extends Controller
             'total_rentals' => Rental::count(),
         ];
 
-        $usersByType = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        $usersByType = User::join('model_has_roles', 'users.id', '=', 'model_has_aroles.model_id')
             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->select('roles.name', DB::raw('count(*) as total'))
             ->whereIn('roles.name', ['individual', 'dealership'])
