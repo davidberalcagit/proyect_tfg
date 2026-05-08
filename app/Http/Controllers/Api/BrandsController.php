@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brands;
 use App\Models\CarModels;
 use Illuminate\Http\Request;
@@ -49,10 +51,9 @@ class BrandsController extends Controller
      *  "created_at": "..."
      * }
      */
-    public function store(Request $request)
+    public function store(StoreBrandRequest $request)
     {
-        $request->validate(['nombre' => 'required|unique:brands,nombre']);
-        $brand = Brands::create($request->all());
+        $brand = Brands::create($request->validated());
         return response()->json($brand, 201);
     }
 
@@ -84,10 +85,10 @@ class BrandsController extends Controller
      *
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBrandRequest $request, $id)
     {
         $brand = Brands::findOrFail($id);
-        $brand->update($request->all());
+        $brand->update($request->validated());
         return response()->json($brand, 200);
     }
 

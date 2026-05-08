@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFuelRequest;
+use App\Http\Requests\UpdateFuelRequest;
 use App\Models\Fuels;
-use Illuminate\Http\Request;
 
 /**
  * @group Tablas Auxiliares
@@ -46,10 +47,9 @@ class FuelsController extends Controller
      *  "created_at": "..."
      * }
      */
-    public function store(Request $request)
+    public function store(StoreFuelRequest $request)
     {
-        $request->validate(['nombre' => 'required|unique:fuels,nombre']);
-        $fuel = Fuels::create($request->all());
+        $fuel = Fuels::create($request->validated());
         return response()->json($fuel, 201);
     }
 
@@ -79,10 +79,10 @@ class FuelsController extends Controller
      *
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFuelRequest $request, $id)
     {
         $fuel = Fuels::findOrFail($id);
-        $fuel->update($request->all());
+        $fuel->update($request->validated());
         return response()->json($fuel, 200);
     }
 

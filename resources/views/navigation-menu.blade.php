@@ -20,19 +20,7 @@
                                     <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-[#D1D5DB] focus:outline-none transition ease-in-out duration-150">
                                         <span>{{ __('My Garage') }}</span>
 
-                                        @php
-                                            $notificationCount = 0;
-                                            if(Auth::user()->customer) {
-                                                $customerId = Auth::user()->customer->id;
-                                                $pendingOffers = \App\Models\Offer::where('id_vendedor', $customerId)->where('estado', 'pending')->count();
-                                                $acceptedOffers = \App\Models\Offer::where('id_comprador', $customerId)->where('estado', 'accepted_by_seller')->count();
-                                                $pendingRentals = \App\Models\Rental::whereHas('car', function($q) use ($customerId) { $q->where('id_vendedor', $customerId); })->where('id_estado', 1)->count();
-                                                $acceptedRentals = \App\Models\Rental::where('id_cliente', $customerId)->where('id_estado', 7)->count();
-                                                $notificationCount = $pendingOffers + $acceptedOffers + $pendingRentals + $acceptedRentals;
-                                            }
-                                        @endphp
-
-                                        @if($notificationCount > 0)
+                                        @if(Auth::user()->customer && Auth::user()->customer->pending_notifications_count > 0)
                                             <span class="ml-2 flex h-2 w-2 relative">
                                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -54,8 +42,8 @@
                                     </x-dropdown-link>
                                     <x-dropdown-link href="{{ route('sales.index') }}" class="flex justify-between items-center">
                                         {{ __('My Transactions') }}
-                                        @if($notificationCount > 0)
-                                            <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-2">{{ $notificationCount }}</span>
+                                        @if(Auth::user()->customer && Auth::user()->customer->pending_notifications_count > 0)
+                                            <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-2">{{ Auth::user()->customer->pending_notifications_count }}</span>
                                         @endif
                                     </x-dropdown-link>
                                 </x-slot>
@@ -194,7 +182,7 @@
                 <div class="border-t border-[#1c3344] my-1"></div>
                 <div class="px-4 py-2 text-xs text-gray-400 uppercase font-bold flex items-center">
                     {{ __('My Garage') }}
-                    @if($notificationCount > 0)
+                    @if(Auth::user()->customer && Auth::user()->customer->pending_notifications_count > 0)
                         <span class="ml-2 flex h-2 w-2 relative">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -212,8 +200,8 @@
 
                 <x-responsive-nav-link href="{{ route('sales.index') }}" :active="request()->routeIs('sales.index')" class="text-white hover:bg-[#1c3344] hover:text-white border-l-4 border-transparent hover:border-white pl-8 flex justify-between items-center">
                     {{ __('My Transactions') }}
-                    @if($notificationCount > 0)
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-2">{{ $notificationCount }}</span>
+                    @if(Auth::user()->customer && Auth::user()->customer->pending_notifications_count > 0)
+                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-2">{{ Auth::user()->customer->pending_notifications_count }}</span>
                     @endif
                 </x-responsive-nav-link>
 

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Cars;
 use App\Models\Sales;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Api\StoreApiSaleRequest;
+use App\Http\Requests\Api\UpdateApiSaleRequest;
 
 /**
  * @group Ventas
@@ -78,31 +79,10 @@ class SalesController extends Controller
      *  "message": "No puedes vender un coche que no es tuyo."
      * }
      */
-    public function store(Request $request)
+    public function store(StoreApiSaleRequest $request)
     {
-        $request->validate([
-            'id_vehiculo' => 'required|exists:cars,id',
-            'id_comprador' => 'required|exists:customers,id',
-            'precio' => 'required|numeric|min:0',
-            'fecha' => 'required|date',
-            'metodo_pago' => 'required|string|max:50',
-            'estado' => 'required|exists:sale_statuses,id',
-        ]);
-
-        $car = Cars::findOrFail($request->id_vehiculo);
         $seller = Auth::user()->customer;
-
-        if (!$seller) {
-            return response()->json(['message' => 'No tienes perfil de vendedor.'], 403);
-        }
-
-        if ($car->id_vendedor !== $seller->id) {
-            return response()->json(['message' => 'No puedes vender un coche que no es tuyo.'], 403);
-        }
-
-        if ($car->id_estado == 3) {
-             return response()->json(['message' => 'Este coche ya ha sido vendido.'], 400);
-        }
+        $car = Cars::findOrFail($request->id_vehiculo);
 
         $sale = Sales::create([
             'id_vehiculo' => $request->id_vehiculo,
@@ -161,21 +141,11 @@ class SalesController extends Controller
      *
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateApiSaleRequest $request, $id)
     {
         $sale = Sales::findOrFail($id);
-        if ($sale->id_vendedor !== Auth::user()->customer->id) {
-            return response()->json(['message' => 'No tienes permiso para editar esta venta.'], 403);
-        }
+        $sale->update($request->validated());
 
-        $request->validate([
-            'precio' => 'numeric|min:0',
-            'fecha' => 'date',
-            'metodo_pago' => 'string|max:50',
-            'estado' => 'exists:sale_statuses,id',
-        ]);
-
-        $sale->update($request->all());
         return response()->json($sale, 200);
     }
 

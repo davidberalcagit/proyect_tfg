@@ -85,7 +85,12 @@ class CarsController extends Controller
 
         $listingType = ListingType::where('nombre', $request->query('type', 'sale') === 'rent' ? 'Alquiler' : 'Venta')->first() ?? ListingType::first();
 
-        return view('cars.create', compact('brands','fuels', 'gears', 'colors', 'listingType'));
+        $priceLabel = __('Price');
+        if (isset($listingType) && $listingType->nombre === 'Alquiler') {
+            $priceLabel = __('Daily Price');
+        }
+
+        return view('cars.create', compact('brands','fuels', 'gears', 'colors', 'listingType', 'priceLabel'));
     }
 
     public function getModels(Brands $brand)
@@ -145,7 +150,13 @@ class CarsController extends Controller
         $fuels = Fuels::all();
         $gears = Gears::all();
         $colors = Color::all();
-        return view('cars.edit', compact('car', 'brands', 'fuels', 'gears', 'colors'));
+
+        $priceLabel = __('Price');
+        if ($car->exists && $car->listingType && $car->listingType->nombre === 'Alquiler') {
+            $priceLabel = __('Daily Price');
+        }
+
+        return view('cars.edit', compact('car', 'brands', 'fuels', 'gears', 'colors', 'priceLabel'));
     }
 
     public function update(UpdateCarRequest $request, Cars $car)

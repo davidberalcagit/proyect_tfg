@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Cars;
 use App\Models\Offer;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Api\StoreApiOfferRequest;
+use App\Http\Requests\Api\UpdateApiOfferRequest;
 
 /**
  * @group Ofertas
@@ -75,32 +76,10 @@ class OfferController extends Controller
      *  "message": "No puedes hacer una oferta por tu propio coche."
      * }
      */
-    public function store(Request $request)
+    public function store(StoreApiOfferRequest $request)
     {
-        $request->validate([
-            'id_vehiculo' => 'required|exists:cars,id',
-            'precio_oferta' => 'required|numeric|min:0',
-        ]);
-
         $buyer = Auth::user()->customer;
-        if (!$buyer) {
-            return response()->json(['message' => 'Debes crear un perfil de cliente para hacer ofertas.'], 403);
-        }
-
         $car = Cars::findOrFail($request->id_vehiculo);
-
-        if ($car->id_vendedor === $buyer->id) {
-            return response()->json(['message' => 'No puedes hacer una oferta por tu propio coche.'], 400);
-        }
-
-        $existingOffer = Offer::where('id_vehiculo', $car->id)
-            ->where('id_comprador', $buyer->id)
-            ->pending()
-            ->exists();
-
-        if ($existingOffer) {
-            return response()->json(['message' => 'Ya tienes una oferta pendiente para este coche.'], 409);
-        }
 
         $offer = Offer::create([
             'id_vehiculo' => $car->id,
@@ -164,16 +143,12 @@ class OfferController extends Controller
      *  "estado": "pending"
      * }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateApiOfferRequest $request, $id)
     {
         $offer = Offer::findOrFail($id);
         $userCustomer = Auth::user()->customer;
 
         if ($offer->id_comprador === $userCustomer->id) {
-            $request->validate([
-                'precio_oferta' => 'numeric|min:0',
-            ]);
-
             $data = [];
             if ($request->has('precio_oferta')) {
                 $data['cantidad'] = $request->precio_oferta;
@@ -182,12 +157,7 @@ class OfferController extends Controller
             $offer->update($data);
 
         } elseif ($offer->id_vendedor === $userCustomer->id) {
-            $request->validate([
-                'estado' => 'required|in:aceptada,rechazada,pendiente',
-            ]);
             $offer->update(['estado' => $request->estado]);
-        } else {
-            return response()->json(['message' => 'No tienes permiso para modificar esta oferta.'], 403);
         }
 
         return response()->json($offer, 200);

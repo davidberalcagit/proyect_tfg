@@ -59,4 +59,16 @@ class Customers extends Model
                     ->withPivot('cantidad', 'estado', 'id_vendedor')
                     ->withTimestamps();
     }
+
+    public function getPendingNotificationsCountAttribute()
+    {
+        $pendingOffers = \App\Models\Offer::where('id_vendedor', $this->id)->where('estado', 'pending')->count();
+        $acceptedOffers = \App\Models\Offer::where('id_comprador', $this->id)->where('estado', 'accepted_by_seller')->count();
+        $pendingRentals = \App\Models\Rental::whereHas('car', function($q) {
+            $q->where('id_vendedor', $this->id);
+        })->where('id_estado', 1)->count();
+        $acceptedRentals = \App\Models\Rental::where('id_cliente', $this->id)->where('id_estado', 7)->count();
+
+        return $pendingOffers + $acceptedOffers + $pendingRentals + $acceptedRentals;
+    }
 }

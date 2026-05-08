@@ -1,4 +1,10 @@
-@props(['car', 'brands', 'fuels', 'gears', 'colors', 'listingType' => null])
+@props(['car', 'brands', 'fuels', 'gears', 'colors', 'listingType' => null, 'priceLabel' => __('Price')])
+
+<style>
+    .ck-editor__editable_inline {
+        min-height: 200px;
+    }
+</style>
 
 <div class="grid grid-cols-1 gap-6">
 
@@ -92,14 +98,6 @@
     </div>
 
     <div>
-        @php
-            $priceLabel = __('Price');
-            if (isset($listingType) && $listingType->nombre === 'Alquiler') {
-                $priceLabel = __('Daily Price');
-            } elseif ($car->exists && $car->listingType && $car->listingType->nombre === 'Alquiler') {
-                $priceLabel = __('Daily Price');
-            }
-        @endphp
         <x-label for="price" value="{{ $priceLabel }}" />
         <x-input type="number" step="0.01" name="precio" id="price" class="mt-1 block w-full" value="{{ old('precio', $car->precio) }}" />
         <p class="text-xs text-gray-500 mt-1">{{ __('Note:The total price may increase due to VAT.') }}</p>
@@ -110,7 +108,7 @@
         <x-input type="text" name="matricula" id="matricula" class="mt-1 block w-full" value="{{ old('matricula', $car->matricula) }}" />
     </div>
 
-    <div>
+    <div wire:ignore>
         <x-label for="descripcion" value="{{ __('Descripcion') }}" />
         <x-textarea name="descripcion" id="descripcion" class="mt-1 block w-full">{{ old('descripcion', $car->descripcion) }}</x-textarea>
     </div>
@@ -145,8 +143,17 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        ClassicEditor
+            .create(document.querySelector('#descripcion'), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'undo', 'redo' ]
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
         const brandSelect = document.getElementById('brand');
         const modelSelect = document.getElementById('model');
         const colorSelect = document.getElementById('color');
