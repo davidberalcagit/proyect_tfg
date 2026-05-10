@@ -1,7 +1,7 @@
 <?php
 
 use App\Jobs\ProcessCarImageJob;
-use App\Jobs\SendOfferAcceptedJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Jobs\SendOfferNotificationJob;
 use App\Models\Cars;
 use App\Models\Customers;
@@ -94,5 +94,5 @@ test('send offer accepted job is dispatched when offer is accepted', function ()
 
     $this->actingAs($sellerUser)->post(route('offers.accept', $offer));
 
-    Bus::assertDispatched(SendOfferAcceptedJob::class);
+    Bus::assertDispatched(SendOfferStatusNotificationJob::class, fn ($job) => $job->status === 'accepted');
 });

@@ -1,10 +1,8 @@
 <?php
 
-use App\Jobs\SendCarApprovedNotificationJob;
-use App\Jobs\SendCarRejectedNotificationJob;
-use App\Jobs\SendOfferAcceptedJob;
+use App\Jobs\SendCarStatusNotificationJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Jobs\SendOfferNotificationJob;
-use App\Jobs\SendOfferRejectedJob;
 use App\Jobs\SendRentalProcessedJob;
 use App\Jobs\SendSaleProcessedJob;
 use App\Mail\CarApproved;
@@ -54,7 +52,7 @@ test('offer accepted email is sent to buyer', function () {
     $car = Cars::factory()->create(['id_vendedor' => $seller->id]);
     $offer = Offer::create(['id_vehiculo' => $car->id, 'id_vendedor' => $seller->id, 'id_comprador' => $buyer->id, 'cantidad' => 1000, 'estado' => 'accepted_by_seller']);
 
-    (new SendOfferAcceptedJob($offer))->handle();
+    (new SendOfferStatusNotificationJob($offer, 'accepted'))->handle();
 
     Mail::assertSent(OfferAccepted::class, fn ($mail) => $mail->hasTo($buyer->user->email));
 });
@@ -66,7 +64,7 @@ test('offer rejected email is sent to buyer', function () {
     $car = Cars::factory()->create(['id_vendedor' => $seller->id]);
     $offer = Offer::create(['id_vehiculo' => $car->id, 'id_vendedor' => $seller->id, 'id_comprador' => $buyer->id, 'cantidad' => 1000, 'estado' => 'rejected']);
 
-    (new SendOfferRejectedJob($offer))->handle();
+    (new SendOfferStatusNotificationJob($offer, 'rejected'))->handle();
 
     Mail::assertQueued(OfferRejected::class, fn ($mail) => $mail->hasTo($buyer->user->email));
 });
@@ -138,7 +136,7 @@ test('car approved email is sent to seller', function () {
     $seller = createCustomer();
     $car = Cars::factory()->create(['id_vendedor' => $seller->id]);
 
-    (new SendCarApprovedNotificationJob($car))->handle();
+    (new SendCarStatusNotificationJob($car, 'approved'))->handle();
 
     Mail::assertQueued(CarApproved::class, fn ($mail) => $mail->hasTo($seller->user->email));
 });
@@ -148,7 +146,7 @@ test('car rejected email is sent to seller', function () {
     $seller = createCustomer();
     $car = Cars::factory()->create(['id_vendedor' => $seller->id]);
 
-    (new SendCarRejectedNotificationJob($car, 'Razón test'))->handle();
+    (new SendCarStatusNotificationJob($car, 'rejected', 'Razón test'))->handle();
 
     Mail::assertQueued(CarRejected::class, fn ($mail) => $mail->hasTo($seller->user->email));
 });

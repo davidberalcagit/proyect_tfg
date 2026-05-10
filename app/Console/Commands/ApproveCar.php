@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SendCarApprovedNotificationJob;
+use App\Jobs\SendCarStatusNotificationJob;
 use App\Models\Brands;
 use App\Models\CarModels;
 use App\Models\Cars;
@@ -65,7 +65,7 @@ class ApproveCar extends Command
                 $car->save();
             });
 
-            SendCarApprovedNotificationJob::dispatch($car);
+            SendCarStatusNotificationJob::dispatch($car, 'approved');
 
             $this->info("Coche ID {$carId} aprobado correctamente (Estado: {$car->id_estado}).");
             return Command::SUCCESS;

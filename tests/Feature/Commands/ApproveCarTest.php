@@ -1,6 +1,6 @@
 <?php
 
-use App\Jobs\SendCarApprovedNotificationJob;
+use App\Jobs\SendCarStatusNotificationJob;
 use App\Models\Brands;
 use App\Models\CarModels;
 use App\Models\Cars;
@@ -38,7 +38,7 @@ test('command approves car and processes temp data', function () {
     $this->assertDatabaseHas('car_models', ['nombre' => 'New Model']);
     $this->assertDatabaseHas('colors', ['nombre' => 'New Color']);
 
-    Queue::assertPushed(SendCarApprovedNotificationJob::class);
+    Queue::assertPushed(SendCarStatusNotificationJob::class, fn ($job) => $job->status === 'approved');
 });
 
 test('command fails if car not found', function () {

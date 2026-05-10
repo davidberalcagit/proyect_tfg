@@ -1,6 +1,6 @@
 <?php
 
-use App\Jobs\SendOfferAcceptedJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Jobs\SendOfferNotificationJob;
 use App\Jobs\SendSaleProcessedJob;
 use App\Models\Cars;
@@ -53,7 +53,7 @@ test('full offer flow create accept pay', function () {
     $offer->refresh();
     expect($offer->estado)->toBe('accepted_by_seller');
 
-    Bus::assertDispatched(SendOfferAcceptedJob::class);
+    Bus::assertDispatched(SendOfferStatusNotificationJob::class, fn ($job) => $job->status === 'accepted');
 
     $response = $this->actingAs($buyerUser)->post(route('offers.pay', $offer));
     $response->assertRedirect();
@@ -103,6 +103,8 @@ test('seller can reject offer', function () {
 
     $offer->refresh();
     expect($offer->estado)->toBe('rejected');
+
+    Bus::assertDispatched(SendOfferStatusNotificationJob::class, fn ($job) => $job->status === 'rejected');
 });
 
 test('buyer cannot pay if not accepted', function () {

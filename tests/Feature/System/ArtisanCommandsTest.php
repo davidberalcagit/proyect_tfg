@@ -1,7 +1,7 @@
 <?php
 
-use App\Jobs\SendCarApprovedNotificationJob;
-use App\Jobs\SendOfferRejectedJob;
+use App\Jobs\SendCarStatusNotificationJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Jobs\SendRentalReturnReminderJob;
 use App\Models\Brands;
 use App\Models\Cars;
@@ -53,7 +53,7 @@ test('offers auto reject low command', function () {
     expect($lowOffer->estado)->toBe('rejected');
     expect($highOffer->estado)->toBe('pending');
 
-    Bus::assertDispatched(SendOfferRejectedJob::class, fn ($job) => $job->offer->id === $lowOffer->id);
+    Bus::assertDispatched(SendOfferStatusNotificationJob::class, fn ($job) => $job->offer->id === $lowOffer->id && $job->status === 'rejected');
 });
 
 test('rentals process daily command', function () {
@@ -196,7 +196,7 @@ test('cars approve command', function () {
 
     $car->refresh();
     expect($car->id_estado)->toBe(1);
-    Bus::assertDispatched(SendCarApprovedNotificationJob::class);
+    Bus::assertDispatched(SendCarStatusNotificationJob::class, fn ($job) => $job->status === 'approved');
 });
 
 test('sales export command', function () {

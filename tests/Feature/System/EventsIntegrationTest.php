@@ -5,7 +5,7 @@ use App\Events\CarRejected;
 use App\Events\OfferCreated;
 use App\Events\RentalPaid;
 use App\Events\SaleCompleted;
-use App\Jobs\SendCarRejectedNotificationJob;
+use App\Jobs\SendCarStatusNotificationJob;
 use App\Jobs\SendOfferNotificationJob;
 use App\Jobs\SendRentalProcessedJob;
 use App\Jobs\SendSaleProcessedJob;
@@ -127,5 +127,5 @@ test('car rejected event dispatches job', function () {
         'reason' => 'Test Reason'
     ]);
 
-    Bus::assertDispatched(SendCarRejectedNotificationJob::class);
+    Bus::assertDispatched(SendCarStatusNotificationJob::class, fn ($job) => $job->status === 'rejected');
 });

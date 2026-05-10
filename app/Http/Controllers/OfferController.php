@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\OfferCreated;
 use App\Events\SaleCompleted;
-use App\Jobs\SendOfferAcceptedJob;
-use App\Jobs\SendOfferRejectedJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Models\Cars;
 use App\Models\Offer;
 use App\Models\Sales;
+use App\Http\Requests\StoreOfferRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -17,14 +17,8 @@ class OfferController extends Controller
 {
     use AuthorizesRequests;
 
-    public function store(Request $request, Cars $car)
+    public function store(StoreOfferRequest $request, Cars $car)
     {
-        $this->authorize('create', [Offer::class, $car]);
-
-        $request->validate([
-            'cantidad' => 'required|numeric|min:1'
-        ]);
-
         $buyerId = Auth::user()->customer->id;
 
         $existingOffer = Offer::where('id_vehiculo', $car->id)
@@ -60,7 +54,7 @@ class OfferController extends Controller
 
         $offer->update(['estado' => 'accepted_by_seller']);
 
-        SendOfferAcceptedJob::dispatch($offer);
+        SendOfferStatusNotificationJob::dispatch($offer, 'accepted');
 
         return redirect()->route('sales.index')->with('success', 'Oferta aceptada. Esperando pago del comprador.');
     }
@@ -102,7 +96,7 @@ class OfferController extends Controller
 
         $offer->update(['estado' => 'rejected']);
 
-        SendOfferRejectedJob::dispatch($offer);
+        SendOfferStatusNotificationJob::dispatch($offer, 'rejected');
 
         return redirect()->route('sales.index')->with('success', 'Oferta rechazada.');
     }
