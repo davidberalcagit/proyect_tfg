@@ -1,5 +1,5 @@
 {
-    "php": {
-        "version": "8.3"
+    "variables": {
+        "phpVersion": "8.3"
     }
 }
