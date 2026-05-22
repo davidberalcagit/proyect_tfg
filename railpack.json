@@ -1,7 +1,5 @@
 {
-    "build": {
-        "composer": {
-            "install": "composer install --no-dev --optimize-autoloader"
-        }
+    "php": {
+        "version": "8.3"
     }
 }
