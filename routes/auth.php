@@ -11,6 +11,22 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Rutas de Autenticación
+|--------------------------------------------------------------------------
+|
+| Este archivo define las rutas de autenticación. En un proyecto con
+| Laravel Jetstream, la mayoría de estas rutas son manejadas automáticamente
+| por el paquete Fortify. Dejar este archivo activo puede causar conflictos
+| de nombres de rutas duplicados.
+|
+| Se ha comentado todo el contenido para permitir que Fortify gestione
+| la autenticación, que es la configuración estándar para Jetstream.
+|
+*/
+
+/*
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -54,3 +70,4 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+*/
