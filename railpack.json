@@ -1,5 +1,11 @@
 {
     "packages": {
         "php": "8.3"
+    },
+    "build": {
+        "aptPackages": [
+            "bison",
+            "re2c"
+        ]
     }
 }
