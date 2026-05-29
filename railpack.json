@@ -2,5 +2,9 @@
     "packages": {
         "php": "8.3"
     },
-    "image": "dunglas/frankenphp:php8.3-bookworm"
+    "buildAptPackages": [
+        "bison",
+        "re2c",
+        "libcurl4-openssl-dev"
+    ]
 }
