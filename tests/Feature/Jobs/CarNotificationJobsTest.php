@@ -2,8 +2,7 @@
 
 namespace Tests\Feature\Jobs;
 
-use App\Jobs\SendCarApprovedNotificationJob;
-use App\Jobs\SendCarRejectedNotificationJob;
+use App\Jobs\SendCarStatusNotificationJob;
 use App\Mail\CarApproved;
 use App\Mail\CarRejected;
 use App\Models\Cars;
@@ -23,7 +22,7 @@ test('send car approved notification job sends email', function () {
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
     $car = Cars::factory()->create(['id_vendedor' => $customer->id]);
 
-    $job = new SendCarApprovedNotificationJob($car);
+    $job = new SendCarStatusNotificationJob($car, 'approved');
     $job->handle();
 
     if (in_array(\Illuminate\Contracts\Queue\ShouldQueue::class, class_implements(CarApproved::class))) {
@@ -49,7 +48,7 @@ test('send car approved notification logs warning if user missing', function () 
 
     $car->shouldReceive('getAttribute')->with('vendedor')->andReturn($customer);
 
-    $job = new SendCarApprovedNotificationJob($car);
+    $job = new SendCarStatusNotificationJob($car, 'approved');
     $job->handle();
 
     Mail::assertNothingSent();
@@ -63,7 +62,7 @@ test('send car rejected notification job sends email', function () {
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
     $car = Cars::factory()->create(['id_vendedor' => $customer->id]);
 
-    $job = new SendCarRejectedNotificationJob($car, 'Reason for rejection');
+    $job = new SendCarStatusNotificationJob($car, 'rejected', 'Reason for rejection');
     $job->handle();
 
     if (in_array(\Illuminate\Contracts\Queue\ShouldQueue::class, class_implements(CarRejected::class))) {
@@ -88,7 +87,7 @@ test('send car rejected notification logs warning if user missing', function () 
 
     $car->shouldReceive('getAttribute')->with('vendedor')->andReturn($customer);
 
-    $job = new SendCarRejectedNotificationJob($car, 'Reason');
+    $job = new SendCarStatusNotificationJob($car, 'rejected', 'Reason');
     $job->handle();
 
     Mail::assertNothingSent();

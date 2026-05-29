@@ -63,7 +63,7 @@
 
                         <div class="absolute top-2 left-2 z-20">
                             @if($car->id_listing_type == 2)
-                                <span class="bg-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded shadow">
+                                <span class="bg-blue-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded shadow">
                                     {{ __('For Rent') }}
                                 </span>
                             @else

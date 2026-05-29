@@ -1,7 +1,6 @@
 <?php
 
-use App\Jobs\SendCarApprovedNotificationJob;
-use App\Jobs\SendCarRejectedNotificationJob;
+use App\Jobs\SendCarStatusNotificationJob;
 use App\Mail\CarApproved;
 use App\Mail\CarRejected;
 use App\Models\Cars;
@@ -29,7 +28,7 @@ test('approval email is sent to seller', function () {
         'id_estado' => 4
     ]);
 
-    $job = new SendCarApprovedNotificationJob($car);
+    $job = new SendCarStatusNotificationJob($car, 'approved');
     $job->handle();
 
     Mail::assertQueued(CarApproved::class, function ($mail) use ($sellerUser) {
@@ -51,7 +50,7 @@ test('rejection email is sent to seller with reason', function () {
 
     $reason = 'Fotos borrosas';
 
-    $job = new SendCarRejectedNotificationJob($car, $reason);
+    $job = new SendCarStatusNotificationJob($car, 'rejected', $reason);
     $job->handle();
 
     Mail::assertQueued(CarRejected::class, function ($mail) use ($sellerUser, $reason) {

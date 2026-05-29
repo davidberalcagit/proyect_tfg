@@ -62,7 +62,18 @@ class SalesController extends Controller
             abort(403);
         }
 
-        $pdf = Pdf::loadView('pdf.sale_receipt', ['sale' => $sale]);
+        $total = $sale->precio;
+        $serviceFee = $total * 0.05;
+        $tax = $serviceFee * 0.21;
+        $grandTotal = $total + $serviceFee + $tax;
+
+        $pdf = Pdf::loadView('pdf.sale_receipt', [
+            'sale' => $sale,
+            'total' => $total,
+            'serviceFee' => $serviceFee,
+            'tax' => $tax,
+            'grandTotal' => $grandTotal
+        ]);
         return $pdf->download('Recibo_Venta_' . $sale->id . '.pdf');
     }
 
@@ -77,7 +88,22 @@ class SalesController extends Controller
              abort(403, 'Recibo no disponible.');
         }
 
-        $pdf = Pdf::loadView('pdf.rental_receipt', ['rental' => $rental]);
+        $days = $rental->fecha_inicio->diffInDays($rental->fecha_fin);
+        if ($days == 0) $days = 1;
+
+        $total = $rental->precio_total;
+        $serviceFee = $total * 0.05;
+        $tax = $serviceFee * 0.21;
+        $grandTotal = $total + $serviceFee + $tax;
+
+        $pdf = Pdf::loadView('pdf.rental_receipt', [
+            'rental' => $rental,
+            'days' => $days,
+            'total' => $total,
+            'serviceFee' => $serviceFee,
+            'tax' => $tax,
+            'grandTotal' => $grandTotal
+        ]);
         return $pdf->download('Recibo_Alquiler_' . $rental->id . '.pdf');
     }
 

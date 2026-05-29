@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Events\OfferRejected;
-use App\Jobs\SendOfferRejectedJob;
+use App\Jobs\SendOfferStatusNotificationJob;
 use App\Models\Offer;
 use Illuminate\Console\Command;
 
@@ -26,7 +25,7 @@ class AutoRejectLowOffers extends Command
             $minPrice = $offer->car->precio * ($percentage / 100);
             if ($offer->cantidad < $minPrice) {
                 $offer->update(['estado' => 'rejected']);
-                SendOfferRejectedJob::dispatch($offer);
+                SendOfferStatusNotificationJob::dispatch($offer, 'rejected');
                 $this->line("Oferta #{$offer->id} rechazada: {$offer->cantidad}€ (Precio coche: {$offer->car->precio}€)");
                 $count++;
             }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendWelcomeEmailJob;
 use App\Models\Customers;
 use App\Models\Dealerships;
 use App\Models\User;
@@ -41,7 +42,9 @@ class RegisteredUserController extends Controller
 
         $request->validate($rules);
 
-        DB::transaction(function () use ($request) {
+        $user = null;
+
+        DB::transaction(function () use ($request, &$user) {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -94,6 +97,11 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
         });
+
+        // Dispatch the welcome email job after successful transaction
+        if ($user) {
+            SendWelcomeEmailJob::dispatch($user);
+        }
 
         return redirect(route('dashboard', absolute: false));
     }

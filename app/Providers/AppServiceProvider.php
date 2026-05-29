@@ -28,21 +28,14 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Event::listen(
-            \App\Events\OfferCreated::class,
-            \App\Listeners\NotifySeller::class,
+            \App\Events\CarRejected::class,
+            \App\Listeners\NotifyCarRejection::class,
         );
 
         Event::listen(
-            \App\Events\SaleCompleted::class,
-            \App\Listeners\NotifySaleParticipants::class
+            \App\Events\OfferCreated::class,
+            \App\Listeners\NotifySeller::class,
         );
-
-      if (class_exists(\App\Listeners\LogSaleActivity::class)) {
-            Event::listen(
-                \App\Events\SaleCompleted::class,
-                \App\Listeners\LogSaleActivity::class
-            );
-        }
 
         Event::listen(
             \App\Events\RentalPaid::class,
@@ -50,8 +43,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Event::listen(
-            \App\Events\CarRejected::class,
-            \App\Listeners\NotifyCarRejection::class,
+            \App\Events\SaleCompleted::class,
+            \App\Listeners\NotifySaleParticipants::class
         );
+
     }
 }

@@ -41,6 +41,16 @@ class Customers extends Model
         return $this->hasMany(Cars::class,'id_vendedor');
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sales::class, 'id_vendedor');
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Sales::class, 'id_comprador');
+    }
+
     public function rentals()
     {
         return $this->hasMany(Rental::class, 'id_cliente');
@@ -58,5 +68,17 @@ class Customers extends Model
         return $this->belongsToMany(Cars::class, 'offers', 'id_comprador', 'id_vehiculo')
                     ->withPivot('cantidad', 'estado', 'id_vendedor')
                     ->withTimestamps();
+    }
+
+    public function getPendingNotificationsCountAttribute()
+    {
+        $pendingOffers = \App\Models\Offer::where('id_vendedor', $this->id)->where('estado', 'pending')->count();
+        $acceptedOffers = \App\Models\Offer::where('id_comprador', $this->id)->where('estado', 'accepted_by_seller')->count();
+        $pendingRentals = \App\Models\Rental::whereHas('car', function($q) {
+            $q->where('id_vendedor', $this->id);
+        })->where('id_estado', 1)->count();
+        $acceptedRentals = \App\Models\Rental::where('id_cliente', $this->id)->where('id_estado', 7)->count();
+
+        return $pendingOffers + $acceptedOffers + $pendingRentals + $acceptedRentals;
     }
 }

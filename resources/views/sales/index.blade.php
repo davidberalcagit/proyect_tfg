@@ -119,7 +119,7 @@
                                         <tr>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Car') }}</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Seller') }}</th>
-                                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Amount') }}</th>
+                                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Amount Breakdown') }}</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Status') }}</th>
                                             <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
                                         </tr>
@@ -131,7 +131,21 @@
                                                     <a href="{{ route('cars.show', $offer->car) }}" class="text-[#B35F12] font-bold hover:underline">{{ Str::limit($offer->car->title, 30) }}</a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $offer->seller->nombre_contacto }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap font-mono text-[#284961] font-bold">{{ number_format($offer->cantidad, 2) }} €</td>
+                                                <td class="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                                                    <div class="text-gray-800">
+                                                        <span class="font-bold">{{ number_format($offer->cantidad, 2) }} €</span>
+                                                        <span class="text-gray-500 text-xs"> ({{ __('Offer') }})</span>
+                                                    </div>
+                                                    <div class="text-gray-600 text-xs mt-1">
+                                                        + {{ number_format($offer->cantidad * 0.05, 2) }} € <span class="text-gray-500">({{ __('Commission') }} 5%)</span>
+                                                    </div>
+                                                    <div class="text-gray-600 text-xs">
+                                                        + {{ number_format(($offer->cantidad * 0.05) * 0.21, 2) }} € <span class="text-gray-500">({{ __('VAT') }} 21%)</span>
+                                                    </div>
+                                                    <div class="font-bold text-green-700 mt-1 pt-1 border-t">
+                                                        Total: {{ number_format($offer->cantidad + ($offer->cantidad * 0.05) + (($offer->cantidad * 0.05) * 0.21), 2) }} €
+                                                    </div>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                                         @if($offer->estado == 'pending') bg-yellow-100 text-yellow-800
@@ -141,7 +155,7 @@
                                                         {{ ucfirst(str_replace('_', ' ', $offer->estado)) }}
                                                     </span>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
                                                     @if($offer->estado == 'accepted_by_seller')
                                                         <form action="{{ route('offers.pay', $offer) }}" method="POST" class="inline-block action-form">
                                                             @csrf
@@ -176,7 +190,7 @@
                                         <tr>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Car') }}</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Period') }}</th>
-                                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Total Price') }}</th>
+                                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Amount Breakdown') }}</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Return Date') }}</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Status') }}</th>
                                             <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">{{ __('Actions') }}</th>
@@ -191,7 +205,21 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">
                                                     {{ $rental->fecha_inicio->format('d/m/Y') }} - {{ $rental->fecha_fin->format('d/m/Y') }}
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap font-mono text-[#284961] font-bold">{{ number_format($rental->precio_total, 2) }} €</td>
+                                                <td class="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                                                    <div class="text-gray-800">
+                                                        <span class="font-bold">{{ number_format($rental->precio_total, 2) }} €</span>
+                                                        <span class="text-gray-500 text-xs"> ({{ __('Rental Cost') }})</span>
+                                                    </div>
+                                                    <div class="text-gray-600 text-xs mt-1">
+                                                        + {{ number_format($rental->precio_total * 0.15, 2) }} € <span class="text-gray-500">({{ __('Commission') }} 15%)</span>
+                                                    </div>
+                                                    <div class="text-gray-600 text-xs">
+                                                        + {{ number_format(($rental->precio_total * 0.15) * 0.21, 2) }} € <span class="text-gray-500">({{ __('VAT') }} 21%)</span>
+                                                    </div>
+                                                    <div class="font-bold text-green-700 mt-1 pt-1 border-t">
+                                                        Total: {{ number_format($rental->precio_total + ($rental->precio_total * 0.15) + (($rental->precio_total * 0.15) * 0.21), 2) }} €
+                                                    </div>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-[#284961] font-bold">
                                                     {{ $rental->fecha_fin->format('d/m/Y') }}
                                                 </td>
@@ -208,7 +236,7 @@
                                                         {{ $rental->status->nombre }}
                                                     </span>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
                                                     @if($rental->id_estado == 7)
                                                         <form action="{{ route('rentals.pay', $rental) }}" method="POST" class="inline-block action-form">
                                                             @csrf

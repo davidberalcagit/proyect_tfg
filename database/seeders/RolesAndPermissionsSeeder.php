@@ -19,15 +19,12 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permissions = [
             'create cars',
-            'crud own cars',
             'buy cars',
-            'crud all cars',
-            'all access',
-            'offers for companies',
-            'offers for individuals',
             'view cars',
             'view users data',
             'view customers data',
+            'offers for companies',
+            'offers for individuals',
         ];
 
         foreach ($permissions as $permission) {
@@ -37,21 +34,21 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::firstOrCreate(['name' => 'individual', 'guard_name' => 'web']);
         $role->syncPermissions([
             'create cars',
-            'crud own cars',
             'buy cars',
-            'offers for individuals',
             'view customers data',
-            'view cars'
+            'view cars',
+            'offers for companies',
+            'offers for individuals'
         ]);
 
         $role = Role::firstOrCreate(['name' => 'dealership', 'guard_name' => 'web']);
         $role->syncPermissions([
             'create cars',
-            'crud own cars',
             'buy cars',
-            'offers for companies',
             'view customers data',
-            'view cars'
+            'view cars',
+            'offers for companies',
+            'offers for individuals'
         ]);
 
         $role = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
@@ -59,7 +56,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::firstOrCreate(['name' => 'supervisor', 'guard_name' => 'web']);
         $role->syncPermissions([
-            'crud all cars',
             'view customers data',
             'view cars'
         ]);

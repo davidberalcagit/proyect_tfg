@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreColorRequest;
+use App\Http\Requests\UpdateColorRequest;
 use App\Models\Color;
-use Illuminate\Http\Request;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Colores
+ * @subgroupDescription Gestión de los colores de vehículos.
  */
 class ColorsController extends Controller
 {
@@ -30,10 +33,9 @@ class ColorsController extends Controller
      * @bodyParam nombre string required Nombre del color. Example: Azul Mate
      * @response 201 { ... }
      */
-    public function store(Request $request)
+    public function store(StoreColorRequest $request)
     {
-        $request->validate(['nombre' => 'required|unique:colors,nombre']);
-        $color = Color::create($request->all());
+        $color = Color::create($request->validated());
         return response()->json($color, 201);
     }
 
@@ -56,10 +58,10 @@ class ColorsController extends Controller
      * @bodyParam nombre string Nuevo nombre.
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateColorRequest $request, $id)
     {
         $color = Color::findOrFail($id);
-        $color->update($request->all());
+        $color->update($request->validated());
         return response()->json($color, 200);
     }
 

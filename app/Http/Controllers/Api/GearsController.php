@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGearRequest;
+use App\Http\Requests\UpdateGearRequest;
 use App\Models\Gears;
-use Illuminate\Http\Request;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Marchas
+ * @subgroupDescription Gestión de los tipos de marchas (transmisiones).
  */
 class GearsController extends Controller
 {
@@ -30,10 +33,9 @@ class GearsController extends Controller
      * @bodyParam tipo string required Tipo de marcha. Example: Secuencial
      * @response 201 { ... }
      */
-    public function store(Request $request)
+    public function store(StoreGearRequest $request)
     {
-        $request->validate(['tipo' => 'required|unique:gears,tipo']);
-        $gear = Gears::create($request->all());
+        $gear = Gears::create($request->validated());
         return response()->json($gear, 201);
     }
 
@@ -56,10 +58,10 @@ class GearsController extends Controller
      * @bodyParam tipo string Nuevo tipo.
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGearRequest $request, $id)
     {
         $gear = Gears::findOrFail($id);
-        $gear->update($request->all());
+        $gear->update($request->validated());
         return response()->json($gear, 200);
     }
 

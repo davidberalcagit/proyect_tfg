@@ -12,6 +12,7 @@ class MakeOffer extends Component
     public $car;
     public $cantidad;
     public $isModalOpen = false;
+    public $confirmationStep = false;
 
     protected $rules = [
         'cantidad' => 'required|numeric|min:1',
@@ -33,12 +34,20 @@ class MakeOffer extends Component
         }
 
         $this->isModalOpen = true;
+        $this->confirmationStep = false;
     }
 
     public function closeModal()
     {
         $this->isModalOpen = false;
+        $this->confirmationStep = false;
         $this->reset(['cantidad']);
+    }
+
+    public function confirmOffer()
+    {
+        $this->validate();
+        $this->confirmationStep = true;
     }
 
     public function submitOffer()
@@ -59,6 +68,7 @@ class MakeOffer extends Component
 
         if ($existingOffer) {
             session()->flash('error', 'Ya tienes una oferta pendiente para este coche.');
+            $this->closeModal();
             return;
         }
 

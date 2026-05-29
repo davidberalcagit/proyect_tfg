@@ -25,22 +25,46 @@ class Rental extends Model
 
     public function scopeOverlapping($query, $carId, $start, $end)
     {
-        return $query->where('id_vehiculo', $carId)
-                     ->whereIn('id_estado', [1, 2, 3, 7])
-                     ->where(function ($q) use ($start, $end) {
-                         $q->whereBetween('fecha_inicio', [$start, $end])
-                           ->orWhereBetween('fecha_fin', [$start, $end])
-                           ->orWhere(function ($q2) use ($start, $end) {
-                               $q2->where('fecha_inicio', '<=', $start)
-                                  ->where('fecha_fin', '>=', $end);
-                           });
-                     });
+        $query->where('id_vehiculo', $carId);
+        $query->whereIn('id_estado', [1, 2, 3, 7]);
+        $query->where(function ($dateQuery) use ($start, $end) {
+            $dateQuery->whereBetween('fecha_inicio', [$start, $end]);
+            $dateQuery->orWhereBetween('fecha_fin', [$start, $end]);
+            $dateQuery->orWhere(function ($envelopQuery) use ($start, $end) {
+                $envelopQuery->where('fecha_inicio', '<=', $start);
+                $envelopQuery->where('fecha_fin', '>=', $end);
+            });
+
+        });
+
+        return $query;
     }
 
 
     public function scopeActive($query)
     {
         return $query->where('id_estado', 3);
+    }
+
+    public function getDurationDaysAttribute()
+    {
+        $days = $this->fecha_inicio->diffInDays($this->fecha_fin);
+        return $days == 0 ? 1 : $days;
+    }
+
+    public function getServiceFeeAttribute()
+    {
+        return $this->precio_total * 0.15;
+    }
+
+    public function getTaxAttribute()
+    {
+        return $this->service_fee * 0.21;
+    }
+
+    public function getGrandTotalAttribute()
+    {
+        return $this->precio_total + $this->service_fee + $this->tax;
     }
 
     public function car()

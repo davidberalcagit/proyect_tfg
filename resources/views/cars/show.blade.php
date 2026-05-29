@@ -73,7 +73,7 @@
                                     <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Seller') }}</span>
                                     <span class="font-medium">
                                         @if($car->vendedor)
-                                            @if(Auth::check() && Auth::user()->can('view users') && $car->vendedor->user)
+                                            @if(Auth::check() && Auth::user()->can('view users data') && $car->vendedor->user)
                                                 <a href="{{ route('support.users.show', $car->vendedor->user) }}" class="text-[#B35F12] hover:underline font-bold">
                                                     {{ $car->vendedor->nombre_contacto }}
                                                 </a>
@@ -146,9 +146,9 @@
 
                             <div class="mt-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
                                 <span class="text-gray-500 block mb-2 text-xs uppercase tracking-wide">{{ __('Description') }}</span>
-                                <p class="text-gray-700 text-sm leading-relaxed">
-                                    {{ $car->descripcion }}
-                                </p>
+                                <div class="text-gray-700 text-sm leading-relaxed prose max-w-none">
+                                    {!! $car->descripcion !!}
+                                </div>
                             </div>
 
                             <div class="mt-8 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">

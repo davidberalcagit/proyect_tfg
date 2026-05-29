@@ -56,7 +56,15 @@ class CarsPolicy
 
     public function rent(User $user, Cars $car): bool
     {
-        if ($user->customer && $user->customer->id === $car->id_vendedor) {
+        if (!$user->can('buy cars')) {
+            return false;
+        }
+
+        if (!$user->customer) {
+            return false;
+        }
+
+        if ($user->customer->id === $car->id_vendedor) {
             return false;
         }
 

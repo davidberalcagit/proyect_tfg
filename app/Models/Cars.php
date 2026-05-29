@@ -42,29 +42,37 @@ class Cars extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['brand'] ?? null, function ($q, $brand) {
-            $q->where('id_marca', $brand);
-        })
-        ->when($filters['min_price'] ?? null, function ($q, $price) {
-            $q->where('precio', '>=', $price);
-        })
-        ->when($filters['max_price'] ?? null, function ($q, $price) {
-            $q->where('precio', '<=', $price);
-        });
+        if (isset($filters['brand']) && $filters['brand'] !== null) {
+            $query->where('id_marca', $filters['brand']);
+        }
+
+        if (isset($filters['min_price']) && $filters['min_price'] !== null) {
+            $query->where('precio', '>=', $filters['min_price']);
+        }
+
+        if (isset($filters['max_price']) && $filters['max_price'] !== null) {
+            $query->where('precio', '<=', $filters['max_price']);
+        }
+
+        return $query;
     }
 
     public function scopeSearch($query, $term)
     {
-        return $query->where(function($q) use ($term) {
-            $q->where('title', 'like', "%{$term}%")
-              ->orWhere('descripcion', 'like', "%{$term}%")
-              ->orWhereHas('marca', fn($q2) => $q2->where('nombre', 'like', "%{$term}%"));
+        return $query->where(function($searchGroup) use ($term) {
+            $searchGroup->where('title', 'like', "%{$term}%");
+            $searchGroup->orWhere('descripcion', 'like', "%{$term}%");
+            $searchGroup->orWhereHas('marca', function($brandQuery) use ($term) {
+                $brandQuery->where('nombre', 'like', "%{$term}%");
+            });
+
         });
     }
 
     public function scopeRecent($query, $days = 7)
     {
-        return $query->where('created_at', '>=', now()->subDays($days));
+        $fechaLimite = now()->subDays($days);
+        return $query->where('created_at', '>=', $fechaLimite);
     }
 
     public function scopeCheap($query, $maxPrice = 5000)

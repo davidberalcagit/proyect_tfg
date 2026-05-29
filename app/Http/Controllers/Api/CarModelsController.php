@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCarModelRequest;
+use App\Http\Requests\UpdateCarModelRequest;
 use App\Models\CarModels;
-use Illuminate\Http\Request;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Modelos
+ * @subgroupDescription Gestión de los modelos de vehículos.
  */
 class CarModelsController extends Controller
 {
@@ -40,13 +43,9 @@ class CarModelsController extends Controller
      *
      * @response 201 { ... }
      */
-    public function store(Request $request)
+    public function store(StoreCarModelRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'id_marca' => 'required|exists:brands,id'
-        ]);
-        $model = CarModels::create($request->all());
+        $model = CarModels::create($request->validated());
         return response()->json($model, 201);
     }
 
@@ -75,10 +74,10 @@ class CarModelsController extends Controller
      *
      * @response 200 { ... }
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCarModelRequest $request, $id)
     {
         $model = CarModels::findOrFail($id);
-        $model->update($request->all());
+        $model->update($request->validated());
         return response()->json($model, 200);
     }
 

@@ -26,6 +26,11 @@ class OfferPolicy
         if (!$user->customer) return false;
         if (!$user->can('buy cars')) return false;
 
+        // El usuario debe tener al menos uno de los dos permisos para hacer ofertas
+        if (!$user->can('offers for individuals') && !$user->can('offers for companies')) {
+            return false;
+        }
+
         if ($user->customer->id === $car->id_vendedor) {
             return false;
         }

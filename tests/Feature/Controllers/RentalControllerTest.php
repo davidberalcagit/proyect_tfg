@@ -15,12 +15,18 @@ use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'individual']);
+    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+    $role = Role::firstOrCreate(['name' => 'individual', 'guard_name' => 'web']);
+    $permission = Permission::firstOrCreate(['name' => 'buy cars', 'guard_name' => 'web']);
+    $role->givePermissionTo($permission);
 
     DB::table('rental_statuses')->insertOrIgnore([
         ['id' => 1, 'nombre' => 'Pendiente de Aprobación'],
@@ -42,11 +48,15 @@ beforeEach(function () {
 });
 
 test('rental create page loads', function () {
+    $ownerUser = User::factory()->create();
+    $owner = Customers::factory()->create(['id_usuario' => $ownerUser->id]);
+
     $user = User::factory()->create();
     $user->assignRole('individual');
     Customers::factory()->create(['id_usuario' => $user->id]);
 
     $car = Cars::factory()->create([
+        'id_vendedor' => $owner->id,
         'id_marca' => $this->brand->id,
         'id_modelo' => $this->model->id,
         'id_combustible' => $this->fuel->id,
@@ -62,11 +72,15 @@ test('rental create page loads', function () {
 });
 
 test('rental store creates rental request', function () {
+    $ownerUser = User::factory()->create();
+    $owner = Customers::factory()->create(['id_usuario' => $ownerUser->id]);
+
     $user = User::factory()->create();
     $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
 
     $car = Cars::factory()->create([
+        'id_vendedor' => $owner->id,
         'id_marca' => $this->brand->id,
         'id_modelo' => $this->model->id,
         'id_combustible' => $this->fuel->id,
@@ -107,9 +121,11 @@ test('rental accept updates status', function () {
         'id_listing_type' => $this->listingType->id,
     ]);
 
+    $renterCustomer = Customers::factory()->create();
+
     $rental = Rental::create([
         'id_vehiculo' => $car->id,
-        'id_cliente' => $ownerCustomer->id,
+        'id_cliente' => $renterCustomer->id,
         'fecha_inicio' => now()->addDay(),
         'fecha_fin' => now()->addDays(3),
         'precio_total' => 100,
@@ -138,9 +154,11 @@ test('rental reject updates status', function () {
         'id_listing_type' => $this->listingType->id,
     ]);
 
+    $renterCustomer = Customers::factory()->create();
+
     $rental = Rental::create([
         'id_vehiculo' => $car->id,
-        'id_cliente' => $ownerCustomer->id,
+        'id_cliente' => $renterCustomer->id,
         'fecha_inicio' => now()->addDay(),
         'fecha_fin' => now()->addDays(3),
         'precio_total' => 100,
@@ -159,7 +177,10 @@ test('rental pay updates status', function () {
     $user->assignRole('individual');
     $customer = Customers::factory()->create(['id_usuario' => $user->id]);
 
+    $ownerCustomer = Customers::factory()->create();
+
     $car = Cars::factory()->create([
+        'id_vendedor' => $ownerCustomer->id,
         'id_marca' => $this->brand->id,
         'id_modelo' => $this->model->id,
         'id_combustible' => $this->fuel->id,

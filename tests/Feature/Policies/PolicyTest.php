@@ -13,8 +13,10 @@ beforeEach(function () {
 
     Permission::firstOrCreate(['name' => 'buy cars']);
     Permission::firstOrCreate(['name' => 'view customers data']);
+    Permission::firstOrCreate(['name' => 'offers for individuals']);
 
     $individualRole->givePermissionTo('buy cars');
+    $individualRole->givePermissionTo('offers for individuals');
     $adminRole->givePermissionTo('view customers data');
 });
 
