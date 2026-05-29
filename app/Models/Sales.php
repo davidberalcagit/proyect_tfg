@@ -25,6 +25,21 @@ class Sales extends Model
                      ->where('id_estado', 1);
     }
 
+    public function getServiceFeeAttribute()
+    {
+        return $this->precio * 0.05;
+    }
+
+    public function getTaxAttribute()
+    {
+        return $this->service_fee * 0.21;
+    }
+
+    public function getGrandTotalAttribute()
+    {
+        return $this->precio + $this->service_fee + $this->tax;
+    }
+
     public function vehiculo(){
         return $this->belongsTo(Cars::class, 'id_vehiculo');
     }

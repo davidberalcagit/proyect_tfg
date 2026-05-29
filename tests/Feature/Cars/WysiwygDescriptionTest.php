@@ -31,7 +31,26 @@ beforeEach(function () {
     CarStatus::firstOrCreate(['id' => 4, 'nombre' => 'Pendiente']);
 });
 
-it('can store and display all wysiwyg html tags from the editor buttons', function () {
+it('displays the drag and drop ui and wysiwyg editor on create page', function () {
+    $this->actingAs($this->user);
+
+    $response = $this->get(route('cars.create', ['type' => 'sale']));
+    $response->assertStatus(200);
+
+    // Verify WYSIWYG (CKEditor) is loaded
+    $response->assertSee('https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js', false);
+    // Cambiamos la aserción para que no dependa de saltos de línea exactos que se puedan haber reformateado
+    $response->assertSee('ClassicEditor', false);
+    $response->assertSee("create(document.querySelector('#descripcion')", false);
+
+    // Verify Drag and Drop UI (Alpine.js) is loaded
+    // En lugar de buscar "imageUploader()", buscamos las funciones inyectadas directamente en x-data
+    $response->assertSee('handleFileChange(event)', false);
+    $response->assertSee('@drop.prevent="handleDrop($event)"', false);
+    $response->assertSee('URL.createObjectURL', false); // Confirma la previsualización JS
+});
+
+it('can store and display all wysiwyg html tags and image from form', function () {
     $this->actingAs($this->user);
 
     Storage::fake('public');
@@ -49,6 +68,9 @@ it('can store and display all wysiwyg html tags from the editor buttons', functi
         </ol>
         <blockquote>Blockquote text</blockquote>";
 
+    // Simulate the drag and drop upload generating a fake file
+    $dragAndDropFile = UploadedFile::fake()->image('mi_coche_guapo.jpg');
+
     $carData = [
         'id_marca' => $this->brand->id,
         'id_modelo' => $this->carModel->id,
@@ -61,7 +83,7 @@ it('can store and display all wysiwyg html tags from the editor buttons', functi
         'matricula' => '1234ABC',
         'descripcion' => $richTextDescription,
         'id_listing_type' => $this->listingType->id,
-        'image' => UploadedFile::fake()->image('car.jpg'),
+        'image' => $dragAndDropFile,
     ];
 
     $response = $this->post(route('cars.store'), $carData);
@@ -71,6 +93,10 @@ it('can store and display all wysiwyg html tags from the editor buttons', functi
 
     $car = Cars::where('matricula', '1234ABC')->first();
     expect($car)->not->toBeNull();
+
+    // Verify Image was stored
+    expect($car->image)->not->toBeNull();
+    Storage::disk('public')->assertExists($car->image);
 
     // Use trim on both to avoid trailing/leading space issues
     expect(trim($car->descripcion))->toBe(trim($richTextDescription));

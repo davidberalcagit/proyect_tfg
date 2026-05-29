@@ -59,9 +59,12 @@ class User extends Authenticatable
     public function scopeActiveTraders($query)
     {
         return $query->whereHas('customer.cars', function ($q) {
-            $q->where('id_estado', 1);
+            $q->where('id_estado', 1)
+                ->where('created_at', '>=', now()->subYear());
         })->orWhereHas('customer.sales', function ($q) {
-            $q->where('created_at', '>=', now()->subDays(30));
+            $q->where('created_at', '>=', now()->subMonths(3));
+        })->orWhereHas('customer.rentals', function ($q) {
+            $q->where('created_at', '>=', now()->subMonths(3));
         });
     }
 

@@ -179,7 +179,7 @@ class CarsController extends Controller
             ProcessCarImageJob::dispatch($car->id);
         }
         $car->save();
-        return redirect()->route('cars.index')->with('success', 'Coche actualizado correctamente.');
+        return redirect()->route('cars.my_cars')->with('success', 'Coche actualizado correctamente.');
     }
 
     public function destroy(Cars $car)

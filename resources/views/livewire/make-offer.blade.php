@@ -8,7 +8,12 @@
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" wire:click="closeModal"></div>
 
             <div class="bg-white rounded-xl overflow-hidden shadow-2xl transform transition-all sm:max-w-md w-full p-6 relative z-10 border border-gray-200">
-                <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">{{ __('Offer for') }} {{ $car->title }}</h3>
+
+                @if(!$confirmationStep)
+                    <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">{{ __('Offer for') }} {{ $car->title }}</h3>
+                @else
+                    <h3 class="text-xl font-bold text-[#284961] mb-4" id="modal-title">{{ __('Confirm Your Offer') }}</h3>
+                @endif
 
                 @if (session()->has('error'))
                     <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 mb-4 text-sm rounded">
@@ -16,20 +21,54 @@
                     </div>
                 @endif
 
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">{{ __('Your Offer') }} (€)</label>
-                    <input type="number" wire:model="cantidad" wire:keydown.enter="submitOffer" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50 py-2 px-3 text-lg font-mono text-[#284961]" placeholder="0.00" autofocus>
-                    @error('cantidad') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
-                </div>
+                @if(!$confirmationStep)
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ __('Your Offer') }} (€)</label>
+                        <input type="number" wire:model="cantidad" wire:keydown.enter="confirmOffer" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50 py-2 px-3 text-lg font-mono text-[#284961]" placeholder="0.00" autofocus>
+                        @error('cantidad') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="flex justify-end space-x-3">
-                    <button wire:click="closeModal" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition text-sm uppercase tracking-wide">
-                        {{ __('Cancel') }}
-                    </button>
-                    <button wire:click="submitOffer" class="bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm uppercase tracking-wide">
-                        {{ __('Send Offer') }}
-                    </button>
-                </div>
+                    <div class="flex justify-end space-x-3">
+                        <button wire:click="closeModal" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition text-sm uppercase tracking-wide">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button wire:click="confirmOffer" class="bg-[#B35F12] hover:bg-[#9A5210] text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm uppercase tracking-wide">
+                            {{ __('Next') }}
+                        </button>
+                    </div>
+                @else
+                    <div class="mb-6">
+                        <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 shadow-inner">
+                            <p class="font-bold text-[#284961] mb-2">{{ __('Estimated Final Cost') }}:</p>
+                            <div class="flex justify-between mb-1">
+                                <span>{{ __('Base Offer') }}</span>
+                                <span class="font-medium text-gray-800">{{ number_format($cantidad, 2) }} €</span>
+                            </div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>+ {{ __('Platform Fee') }} (5%)</span>
+                                <span>{{ number_format($cantidad * 0.05, 2) }} €</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span>+ {{ __('VAT') }} (21% {{ __('on Fee') }})</span>
+                                <span>{{ number_format(($cantidad * 0.05) * 0.21, 2) }} €</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-green-700 mt-3 pt-3 border-t border-gray-300 text-base">
+                                <span>{{ __('Total to Pay') }}</span>
+                                <span>{{ number_format($cantidad + ($cantidad * 0.05) + (($cantidad * 0.05) * 0.21), 2) }} €</span>
+                            </div>
+                            <p class="text-[10px] text-gray-400 mt-2 italic">* {{ __('This amount will only be charged if the seller accepts your offer.') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button wire:click="$set('confirmationStep', false)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition text-sm uppercase tracking-wide">
+                            {{ __('Back') }}
+                        </button>
+                        <button wire:click="submitOffer" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm uppercase tracking-wide">
+                            {{ __('Confirm & Send') }}
+                        </button>
+                    </div>
+                @endif
             </div>
         </div>
     @endif

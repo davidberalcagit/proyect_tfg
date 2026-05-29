@@ -3,7 +3,7 @@
 <head>
     <title>{{ __('Sale Receipt') }}</title>
     <style>
-        body { font-family: 'Helvetica', sans-serif; font-size: 12px; color: #1a202c; line-height: 1.6; } /* Texto base casi negro */
+        body { font-family: 'Helvetica', sans-serif; font-size: 12px; color: #1a202c; line-height: 1.6; }
         .container { width: 100%; margin: 0 auto; }
 
         .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #2d3748; padding-bottom: 20px; }
@@ -95,13 +95,6 @@
 
         <h3>{{ __('Financial Breakdown') }}</h3>
 
-        @php
-            $total = $sale->precio;
-            $serviceFee = $total * 0.05;
-            $tax = $serviceFee * 0.21;
-            $grandTotal = $total + $serviceFee + $tax;
-        @endphp
-
         <table>
             <thead>
                 <tr>
@@ -112,15 +105,15 @@
             <tbody>
                 <tr>
                     <td>{{ __('Vehicle Price') }} ({{ $sale->vehiculo->title }})</td>
-                    <td style="text-align: right;">{{ number_format($total, 2) }} €</td>
+                    <td style="text-align: right;">{{ number_format($sale->precio, 2) }} €</td>
                 </tr>
                 <tr>
                     <td>{{ __('Platform Service Fee') }} (5%)</td>
-                    <td style="text-align: right;">{{ number_format($serviceFee, 2) }} €</td>
+                    <td style="text-align: right;">{{ number_format($sale->service_fee, 2) }} €</td>
                 </tr>
                 <tr>
                     <td>{{ __('VAT') }} (21% {{ __('on Service Fee') }})</td>
-                    <td style="text-align: right;">{{ number_format($tax, 2) }} €</td>
+                    <td style="text-align: right;">{{ number_format($sale->tax, 2) }} €</td>
                 </tr>
             </tbody>
         </table>
@@ -129,11 +122,11 @@
             <table>
                 <tr>
                     <th>{{ __('Subtotal') }}</th>
-                    <td>{{ number_format($total + $serviceFee, 2) }} €</td>
+                    <td>{{ number_format($sale->precio + $sale->service_fee, 2) }} €</td>
                 </tr>
                 <tr>
                     <th>{{ __('TOTAL PAID') }}</th>
-                    <td class="grand-total">{{ number_format($grandTotal, 2) }} €</td>
+                    <td class="grand-total">{{ number_format($sale->grand_total, 2) }} €</td>
                 </tr>
             </table>
         </div>

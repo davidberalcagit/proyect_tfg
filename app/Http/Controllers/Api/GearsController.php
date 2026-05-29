@@ -9,6 +9,8 @@ use App\Models\Gears;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Marchas
+ * @subgroupDescription Gestión de los tipos de marchas (transmisiones).
  */
 class GearsController extends Controller
 {

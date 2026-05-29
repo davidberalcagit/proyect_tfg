@@ -121,15 +121,7 @@ return [
                     'app.debug' => false,
                     'auth' => [
                         'enabled' => true,
-                        'login' => function () {
-                            $user = \App\Models\User::first();
-                            if (!$user) {
-                                $user = \App\Models\User::factory()->create();
-                            }
-                            $token = $user->createToken('Scribe')->plainTextToken;
-                            return $token;
-                        },
-                        'use_value' => true,
+                        'use_value' => env('SCRIBE_AUTH_KEY'),
                         'param_name' => 'Authorization',
                         'prefix' => 'Bearer ',
                     ],

@@ -13,11 +13,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RentalController extends Controller
 {
+    use AuthorizesRequests;
+
     public function create(Cars $car)
     {
+        $this->authorize('rent', $car);
         return view('rentals.create', compact('car'));
     }
 
@@ -29,13 +33,7 @@ class RentalController extends Controller
 
     public function store(Request $request, Cars $car)
     {
-        if (!Auth::check() || !Auth::user()->customer) {
-            return redirect()->route('login')->with('error', 'Debes iniciar sesión y tener perfil de cliente.');
-        }
-
-        if ($car->id_estado !== 3) {
-            return redirect()->back()->with('error', 'Este coche no está disponible para alquiler.');
-        }
+        $this->authorize('rent', $car);
 
         $request->validate([
             'fecha_inicio' => 'required|date|after_or_equal:today',

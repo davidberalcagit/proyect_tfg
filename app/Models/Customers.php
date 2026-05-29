@@ -41,6 +41,16 @@ class Customers extends Model
         return $this->hasMany(Cars::class,'id_vendedor');
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sales::class, 'id_vendedor');
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Sales::class, 'id_comprador');
+    }
+
     public function rentals()
     {
         return $this->hasMany(Rental::class, 'id_cliente');

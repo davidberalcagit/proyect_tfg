@@ -9,6 +9,8 @@ use App\Models\CarModels;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Modelos
+ * @subgroupDescription Gestión de los modelos de vehículos.
  */
 class CarModelsController extends Controller
 {

@@ -9,6 +9,8 @@ use App\Models\Color;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Colores
+ * @subgroupDescription Gestión de los colores de vehículos.
  */
 class ColorsController extends Controller
 {

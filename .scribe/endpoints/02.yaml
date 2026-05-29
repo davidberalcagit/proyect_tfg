@@ -1,7 +1,5 @@
 name: 'Tablas Auxiliares'
-description: |-
-
-  Gestión de datos maestros (Marcas, Modelos, etc.).
+description: ''
 endpoints:
   -
     custom: []
@@ -11,11 +9,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Listar Marcas'
       description: 'Obtiene todas las marcas de coches registradas.'
       authenticated: true
@@ -64,11 +60,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Ver Marca'
       description: 'Obtiene los detalles de una marca.'
       authenticated: true
@@ -123,11 +117,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Listar Modelos de una Marca'
       description: 'Obtiene todos los modelos asociados a una marca específica.'
       authenticated: true
@@ -191,8 +183,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Modelos
+      subgroupDescription: 'Gestión de los modelos de vehículos.'
       title: 'Listar Modelos'
       description: 'Obtiene todos los modelos de coches registrados.'
       authenticated: true
@@ -239,8 +231,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Modelos
+      subgroupDescription: 'Gestión de los modelos de vehículos.'
       title: 'Ver Modelo'
       description: 'Obtiene los detalles de un modelo.'
       authenticated: true
@@ -292,8 +284,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Combustibles
+      subgroupDescription: 'Gestión de los tipos de combustible disponibles.'
       title: 'Listar Combustibles'
       description: 'Obtiene la lista de tipos de combustible disponibles.'
       authenticated: true
@@ -343,8 +335,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Combustibles
+      subgroupDescription: 'Gestión de los tipos de combustible disponibles.'
       title: 'Ver Combustible'
       description: ''
       authenticated: true
@@ -400,8 +392,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Colores
+      subgroupDescription: 'Gestión de los colores de vehículos.'
       title: 'Listar Colores'
       description: ''
       authenticated: true
@@ -444,8 +436,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Colores
+      subgroupDescription: 'Gestión de los colores de vehículos.'
       title: 'Ver Color'
       description: ''
       authenticated: true
@@ -497,8 +489,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Marchas
+      subgroupDescription: 'Gestión de los tipos de marchas (transmisiones).'
       title: 'Listar Marchas'
       description: ''
       authenticated: true
@@ -541,8 +533,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Marchas
+      subgroupDescription: 'Gestión de los tipos de marchas (transmisiones).'
       title: 'Ver Marcha'
       description: ''
       authenticated: true
@@ -593,11 +585,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Crear Marca'
       description: 'Registra una nueva marca. (Solo Admin)'
       authenticated: true
@@ -654,11 +644,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Actualizar Marca'
       description: 'Modifica el nombre de una marca. (Solo Admin)'
       authenticated: true
@@ -721,11 +709,9 @@ endpoints:
     metadata:
       custom: []
       groupName: 'Tablas Auxiliares'
-      groupDescription: |-
-
-        Gestión de datos maestros (Marcas, Modelos, etc.).
-      subgroup: ''
-      subgroupDescription: ''
+      groupDescription: ''
+      subgroup: Marcas
+      subgroupDescription: 'Gestión de las marcas de los vehículos.'
       title: 'Eliminar Marca'
       description: 'Elimina una marca del sistema. (Solo Admin)'
       authenticated: true
@@ -777,8 +763,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Modelos
+      subgroupDescription: 'Gestión de los modelos de vehículos.'
       title: 'Crear Modelo'
       description: 'Registra un nuevo modelo. (Solo Admin)'
       authenticated: true
@@ -843,8 +829,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Modelos
+      subgroupDescription: 'Gestión de los modelos de vehículos.'
       title: 'Actualizar Modelo'
       description: 'Modifica un modelo existente. (Solo Admin)'
       authenticated: true
@@ -881,6 +867,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      id_marca:
+        custom: []
+        name: id_marca
+        description: 'The <code>id</code> of an existing record in the brands table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       nombre: architecto
     fileParameters: []
@@ -908,8 +905,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Modelos
+      subgroupDescription: 'Gestión de los modelos de vehículos.'
       title: 'Eliminar Modelo'
       description: 'Elimina un modelo del sistema. (Solo Admin)'
       authenticated: true
@@ -961,8 +958,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Combustibles
+      subgroupDescription: 'Gestión de los tipos de combustible disponibles.'
       title: 'Crear Combustible'
       description: 'Registra un nuevo tipo de combustible. (Solo Admin)'
       authenticated: true
@@ -1020,8 +1017,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Combustibles
+      subgroupDescription: 'Gestión de los tipos de combustible disponibles.'
       title: 'Actualizar Combustible'
       description: 'Modifica un tipo de combustible. (Solo Admin)'
       authenticated: true
@@ -1085,8 +1082,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Combustibles
+      subgroupDescription: 'Gestión de los tipos de combustible disponibles.'
       title: 'Eliminar Combustible'
       description: 'Elimina un tipo de combustible. (Solo Admin)'
       authenticated: true
@@ -1138,8 +1135,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Colores
+      subgroupDescription: 'Gestión de los colores de vehículos.'
       title: 'Crear Color'
       description: ''
       authenticated: true
@@ -1192,8 +1189,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Colores
+      subgroupDescription: 'Gestión de los colores de vehículos.'
       title: 'Actualizar Color'
       description: ''
       authenticated: true
@@ -1257,8 +1254,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Colores
+      subgroupDescription: 'Gestión de los colores de vehículos.'
       title: 'Eliminar Color'
       description: ''
       authenticated: true
@@ -1310,8 +1307,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Marchas
+      subgroupDescription: 'Gestión de los tipos de marchas (transmisiones).'
       title: 'Crear Marcha'
       description: ''
       authenticated: true
@@ -1364,8 +1361,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Marchas
+      subgroupDescription: 'Gestión de los tipos de marchas (transmisiones).'
       title: 'Actualizar Marcha'
       description: ''
       authenticated: true
@@ -1429,8 +1426,8 @@ endpoints:
       custom: []
       groupName: 'Tablas Auxiliares'
       groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
+      subgroup: Marchas
+      subgroupDescription: 'Gestión de los tipos de marchas (transmisiones).'
       title: 'Eliminar Marcha'
       description: ''
       authenticated: true

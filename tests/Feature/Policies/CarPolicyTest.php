@@ -34,7 +34,7 @@ test('admin can edit approved car', function () {
         'id_listing_type' => 1
     ]);
 
-    $response->assertRedirect(route('cars.index'));
+    $response->assertRedirect(route('cars.my_cars'));
     $this->assertDatabaseHas('cars', ['id' => $car->id, 'precio' => 99999]);
 });
 
@@ -56,7 +56,7 @@ test('owner can edit pending car', function () {
         'id_marca' => $car->id_marca,
         'id_modelo' => $car->id_modelo,
         'id_marcha' => $car->id_marcha,
-        'id_combustible' => $car->id_combustible,
+        'id_combustible' => $this->car->id_combustible ?? 1,
         'id_color' => $car->id_color,
         'matricula' => $car->matricula,
         'anyo_matri' => $car->anyo_matri,
@@ -65,7 +65,7 @@ test('owner can edit pending car', function () {
         'id_listing_type' => 1
     ]);
 
-    $response->assertRedirect(route('cars.index'));
+    $response->assertRedirect(route('cars.my_cars'));
 });
 
 test('owner cannot edit approved car', function () {

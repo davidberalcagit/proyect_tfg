@@ -73,7 +73,7 @@
                                     <span class="text-gray-500 block text-xs uppercase tracking-wide">{{ __('Seller') }}</span>
                                     <span class="font-medium">
                                         @if($car->vendedor)
-                                            @if(Auth::check() && Auth::user()->can('view users') && $car->vendedor->user)
+                                            @if(Auth::check() && Auth::user()->can('view users data') && $car->vendedor->user)
                                                 <a href="{{ route('support.users.show', $car->vendedor->user) }}" class="text-[#B35F12] hover:underline font-bold">
                                                     {{ $car->vendedor->nombre_contacto }}
                                                 </a>

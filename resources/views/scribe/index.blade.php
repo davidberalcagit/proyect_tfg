@@ -167,84 +167,109 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
                     <a href="#tablas-auxiliares">Tablas Auxiliares</a>
                 </li>
                                     <ul id="tocify-subheader-tablas-auxiliares" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-brands">
-                                <a href="#tablas-auxiliares-GETapi-brands">Listar Marcas</a>
+                                                    <li class="tocify-item level-2" data-unique="tablas-auxiliares-marcas">
+                                <a href="#tablas-auxiliares-marcas">Marcas</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-brands--id-">
-                                <a href="#tablas-auxiliares-GETapi-brands--id-">Ver Marca</a>
+                                                            <ul id="tocify-subheader-tablas-auxiliares-marcas" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-brands">
+                                            <a href="#tablas-auxiliares-GETapi-brands">Listar Marcas</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-brands--id-">
+                                            <a href="#tablas-auxiliares-GETapi-brands--id-">Ver Marca</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-brands--id--models">
+                                            <a href="#tablas-auxiliares-GETapi-brands--id--models">Listar Modelos de una Marca</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-POSTapi-brands">
+                                            <a href="#tablas-auxiliares-POSTapi-brands">Crear Marca</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-PUTapi-brands--id-">
+                                            <a href="#tablas-auxiliares-PUTapi-brands--id-">Actualizar Marca</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-DELETEapi-brands--id-">
+                                            <a href="#tablas-auxiliares-DELETEapi-brands--id-">Eliminar Marca</a>
+                                        </li>
+                                                                    </ul>
+                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-modelos">
+                                <a href="#tablas-auxiliares-modelos">Modelos</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-brands--id--models">
-                                <a href="#tablas-auxiliares-GETapi-brands--id--models">Listar Modelos de una Marca</a>
+                                                            <ul id="tocify-subheader-tablas-auxiliares-modelos" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-car-models">
+                                            <a href="#tablas-auxiliares-GETapi-car-models">Listar Modelos</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-car-models--id-">
+                                            <a href="#tablas-auxiliares-GETapi-car-models--id-">Ver Modelo</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-POSTapi-car-models">
+                                            <a href="#tablas-auxiliares-POSTapi-car-models">Crear Modelo</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-PUTapi-car-models--id-">
+                                            <a href="#tablas-auxiliares-PUTapi-car-models--id-">Actualizar Modelo</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-DELETEapi-car-models--id-">
+                                            <a href="#tablas-auxiliares-DELETEapi-car-models--id-">Eliminar Modelo</a>
+                                        </li>
+                                                                    </ul>
+                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-combustibles">
+                                <a href="#tablas-auxiliares-combustibles">Combustibles</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-car-models">
-                                <a href="#tablas-auxiliares-GETapi-car-models">Listar Modelos</a>
+                                                            <ul id="tocify-subheader-tablas-auxiliares-combustibles" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-fuels">
+                                            <a href="#tablas-auxiliares-GETapi-fuels">Listar Combustibles</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-fuels--id-">
+                                            <a href="#tablas-auxiliares-GETapi-fuels--id-">Ver Combustible</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-POSTapi-fuels">
+                                            <a href="#tablas-auxiliares-POSTapi-fuels">Crear Combustible</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-PUTapi-fuels--id-">
+                                            <a href="#tablas-auxiliares-PUTapi-fuels--id-">Actualizar Combustible</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-DELETEapi-fuels--id-">
+                                            <a href="#tablas-auxiliares-DELETEapi-fuels--id-">Eliminar Combustible</a>
+                                        </li>
+                                                                    </ul>
+                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-colores">
+                                <a href="#tablas-auxiliares-colores">Colores</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-car-models--id-">
-                                <a href="#tablas-auxiliares-GETapi-car-models--id-">Ver Modelo</a>
+                                                            <ul id="tocify-subheader-tablas-auxiliares-colores" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-colors">
+                                            <a href="#tablas-auxiliares-GETapi-colors">Listar Colores</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-colors--id-">
+                                            <a href="#tablas-auxiliares-GETapi-colors--id-">Ver Color</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-POSTapi-colors">
+                                            <a href="#tablas-auxiliares-POSTapi-colors">Crear Color</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-PUTapi-colors--id-">
+                                            <a href="#tablas-auxiliares-PUTapi-colors--id-">Actualizar Color</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-DELETEapi-colors--id-">
+                                            <a href="#tablas-auxiliares-DELETEapi-colors--id-">Eliminar Color</a>
+                                        </li>
+                                                                    </ul>
+                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-marchas">
+                                <a href="#tablas-auxiliares-marchas">Marchas</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-fuels">
-                                <a href="#tablas-auxiliares-GETapi-fuels">Listar Combustibles</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-fuels--id-">
-                                <a href="#tablas-auxiliares-GETapi-fuels--id-">Ver Combustible</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-colors">
-                                <a href="#tablas-auxiliares-GETapi-colors">Listar Colores</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-colors--id-">
-                                <a href="#tablas-auxiliares-GETapi-colors--id-">Ver Color</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-gears">
-                                <a href="#tablas-auxiliares-GETapi-gears">Listar Marchas</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-GETapi-gears--id-">
-                                <a href="#tablas-auxiliares-GETapi-gears--id-">Ver Marcha</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-POSTapi-brands">
-                                <a href="#tablas-auxiliares-POSTapi-brands">Crear Marca</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-PUTapi-brands--id-">
-                                <a href="#tablas-auxiliares-PUTapi-brands--id-">Actualizar Marca</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-DELETEapi-brands--id-">
-                                <a href="#tablas-auxiliares-DELETEapi-brands--id-">Eliminar Marca</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-POSTapi-car-models">
-                                <a href="#tablas-auxiliares-POSTapi-car-models">Crear Modelo</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-PUTapi-car-models--id-">
-                                <a href="#tablas-auxiliares-PUTapi-car-models--id-">Actualizar Modelo</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-DELETEapi-car-models--id-">
-                                <a href="#tablas-auxiliares-DELETEapi-car-models--id-">Eliminar Modelo</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-POSTapi-fuels">
-                                <a href="#tablas-auxiliares-POSTapi-fuels">Crear Combustible</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-PUTapi-fuels--id-">
-                                <a href="#tablas-auxiliares-PUTapi-fuels--id-">Actualizar Combustible</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-DELETEapi-fuels--id-">
-                                <a href="#tablas-auxiliares-DELETEapi-fuels--id-">Eliminar Combustible</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-POSTapi-colors">
-                                <a href="#tablas-auxiliares-POSTapi-colors">Crear Color</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-PUTapi-colors--id-">
-                                <a href="#tablas-auxiliares-PUTapi-colors--id-">Actualizar Color</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-DELETEapi-colors--id-">
-                                <a href="#tablas-auxiliares-DELETEapi-colors--id-">Eliminar Color</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-POSTapi-gears">
-                                <a href="#tablas-auxiliares-POSTapi-gears">Crear Marcha</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-PUTapi-gears--id-">
-                                <a href="#tablas-auxiliares-PUTapi-gears--id-">Actualizar Marcha</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="tablas-auxiliares-DELETEapi-gears--id-">
-                                <a href="#tablas-auxiliares-DELETEapi-gears--id-">Eliminar Marcha</a>
-                            </li>
+                                                            <ul id="tocify-subheader-tablas-auxiliares-marchas" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-gears">
+                                            <a href="#tablas-auxiliares-GETapi-gears">Listar Marchas</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-GETapi-gears--id-">
+                                            <a href="#tablas-auxiliares-GETapi-gears--id-">Ver Marcha</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-POSTapi-gears">
+                                            <a href="#tablas-auxiliares-POSTapi-gears">Crear Marcha</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-PUTapi-gears--id-">
+                                            <a href="#tablas-auxiliares-PUTapi-gears--id-">Actualizar Marcha</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="tablas-auxiliares-DELETEapi-gears--id-">
+                                            <a href="#tablas-auxiliares-DELETEapi-gears--id-">Eliminar Marcha</a>
+                                        </li>
+                                                                    </ul>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-ventas" class="tocify-header">
@@ -278,7 +303,7 @@ Muestra las ofertas realizadas por el usuario (como comprador) y las recibidas (
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 17, 2026</li>
+        <li>Last updated: May 11, 2026</li>
     </ul>
 </div>
 
@@ -2204,7 +2229,7 @@ Requiere que el usuario tenga un perfil de vendedor (Customer).</p>
     --form "temp_color=g"\
     --form "descripcion=Coche en perfecto estado..."\
     --form "id_listing_type=1"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php9DE9.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpAA50.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2519,7 +2544,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php9DE9.tmp</code></p>
+<p>Imagen del vehículo. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpAA50.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>id_listing_type</code></b>&nbsp;&nbsp;
@@ -2560,7 +2585,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "km=16"\
     --form "matricula=n"\
     --form "descripcion=architecto"\
-    --form "image=@C:\Users\ninvi\AppData\Local\Temp\php9E77.tmp" </code></pre></div>
+    --form "image=@C:\Users\ninvi\AppData\Local\Temp\phpAABE.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2846,7 +2871,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\php9E77.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\ninvi\AppData\Local\Temp\phpAABE.tmp</code></p>
         </div>
         </form>
 
@@ -4021,9 +4046,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
                 <h1 id="tablas-auxiliares">Tablas Auxiliares</h1>
 
-    <p>Gestión de datos maestros (Marcas, Modelos, etc.).</p>
+    
 
-                                <h2 id="tablas-auxiliares-GETapi-brands">Listar Marcas</h2>
+                        <h2 id="tablas-auxiliares-marcas">Marcas</h2>
+                                        <p>
+                    <p>Gestión de las marcas de los vehículos.</p>
+                </p>
+                                        <h2 id="tablas-auxiliares-GETapi-brands">Listar Marcas</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -4465,1151 +4494,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>El ID de la marca. Example: <code>1</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-car-models">Listar Modelos</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-<p>Obtiene todos los modelos de coches registrados.</p>
-
-<span id="example-requests-GETapi-car-models">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/car-models" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/car-models"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-car-models">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">[
-    {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Corolla&quot;,
-        &quot;marca&quot;: {
-            &quot;id&quot;: 1,
-            &quot;nombre&quot;: &quot;Toyota&quot;
-        }
-    }
-]</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-car-models" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-car-models"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-car-models"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-car-models" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-car-models">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-car-models" data-method="GET"
-      data-path="api/car-models"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-car-models', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-car-models"
-                    onclick="tryItOut('GETapi-car-models');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-car-models"
-                    onclick="cancelTryOut('GETapi-car-models');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-car-models"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/car-models</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-car-models"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-car-models"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-car-models--id-">Ver Modelo</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-<p>Obtiene los detalles de un modelo.</p>
-
-<span id="example-requests-GETapi-car-models--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/car-models/1" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/car-models/1"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-car-models--id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{ ... }</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-car-models--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-car-models--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-car-models--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-car-models--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-car-models--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-car-models--id-" data-method="GET"
-      data-path="api/car-models/{id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-car-models--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-car-models--id-"
-                    onclick="tryItOut('GETapi-car-models--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-car-models--id-"
-                    onclick="cancelTryOut('GETapi-car-models--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-car-models--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/car-models/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models--id-"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-car-models--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-car-models--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-car-models--id-"
-               value="1"
-               data-component="url">
-    <br>
-<p>El ID del modelo. Example: <code>1</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-fuels">Listar Combustibles</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-<p>Obtiene la lista de tipos de combustible disponibles.</p>
-
-<span id="example-requests-GETapi-fuels">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/fuels" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/fuels"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-fuels">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">[
-    {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Gasolina&quot;
-    },
-    {
-        &quot;id&quot;: 2,
-        &quot;nombre&quot;: &quot;Diesel&quot;
-    }
-]</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-fuels" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-fuels"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-fuels"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-fuels" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-fuels">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-fuels" data-method="GET"
-      data-path="api/fuels"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-fuels', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-fuels"
-                    onclick="tryItOut('GETapi-fuels');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-fuels"
-                    onclick="cancelTryOut('GETapi-fuels');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-fuels"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/fuels</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-fuels"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-fuels"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-fuels--id-">Ver Combustible</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-fuels--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/fuels/1" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/fuels/1"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-fuels--id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 1,
-    &quot;nombre&quot;: &quot;Gasolina&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-fuels--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-fuels--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-fuels--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-fuels--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-fuels--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-fuels--id-" data-method="GET"
-      data-path="api/fuels/{id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-fuels--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-fuels--id-"
-                    onclick="tryItOut('GETapi-fuels--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-fuels--id-"
-                    onclick="cancelTryOut('GETapi-fuels--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-fuels--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/fuels/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels--id-"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-fuels--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-fuels--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-fuels--id-"
-               value="1"
-               data-component="url">
-    <br>
-<p>El ID del combustible. Example: <code>1</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-colors">Listar Colores</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-colors">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/colors" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/colors"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-colors">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">[
-    {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Rojo&quot;
-    }
-]</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-colors" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-colors"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-colors"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-colors" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-colors">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-colors" data-method="GET"
-      data-path="api/colors"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-colors', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-colors"
-                    onclick="tryItOut('GETapi-colors');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-colors"
-                    onclick="cancelTryOut('GETapi-colors');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-colors"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/colors</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-colors"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-colors"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-colors--id-">Ver Color</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-colors--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/colors/16" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/colors/16"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-colors--id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 1,
-    &quot;nombre&quot;: &quot;Rojo&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-colors--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-colors--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-colors--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-colors--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-colors--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-colors--id-" data-method="GET"
-      data-path="api/colors/{id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-colors--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-colors--id-"
-                    onclick="tryItOut('GETapi-colors--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-colors--id-"
-                    onclick="cancelTryOut('GETapi-colors--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-colors--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/colors/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors--id-"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-colors--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-colors--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-colors--id-"
-               value="16"
-               data-component="url">
-    <br>
-<p>ID del color. Example: <code>16</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-gears">Listar Marchas</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-gears">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/gears" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/gears"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-gears">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">[
-    {
-        &quot;id&quot;: 1,
-        &quot;tipo&quot;: &quot;Manual&quot;
-    }
-]</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-gears" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-gears"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-gears"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-gears" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-gears">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-gears" data-method="GET"
-      data-path="api/gears"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-gears', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-gears"
-                    onclick="tryItOut('GETapi-gears');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-gears"
-                    onclick="cancelTryOut('GETapi-gears');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-gears"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/gears</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-gears"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-gears"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="tablas-auxiliares-GETapi-gears--id-">Ver Marcha</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-gears--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://proyect.test/api/gears/16" \
-    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://proyect.test/api/gears/16"
-);
-
-const headers = {
-    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-gears--id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 1,
-    &quot;tipo&quot;: &quot;Manual&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-gears--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-gears--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-gears--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-gears--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-gears--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-gears--id-" data-method="GET"
-      data-path="api/gears/{id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-gears--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-gears--id-"
-                    onclick="tryItOut('GETapi-gears--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-gears--id-"
-                    onclick="cancelTryOut('GETapi-gears--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-gears--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/gears/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears--id-"
-               value="Bearer e.g. 1|laravel_sanctum_token..."
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-gears--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-gears--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-gears--id-"
-               value="16"
-               data-component="url">
-    <br>
-<p>ID. Example: <code>16</code></p>
             </div>
                     </form>
 
@@ -6086,6 +4970,296 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                                <h2 id="tablas-auxiliares-modelos">Modelos</h2>
+                                        <p>
+                    <p>Gestión de los modelos de vehículos.</p>
+                </p>
+                                        <h2 id="tablas-auxiliares-GETapi-car-models">Listar Modelos</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Obtiene todos los modelos de coches registrados.</p>
+
+<span id="example-requests-GETapi-car-models">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/car-models" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/car-models"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-car-models">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Corolla&quot;,
+        &quot;marca&quot;: {
+            &quot;id&quot;: 1,
+            &quot;nombre&quot;: &quot;Toyota&quot;
+        }
+    }
+]</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-car-models" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-car-models"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-car-models"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-car-models" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-car-models">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-car-models" data-method="GET"
+      data-path="api/car-models"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-car-models', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-car-models"
+                    onclick="tryItOut('GETapi-car-models');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-car-models"
+                    onclick="cancelTryOut('GETapi-car-models');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-car-models"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/car-models</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-car-models"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-car-models"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="tablas-auxiliares-GETapi-car-models--id-">Ver Modelo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Obtiene los detalles de un modelo.</p>
+
+<span id="example-requests-GETapi-car-models--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/car-models/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/car-models/1"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-car-models--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{ ... }</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-car-models--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-car-models--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-car-models--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-car-models--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-car-models--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-car-models--id-" data-method="GET"
+      data-path="api/car-models/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-car-models--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-car-models--id-"
+                    onclick="tryItOut('GETapi-car-models--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-car-models--id-"
+                    onclick="cancelTryOut('GETapi-car-models--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-car-models--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/car-models/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-car-models--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-car-models--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-car-models--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-car-models--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>El ID del modelo. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                     <h2 id="tablas-auxiliares-POSTapi-car-models">Crear Modelo</h2>
 
 <p>
@@ -6423,6 +5597,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Nuevo nombre. Example: <code>architecto</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>id_marca</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id_marca"                data-endpoint="PUTapi-car-models--id-"
+               value=""
+               data-component="body">
+    <br>
+<p>The <code>id</code> of an existing record in the brands table.</p>
+        </div>
         </form>
 
                     <h2 id="tablas-auxiliares-DELETEapi-car-models--id-">Eliminar Modelo</h2>
@@ -6566,6 +5752,299 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>El ID del modelo. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                                <h2 id="tablas-auxiliares-combustibles">Combustibles</h2>
+                                        <p>
+                    <p>Gestión de los tipos de combustible disponibles.</p>
+                </p>
+                                        <h2 id="tablas-auxiliares-GETapi-fuels">Listar Combustibles</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Obtiene la lista de tipos de combustible disponibles.</p>
+
+<span id="example-requests-GETapi-fuels">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/fuels" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/fuels"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-fuels">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Gasolina&quot;
+    },
+    {
+        &quot;id&quot;: 2,
+        &quot;nombre&quot;: &quot;Diesel&quot;
+    }
+]</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-fuels" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-fuels"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-fuels"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-fuels" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-fuels">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-fuels" data-method="GET"
+      data-path="api/fuels"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-fuels', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-fuels"
+                    onclick="tryItOut('GETapi-fuels');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-fuels"
+                    onclick="cancelTryOut('GETapi-fuels');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-fuels"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/fuels</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-fuels"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-fuels"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="tablas-auxiliares-GETapi-fuels--id-">Ver Combustible</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-fuels--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/fuels/1" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/fuels/1"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-fuels--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;id&quot;: 1,
+    &quot;nombre&quot;: &quot;Gasolina&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-fuels--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-fuels--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-fuels--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-fuels--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-fuels--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-fuels--id-" data-method="GET"
+      data-path="api/fuels/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-fuels--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-fuels--id-"
+                    onclick="tryItOut('GETapi-fuels--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-fuels--id-"
+                    onclick="cancelTryOut('GETapi-fuels--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-fuels--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/fuels/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-fuels--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-fuels--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-fuels--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-fuels--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>El ID del combustible. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -7042,6 +6521,295 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                                <h2 id="tablas-auxiliares-colores">Colores</h2>
+                                        <p>
+                    <p>Gestión de los colores de vehículos.</p>
+                </p>
+                                        <h2 id="tablas-auxiliares-GETapi-colors">Listar Colores</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-colors">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/colors" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/colors"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-colors">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Rojo&quot;
+    }
+]</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-colors" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-colors"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-colors"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-colors" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-colors">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-colors" data-method="GET"
+      data-path="api/colors"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-colors', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-colors"
+                    onclick="tryItOut('GETapi-colors');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-colors"
+                    onclick="cancelTryOut('GETapi-colors');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-colors"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/colors</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-colors"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-colors"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="tablas-auxiliares-GETapi-colors--id-">Ver Color</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-colors--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/colors/16" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/colors/16"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-colors--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;id&quot;: 1,
+    &quot;nombre&quot;: &quot;Rojo&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-colors--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-colors--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-colors--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-colors--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-colors--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-colors--id-" data-method="GET"
+      data-path="api/colors/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-colors--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-colors--id-"
+                    onclick="tryItOut('GETapi-colors--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-colors--id-"
+                    onclick="cancelTryOut('GETapi-colors--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-colors--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/colors/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-colors--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-colors--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-colors--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-colors--id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>ID del color. Example: <code>16</code></p>
+            </div>
+                    </form>
+
                     <h2 id="tablas-auxiliares-POSTapi-colors">Crear Color</h2>
 
 <p>
@@ -7508,6 +7276,295 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>ID del color. Example: <code>16</code></p>
+            </div>
+                    </form>
+
+                                <h2 id="tablas-auxiliares-marchas">Marchas</h2>
+                                        <p>
+                    <p>Gestión de los tipos de marchas (transmisiones).</p>
+                </p>
+                                        <h2 id="tablas-auxiliares-GETapi-gears">Listar Marchas</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-gears">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/gears" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/gears"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-gears">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 1,
+        &quot;tipo&quot;: &quot;Manual&quot;
+    }
+]</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-gears" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-gears"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-gears"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-gears" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-gears">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-gears" data-method="GET"
+      data-path="api/gears"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-gears', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-gears"
+                    onclick="tryItOut('GETapi-gears');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-gears"
+                    onclick="cancelTryOut('GETapi-gears');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-gears"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/gears</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-gears"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-gears"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="tablas-auxiliares-GETapi-gears--id-">Ver Marcha</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-gears--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://proyect.test/api/gears/16" \
+    --header "Authorization: Bearer e.g. 1|laravel_sanctum_token..." \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://proyect.test/api/gears/16"
+);
+
+const headers = {
+    "Authorization": "Bearer e.g. 1|laravel_sanctum_token...",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-gears--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;id&quot;: 1,
+    &quot;tipo&quot;: &quot;Manual&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-gears--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-gears--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-gears--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-gears--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-gears--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-gears--id-" data-method="GET"
+      data-path="api/gears/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-gears--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-gears--id-"
+                    onclick="tryItOut('GETapi-gears--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-gears--id-"
+                    onclick="cancelTryOut('GETapi-gears--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-gears--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/gears/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-gears--id-"
+               value="Bearer e.g. 1|laravel_sanctum_token..."
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer e.g. 1|laravel_sanctum_token...</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-gears--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-gears--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-gears--id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>ID. Example: <code>16</code></p>
             </div>
                     </form>
 
@@ -8558,7 +8615,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"precio\": 14000,
-    \"fecha\": \"2026-02-17T14:55:07\",
+    \"fecha\": \"2026-05-11T20:17:14\",
     \"metodo_pago\": \"n\",
     \"estado\": 2
 }"
@@ -8578,7 +8635,7 @@ const headers = {
 
 let body = {
     "precio": 14000,
-    "fecha": "2026-02-17T14:55:07",
+    "fecha": "2026-05-11T20:17:14",
     "metodo_pago": "n",
     "estado": 2
 };
@@ -8720,10 +8777,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha"                data-endpoint="PUTapi-sales--id-"
-               value="2026-02-17T14:55:07"
+               value="2026-05-11T20:17:14"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T14:55:07</code></p>
+<p>Must be a valid date. Example: <code>2026-05-11T20:17:14</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>metodo_pago</code></b>&nbsp;&nbsp;

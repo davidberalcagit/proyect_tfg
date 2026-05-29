@@ -9,6 +9,8 @@ use App\Models\Fuels;
 
 /**
  * @group Tablas Auxiliares
+ * @subgroup Combustibles
+ * @subgroupDescription Gestión de los tipos de combustible disponibles.
  */
 class FuelsController extends Controller
 {

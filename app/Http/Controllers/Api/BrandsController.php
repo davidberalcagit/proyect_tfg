@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 
 /**
  * @group Tablas Auxiliares
- *
- * Gestión de datos maestros (Marcas, Modelos, etc.).
+ * @subgroup Marcas
+ * @subgroupDescription Gestión de las marcas de los vehículos.
  */
 class BrandsController extends Controller
 {
