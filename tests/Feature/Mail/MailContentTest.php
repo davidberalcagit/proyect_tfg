@@ -106,7 +106,7 @@ test('offer rejected mail content', function () {
 
 test('car rejected mail content', function () {
     $car = Cars::factory()->create();
-    $reason = 'Invalid photos';
+    $reason = 'Test reason';
 
     $mail = new CarRejected($car, $reason);
 

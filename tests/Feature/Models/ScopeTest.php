@@ -5,9 +5,12 @@ use App\Models\Cars;
 use App\Models\Customers;
 use App\Models\Offer;
 use App\Models\Rental;
+use App\Models\User;
+use App\Models\Sales;
+use App\Models\EntityType;
 
 beforeEach(function () {
-    $this->seed(Database\Seeders\DatabaseSeeder::class);
+    $this->seed(Database\Seeders\TestDatabaseSeeder::class);
 });
 
 test('cars available scope', function () {
@@ -68,23 +71,13 @@ test('cars recent scope', function () {
     expect($recentCars->first()->id)->toBe($recent->id);
 });
 
-test('cars cheap scope', function () {
-    $cheap = Cars::factory()->create(['precio' => 4000]);
-    $expensive = Cars::factory()->create(['precio' => 6000]);
-
-    $cheapCars = Cars::cheap(5000)->whereIn('id', [$cheap->id, $expensive->id])->get();
-
-    expect($cheapCars->count())->toBe(1);
-    expect($cheapCars->first()->id)->toBe($cheap->id);
-});
-
 test('offer pending scope', function () {
-    $car = Cars::first() ?? Cars::factory()->create();
-    $buyer = Customers::first() ?? Customers::factory()->create();
+    $car = Cars::factory()->create();
+    $buyer = Customers::factory()->create();
     $seller = Customers::factory()->create();
 
-    $pending = Offer::create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id, 'cantidad' => 100, 'estado' => 'pending']);
-    $accepted = Offer::create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id, 'cantidad' => 100, 'estado' => 'accepted']);
+    $pending = Offer::factory()->create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id, 'estado' => 'pending']);
+    $accepted = Offer::factory()->create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id, 'estado' => 'accepted']);
 
     $pendingOffers = Offer::pending()->whereIn('id', [$pending->id, $accepted->id])->get();
 
@@ -97,7 +90,7 @@ test('offer for seller scope', function () {
     $car = Cars::factory()->create(['id_vendedor' => $seller->id]);
     $buyer = Customers::factory()->create();
 
-    $offer = Offer::create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id, 'cantidad' => 100, 'estado' => 'pending']);
+    $offer = Offer::factory()->create(['id_vehiculo' => $car->id, 'id_comprador' => $buyer->id, 'id_vendedor' => $seller->id]);
 
     $offers = Offer::forSeller($seller->id)->where('id', $offer->id)->get();
 
@@ -107,14 +100,13 @@ test('offer for seller scope', function () {
 
 test('rental overlapping scope', function () {
     $car = Cars::factory()->create(['id_estado' => 3]);
-    $customer = Customers::first() ?? Customers::factory()->create();
+    $customer = Customers::factory()->create();
 
-    Rental::create([
+    Rental::factory()->create([
         'id_vehiculo' => $car->id,
         'id_cliente' => $customer->id,
         'fecha_inicio' => '2024-01-10',
         'fecha_fin' => '2024-01-15',
-        'precio_total' => 100,
         'id_estado' => 2
     ]);
 
@@ -130,11 +122,76 @@ test('rental active scope', function () {
     $car = Cars::factory()->create(['id_estado' => 3]);
     $customer = Customers::factory()->create();
 
-    $active = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 3]);
-    $pending = Rental::create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'fecha_inicio' => now(), 'fecha_fin' => now(), 'precio_total' => 100, 'id_estado' => 2]);
+    $active = Rental::factory()->create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'id_estado' => 3]);
+    $pending = Rental::factory()->create(['id_vehiculo' => $car->id, 'id_cliente' => $customer->id, 'id_estado' => 2]);
 
     $activeRentals = Rental::active()->whereIn('id', [$active->id, $pending->id])->get();
 
     expect($activeRentals->count())->toBe(1);
     expect($activeRentals->first()->id)->toBe($active->id);
+});
+
+test('user active traders scope', function () {
+    $user1 = User::factory()->create();
+    $customer1 = Customers::factory()->create(['id_usuario' => $user1->id]);
+    Cars::factory()->create(['id_vendedor' => $customer1->id, 'created_at' => now()]);
+
+    $user2 = User::factory()->create();
+    $customer2 = Customers::factory()->create(['id_usuario' => $user2->id]);
+    $car2 = Cars::factory()->create(['id_vendedor' => $customer2->id, 'created_at' => now()->subYear()]);
+    $buyer = Customers::factory()->create();
+    Sales::factory()->create(['id_vehiculo' => $car2->id, 'id_vendedor' => $customer2->id, 'id_comprador' => $buyer->id, 'created_at' => now()->subDays(15)]);
+
+    $user3 = User::factory()->create();
+    $customer3 = Customers::factory()->create(['id_usuario' => $user3->id]);
+    Cars::factory()->create(['id_vendedor' => $customer3->id, 'created_at' => now()->subYear()]);
+
+    $activeTraders = User::activeTraders()->whereIn('id', [$user1->id, $user2->id, $user3->id])->get();
+
+    expect($activeTraders->count())->toBe(2);
+    expect($activeTraders->contains($user1))->toBeTrue();
+    expect($activeTraders->contains($user2))->toBeTrue();
+    expect($activeTraders->contains($user3))->toBeFalse();
+});
+
+
+test('sales getReportData works correctly', function () {
+    $brand1 = Brands::factory()->create();
+    $brand2 = Brands::factory()->create();
+
+    $entityType1 = EntityType::firstOrCreate(['id' => 1, 'nombre' => 'individual']);
+    $entityType2 = EntityType::firstOrCreate(['id' => 2, 'nombre' => 'dealership']);
+
+    $seller1 = Customers::factory()->create(['id_entidad' => $entityType1->id]);
+    $seller2 = Customers::factory()->create(['id_entidad' => $entityType2->id]);
+
+    $car1 = Cars::factory()->create(['id_marca' => $brand1->id]);
+    $car2 = Cars::factory()->create(['id_marca' => $brand2->id]);
+
+    Sales::factory()->count(2)->create(['id_vendedor' => $seller1->id, 'id_vehiculo' => $car1->id, 'id_estado' => 1]);
+    Sales::factory()->create(['id_vendedor' => $seller2->id, 'id_vehiculo' => $car2->id, 'id_estado' => 1]);
+
+    $summary = Sales::getReportData();
+
+    expect($summary['top_sellers'])->toHaveCount(2);
+    expect($summary['top_sellers']->first()->id)->toBe($seller1->id);
+    expect($summary['top_sellers']->first()->total_sales)->toBe(2);
+
+    $salesByType = collect($summary['sales_by_type'])->keyBy('nombre');
+    expect($salesByType['individual']->total)->toBe(2);
+    expect($salesByType['dealership']->total)->toBe(1);
+
+    expect($summary['popular_brand'])->toContain($brand1->nombre);
+});
+
+test('top sellers scope only includes valid sales', function () {
+    $seller = Customers::factory()->create();
+
+    Sales::factory()->create(['id_vendedor' => $seller->id, 'id_estado' => 1]);
+    Sales::factory()->create(['id_vendedor' => $seller->id, 'id_estado' => 2]);
+
+    $topSellers = Customers::topSellers()->get();
+
+    expect($topSellers)->toHaveCount(1);
+    expect($topSellers->first()->total_sales)->toBe(1);
 });

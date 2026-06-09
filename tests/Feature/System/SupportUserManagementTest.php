@@ -46,7 +46,8 @@ test('support cannot delete themselves', function () {
 
     $response = $this->actingAs($support)->delete(route('support.users.destroy', $support));
 
-    $response->assertStatus(403);
+    $response->assertRedirect();
+    $response->assertSessionHas('error');
 
     $this->assertDatabaseHas('users', ['id' => $support->id]);
 });

@@ -74,7 +74,7 @@ class RegisteredUserController extends Controller
 
                     $dealership = Dealerships::firstOrCreate(
                         ['nif' => $request->nif],
-                        [ //error1
+                        [
                             'nombre_empresa'  => $request->nombre_empresa,
                             'direccion'       => $request->direccion
                         ]
@@ -98,7 +98,6 @@ class RegisteredUserController extends Controller
             Auth::login($user);
         });
 
-        // Dispatch the welcome email job after successful transaction
         if ($user) {
             SendWelcomeEmailJob::dispatch($user);
         }

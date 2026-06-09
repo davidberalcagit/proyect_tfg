@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasPermissionTo('all access') ? true : null;
+        });
 
         Event::listen(
             \App\Events\CarCreated::class,

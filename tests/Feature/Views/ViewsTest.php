@@ -10,7 +10,9 @@ use App\Livewire\CarFilter;
 use Laravel\Fortify\Features;
 
 beforeEach(function () {
-    $this->seed(Database\Seeders\DatabaseSeeder::class);
+    $this->seed(Database\Seeders\TestDatabaseSeeder::class);
+    $this->user = User::factory()->create();
+    $this->user->assignRole('individual');
 });
 
 test('cars index view renders correctly', function () {
@@ -28,53 +30,52 @@ test('cars index view renders correctly', function () {
 });
 
 test('cars create view renders correctly', function () {
-    $user = User::factory()->create();
-    $user->assignRole('individual');
-    Customers::factory()->create(['id_usuario' => $user->id]);
+    Customers::factory()->create(['id_usuario' => $this->user->id]);
 
-    $response = $this->actingAs($user)->get(route('cars.create'));
+    $response = $this->actingAs($this->user)->get(route('cars.create'));
 
     $response->assertStatus(200);
     $response->assertSee('Create');
 });
 
 test('cars my cars view renders correctly', function () {
-    $user = User::factory()->create();
-    $user->assignRole('individual');
-    $customer = Customers::factory()->create(['id_usuario' => $user->id]);
+    $customer = Customers::factory()->create(['id_usuario' => $this->user->id]);
 
     $car = Cars::factory()->create(['title' => 'Mi Coche', 'id_vendedor' => $customer->id]);
 
-    $response = $this->actingAs($user)->get(route('cars.my_cars'));
+    $response = $this->actingAs($this->user)->get(route('cars.my_cars'));
 
     $response->assertStatus(200);
     $response->assertSee('Mi Coche');
 });
 
 test('car show view renders correctly', function () {
-    $car = Cars::factory()->create(['title' => 'Detalle Coche']);
+    $seller = User::factory()->create();
+    $sellerCustomer = Customers::factory()->create(['id_usuario' => $seller->id]);
+    $car = Cars::factory()->create(['title' => 'Detalle Coche', 'id_vendedor' => $sellerCustomer->id, 'id_estado' => 1]);
 
-    $response = $this->get(route('cars.show', $car));
+    $response = $this->actingAs($this->user)->get(route('cars.show', $car));
 
     $response->assertStatus(200);
     $response->assertSee('Detalle Coche');
 });
 
 test('car show view shows rent button for rental cars', function () {
-    $user = User::factory()->create();
-    $user->assignRole('individual');
-    Customers::factory()->create(['id_usuario' => $user->id]);
-
+    Customers::factory()->create(['id_usuario' => $this->user->id]);
 
     $rentType = ListingType::where('nombre', 'Alquiler')->first();
     if (!$rentType) $rentType = ListingType::factory()->create(['id' => 2, 'nombre' => 'Alquiler']);
 
+    $seller = User::factory()->create();
+    $sellerCustomer = Customers::factory()->create(['id_usuario' => $seller->id]);
+
     $car = Cars::factory()->create([
+        'id_vendedor' => $sellerCustomer->id,
         'id_estado' => 3,
         'id_listing_type' => $rentType->id
     ]);
 
-    $response = $this->actingAs($user)->get(route('cars.show', $car));
+    $response = $this->actingAs($this->user)->get(route('cars.show', $car));
 
     $response->assertStatus(200);
 
@@ -113,10 +114,7 @@ test('profile view shows two factor authentication option', function () {
         $this->markTestSkipped('Two factor authentication is not enabled.');
     }
 
-    $user = User::factory()->create();
-    $user->assignRole('individual');
-
-    $response = $this->actingAs($user)->get(route('profile.show'));
+    $response = $this->actingAs($this->user)->get(route('profile.show'));
 
     $response->assertStatus(200);
     $response->assertSee('Two Factor Authentication');

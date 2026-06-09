@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'admin']);
+    Role::firstOrCreate(['name' => 'admin']);
 });
 
 test('user manager renders', function () {

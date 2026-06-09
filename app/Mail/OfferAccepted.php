@@ -14,10 +14,6 @@ use Illuminate\Queue\SerializesModels;
 class OfferAccepted extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     */
     public function __construct(public Offer $offer)
     {
     }
@@ -34,11 +30,6 @@ class OfferAccepted extends Mailable
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];

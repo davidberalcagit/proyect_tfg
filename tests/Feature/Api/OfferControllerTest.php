@@ -94,42 +94,6 @@ test('api offer show forbids unrelated user', function () {
     $response->assertStatus(403);
 });
 
-test('api offer update allows buyer to change price', function () {
-    $offer = Offer::factory()->create([
-        'id_comprador' => $this->buyer->id,
-        'cantidad' => 1000
-    ]);
-
-    Sanctum::actingAs($this->buyerUser);
-
-    $response = $this->putJson(route('api.offers.update', $offer->id), [
-        'precio_oferta' => 1200
-    ]);
-
-    $response->assertStatus(200);
-    $this->assertDatabaseHas('offers', ['id' => $offer->id, 'cantidad' => 1200]);
-});
-
-test('api offer update allows seller to change status', function () {
-    $otherUser = User::factory()->create();
-    $otherCustomer = Customers::factory()->create(['id_usuario' => $otherUser->id]);
-
-    $offer = Offer::factory()->create([
-        'id_vendedor' => $this->seller->id,
-        'id_comprador' => $otherCustomer->id,
-        'estado' => 'pendiente'
-    ]);
-
-    Sanctum::actingAs($this->sellerUser);
-
-    $response = $this->putJson(route('api.offers.update', $offer->id), [
-        'estado' => 'aceptada'
-    ]);
-
-    $response->assertStatus(200);
-    $this->assertDatabaseHas('offers', ['id' => $offer->id, 'estado' => 'aceptada']);
-});
-
 test('api offer destroy deletes offer by buyer', function () {
     $offer = Offer::factory()->create(['id_comprador' => $this->buyer->id]);
 

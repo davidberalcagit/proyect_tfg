@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Queue;
 test('command approves car and processes temp data', function () {
     Queue::fake();
 
-    $listingType = ListingType::factory()->create(['nombre' => 'Venta']);
+    $listingType = ListingType::firstOrCreate(['nombre' => 'Venta']);
 
     $car = Cars::factory()->create([
         'id_estado' => 4,

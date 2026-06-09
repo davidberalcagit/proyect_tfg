@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('cars', CarsController::class)->except(['index', 'show'])->names('api.cars');
 
     Route::apiResource('sales', SalesController::class)->names('api.sales');
-    Route::apiResource('offers', OfferController::class)->names('api.offers');
+    Route::apiResource('offers', OfferController::class)->except(['update'])->names('api.offers');
 
     Route::apiResource('brands', BrandsController::class)->except(['index', 'show'])->names('api.brands');
     Route::apiResource('car-models', CarModelsController::class)->except(['index', 'show'])->names('api.car-models');

@@ -12,7 +12,7 @@ class GearsFactory extends Factory
     public function definition()
     {
         return [
-            'tipo' => $this->faker->randomElement(['Manual', 'Automático']),
+            'tipo' => $this->faker->unique()->word() . ' Gear',
         ];
     }
 }

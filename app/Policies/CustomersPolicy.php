@@ -9,20 +9,32 @@ class CustomersPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->can('view customers data');
+        if ($user->can('view customers data')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function view(User $user, Customers $customer): bool
     {
-        if ($user->hasRole(['admin', 'supervisor'])) return true;
+        if ($user->id === $customer->id_usuario) {
+        return true;
+    }
 
-        return $user->id === $customer->id_usuario;
+        if ($user->can('view customers data')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function update(User $user, Customers $customer): bool
     {
-        if ($user->hasRole('admin')) return true;
+        if ($user->id === $customer->id_usuario) {
+            return true;
+        }
 
-        return $user->id === $customer->id_usuario;
+        return false;
     }
 }

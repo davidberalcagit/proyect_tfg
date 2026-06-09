@@ -19,7 +19,7 @@ test('login returns token with valid credentials', function () {
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonStructure(['accessToken', 'token_type', 'user']);
+             ->assertJsonStructure(['token']);
 
     Queue::assertNotPushed(SendWelcomeEmailJob::class);
 });

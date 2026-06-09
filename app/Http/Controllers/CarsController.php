@@ -104,6 +104,9 @@ class CarsController extends Controller
         $this->authorize('create', Cars::class);
 
         $user = Auth::user();
+        if (!$user->customer) {
+            abort(403, 'User does not have a customer profile.');
+        }
 
         $brandName = $request->temp_brand ? trim($request->temp_brand) : Brands::find($request->id_marca)->nombre;
         $modelName = $request->temp_model ? trim($request->temp_model) : CarModels::find($request->id_modelo)->nombre;
@@ -138,6 +141,7 @@ class CarsController extends Controller
 
     public function show(Cars $car)
     {
+        $this->authorize('view', $car);
         $car->load('vendedor', 'marcha', 'combustible', 'color', 'marca', 'modelo', 'status');
         return view('cars.show', compact('car'));
     }

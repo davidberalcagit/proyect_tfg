@@ -20,25 +20,6 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <div class="text-gray-500 text-sm uppercase font-bold">Pendientes Revisión</div>
-                    <div class="text-3xl font-bold text-orange-600">{{ $stats['pending_cars_count'] }}</div>
-                </div>
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <div class="text-gray-500 text-sm uppercase font-bold">Total Coches</div>
-                    <div class="text-3xl font-bold text-blue-600">{{ $stats['total_cars'] }}</div>
-                </div>
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <div class="text-gray-500 text-sm uppercase font-bold">En Venta</div>
-                    <div class="text-3xl font-bold text-green-600">{{ $stats['cars_for_sale'] }}</div>
-                </div>
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <div class="text-gray-500 text-sm uppercase font-bold">Ventas Totales</div>
-                    <div class="text-3xl font-bold text-purple-600">{{ $stats['total_sales'] }}</div>
-                </div>
-            </div>
-
             <div class="bg-white  shadow-xl sm:rounded-lg mb-8 ">
                 <div class="p-6 border-b border-gray-200 bg-orange-50">
                     <h3 class="text-lg font-medium text-orange-800">Coches Pendientes de Aprobación</h3>
@@ -127,7 +108,28 @@
                     </table>
                 </div>
             </div>
-
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <div class="text-gray-500 text-sm uppercase font-bold">Pendientes Revisión</div>
+                        <div class="text-3xl font-bold text-orange-600">{{ $stats['pending_cars_count'] }}</div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <div class="text-gray-500 text-sm uppercase font-bold">Total Coches</div>
+                        <div class="text-3xl font-bold text-blue-600">{{ $stats['total_cars'] }}</div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <div class="text-gray-500 text-sm uppercase font-bold">En Venta</div>
+                        <div class="text-3xl font-bold text-green-600">{{ $stats['cars_for_sale'] }}</div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <div class="text-gray-500 text-sm uppercase font-bold">Ventas Totales</div>
+                        <div class="text-3xl font-bold text-purple-600">{{ $stats['total_sales'] }}</div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <div class="text-gray-500 text-sm uppercase font-bold">Vendedores Activos</div>
+                        <div class="text-3xl font-bold text-amber-600">{{ $stats['active_traders_count'] }}</div>
+                    </div>
+                </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Ventas Recientes</h3>

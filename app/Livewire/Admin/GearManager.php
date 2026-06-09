@@ -7,20 +7,61 @@ use Livewire\WithPagination;
 class GearManager extends Component {
     use WithPagination;
     protected $paginationTheme = 'tailwind';
-    public $tipo, $gear_id, $isModalOpen = false;
-    protected $rules = ['tipo' => 'required|string|max:255|unique:gears,tipo'];
 
-    public function render() { return view('livewire.admin.gear-manager', ['gears' => Gears::paginate(10)]); }
-    public function create() { $this->reset(['tipo', 'gear_id']); $this->isModalOpen = true; }
-    public function store() {
-        $this->validate();
-        Gears::updateOrCreate(['id' => $this->gear_id], ['tipo' => $this->tipo]);
-        $this->isModalOpen = false;
-        session()->flash('message', 'Caja de cambios guardada.');
+    public $editingGearId = null;
+    public $editingGearType;
+
+    public $newGearType;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
+    protected function rules() {
+        return [
+            'editingGearType' => 'required|string|max:255|unique:gears,tipo,' . $this->editingGearId,
+            'newGearType' => 'required|string|max:255|unique:gears,tipo',
+        ];
     }
+
+    public function render() {
+        return view('livewire.admin.gear-manager', [
+            'gears' => Gears::orderBy('id', 'desc')->paginate(10)
+        ]);
+    }
+
     public function edit($id) {
-        $g = Gears::findOrFail($id); $this->gear_id = $id; $this->tipo = $g->tipo; $this->isModalOpen = true;
+        $gear = Gears::findOrFail($id);
+        $this->editingGearId = $id;
+        $this->editingGearType = $gear->tipo;
     }
-    public function delete($id) { Gears::find($id)->delete(); }
-    public function closeModal() { $this->isModalOpen = false; }
+
+    public function cancelEdit() {
+        $this->editingGearId = null;
+        $this->editingGearType = '';
+    }
+
+    public function update() {
+        $this->validate([
+            'editingGearType' => 'required|string|max:255|unique:gears,tipo,' . $this->editingGearId,
+        ]);
+        Gears::find($this->editingGearId)->update(['tipo' => $this->editingGearType]);
+        $this->cancelEdit();
+        session()->flash('message', 'Caja de cambios actualizada.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function store() {
+        $this->validate([
+            'newGearType' => 'required|string|max:255|unique:gears,tipo',
+        ]);
+        Gears::create(['tipo' => $this->newGearType]);
+        $this->newGearType = '';
+        session()->flash('message', 'Caja de cambios creada.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function delete($id) {
+        Gears::find($id)->delete();
+        session()->flash('message', 'Caja de cambios eliminada.');
+        $this->dispatch('refreshComponent');
+    }
 }

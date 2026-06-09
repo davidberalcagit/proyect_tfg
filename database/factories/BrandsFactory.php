@@ -19,10 +19,8 @@ class BrandsFactory extends Factory
 
     public function definition(): array
     {
-        $marca=['Toyota','BMW','Mercedes','Renault','Volvo','Ford','Hyundai','Volkswagen','Tesla','Audi'];
-
         return [
-            'nombre' => $this->faker->unique()->randomElement($marca)
+            'nombre' => $this->faker->unique()->company()
         ];
     }
 }

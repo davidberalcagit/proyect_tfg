@@ -16,6 +16,7 @@ class UpdateCarModelRequest extends FormRequest
         return [
             'nombre' => 'sometimes|required|string|max:255',
             'id_marca' => 'sometimes|required|exists:brands,id',
+            'carroceria' => 'sometimes|required|string|max:100',
         ];
     }
 }

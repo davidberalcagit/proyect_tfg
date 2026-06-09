@@ -14,10 +14,9 @@ endpoints:
       subgroupDescription: ''
       title: 'Iniciar Sesión'
       description: 'Autentica a un usuario y devuelve un token de acceso.'
-      authenticated: true
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -57,10 +56,7 @@ endpoints:
         status: 200
         content: |-
           {
-           "message": "Hola Admin",
-           "accessToken": "1|laravel_sanctum_token...",
-           "token_type": "Bearer",
-           "user": { "id": 1, "name": "Admin", "email": "admin@example.com" }
+           "token": "1|laravel_sanctum_token..."
           }
         headers: []
         description: ''
@@ -74,10 +70,7 @@ endpoints:
         headers: []
         description: ''
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    auth: []
     controller: null
     method: null
     route: null

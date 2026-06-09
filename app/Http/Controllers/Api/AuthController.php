@@ -20,14 +20,12 @@ class AuthController extends Controller
      *
      * Autentica a un usuario y devuelve un token de acceso.
      *
+     * @unauthenticated
      * @bodyParam email string required El email del usuario. Example: admin@example.com
      * @bodyParam password string required La contraseña del usuario. Example: password
      *
      * @response {
-     *  "message": "Hola Admin",
-     *  "accessToken": "1|laravel_sanctum_token...",
-     *  "token_type": "Bearer",
-     *  "user": { "id": 1, "name": "Admin", "email": "admin@example.com" }
+     *  "token": "1|laravel_sanctum_token..."
      * }
      * @response 401 {
      *  "message": "Credenciales incorrectas"
@@ -49,10 +47,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Hola ' . $user->name,
-            'accessToken' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
+            'token' => $token
         ]);
     }
 

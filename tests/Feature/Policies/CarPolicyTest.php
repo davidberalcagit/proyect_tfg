@@ -3,9 +3,10 @@
 use App\Models\Cars;
 use App\Models\Customers;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $this->seed(Database\Seeders\DatabaseSeeder::class);
+    $this->seed(Database\Seeders\TestDatabaseSeeder::class);
 });
 
 test('admin can edit approved car', function () {
@@ -107,5 +108,45 @@ test('user cannot edit others car', function () {
     $response = $this->actingAs($otherUser)->put(route('cars.update', $car), [
         'precio' => 5000
     ]);
+    $response->assertStatus(403);
+});
+
+test('user without customer profile cannot create car', function () {
+    $user = User::factory()->create();
+    $user->assignRole('individual');
+
+    $response = $this->actingAs($user)->get(route('cars.create'));
+    $response->assertStatus(403);
+});
+
+test('owner can view their own pending car', function () {
+    $user = User::factory()->create();
+    $user->assignRole('individual');
+    $customer = Customers::factory()->create(['id_usuario' => $user->id]);
+
+    $car = Cars::factory()->create([
+        'id_vendedor' => $customer->id,
+        'id_estado' => 4
+    ]);
+
+    $response = $this->actingAs($user)->get(route('cars.show', $car));
+    $response->assertStatus(200);
+});
+
+test('other users cannot view pending car', function () {
+    $owner = User::factory()->create();
+    $owner->assignRole('individual');
+    $ownerCustomer = Customers::factory()->create(['id_usuario' => $owner->id]);
+
+    $otherUser = User::factory()->create();
+    $otherUser->assignRole('individual');
+    Customers::factory()->create(['id_usuario' => $otherUser->id]);
+
+    $car = Cars::factory()->create([
+        'id_vendedor' => $ownerCustomer->id,
+        'id_estado' => 4
+    ]);
+
+    $response = $this->actingAs($otherUser)->get(route('cars.show', $car));
     $response->assertStatus(403);
 });

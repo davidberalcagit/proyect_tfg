@@ -7,22 +7,61 @@ use Livewire\WithPagination;
 class FuelManager extends Component {
     use WithPagination;
     protected $paginationTheme = 'tailwind';
-    public $nombre, $fuel_id, $isModalOpen = false;
-    protected $rules = ['nombre' => 'required|string|max:255|unique:fuels,nombre'];
 
-    public function render() { return view('livewire.admin.fuel-manager', ['fuels' => Fuels::paginate(10)]); }
-    public function create() { $this->reset(['nombre', 'fuel_id']); $this->isModalOpen = true; }
-    public function store() {
-        $this->validate();
-        Fuels::updateOrCreate(['id' => $this->fuel_id], ['nombre' => $this->nombre]);
-        $this->isModalOpen = false;
-        session()->flash('message', 'Combustible guardado.');
+    public $editingFuelId = null;
+    public $editingFuelName;
+
+    public $newFuelName;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
+    protected function rules() {
+        return [
+            'editingFuelName' => 'required|string|max:255|unique:fuels,nombre,' . $this->editingFuelId,
+            'newFuelName' => 'required|string|max:255|unique:fuels,nombre',
+        ];
     }
+
+    public function render() {
+        return view('livewire.admin.fuel-manager', [
+            'fuels' => Fuels::orderBy('id', 'desc')->paginate(10)
+        ]);
+    }
+
     public function edit($id) {
         $fuel = Fuels::findOrFail($id);
-        $this->fuel_id = $id; $this->nombre = $fuel->nombre;
-        $this->isModalOpen = true;
+        $this->editingFuelId = $id;
+        $this->editingFuelName = $fuel->nombre;
     }
-    public function delete($id) { Fuels::find($id)->delete(); }
-    public function closeModal() { $this->isModalOpen = false; }
+
+    public function cancelEdit() {
+        $this->editingFuelId = null;
+        $this->editingFuelName = '';
+    }
+
+    public function update() {
+        $this->validate([
+            'editingFuelName' => 'required|string|max:255|unique:fuels,nombre,' . $this->editingFuelId,
+        ]);
+        Fuels::find($this->editingFuelId)->update(['nombre' => $this->editingFuelName]);
+        $this->cancelEdit();
+        session()->flash('message', 'Combustible actualizado.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function store() {
+        $this->validate([
+            'newFuelName' => 'required|string|max:255|unique:fuels,nombre',
+        ]);
+        Fuels::create(['nombre' => $this->newFuelName]);
+        $this->newFuelName = '';
+        session()->flash('message', 'Combustible guardado.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function delete($id) {
+        Fuels::find($id)->delete();
+        session()->flash('message', 'Combustible eliminado.');
+        $this->dispatch('refreshComponent');
+    }
 }

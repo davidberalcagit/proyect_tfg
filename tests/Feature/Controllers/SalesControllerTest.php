@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'individual']);
+    Role::firstOrCreate(['name' => 'individual']);
 });
 
 test('sales index displays transactions', function () {

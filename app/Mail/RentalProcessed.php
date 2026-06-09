@@ -42,7 +42,7 @@ class RentalProcessed extends Mailable implements ShouldQueue
         if ($days == 0) $days = 1;
 
         $total = $this->rental->precio_total;
-        $serviceFee = $total * 0.05;
+        $serviceFee = $total * 0.15;
         $tax = $serviceFee * 0.21;
         $grandTotal = $total + $serviceFee + $tax;
 

@@ -23,6 +23,7 @@ class SupervisorController extends Controller
             'total_sales' => Sales::count(),
             'recent_sales' => Sales::latest()->take(5)->with(['vehiculo', 'vendedor'])->get(),
             'pending_cars_count' => Cars::where('id_estado', 4)->count(),
+            'active_traders_count' => User::activeTraders()->count(),
         ];
 
         $pendingCars = Cars::where('id_estado', 4)->with(['vendedor', 'listingType'])->get();
@@ -37,6 +38,7 @@ class SupervisorController extends Controller
             'total_cars' => Cars::count(),
             'total_sales' => Sales::count(),
             'total_rentals' => Rental::count(),
+            'active_traders_count' => User::activeTraders()->count(),
         ];
 
         $usersByType = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
@@ -48,29 +50,17 @@ class SupervisorController extends Controller
 
         $stats['users_by_type'] = $usersByType;
 
-        $popularBrand = Sales::join('cars', 'sales.id_vehiculo', '=', 'cars.id')
-            ->join('brands', 'cars.id_marca', '=', 'brands.id')
-            ->select('brands.nombre', DB::raw('count(*) as total'))
-            ->groupBy('brands.nombre')
-            ->orderByDesc('total')
-            ->first();
+        $summary = Sales::getReportData();
+        $stats['popular_brand'] = $summary['popular_brand'];
+        $stats['sales_by_type'] = $summary['sales_by_type'];
+        $topSellers = $summary['top_sellers'];
 
-        $stats['popular_brand'] = $popularBrand ? $popularBrand->nombre . ' (' . $popularBrand->total . ')' : 'N/A';
-
-        $salesByType = Sales::join('customers', 'sales.id_vendedor', '=', 'customers.id')
-            ->join('entity_types', 'customers.id_entidad', '=', 'entity_types.id')
-            ->select('entity_types.nombre', DB::raw('count(*) as total'))
-            ->groupBy('entity_types.nombre')
-            ->get();
-
-        $stats['sales_by_type'] = $salesByType;
-
-        $topSellers = Sales::join('customers', 'sales.id_vendedor', '=', 'customers.id')
-            ->select('customers.nombre_contacto', DB::raw('count(*) as total_sales'), DB::raw('sum(sales.precio) as total_revenue'))
-            ->groupBy('customers.id', 'customers.nombre_contacto')
-            ->orderByDesc('total_sales')
-            ->take(5)
-            ->get();
+        if ($topSellers->isNotEmpty()) {
+            $bestSeller = $topSellers->first();
+            $stats['best_seller_monthly_sales'] = Sales::monthlyReport($bestSeller->id, now()->month, now()->year)->count();
+        } else {
+            $stats['best_seller_monthly_sales'] = 0;
+        }
 
         $recentSales = Sales::latest()->take(20)->with(['vehiculo', 'vendedor', 'comprador'])->get();
         $recentRentals = Rental::latest()->take(20)->with(['car', 'customer', 'status'])->get();
