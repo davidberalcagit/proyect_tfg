@@ -10,8 +10,8 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'soporte']);
-    Role::create(['name' => 'individual']);
+    Role::firstOrCreate(['name' => 'soporte']);
+    Role::firstOrCreate(['name' => 'individual']);
 
     DB::table('entity_types')->insertOrIgnore([
         ['id' => 1, 'nombre' => 'Particular'],

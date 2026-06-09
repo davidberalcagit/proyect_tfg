@@ -58,18 +58,15 @@ class Cars extends Model
         return $query->where(function($q) use ($term) {
             $q->where('title', 'like', "%{$term}%")
               ->orWhere('descripcion', 'like', "%{$term}%")
-              ->orWhereHas('marca', fn($q2) => $q2->where('nombre', 'like', "%{$term}%"));
+              ->orWhereHas('marca', function($q2) use ($term) {
+                  $q2->where('nombre', 'like', "%{$term}%");
+              });
         });
     }
 
     public function scopeRecent($query, $days = 7)
     {
         return $query->where('created_at', '>=', now()->subDays($days));
-    }
-
-    public function scopeCheap($query, $maxPrice = 5000)
-    {
-        return $query->where('precio', '<=', $maxPrice);
     }
 
     public function vendedor(){

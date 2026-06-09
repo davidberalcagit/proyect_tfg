@@ -14,36 +14,40 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('sale status can be created and updated', function () {
-    $status = SaleStatus::create(['id' => 1, 'nombre' => 'Pendiente']);
-    $this->assertDatabaseHas('sale_statuses', ['nombre' => 'Pendiente']);
+    $status = SaleStatus::create(['nombre' => 'Test Status ' . uniqid()]);
+    $this->assertDatabaseHas('sale_statuses', ['nombre' => $status->nombre]);
 
-    $status->update(['nombre' => 'Vendido']);
-    $this->assertDatabaseHas('sale_statuses', ['nombre' => 'Vendido']);
+    $newName = 'Updated Status ' . uniqid();
+    $status->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('sale_statuses', ['nombre' => $newName]);
 });
 
 test('rental status can be created and updated', function () {
-    $status = RentalStatus::create(['nombre' => 'Activo']);
-    $this->assertDatabaseHas('rental_statuses', ['nombre' => 'Activo']);
+    $status = RentalStatus::create(['nombre' => 'Test Rental ' . uniqid()]);
+    $this->assertDatabaseHas('rental_statuses', ['nombre' => $status->nombre]);
 
-    $status->update(['nombre' => 'Finalizado']);
-    $this->assertDatabaseHas('rental_statuses', ['nombre' => 'Finalizado']);
+    $newName = 'Updated Rental ' . uniqid();
+    $status->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('rental_statuses', ['nombre' => $newName]);
 });
 
 test('listing type can be created and updated', function () {
-    $type = ListingType::create(['nombre' => 'Venta']);
-    $this->assertDatabaseHas('listing_types', ['nombre' => 'Venta']);
+    $type = ListingType::create(['nombre' => 'Test Type ' . uniqid()]);
+    $this->assertDatabaseHas('listing_types', ['nombre' => $type->nombre]);
 
-    $type->update(['nombre' => 'Alquiler']);
-    $this->assertDatabaseHas('listing_types', ['nombre' => 'Alquiler']);
+    $newName = 'Updated Type ' . uniqid();
+    $type->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('listing_types', ['nombre' => $newName]);
 });
 
 
 test('gears can be created, updated and deleted', function () {
-    $gear = Gears::create(['tipo' => 'Manual']);
-    $this->assertDatabaseHas('gears', ['tipo' => 'Manual']);
+    $gear = Gears::create(['tipo' => 'Test Gear ' . uniqid()]);
+    $this->assertDatabaseHas('gears', ['tipo' => $gear->tipo]);
 
-    $gear->update(['tipo' => 'Automatic']);
-    $this->assertDatabaseHas('gears', ['tipo' => 'Automatic']);
+    $newName = 'Updated Gear ' . uniqid();
+    $gear->update(['tipo' => $newName]);
+    $this->assertDatabaseHas('gears', ['tipo' => $newName]);
 
     $gear->delete();
     $this->assertDatabaseMissing('gears', ['id' => $gear->id]);
@@ -51,11 +55,12 @@ test('gears can be created, updated and deleted', function () {
 
 
 test('fuels can be created, updated and deleted', function () {
-    $fuel = Fuels::create(['nombre' => 'Gasolina']);
-    $this->assertDatabaseHas('fuels', ['nombre' => 'Gasolina']);
+    $fuel = Fuels::create(['nombre' => 'Test Fuel ' . uniqid()]);
+    $this->assertDatabaseHas('fuels', ['nombre' => $fuel->nombre]);
 
-    $fuel->update(['nombre' => 'Diesel']);
-    $this->assertDatabaseHas('fuels', ['nombre' => 'Diesel']);
+    $newName = 'Updated Fuel ' . uniqid();
+    $fuel->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('fuels', ['nombre' => $newName]);
 
     $fuel->delete();
     $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
@@ -63,18 +68,20 @@ test('fuels can be created, updated and deleted', function () {
 
 
 test('entity type can be created and updated', function () {
-    $type = EntityType::create(['nombre' => 'Particular']);
-    $this->assertDatabaseHas('entity_types', ['nombre' => 'Particular']);
+    $type = EntityType::create(['nombre' => 'Test Entity ' . uniqid()]);
+    $this->assertDatabaseHas('entity_types', ['nombre' => $type->nombre]);
 
-    $type->update(['nombre' => 'Empresa']);
-    $this->assertDatabaseHas('entity_types', ['nombre' => 'Empresa']);
+    $newName = 'Updated Entity ' . uniqid();
+    $type->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('entity_types', ['nombre' => $newName]);
 });
 
 
 test('car status can be created and updated', function () {
-    $status = CarStatus::create(['id' => 1, 'nombre' => 'En Venta']);
-    $this->assertDatabaseHas('car_statuses', ['nombre' => 'En Venta']);
+    $status = CarStatus::create(['nombre' => 'Test Car Status ' . uniqid()]);
+    $this->assertDatabaseHas('car_statuses', ['nombre' => $status->nombre]);
 
-    $status->update(['nombre' => 'Vendido']);
-    $this->assertDatabaseHas('car_statuses', ['nombre' => 'Vendido']);
+    $newName = 'Updated Car Status ' . uniqid();
+    $status->update(['nombre' => $newName]);
+    $this->assertDatabaseHas('car_statuses', ['nombre' => $newName]);
 });

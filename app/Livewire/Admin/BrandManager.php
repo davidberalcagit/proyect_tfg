@@ -12,71 +12,71 @@ class BrandManager extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public $nombre, $brand_id;
-    public $isModalOpen = false;
+    public $editingBrandId = null;
+    public $editingBrandName;
 
-    protected $rules = [
-        'nombre' => 'required|string|max:255|unique:brands,nombre',
-    ];
+    public $newBrandName;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
+    protected function rules()
+    {
+        return [
+            'editingBrandName' => 'required|string|max:255|unique:brands,nombre,' . $this->editingBrandId,
+            'newBrandName' => 'required|string|max:255|unique:brands,nombre',
+        ];
+    }
 
     public function render()
     {
         return view('livewire.admin.brand-manager', [
-            'brands' => Brands::orderBy('id', 'desc')->paginate(10),
+            'brands' => Brands::withCount('models')->orderBy('id', 'desc')->paginate(10),
         ]);
-    }
-
-    public function create()
-    {
-        $this->resetInputFields();
-        $this->openModal();
-    }
-
-    public function openModal()
-    {
-        $this->isModalOpen = true;
-    }
-
-    public function closeModal()
-    {
-        $this->isModalOpen = false;
-        $this->resetInputFields();
-    }
-
-    private function resetInputFields()
-    {
-        $this->nombre = '';
-        $this->brand_id = null;
-        $this->resetErrorBag();
-    }
-
-    public function store()
-    {
-        $this->validate([
-            'nombre' => 'required|string|max:255|unique:brands,nombre,' . $this->brand_id,
-        ]);
-
-        Brands::updateOrCreate(['id' => $this->brand_id], [
-            'nombre' => $this->nombre
-        ]);
-
-        session()->flash('message', $this->brand_id ? 'Marca actualizada correctamente.' : 'Marca creada correctamente.');
-
-        $this->closeModal();
     }
 
     public function edit($id)
     {
         $brand = Brands::findOrFail($id);
-        $this->brand_id = $id;
-        $this->nombre = $brand->nombre;
+        $this->editingBrandId = $id;
+        $this->editingBrandName = $brand->nombre;
+    }
 
-        $this->openModal();
+    public function cancelEdit()
+    {
+        $this->editingBrandId = null;
+        $this->editingBrandName = '';
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'editingBrandName' => 'required|string|max:255|unique:brands,nombre,' . $this->editingBrandId,
+        ]);
+
+        Brands::find($this->editingBrandId)->update(['nombre' => $this->editingBrandName]);
+
+        $this->cancelEdit();
+        session()->flash('message', 'Marca actualizada.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'newBrandName' => 'required|string|max:255|unique:brands,nombre',
+        ]);
+
+        Brands::create(['nombre' => $this->newBrandName]);
+
+        $this->newBrandName = '';
+        session()->flash('message', 'Marca creada.');
+        $this->dispatch('refreshComponent');
     }
 
     public function delete($id)
     {
         Brands::find($id)->delete();
-        session()->flash('message', 'Marca eliminada correctamente.');
+        session()->flash('message', 'Marca eliminada.');
+        $this->dispatch('refreshComponent');
     }
 }

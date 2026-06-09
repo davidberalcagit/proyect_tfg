@@ -8,7 +8,9 @@ use Livewire\Livewire;
 use App\Livewire\CarFilter;
 
 beforeEach(function () {
-    $this->seed(Database\Seeders\DatabaseSeeder::class);
+    $this->seed(Database\Seeders\TestDatabaseSeeder::class);
+    $this->user = User::factory()->create();
+    $this->user->assignRole('individual');
 });
 
 test('index displays available cars', function () {
@@ -41,7 +43,7 @@ test('index filters by price', function () {
 test('show page displays car details', function () {
     $car = Cars::factory()->create(['id_estado' => 1]);
 
-    $response = $this->get(route('cars.show', $car));
+    $response = $this->actingAs($this->user)->get(route('cars.show', $car));
 
     $response->assertStatus(200);
     $response->assertViewIs('cars.show');
@@ -49,14 +51,12 @@ test('show page displays car details', function () {
 });
 
 test('myCars displays seller cars', function () {
-    $user = User::factory()->create();
-    $customer = Customers::factory()->create(['id_usuario' => $user->id]);
-    $user->setRelation('customer', $customer);
+    $customer = Customers::factory()->create(['id_usuario' => $this->user->id]);
+    $this->user->setRelation('customer', $customer);
 
     $car = Cars::factory()->create(['id_vendedor' => $customer->id]);
 
-    $this->actingAs($user);
-    $response = $this->get(route('cars.my_cars'));
+    $response = $this->actingAs($this->user)->get(route('cars.my_cars'));
 
     $response->assertStatus(200);
     $response->assertSee($car->title);

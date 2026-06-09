@@ -6,58 +6,81 @@ use App\Models\User;
 
 class UserPolicy
 {
-
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['admin', 'soporte']);
-    }
+        if ($user->can('view users data')) {
+            return true;
+        }
 
+        return false;
+    }
 
     public function view(User $user, User $model): bool
     {
-        if ($user->hasRole(['admin', 'soporte'])) {
+        if ($user->id === $model->id) {
             return true;
         }
-        return $user->id === $model->id;
-    }
 
+        if ($user->can('view users data')) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function create(User $user): bool
     {
-        return $user->hasRole(['admin', 'soporte']);
-    }
+        if ($user->can('manage users')) {
+            return true;
+        }
 
+        return false;
+    }
 
     public function update(User $user, User $model): bool
     {
-        if ($user->hasRole('admin')) {
+        if ($user->id === $model->id) {
             return true;
         }
-        if ($user->hasRole('soporte')) {
-            return true;
-        }
-        return $user->id === $model->id;
-    }
 
+        if ($user->can('manage users')) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function delete(User $user, User $model): bool
     {
-        if ($user->hasRole('admin')) {
-            return $user->id !== $model->id;
+        if ($user->id === $model->id) {
+            return true;
         }
 
-        if ($user->hasRole('soporte')) {
-            return $user->id !== $model->id && !$model->hasRole('admin');
+        if ($model->hasRole('admin')) {
+            return false;
         }
 
-        return $user->id === $model->id;
+        if ($user->can('manage users')) {
+            return true;
+        }
+
+        return false;
     }
-
 
     public function ban(User $user, User $model): bool
     {
-        return $user->hasRole('admin') &&
-               $user->id !== $model->id &&
-               !$model->hasRole('admin');
+        if ($user->id === $model->id) {
+            return false;
+        }
+
+        if ($model->hasRole('admin')) {
+            return false;
+        }
+
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -8,12 +8,13 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'individual']);
-    EntityType::factory()->create(['id' => 1, 'nombre' => 'Particular']);
+    Role::firstOrCreate(['name' => 'individual']);
+    DB::table('entity_types')->insertOrIgnore(['id' => 1, 'nombre' => 'Particular']);
 });
 
 test('create new user action creates user and customer', function () {

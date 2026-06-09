@@ -13,13 +13,24 @@ class ModelManager extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public $nombre, $id_marca, $model_id;
-    public $isModalOpen = false;
+    public $editingModelId = null;
+    public $editingModelName;
+    public $editingModelBrandId;
 
-    protected $rules = [
-        'nombre' => 'required|string|max:255',
-        'id_marca' => 'required|exists:brands,id',
-    ];
+    public $newModelName;
+    public $newModelBrandId;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
+    protected function rules()
+    {
+        return [
+            'editingModelName' => 'required|string|max:255',
+            'editingModelBrandId' => 'required|exists:brands,id',
+            'newModelName' => 'required|string|max:255',
+            'newModelBrandId' => 'required|exists:brands,id',
+        ];
+    }
 
     public function render()
     {
@@ -29,56 +40,60 @@ class ModelManager extends Component
         ]);
     }
 
-    public function create()
+    public function edit($id)
     {
-        $this->resetInputFields();
-        $this->openModal();
+        $model = CarModels::findOrFail($id);
+        $this->editingModelId = $id;
+        $this->editingModelName = $model->nombre;
+        $this->editingModelBrandId = $model->id_marca;
     }
 
-    public function openModal()
+    public function cancelEdit()
     {
-        $this->isModalOpen = true;
+        $this->editingModelId = null;
+        $this->editingModelName = '';
+        $this->editingModelBrandId = '';
     }
 
-    public function closeModal()
+    public function update()
     {
-        $this->isModalOpen = false;
-        $this->resetInputFields();
-    }
+        $this->validate([
+            'editingModelName' => 'required|string|max:255',
+            'editingModelBrandId' => 'required|exists:brands,id',
+        ]);
 
-    private function resetInputFields()
-    {
-        $this->nombre = '';
-        $this->id_marca = '';
-        $this->model_id = null;
-        $this->resetErrorBag();
+        CarModels::find($this->editingModelId)->update([
+            'nombre' => $this->editingModelName,
+            'id_marca' => $this->editingModelBrandId,
+        ]);
+
+        $this->cancelEdit();
+        session()->flash('message', 'Modelo actualizado.');
+        $this->dispatch('refreshComponent');
     }
 
     public function store()
     {
-        $this->validate();
-
-        CarModels::updateOrCreate(['id' => $this->model_id], [
-            'nombre' => $this->nombre,
-            'id_marca' => $this->id_marca
+        $this->validate([
+            'newModelName' => 'required|string|max:255',
+            'newModelBrandId' => 'required|exists:brands,id',
         ]);
 
-        session()->flash('message', $this->model_id ? 'Modelo actualizado.' : 'Modelo creado.');
-        $this->closeModal();
-    }
+        CarModels::create([
+            'nombre' => $this->newModelName,
+            'id_marca' => $this->newModelBrandId,
+        ]);
 
-    public function edit($id)
-    {
-        $model = CarModels::findOrFail($id);
-        $this->model_id = $id;
-        $this->nombre = $model->nombre;
-        $this->id_marca = $model->id_marca;
-        $this->openModal();
+        $this->newModelName = '';
+        $this->newModelBrandId = '';
+        session()->flash('message', 'Modelo creado.');
+        $this->dispatch('refreshComponent');
     }
 
     public function delete($id)
     {
         CarModels::find($id)->delete();
         session()->flash('message', 'Modelo eliminado.');
+        $this->dispatch('refreshComponent');
     }
 }

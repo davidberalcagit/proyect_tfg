@@ -14,10 +14,18 @@ class SalesPolicy
 
     public function view(User $user, Sales $sale): bool
     {
-        if ($user->hasRole('admin')) return true;
-        if (!$user->customer) return false;
+        if (!$user->customer) {
+            return false;
+        }
 
-        return $user->customer->id === $sale->id_comprador ||
-               $user->customer->id === $sale->id_vendedor;
+        if ($user->customer->id === $sale->id_comprador) {
+            return true;
+        }
+
+        if ($user->customer->id === $sale->id_vendedor) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -97,7 +97,7 @@
             <tr>
                 <th>{{ __('Duration') }}</th>
                 <td>
-                    {{ $rental->fecha_inicio->diffInDays($rental->fecha_fin) == 0 ? 1 : $rental->fecha_inicio->diffInDays($rental->fecha_fin) }} {{ __('days') }}
+                    {{ $days }} {{ __('days') }}
                 </td>
                 <th>{{ __('Daily Rate') }}</th>
                 <td>{{ number_format($rental->car->precio, 2) }} €</td>
@@ -115,16 +115,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ __('Rental Cost') }} ({{ $rental->fecha_inicio->diffInDays($rental->fecha_fin) == 0 ? 1 : $rental->fecha_inicio->diffInDays($rental->fecha_fin) }} {{ __('days') }} x {{ number_format($rental->car->precio, 2) }} €)</td>
-                    <td style="text-align: right;">{{ number_format($rental->precio_total, 2) }} €</td>
+                    <td>{{ __('Rental Cost') }} ({{ $days }} {{ __('days') }} x {{ number_format($rental->car->precio, 2) }} €)</td>
+                    <td style="text-align: right;">{{ number_format($total, 2) }} €</td>
                 </tr>
                 <tr>
-                    <td>{{ __('Platform Service Fee') }} (5%)</td>
-                    <td style="text-align: right;">{{ number_format($rental->precio_total * 0.05, 2) }} €</td>
+                    <td>{{ __('Platform Service Fee') }} (15%)</td>
+                    <td style="text-align: right;">{{ number_format($serviceFee, 2) }} €</td>
                 </tr>
                 <tr>
                     <td>{{ __('VAT') }} (21% {{ __('on Service Fee') }})</td>
-                    <td style="text-align: right;">{{ number_format(($rental->precio_total * 0.05) * 0.21, 2) }} €</td>
+                    <td style="text-align: right;">{{ number_format($tax, 2) }} €</td>
                 </tr>
             </tbody>
         </table>
@@ -133,11 +133,11 @@
             <table>
                 <tr>
                     <th>{{ __('Subtotal') }}</th>
-                    <td>{{ number_format($rental->precio_total + ($rental->precio_total * 0.05), 2) }} €</td>
+                    <td>{{ number_format($total + $serviceFee, 2) }} €</td>
                 </tr>
                 <tr>
                     <th>{{ __('TOTAL PAID') }}</th>
-                    <td class="grand-total">{{ number_format($rental->precio_total + ($rental->precio_total * 0.05) + (($rental->precio_total * 0.05) * 0.21), 2) }} €</td>
+                    <td class="grand-total">{{ number_format($grandTotal, 2) }} €</td>
                 </tr>
             </table>
         </div>

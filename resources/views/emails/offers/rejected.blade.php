@@ -9,7 +9,7 @@
 
     <p><strong>Tu oferta:</strong> {{ number_format($offer->cantidad, 2) }} €</p>
 
-    <p>Puedes intentar hacer una nueva oferta si el coche sigue disponible.</p>
+    <p>Puedes intentar hacer una nueva oferta con un precio acorde al precio ideal del comprador, en caso de que el coche sigue disponible.</p>
 
     <p>
         <a href="{{ route('cars.show', $offer->car) }}">Ver Coche</a>

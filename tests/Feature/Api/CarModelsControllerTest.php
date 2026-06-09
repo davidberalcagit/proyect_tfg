@@ -7,7 +7,7 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 test('api car models index returns list', function () {
-    CarModels::factory()
+    $models = CarModels::factory()
         ->count(3)
         ->state(new Sequence(
             fn ($sequence) => ['nombre' => 'Model ' . uniqid()],
@@ -16,8 +16,11 @@ test('api car models index returns list', function () {
 
     $response = $this->getJson(route('api.car-models.index'));
 
-    $response->assertStatus(200)
-             ->assertJsonCount(3);
+    $response->assertStatus(200);
+
+    foreach ($models as $model) {
+        $response->assertJsonFragment(['id' => $model->id]);
+    }
 });
 
 test('api car models store creates model', function () {
@@ -27,7 +30,8 @@ test('api car models store creates model', function () {
 
     $response = $this->postJson(route('api.car-models.store'), [
         'nombre' => 'New Model ' . uniqid(),
-        'id_marca' => $brand->id
+        'id_marca' => $brand->id,
+        'carroceria' => 'SUV'
     ]);
 
     $response->assertStatus(201);
@@ -51,7 +55,8 @@ test('api car models update modifies model', function () {
 
     $newName = 'Updated Model ' . uniqid();
     $response = $this->putJson(route('api.car-models.update', $model->id), [
-        'nombre' => $newName
+        'nombre' => $newName,
+        'carroceria' => 'Sedan'
     ]);
 
     $response->assertStatus(200)

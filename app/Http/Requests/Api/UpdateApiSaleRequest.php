@@ -21,7 +21,7 @@ class UpdateApiSaleRequest extends FormRequest
         $this->saleInstance = Sales::find($id);
 
         if (!$this->saleInstance) {
-            return true; // Let 404 happen
+            return true;
         }
 
         return $this->saleInstance->id_vendedor === Auth::user()->customer->id;

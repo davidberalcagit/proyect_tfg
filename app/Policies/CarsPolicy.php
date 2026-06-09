@@ -8,7 +8,6 @@ use Illuminate\Auth\Access\Response;
 
 class CarsPolicy
 {
-
     public function viewAny(User $user): bool
     {
         return $user->can('view cars');
@@ -16,24 +15,46 @@ class CarsPolicy
 
     public function view(User $user, Cars $car): bool
     {
-        return $user->can('view cars');
-    }
+        if (!$user->can('view cars')) {
+            return false;
+        }
 
+        if ($user->can('crud all cars')) {
+            return true;
+        }
+
+        if (in_array($car->id_estado, [4, 5])) {
+            return $user->customer?->id === $car->id_vendedor;
+        }
+
+        return true;
+    }
 
     public function create(User $user): bool
     {
         return $user->can('create cars') && $user->customer;
     }
 
-
     public function update(User $user, Cars $car): bool
     {
-        if ($user->hasRole('admin')) {
+        if ($user->can('crud all cars')) {
             return true;
         }
 
-        if ($user->customer && $user->customer->id === $car->id_vendedor) {
-            return $car->id_estado === 4;
+        if (!$user->can('crud own cars')) {
+            return false;
+        }
+
+        if (!$user->customer) {
+            return false;
+        }
+
+        if ($user->customer->id !== $car->id_vendedor) {
+            return false;
+        }
+
+        if ($car->id_estado === 4) {
+            return true;
         }
 
         return false;
@@ -41,25 +62,39 @@ class CarsPolicy
 
     public function delete(User $user, Cars $car): bool
     {
-        if ($user->hasRole('admin')) {
+        if ($user->can('crud all cars')) {
             return true;
         }
 
-        if ($user->customer && $user->customer->id === $car->id_vendedor) {
+        if (!$user->can('crud own cars')) {
+            return false;
+        }
 
+        if (!$user->customer) {
+            return false;
+        }
+
+        if ($user->customer->id === $car->id_vendedor) {
             return true;
         }
 
         return false;
     }
 
-
     public function rent(User $user, Cars $car): bool
     {
-        if ($user->customer && $user->customer->id === $car->id_vendedor) {
+        if (!$user->customer) {
             return false;
         }
 
-        return $car->id_estado === 3;
+        if ($user->customer->id === $car->id_vendedor) {
+            return false;
+        }
+
+        if ($car->id_estado === 3) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -14,7 +14,8 @@ class StoreGearRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => 'required|unique:gears,tipo'
+            'tipo' => 'required|string|max:255|unique:gears,tipo',
+            'speed_count' => 'required|integer|min:1|max:10',
         ];
     }
 }

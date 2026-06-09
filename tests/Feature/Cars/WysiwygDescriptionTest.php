@@ -16,8 +16,10 @@ use Spatie\Permission\Models\Permission;
 
 beforeEach(function () {
     Permission::firstOrCreate(['name' => 'create cars']);
+    Permission::firstOrCreate(['name' => 'view cars']);
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('create cars');
+    $this->user->givePermissionTo('view cars');
 
     $this->customer = Customers::factory()->create(['id_usuario' => $this->user->id]);
 
@@ -27,8 +29,8 @@ beforeEach(function () {
     $this->fuel = Fuels::factory()->create();
     $this->gear = Gears::factory()->create();
 
-    $this->listingType = ListingType::firstOrCreate(['id' => 1, 'nombre' => 'Venta']);
-    CarStatus::firstOrCreate(['id' => 4, 'nombre' => 'Pendiente']);
+    $this->listingType = ListingType::firstOrCreate(['id' => 1], ['nombre' => 'Venta']);
+    CarStatus::firstOrCreate(['id' => 4], ['nombre' => 'Pendiente']);
 });
 
 it('can store and display all wysiwyg html tags from the editor buttons', function () {

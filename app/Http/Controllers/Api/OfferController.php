@@ -7,7 +7,6 @@ use App\Models\Cars;
 use App\Models\Offer;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\StoreApiOfferRequest;
-use App\Http\Requests\Api\UpdateApiOfferRequest;
 
 /**
  * @group Ofertas
@@ -123,44 +122,6 @@ class OfferController extends Controller
         }
 
         return $offer;
-    }
-
-    /**
-     * Actualizar Oferta
-     *
-     * Permite modificar una oferta.
-     * - El **comprador** puede cambiar el precio (`precio_oferta`) si está pendiente.
-     * - El **vendedor** puede cambiar el estado (`estado`) a 'aceptada' o 'rechazada'.
-     *
-     * @authenticated
-     * @urlParam id int required El ID de la oferta. Example: 1
-     * @bodyParam precio_oferta number Nuevo precio (solo comprador). Example: 14500
-     * @bodyParam estado string Nuevo estado (solo vendedor). Example: aceptada
-     *
-     * @response 200 {
-     *  "id": 1,
-     *  "cantidad": 14500,
-     *  "estado": "pending"
-     * }
-     */
-    public function update(UpdateApiOfferRequest $request, $id)
-    {
-        $offer = Offer::findOrFail($id);
-        $userCustomer = Auth::user()->customer;
-
-        if ($offer->id_comprador === $userCustomer->id) {
-            $data = [];
-            if ($request->has('precio_oferta')) {
-                $data['cantidad'] = $request->precio_oferta;
-            }
-
-            $offer->update($data);
-
-        } elseif ($offer->id_vendedor === $userCustomer->id) {
-            $offer->update(['estado' => $request->estado]);
-        }
-
-        return response()->json($offer, 200);
     }
 
     /**

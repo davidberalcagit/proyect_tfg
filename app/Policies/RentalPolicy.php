@@ -14,15 +14,27 @@ class RentalPolicy
 
     public function view(User $user, Rental $rental): bool
     {
-        if ($user->hasRole('admin')) return true;
-        if (!$user->customer) return false;
+        if (!$user->customer) {
+            return false;
+        }
 
-        return $user->customer->id === $rental->id_cliente ||
-               $user->customer->id === $rental->car->id_vendedor;
+        if ($user->customer->id === $rental->id_cliente) {
+            return true;
+        }
+
+        if ($user->customer->id === $rental->car->id_vendedor) {
+            return true;
+        }
+
+        return false;
     }
 
     public function create(User $user): bool
     {
-        return $user->customer !== null;
+        if ($user->customer) {
+            return true;
+        }
+
+        return false;
     }
 }

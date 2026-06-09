@@ -397,103 +397,6 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/colors
-    metadata:
-      custom: []
-      groupName: 'Tablas Auxiliares'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Listar Colores'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          [
-           { "id": 1, "nombre": "Rojo" }
-          ]
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/colors/{id}'
-    metadata:
-      custom: []
-      groupName: 'Tablas Auxiliares'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Ver Color'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'ID del color.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 16
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{ "id": 1, "nombre": "Rojo" }'
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
     uri: api/gears
     metadata:
       custom: []
@@ -601,7 +504,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Crear Marca'
-      description: 'Registra una nueva marca. (Solo Admin)'
+      description: 'Registra una nueva marca y, opcionalmente, modelos asociados.'
       authenticated: true
       deprecated: false
     headers:
@@ -624,8 +527,24 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      models:
+        custom: []
+        name: models
+        description: 'Opcional. Una lista de nombres de modelos.'
+        required: false
+        example:
+          - 'Model S'
+          - 'Model 3'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       nombre: Tesla
+      models:
+        - 'Model S'
+        - 'Model 3'
     fileParameters: []
     responses:
       -
@@ -635,7 +554,7 @@ endpoints:
           {
            "id": 10,
            "nombre": "Tesla",
-           "created_at": "..."
+           "models_created": 2
           }
         headers: []
         description: ''
@@ -697,8 +616,22 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      models:
+        custom: []
+        name: models
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example:
+          - 'n'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       nombre: 'Toyota Updated'
+      models:
+        - 'n'
     fileParameters: []
     responses:
       -
@@ -816,9 +749,33 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      carroceria:
+        custom: []
+        name: carroceria
+        description: 'Must not be greater than 100 characters.'
+        required: true
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      body_style:
+        custom: []
+        name: body_style
+        description: 'El tipo de carrocería.'
+        required: true
+        example: Pickup
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       nombre: Cybertruck
       id_marca: 10
+      carroceria: 'n'
+      body_style: Pickup
     fileParameters: []
     responses:
       -
@@ -883,8 +840,31 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      id_marca:
+        custom: []
+        name: id_marca
+        description: 'The <code>id</code> of an existing record in the brands table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      carroceria:
+        custom: []
+        name: carroceria
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       nombre: architecto
+      carroceria: 'n'
     fileParameters: []
     responses:
       -
@@ -989,8 +969,28 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      emission_type:
+        custom: []
+        name: emission_type
+        description: ''
+        required: true
+        example: E10
+        type: string
+        enumValues:
+          - E5
+          - E10
+          - B7
+          - B10
+          - H2
+          - LNG
+          - ZERO
+          - ECO
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       nombre: Hidrógeno
+      emission_type: E10
     fileParameters: []
     responses:
       -
@@ -1060,8 +1060,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      emission_type:
+        custom: []
+        name: emission_type
+        description: ''
+        required: false
+        example: LNG
+        type: string
+        enumValues:
+          - E5
+          - E10
+          - B7
+          - B10
+          - H2
+          - LNG
+          - ZERO
+          - ECO
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       nombre: architecto
+      emission_type: LNG
     fileParameters: []
     responses:
       -
@@ -1135,178 +1155,6 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/colors
-    metadata:
-      custom: []
-      groupName: 'Tablas Auxiliares'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Crear Color'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      nombre:
-        custom: []
-        name: nombre
-        description: 'Nombre del color.'
-        required: true
-        example: 'Azul Mate'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      nombre: 'Azul Mate'
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: '{ ... }'
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/colors/{id}'
-    metadata:
-      custom: []
-      groupName: 'Tablas Auxiliares'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Actualizar Color'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'ID del color.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 16
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      nombre:
-        custom: []
-        name: nombre
-        description: 'Nuevo nombre.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      nombre: architecto
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{ ... }'
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/colors/{id}'
-    metadata:
-      custom: []
-      groupName: 'Tablas Auxiliares'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Eliminar Color'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer e.g. 1|laravel_sanctum_token...'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'ID del color.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 16
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 204
-        content: '{}'
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
     uri: api/gears
     metadata:
       custom: []
@@ -1338,8 +1186,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      speed_count:
+        custom: []
+        name: speed_count
+        description: 'Must be at least 1. Must not be greater than 10.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       tipo: Secuencial
+      speed_count: 2
     fileParameters: []
     responses:
       -
@@ -1404,8 +1264,20 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      speed_count:
+        custom: []
+        name: speed_count
+        description: 'Must be at least 1. Must not be greater than 10.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       tipo: architecto
+      speed_count: 2
     fileParameters: []
     responses:
       -

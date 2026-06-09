@@ -12,11 +12,11 @@
         .stats-container { width: 100%; margin-bottom: 30px; }
         .stat-box {
             float: left;
-            width: 22%;
+            width: 18%;
             background-color: #f7fafc;
             border: 1px solid #e2e8f0;
             padding: 15px 5px;
-            margin-right: 3%;
+            margin-right: 2%;
             text-align: center;
             border-radius: 8px;
         }
@@ -49,6 +49,10 @@
         <div class="stat-box">
             <div class="stat-value">{{ $stats['total_users'] }}</div>
             <div class="stat-label">{{ __('Total Users') }}</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ $stats['active_traders_count'] }}</div>
+            <div class="stat-label">{{ __('Active Traders') }}</div>
         </div>
         <div class="stat-box">
             <div class="stat-value">{{ $stats['total_cars'] }}</div>
@@ -87,6 +91,11 @@
                     @endforeach
                 </div>
             </li>
+             @if(isset($stats['best_seller_monthly_sales']))
+                <li>
+                    <strong>{{ __('Top Seller Sales (This Month)') }}:</strong> {{ $stats['best_seller_monthly_sales'] }}
+                </li>
+            @endif
         </ul>
     </div>
 

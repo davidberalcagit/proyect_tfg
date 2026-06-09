@@ -20,7 +20,7 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'individual']);
+    Role::firstOrCreate(['name' => 'individual']);
 
     DB::table('rental_statuses')->insertOrIgnore([
         ['id' => 1, 'nombre' => 'Pendiente de Aprobación'],

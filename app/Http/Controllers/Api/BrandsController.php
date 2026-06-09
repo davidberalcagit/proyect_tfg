@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brands;
 use App\Models\CarModels;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @group Tablas Auxiliares
@@ -40,21 +41,42 @@ class BrandsController extends Controller
     /**
      * Crear Marca
      *
-     * Registra una nueva marca. (Solo Admin)
+     * Registra una nueva marca y, opcionalmente, modelos asociados.
      *
      * @authenticated
      * @bodyParam nombre string required El nombre de la marca. Example: Tesla
+     * @bodyParam models array Opcional. Una lista de nombres de modelos. Example: ["Model S", "Model 3"]
      *
      * @response 201 {
      *  "id": 10,
      *  "nombre": "Tesla",
-     *  "created_at": "..."
+     *  "models_created": 2
      * }
      */
     public function store(StoreBrandRequest $request)
     {
-        $brand = Brands::create($request->validated());
-        return response()->json($brand, 201);
+        $validated = $request->validated();
+        $modelsCreatedCount = 0;
+
+        $brand = DB::transaction(function () use ($validated, &$modelsCreatedCount) {
+            $brand = Brands::create(['nombre' => $validated['nombre']]);
+
+            if (!empty($validated['models'])) {
+                foreach ($validated['models'] as $modelName) {
+                    if (!empty(trim($modelName))) {
+                        $brand->models()->create(['nombre' => $modelName]);
+                        $modelsCreatedCount++;
+                    }
+                }
+            }
+            return $brand;
+        });
+
+        return response()->json([
+            'id' => $brand->id,
+            'nombre' => $brand->nombre,
+            'models_created' => $modelsCreatedCount
+        ], 201);
     }
 
     /**

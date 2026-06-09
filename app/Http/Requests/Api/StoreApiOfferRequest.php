@@ -39,7 +39,6 @@ class StoreApiOfferRequest extends FormRequest
             $car = Cars::find($this->id_vehiculo);
 
             if ($car && $car->id_vendedor === $buyer->id) {
-                // Throws a 400 response directly to match old behavior
                 throw new HttpResponseException(response()->json(['message' => 'No puedes hacer una oferta por tu propio coche.'], 400));
             }
 
@@ -49,7 +48,7 @@ class StoreApiOfferRequest extends FormRequest
                 ->exists();
 
             if ($existingOffer) {
-                // Throws a 409 response directly to match old behavior
+
                 throw new HttpResponseException(response()->json(['message' => 'Ya tienes una oferta pendiente para este coche.'], 409));
             }
         });

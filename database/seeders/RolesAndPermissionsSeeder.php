@@ -20,14 +20,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $permissions = [
             'create cars',
             'crud own cars',
-            'buy cars',
             'crud all cars',
-            'all access',
+            'buy cars',
             'offers for companies',
             'offers for individuals',
             'view cars',
             'view users data',
             'view customers data',
+            'manage users',
+            'all access',
         ];
 
         foreach ($permissions as $permission) {
@@ -40,6 +41,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'crud own cars',
             'buy cars',
             'offers for individuals',
+            'offers for companies',
             'view customers data',
             'view cars'
         ]);
@@ -50,6 +52,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'crud own cars',
             'buy cars',
             'offers for companies',
+            'offers for individuals',
             'view customers data',
             'view cars'
         ]);
@@ -68,7 +71,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->syncPermissions([
             'view cars',
             'view users data',
-            'view customers data'
+            'view customers data',
+            'manage users'
         ]);
     }
 }

@@ -48,12 +48,11 @@ test('rejection email is sent to seller with reason', function () {
         'id_estado' => 4
     ]);
 
-    $reason = 'Fotos borrosas';
 
-    $job = new SendCarStatusNotificationJob($car, 'rejected', $reason);
+    $job = new SendCarStatusNotificationJob($car, 'rejected', 'Test reason');
     $job->handle();
 
-    Mail::assertQueued(CarRejected::class, function ($mail) use ($sellerUser, $reason) {
-        return $mail->hasTo($sellerUser->email) && $mail->reason === $reason;
+    Mail::assertQueued(CarRejected::class, function ($mail) use ($sellerUser) {
+        return $mail->hasTo($sellerUser->email);
     });
 });

@@ -320,7 +320,7 @@ endpoints:
         name: fecha
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T14:55:07'
+        example: '2026-06-09T10:51:38'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -350,7 +350,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       precio: 14000.0
-      fecha: '2026-02-17T14:55:07'
+      fecha: '2026-06-09T10:51:38'
       metodo_pago: 'n'
       estado: 2
     fileParameters: []

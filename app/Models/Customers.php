@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Customers extends Model
 {
     use HasFactory;
@@ -17,6 +16,22 @@ class Customers extends Model
         'nombre_contacto',
         'telefono',
     ];
+
+    public function scopeTopSellers($query, $limit = 5)
+    {
+        return $query->whereHas('sales', function ($q) {
+                        $q->where('id_estado', 1);
+                    })
+                     ->withCount(['sales as total_sales' => function ($query) {
+                        $query->where('id_estado', 1);
+                     }])
+                     ->withSum(['sales as total_revenue' => function ($query) {
+                         $query->where('id_estado', 1);
+                     }], 'precio')
+                     ->orderByDesc('total_sales')
+                     ->orderByDesc('total_revenue')
+                     ->take($limit);
+    }
 
     public function user()
     {
@@ -39,6 +54,11 @@ class Customers extends Model
     public function cars()
     {
         return $this->hasMany(Cars::class,'id_vendedor');
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sales::class, 'id_vendedor');
     }
 
     public function rentals()

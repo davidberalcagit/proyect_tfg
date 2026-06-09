@@ -7,9 +7,7 @@ use App\Http\Requests\StoreColorRequest;
 use App\Http\Requests\UpdateColorRequest;
 use App\Models\Color;
 
-/**
- * @group Tablas Auxiliares
- */
+
 class ColorsController extends Controller
 {
     /**

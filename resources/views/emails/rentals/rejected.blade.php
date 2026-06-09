@@ -13,7 +13,7 @@
         <li>Fecha Fin: {{ $rental->fecha_fin->format('d/m/Y') }}</li>
     </ul>
 
-    <p>Puedes intentar buscar otro vehículo disponible en nuestra plataforma.</p>
+    <p>Puedes intentar elegir otras fechas de alquiler o buscar otro vehículo disponible en nuestra plataforma.</p>
 
     <p>
         <a href="{{ route('cars.index') }}">Ver Coches</a>

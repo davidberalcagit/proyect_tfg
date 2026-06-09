@@ -15,7 +15,8 @@ class UpdateColorRequest extends FormRequest
     {
         $colorId = $this->route('color') ?? $this->route('id');
         return [
-            'nombre' => 'sometimes|required|unique:colors,nombre,' . $colorId
+            'nombre' => 'sometimes|required|string|max:255|unique:colors,nombre,' . $colorId,
+            'hex_code' => 'sometimes|nullable|string|max:7|starts_with:#',
         ];
     }
 }

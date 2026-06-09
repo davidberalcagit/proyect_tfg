@@ -11,10 +11,14 @@ class MakeOffer extends Component
 {
     public $car;
     public $cantidad;
+    public $mensaje;
+    public $terminos;
     public $isModalOpen = false;
 
     protected $rules = [
         'cantidad' => 'required|numeric|min:1',
+        'mensaje' => 'nullable|string|max:500',
+        'terminos' => 'accepted',
     ];
 
     public function mount(Cars $car)
@@ -38,7 +42,7 @@ class MakeOffer extends Component
     public function closeModal()
     {
         $this->isModalOpen = false;
-        $this->reset(['cantidad']);
+        $this->reset(['cantidad', 'mensaje', 'terminos']);
     }
 
     public function submitOffer()

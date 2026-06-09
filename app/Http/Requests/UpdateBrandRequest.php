@@ -15,7 +15,9 @@ class UpdateBrandRequest extends FormRequest
     {
         $brandId = $this->route('brand') ?? $this->route('id');
         return [
-            'nombre' => 'sometimes|required|unique:brands,nombre,' . $brandId
+            'nombre' => 'sometimes|required|string|unique:brands,nombre,' . $brandId,
+            'models' => 'nullable|array',
+            'models.*' => 'nullable|string|max:255'
         ];
     }
 }

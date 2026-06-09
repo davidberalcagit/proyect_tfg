@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateFuelRequest extends FormRequest
 {
@@ -15,7 +16,8 @@ class UpdateFuelRequest extends FormRequest
     {
         $fuelId = $this->route('fuel') ?? $this->route('id');
         return [
-            'nombre' => 'sometimes|required|unique:fuels,nombre,' . $fuelId
+            'nombre' => 'sometimes|required|string|max:255|unique:fuels,nombre,' . $fuelId,
+            'emission_type' => ['sometimes', 'required', 'string', Rule::in(['E5', 'E10', 'B7', 'B10', 'H2', 'LNG', 'ZERO', 'ECO'])],
         ];
     }
 }

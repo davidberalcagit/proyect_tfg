@@ -6,12 +6,14 @@ use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
 test('api brands index returns list', function () {
-    Brands::factory()->count(3)->create();
+    $brands = Brands::factory()->count(3)->create();
 
     $response = $this->getJson(route('api.brands.index'));
 
-    $response->assertStatus(200)
-             ->assertJsonCount(3);
+    $response->assertStatus(200);
+    foreach ($brands as $brand) {
+        $response->assertJsonFragment(['id' => $brand->id]);
+    }
 });
 
 test('api brands store creates brand', function () {

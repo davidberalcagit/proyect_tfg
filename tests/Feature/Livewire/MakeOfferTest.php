@@ -24,6 +24,8 @@ test('can make offer', function () {
     Livewire::actingAs($buyer)
         ->test(MakeOffer::class, ['car' => $car])
         ->set('cantidad', 10000)
+        ->set('mensaje', 'Me interesa mucho tu coche.')
+        ->set('terminos', true)
         ->call('submitOffer')
         ->assertHasNoErrors();
 
@@ -67,6 +69,8 @@ test('cannot make duplicate pending offer', function () {
     Livewire::actingAs($buyer)
         ->test(MakeOffer::class, ['car' => $car])
         ->set('cantidad', 12000)
+        ->set('mensaje', 'Mensaje de prueba.')
+        ->set('terminos', true)
         ->call('submitOffer');
 
     $this->assertDatabaseCount('offers', 1);

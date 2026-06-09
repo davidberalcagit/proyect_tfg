@@ -95,13 +95,6 @@
 
         <h3>{{ __('Financial Breakdown') }}</h3>
 
-        @php
-            $total = $sale->precio;
-            $serviceFee = $total * 0.05;
-            $tax = $serviceFee * 0.21;
-            $grandTotal = $total + $serviceFee + $tax;
-        @endphp
-
         <table>
             <thead>
                 <tr>

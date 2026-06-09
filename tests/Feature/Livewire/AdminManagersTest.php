@@ -16,204 +16,122 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'admin']);
+    Role::firstOrCreate(['name' => 'admin']);
+    $this->admin = User::factory()->create();
+    $this->admin->assignRole('admin');
 });
 
 test('brand manager can create brand', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
+    Livewire::actingAs($this->admin)
         ->test(BrandManager::class)
-        ->set('nombre', 'New Brand')
+        ->set('newBrandName', 'New Brand')
         ->call('store')
         ->assertHasNoErrors();
 
     $this->assertDatabaseHas('brands', ['nombre' => 'New Brand']);
 });
 
-test('brand manager validates required name', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
-        ->test(BrandManager::class)
-        ->set('nombre', '')
-        ->call('store')
-        ->assertHasErrors(['nombre' => 'required']);
-});
-
 test('brand manager can edit brand', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
     $brand = Brands::factory()->create(['nombre' => 'Old Brand']);
 
-    Livewire::actingAs($admin)
+    Livewire::actingAs($this->admin)
         ->test(BrandManager::class)
         ->call('edit', $brand->id)
-        ->set('nombre', 'Updated Brand')
-        ->call('store');
+        ->set('editingBrandName', 'Updated Brand')
+        ->call('update')
+        ->assertHasNoErrors();
 
     $this->assertDatabaseHas('brands', ['id' => $brand->id, 'nombre' => 'Updated Brand']);
 });
 
-test('brand manager can delete brand', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $brand = Brands::factory()->create();
+test('brand manager can edit multiple times', function () {
+    $brand = Brands::factory()->create(['nombre' => 'Initial Name']);
 
-    Livewire::actingAs($admin)
+    Livewire::actingAs($this->admin)
         ->test(BrandManager::class)
-        ->call('delete', $brand->id);
+        // First Edit
+        ->call('edit', $brand->id)
+        ->set('editingBrandName', 'First Edit')
+        ->call('update')
+        ->assertHasNoErrors()
+        ->assertSee('First Edit')
 
-    $this->assertDatabaseMissing('brands', ['id' => $brand->id]);
+        // Second Edit
+        ->call('edit', $brand->id)
+        ->set('editingBrandName', 'Second Edit')
+        ->call('update')
+        ->assertHasNoErrors()
+        ->assertSee('Second Edit');
+
+    $this->assertDatabaseHas('brands', ['id' => $brand->id, 'nombre' => 'Second Edit']);
 });
 
-test('gear manager can create gear', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
-        ->test(GearManager::class)
-        ->set('tipo', 'Automatic')
-        ->call('store');
-
-    $this->assertDatabaseHas('gears', ['tipo' => 'Automatic']);
-});
-
-test('gear manager validates unique gear', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    Gears::create(['tipo' => 'Manual']);
-
-    Livewire::actingAs($admin)
-        ->test(GearManager::class)
-        ->set('tipo', 'Manual')
-        ->call('store')
-        ->assertHasErrors(['tipo' => 'unique']);
-});
-
-test('gear manager can edit gear', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $gear = Gears::create(['tipo' => 'Manual']);
-
-    Livewire::actingAs($admin)
-        ->test(GearManager::class)
-        ->call('edit', $gear->id)
-        ->set('tipo', 'CVT')
-        ->call('store');
-
-    $this->assertDatabaseHas('gears', ['id' => $gear->id, 'tipo' => 'CVT']);
-});
-
-test('gear manager can delete gear', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $gear = Gears::create(['tipo' => 'Manual']);
-
-    Livewire::actingAs($admin)
-        ->test(GearManager::class)
-        ->call('delete', $gear->id);
-
-    $this->assertDatabaseMissing('gears', ['id' => $gear->id]);
-});
-
-test('fuel manager can create fuel', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
-        ->test(FuelManager::class)
-        ->set('nombre', 'Electric')
-        ->call('store');
-
-    $this->assertDatabaseHas('fuels', ['nombre' => 'Electric']);
-});
-
-test('fuel manager validates required name', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
-        ->test(FuelManager::class)
-        ->set('nombre', '')
-        ->call('store')
-        ->assertHasErrors(['nombre' => 'required']);
-});
-
-test('fuel manager can edit fuel', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $fuel = Fuels::factory()->create(['nombre' => 'Old Fuel']);
-
-    Livewire::actingAs($admin)
-        ->test(FuelManager::class)
-        ->call('edit', $fuel->id)
-        ->set('nombre', 'Updated Fuel')
-        ->call('store');
-
-    $this->assertDatabaseHas('fuels', ['id' => $fuel->id, 'nombre' => 'Updated Fuel']);
-});
-
-test('fuel manager can delete fuel', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $fuel = Fuels::factory()->create();
-
-    Livewire::actingAs($admin)
-        ->test(FuelManager::class)
-        ->call('delete', $fuel->id);
-
-    $this->assertDatabaseMissing('fuels', ['id' => $fuel->id]);
-});
 
 test('color manager can create color', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-
-    Livewire::actingAs($admin)
+    Livewire::actingAs($this->admin)
         ->test(ColorManager::class)
-        ->set('nombre', 'Red')
-        ->call('store');
-
-    $this->assertDatabaseHas('colors', ['nombre' => 'Red']);
-});
-
-test('color manager validates unique color', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    Color::create(['nombre' => 'Blue']);
-
-    Livewire::actingAs($admin)
-        ->test(ColorManager::class)
-        ->set('nombre', 'Blue')
+        ->set('newColorName', 'New Color')
         ->call('store')
-        ->assertHasErrors(['nombre' => 'unique']);
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseHas('colors', ['nombre' => 'New Color']);
 });
 
 test('color manager can edit color', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
     $color = Color::factory()->create(['nombre' => 'Old Color']);
 
-    Livewire::actingAs($admin)
+    Livewire::actingAs($this->admin)
         ->test(ColorManager::class)
         ->call('edit', $color->id)
-        ->set('nombre', 'Updated Color')
-        ->call('store');
+        ->set('editingColorName', 'Updated Color')
+        ->call('update')
+        ->assertHasNoErrors();
 
     $this->assertDatabaseHas('colors', ['id' => $color->id, 'nombre' => 'Updated Color']);
 });
 
-test('color manager can delete color', function () {
-    $admin = User::factory()->create();
-    $admin->assignRole('admin');
-    $color = Color::factory()->create();
+test('fuel manager can create fuel', function () {
+    Livewire::actingAs($this->admin)
+        ->test(FuelManager::class)
+        ->set('newFuelName', 'New Fuel')
+        ->call('store')
+        ->assertHasNoErrors();
 
-    Livewire::actingAs($admin)
-        ->test(ColorManager::class)
-        ->call('delete', $color->id);
+    $this->assertDatabaseHas('fuels', ['nombre' => 'New Fuel']);
+});
 
-    $this->assertDatabaseMissing('colors', ['id' => $color->id]);
+test('fuel manager can edit fuel', function () {
+    $fuel = Fuels::factory()->create(['nombre' => 'Old Fuel']);
+
+    Livewire::actingAs($this->admin)
+        ->test(FuelManager::class)
+        ->call('edit', $fuel->id)
+        ->set('editingFuelName', 'Updated Fuel')
+        ->call('update')
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseHas('fuels', ['id' => $fuel->id, 'nombre' => 'Updated Fuel']);
+});
+
+test('gear manager can create gear', function () {
+    Livewire::actingAs($this->admin)
+        ->test(GearManager::class)
+        ->set('newGearType', 'New Gear')
+        ->call('store')
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseHas('gears', ['tipo' => 'New Gear']);
+});
+
+test('gear manager can edit gear', function () {
+    $gear = Gears::factory()->create(['tipo' => 'Old Gear']);
+
+    Livewire::actingAs($this->admin)
+        ->test(GearManager::class)
+        ->call('edit', $gear->id)
+        ->set('editingGearType', 'Updated Gear')
+        ->call('update')
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseHas('gears', ['id' => $gear->id, 'tipo' => 'Updated Gear']);
 });

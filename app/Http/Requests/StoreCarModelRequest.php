@@ -16,6 +16,7 @@ class StoreCarModelRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'id_marca' => 'required|exists:brands,id',
+            'carroceria' => 'required|string|max:100',
         ];
     }
 }

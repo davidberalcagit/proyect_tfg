@@ -38,6 +38,7 @@ class CarModelsController extends Controller
      * @authenticated
      * @bodyParam nombre string required El nombre del modelo. Example: Cybertruck
      * @bodyParam id_marca int required El ID de la marca asociada. Example: 10
+     * @bodyParam body_style string required El tipo de carrocería. Example: Pickup
      *
      * @response 201 { ... }
      */

@@ -16,13 +16,29 @@
                     </div>
                 @endif
 
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">{{ __('Your Offer') }} (€)</label>
-                    <input type="number" wire:model="cantidad" wire:keydown.enter="submitOffer" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50 py-2 px-3 text-lg font-mono text-[#284961]" placeholder="0.00" autofocus>
-                    @error('cantidad') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ __('Your Offer') }} (€)</label>
+                        <input type="number" wire:model="cantidad" wire:keydown.enter="submitOffer" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50 py-2 px-3 text-lg font-mono text-[#284961]" placeholder="0.00" autofocus>
+                        @error('cantidad') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ __('Message for the seller') }} (Opcional)</label>
+                        <textarea wire:model="mensaje" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#B35F12] focus:ring focus:ring-[#B35F12] focus:ring-opacity-50" rows="3" placeholder="Escribe un mensaje..."></textarea>
+                        @error('mensaje') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" wire:model="terminos" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                            <span class="ml-2 text-sm text-gray-600">Acepto los <a href="#" class="underline">términos y condiciones</a> de la oferta.</span>
+                        </label>
+                        @error('terminos') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
                 </div>
 
-                <div class="flex justify-end space-x-3">
+                <div class="flex justify-end space-x-3 mt-6">
                     <button wire:click="closeModal" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition text-sm uppercase tracking-wide">
                         {{ __('Cancel') }}
                     </button>

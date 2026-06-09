@@ -25,6 +25,19 @@ class Sales extends Model
                      ->where('id_estado', 1);
     }
 
+    public static function getReportData()
+    {
+        $topSellers = Customers::topSellers(5)->get();
+        $salesByType = EntityType::withSalesCount()->get();
+        $popularBrand = Brands::mostPopular()->first();
+
+        return [
+            'top_sellers' => $topSellers,
+            'sales_by_type' => $salesByType,
+            'popular_brand' => $popularBrand ? $popularBrand->nombre . ' (' . $popularBrand->cars_sales_count . ')' : 'N/A',
+        ];
+    }
+
     public function vehiculo(){
         return $this->belongsTo(Cars::class, 'id_vehiculo');
     }

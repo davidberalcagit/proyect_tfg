@@ -10,9 +10,9 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'admin']);
-    Role::create(['name' => 'individual']);
-    Role::create(['name' => 'supervisor']);
+    Role::firstOrCreate(['name' => 'admin']);
+    Role::firstOrCreate(['name' => 'individual']);
+    Role::firstOrCreate(['name' => 'supervisor']);
 });
 
 test('admin dashboard loads', function () {

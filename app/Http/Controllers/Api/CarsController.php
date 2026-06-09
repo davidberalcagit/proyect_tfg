@@ -22,6 +22,7 @@ class CarsController extends Controller
      *
      * Obtiene una lista paginada de coches que están en estado "En Venta" (1).
      *
+     * @unauthenticated
      * @queryParam page int El número de página. Example: 1
      * @queryParam search string Término de búsqueda opcional. Example: Toyota
      *
@@ -152,6 +153,7 @@ class CarsController extends Controller
      *
      * Obtiene los detalles completos de un coche específico.
      *
+     * @unauthenticated
      * @urlParam id int required El ID del coche. Example: 1
      *
      * @response {
